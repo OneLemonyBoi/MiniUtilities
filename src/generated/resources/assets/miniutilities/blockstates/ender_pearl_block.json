@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "miniutilities:block/ender_pearl_block"
+    }
+  }
+}
