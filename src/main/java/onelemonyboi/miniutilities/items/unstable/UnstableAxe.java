@@ -11,12 +11,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nonnull;
 import java.util.Set;
+import java.util.UUID;
 
 public class UnstableAxe extends AxeItem {
 
