@@ -22,6 +22,15 @@ public class MUItemModelProvider extends ItemModelProvider {
 
         builder(itemGenerated, "ender_dust");
         builder(itemGenerated, "kikoku");
+        builder(itemGenerated, "healing_axe");
+        builder(itemGenerated, "reversing_hoe");
+        builder(itemGenerated, "unstable_ingot");
+        builder(itemGenerated, "destruction_pickaxe");
+        builder(itemGenerated, "precision_shears");
+        builder(itemGenerated, "erosion_shovel");
+        builder(itemGenerated, "etheric_sword");
+
+
     }
 
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {

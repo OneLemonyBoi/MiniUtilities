@@ -8,8 +8,11 @@ import net.minecraft.util.LazyValue;
 import java.util.function.Supplier;
 
 public enum ItemTier implements IItemTier {
-    KIKOKU(5, 99999, 9.0F, 0.0F, 1000, () -> {
-        return Ingredient.fromItems(Items.NETHERITE_INGOT);
+    KIKOKU(5, 0, 16.0F, 0.0F, 250, () -> {
+        return Ingredient.fromItems(ItemList.UnstableIngot.get());
+    }),
+    UNSTABLE(4, 0, 8.0F, 8.0F, 25, () -> {
+        return Ingredient.fromItems(ItemList.UnstableIngot.get());
     });
 
     private final int harvestLevel;

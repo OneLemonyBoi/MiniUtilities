@@ -3,5 +3,8 @@
   "block.miniutilities.cursed_earth": "Cursed Earth",
   "block.miniutilities.blessed_earth": "Blessed Earth",
   "block.miniutilities.ender_ore": "Ender Ore",
-  "item.miniutilities.ender_dust": "Ender Dust"
+  "item.miniutilities.ender_dust": "Ender Dust",
+  "attribute.miniutilities.divinedamage": "Divine Damage",
+  "attribute.miniutilities.armorpiercingdamage": "Armor Piercing Damage",
+  "attribute.miniutilities.souldamage": "Soul Damage"
 }

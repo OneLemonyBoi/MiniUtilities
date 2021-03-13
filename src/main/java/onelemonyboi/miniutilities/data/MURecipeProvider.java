@@ -4,6 +4,7 @@ import net.minecraft.data.*;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.items.BlockList;
 import onelemonyboi.miniutilities.items.ItemList;
@@ -38,6 +39,15 @@ public class MURecipeProvider extends RecipeProvider {
                 .key('G', Items.GOLD_INGOT)
                 .patternLine(" G ")
                 .patternLine("FOF")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.UnstableIngot.get())
+                .key('D', Tags.Items.GEMS_DIAMOND)
+                .key('S', Items.STICK)
+                .key('I', Tags.Items.INGOTS_IRON)
+                .patternLine(" D ")
+                .patternLine(" S ")
+                .patternLine(" I ")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 

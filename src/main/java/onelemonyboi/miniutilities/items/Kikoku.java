@@ -1,7 +1,6 @@
 package onelemonyboi.miniutilities.items;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -23,15 +22,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import onelemonyboi.miniutilities.world.Configs;
 
 import javax.annotation.Nonnull;
-import javax.smartcardio.ATR;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class Kikoku extends SwordItem {
-    public static Attribute DIVINE_DAMAGE = new RangedAttribute("miniutilities.divinedamage", 0.0D, 0.0D, Double.MAX_VALUE);
+    public static Attribute DIVINE_DAMAGE = new RangedAttribute("attribute.miniutilities.divinedamage", 0.0D, 0.0D, Double.MAX_VALUE);
     public static Attribute ARMOR_PIERCING_DAMAGE = new RangedAttribute("miniutilities.armorpiercingdamage", 0.0D, 0.0D, Double.MAX_VALUE);
-    public static Attribute SOUL_DAMAGE = new RangedAttribute("miniutilities.souldamage", 0.0D, 0.0D, Double.MAX_VALUE);
+    public static Attribute SOUL_DAMAGE = new RangedAttribute("attribute.miniutilities.souldamage", 0.0D, 0.0D, Double.MAX_VALUE);
     public static UUID SOUL_DAMAGE_MODIFIER = UUID.fromString("d2928c01-5d7d-41c5-bd3a-9ca8f43c8ff8");
 
     public static final DamageSource DIVINE_DAMAGE_SOURCE = (new DamageSource("divineDamage")).setDamageBypassesArmor().setDamageAllowedInCreativeMode().setDamageIsAbsolute();
@@ -52,7 +50,7 @@ public class Kikoku extends SwordItem {
 
         ListMultimap<Attribute, AttributeModifier> multimaps = ArrayListMultimap.create();
         if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 3D, AttributeModifier.Operation.ADDITION));
+            multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 3D, AttributeModifier.Operation.ADDITION));
             multimaps.put(DIVINE_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "God Damage Modifier", 2, AttributeModifier.Operation.ADDITION));
             multimaps.put(SOUL_DAMAGE, new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage Modifier", 10 / 39.0, AttributeModifier.Operation.ADDITION));
         }
@@ -67,8 +65,6 @@ public class Kikoku extends SwordItem {
         if (target == null || !target.canBeAttackedWithItem()) return false;
         if (attacker.world.isRemote) return false;
 
-        boolean flag = !target.isInvulnerableTo(DamageSource.ANVIL);
-        boolean cKill = false;
         if (target instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) target;
             if (player.isCreative() && target.isInvulnerableTo(DamageSource.ANVIL))
@@ -77,7 +73,7 @@ public class Kikoku extends SwordItem {
         else {
             target.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, 4);
         }
-        target.setHealth(target.getHealth() - 0.25f);
+        drainHealth(target);
         return true;
     }
 
