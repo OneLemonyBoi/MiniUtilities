@@ -25,7 +25,7 @@ public class ItemList {
     public static final RegistryObject<Item> UnstableHoe = ModRegistry.ITEMS.register("reversing_hoe", () ->
             new UnstableHoe(UNSTABLE, 0, 1, new Item.Properties().group(CreativeTab.getInstance())));
     public static final RegistryObject<Item> UnstableIngot = ModRegistry.ITEMS.register("unstable_ingot", () ->
-            new UnstableIngot(new Item.Properties().group(CreativeTab.getInstance()).maxDamage(20).setNoRepair()));
+            new UnstableIngot(new Item.Properties().group(CreativeTab.getInstance()).setNoRepair().maxDamage(200)));
     public static final RegistryObject<Item> UnstablePickaxe = ModRegistry.ITEMS.register("destruction_pickaxe", () ->
             new UnstablePickaxe(UNSTABLE, 0, -2.8f, new Item.Properties().group(CreativeTab.getInstance())));
     public static final RegistryObject<Item> UnstableShears = ModRegistry.ITEMS.register("precision_shears", () ->

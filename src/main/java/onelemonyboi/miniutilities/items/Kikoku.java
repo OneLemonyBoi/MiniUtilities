@@ -19,7 +19,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import onelemonyboi.miniutilities.world.Configs;
+import onelemonyboi.miniutilities.world.Config;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -130,7 +130,7 @@ public class Kikoku extends SwordItem {
                     cost += addValue;
                     map3.put(entry.getKey(), addValue);
                 } else {
-                    int value = Math.min(curValue + addValue, Configs.max_kikoku_level.get());
+                    int value = Math.min(curValue + addValue, Config.max_kikoku_level.get());
                     cost += value - curValue;
                     map3.put(entry.getKey(), value);
                 }

@@ -6,17 +6,12 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.ShearsItem;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import onelemonyboi.miniutilities.items.BlockList;
 import onelemonyboi.miniutilities.items.ItemList;
-import onelemonyboi.miniutilities.world.Configs;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

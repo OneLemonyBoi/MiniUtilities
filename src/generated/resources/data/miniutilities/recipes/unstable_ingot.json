@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " D ",
+    " I ",
     " S ",
-    " I "
+    " D "
   ],
   "key": {
-    "D": {
-      "tag": "forge:gems/diamond"
+    "I": {
+      "tag": "forge:ingots/iron"
     },
     "S": {
       "item": "minecraft:stick"
     },
-    "I": {
-      "tag": "forge:ingots/iron"
+    "D": {
+      "tag": "forge:gems/diamond"
     }
   },
   "result": {

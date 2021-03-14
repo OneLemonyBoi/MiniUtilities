@@ -45,8 +45,8 @@ public class MiniUtilities {
         EVENT_BUS.addListener(UnstableShears::instantShear);
         EVENT_BUS.addListener(UnstableHoe::hoeTransformation);
         EVENT_BUS.addListener(OreGen::generateOres);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.CONFIG, "MiniUtilities.toml");
-        Config.loadConfig(Config.CONFIG, FMLPaths.CONFIGDIR.get().resolve("MiniUtilities.toml").toString());
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
     }
 
     private void setup(final FMLCommonSetupEvent event)

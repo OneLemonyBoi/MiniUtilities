@@ -8,11 +8,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import onelemonyboi.miniutilities.items.BlockList;
-import onelemonyboi.miniutilities.world.Configs;
+import onelemonyboi.miniutilities.world.Config;
 
 public class EarthBlocks {
     public static void convertCursed(PlayerInteractEvent.RightClickBlock event) {
-        if (!Configs.enable_cursed_earth.get()) return;
+        if (!Config.enable_cursed_earth.get()) return;
         PlayerEntity playerEntity = event.getPlayer();
         World world = playerEntity.world;
         BlockPos pos = event.getPos();
@@ -22,7 +22,7 @@ public class EarthBlocks {
     }
 
     public static void convertBlessed(PlayerInteractEvent.RightClickBlock e) {
-        if (!Configs.enable_blessed_earth.get()) return;
+        if (!Config.enable_blessed_earth.get()) return;
         PlayerEntity p = e.getPlayer();
         World w = p.world;
         BlockPos pos = e.getPos();

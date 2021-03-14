@@ -42,12 +42,12 @@ public class MURecipeProvider extends RecipeProvider {
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ItemList.UnstableIngot.get())
-                .key('D', Tags.Items.GEMS_DIAMOND)
-                .key('S', Items.STICK)
                 .key('I', Tags.Items.INGOTS_IRON)
-                .patternLine(" D ")
-                .patternLine(" S ")
+                .key('S', Items.STICK)
+                .key('D', Tags.Items.GEMS_DIAMOND)
                 .patternLine(" I ")
+                .patternLine(" S ")
+                .patternLine(" D ")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 
