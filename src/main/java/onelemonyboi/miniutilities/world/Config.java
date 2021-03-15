@@ -25,9 +25,9 @@ public class Config {
         ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
         ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
 
-        CLIENT_BUILDER.comment("Settings").push(CATEGORY_GENERAL);
+        CLIENT_BUILDER.push(CATEGORY_GENERAL);
         CLIENT_BUILDER.pop();
-        SERVER_BUILDER.comment("Settings").push(CATEGORY_GENERAL);
+        SERVER_BUILDER.push(CATEGORY_GENERAL);
         setupFirstBlockConfig(SERVER_BUILDER, CLIENT_BUILDER);
         SERVER_BUILDER.pop();
         SERVER_CONFIG = SERVER_BUILDER.build();

@@ -6,7 +6,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.CreativeTab;
