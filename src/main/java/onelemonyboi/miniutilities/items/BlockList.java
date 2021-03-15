@@ -21,6 +21,7 @@ public class BlockList {
     public static final RegistryObject<Block> EnderPearlBlock = register("ender_pearl_block", () -> new BaseBlock(Material.ROCK, 3, 3, 1, ToolType.PICKAXE));
     // ANGEL BLOCK TAKES 1 TICK TO BREAK
     public static final RegistryObject<Block> AngelBlock = registerNoItem("angel_block", () -> new AngelBlock(Material.ROCK, 0.01F, 3F, 1));
+    public static final RegistryObject<Block> EnderLily = register("ender_lily", () -> new EnderLily());
 
     public static void register() {}
 

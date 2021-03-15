@@ -18,6 +18,8 @@ public class ItemList {
             new AngelBlockItem(BlockList.AngelBlock.get()));
     public static final RegistryObject<Item> Kikoku = ModRegistry.ITEMS.register("kikoku", () ->
             new Kikoku(ItemTier.KIKOKU,  13, -2.4F, (new Item.Properties().group(CreativeTab.getInstance()))));
+    public static final RegistryObject<Item> EnderLilySeeds = ModRegistry.ITEMS.register("ender_lily_seeds", () ->
+            new ItemSeeds(BlockList.EnderLily.get()));
 
     // Unstable
     public static final RegistryObject<Item> UnstableAxe = ModRegistry.ITEMS.register("healing_axe", () ->

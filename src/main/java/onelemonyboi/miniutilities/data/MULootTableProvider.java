@@ -3,9 +3,7 @@ package onelemonyboi.miniutilities.data;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.NetherWartBlock;
+import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
@@ -13,11 +11,14 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
 import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.BlockStateProperty;
+import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.loot.conditions.RandomChance;
 import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.ModRegistry;
+import onelemonyboi.miniutilities.blocks.EnderLily;
 import onelemonyboi.miniutilities.items.BlockList;
 import onelemonyboi.miniutilities.items.ItemList;
 
@@ -58,6 +59,9 @@ public class MULootTableProvider extends LootTableProvider {
             registerDropSelfLootTable(BlockList.BlessedEarth.get());
             registerDropSelfLootTable(BlockList.EnderPearlBlock.get());
             registerLootTable(BlockList.AngelBlock.get(), blockNoDrop());
+
+            ILootCondition.IBuilder ilootcondition = BlockStateProperty.builder(BlockList.EnderLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EnderLily.AGE, 7));
+            registerLootTable(BlockList.EnderLily.get(), withExplosionDecay(BlockList.EnderLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(Items.ENDER_PEARL))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
         }
 
         @Override

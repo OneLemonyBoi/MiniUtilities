@@ -57,6 +57,7 @@ public class MiniUtilities {
     {
         RenderTypeLookup.setRenderLayer(BlockList.CursedEarth.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.BlessedEarth.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.EnderLily.get(), RenderType.getCutout());
     }
 
     public static Logger getLogger()
