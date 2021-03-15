@@ -19,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.EnderLily;
+import onelemonyboi.miniutilities.blocks.FlameLily;
 import onelemonyboi.miniutilities.items.BlockList;
 import onelemonyboi.miniutilities.items.ItemList;
 
@@ -62,6 +63,8 @@ public class MULootTableProvider extends LootTableProvider {
 
             ILootCondition.IBuilder ilootcondition = BlockStateProperty.builder(BlockList.EnderLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EnderLily.AGE, 7));
             registerLootTable(BlockList.EnderLily.get(), withExplosionDecay(BlockList.EnderLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(Items.ENDER_PEARL))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
+            ILootCondition.IBuilder ilootcondition1 = BlockStateProperty.builder(BlockList.FlameLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(FlameLily.AGE, 7));
+            registerLootTable(BlockList.FlameLily.get(), withExplosionDecay(BlockList.FlameLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.Cinderpearl.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
         }
 
         @Override

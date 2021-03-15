@@ -18,18 +18,16 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.Tags;
-import onelemonyboi.miniutilities.data.ModTags;
-import onelemonyboi.miniutilities.items.BlockList;
+import net.minecraftforge.fml.ModList;
 import onelemonyboi.miniutilities.items.ItemList;
 
 import java.util.Random;
 
 
-public class EnderLily extends CropsBlock {
+public class FlameLily extends CropsBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
-    public EnderLily()
+    public FlameLily()
     {
         super(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().sound(SoundType.CROP));
     }
@@ -37,13 +35,13 @@ public class EnderLily extends CropsBlock {
     @Override
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos)
     {
-        return Tags.Blocks.END_STONES.contains(state.getBlock()) || state.getBlock() instanceof SpreadableSnowyDirtBlock || ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL.contains(state.getBlock()) || Tags.Blocks.DIRT.contains(state.getBlock());
+        return Tags.Blocks.NETHERRACK.contains(state.getBlock()) || Tags.Blocks.SAND.contains(state.getBlock()) || state.matchesBlock(Blocks.MAGMA_BLOCK);
     }
 
     @OnlyIn(Dist.CLIENT)
     protected IItemProvider getSeedsItem()
     {
-        return ItemList.EnderLilySeeds.get();
+        return ItemList.FlameLilySeeds.get();
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -59,7 +57,7 @@ public class EnderLily extends CropsBlock {
                 double d0 = Math.abs(entityIn.getPosX() - entityIn.lastTickPosX);
                 double d1 = Math.abs(entityIn.getPosZ() - entityIn.lastTickPosZ);
                 if (d0 >= (double)0.003F || d1 >= (double)0.003F) {
-                    entityIn.attackEntityFrom(DamageSource.CACTUS, 1.0F);
+                    entityIn.attackEntityFrom(DamageSource.ON_FIRE, 1.0F);
                 }
             }
         }
@@ -72,7 +70,7 @@ public class EnderLily extends CropsBlock {
             return ActionResultType.PASS;
         } else if (state.get(AGE) == 7) {
             spawnAsEntity(worldIn, pos, new ItemStack(Items.ENDER_PEARL, 1));
-            worldIn.playSound((PlayerEntity)null, pos, SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+            worldIn.playSound((PlayerEntity)null, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
             worldIn.setBlockState(pos, state.with(AGE, 4), 2);
             return ActionResultType.func_233537_a_(worldIn.isRemote);
         } else {
@@ -90,33 +88,31 @@ public class EnderLily extends CropsBlock {
         // Only here to implement new growth chance getter and make lily grow slower
 
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
-        if (worldIn.getLightSubtracted(pos, 0) >= 9) {
-            int i = this.getAge(state);
-            if (i < this.getMaxAge()) {
-                float f = getLilyGrowthChance(this, worldIn, pos);
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)((25.0F / f) * 4) + 1) == 0)) {
-                    worldIn.setBlockState(pos, this.withAge(i + 1), 2);
-                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-                }
+        int i = this.getAge(state);
+        if (i < this.getMaxAge()) {
+            float f = getLilyGrowthChance(this, worldIn, pos);
+            if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)((25.0F / f) * 4) + 1) == 0)) {
+                worldIn.setBlockState(pos, this.withAge(i + 1), 2);
+                net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
             }
         }
     }
 
     protected static float getLilyGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
-        // This is only a thing so that lilies grow faster on End Stone
+        // This is only a thing so that lilies grow faster on Magma Block / Netherrack
         float f = 1.0F;
         BlockPos blockpos = pos.down();
         for(int i = -1; i <= 1; ++i) {
             for(int j = -1; j <= 1; ++j) {
                 float f1 = 0.0F;
                 BlockState blockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
-                if (blockstate.canSustainPlant(worldIn, blockpos.add(i, 0, j), net.minecraft.util.Direction.UP, (net.minecraftforge.common.IPlantable) blockIn)) {
+                if (blockstate.canSustainPlant(worldIn, blockpos.add(i, 0, j), Direction.UP, (net.minecraftforge.common.IPlantable) blockIn)) {
                     f1 = 1.0F;
-                    if (Tags.Blocks.END_STONES.contains(blockIn)) {
-                        f1 = 3.0F;
+                    if (Tags.Blocks.NETHERRACK.contains(blockIn)) {
+                        f1 = 1.5F;
                     }
-                    else if (ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL.contains(blockIn)) {
-                        f1 = 7.0F;
+                    else if (blockIn == Blocks.MAGMA_BLOCK) {
+                        f1 = 3.0F;
                     }
                 }
 

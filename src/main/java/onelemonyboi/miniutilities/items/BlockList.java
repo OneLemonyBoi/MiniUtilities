@@ -21,7 +21,8 @@ public class BlockList {
     public static final RegistryObject<Block> EnderPearlBlock = register("ender_pearl_block", () -> new BaseBlock(Material.ROCK, 3, 3, 1, ToolType.PICKAXE));
     // ANGEL BLOCK TAKES 1 TICK TO BREAK
     public static final RegistryObject<Block> AngelBlock = registerNoItem("angel_block", () -> new AngelBlock(Material.ROCK, 0.01F, 3F, 1));
-    public static final RegistryObject<Block> EnderLily = register("ender_lily", () -> new EnderLily());
+    public static final RegistryObject<Block> EnderLily = registerNoTab("ender_lily", () -> new EnderLily());
+    public static final RegistryObject<Block> FlameLily = registerNoTab("flame_lily", () -> new FlameLily());
 
     public static void register() {}
 
@@ -32,6 +33,12 @@ public class BlockList {
     private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> block) {
         RegistryObject<T> ret = registerNoItem(name, block);
         ModRegistry.ITEMS.register(name, () -> new BlockItem(ret.get(), new Item.Properties().group(CreativeTab.getInstance())));
+        return ret;
+    }
+
+    private static <T extends Block> RegistryObject<T> registerNoTab(String name, Supplier<T> block) {
+        RegistryObject<T> ret = registerNoItem(name, block);
+        ModRegistry.ITEMS.register(name, () -> new BlockItem(ret.get(), new Item.Properties()));
         return ret;
     }
 }

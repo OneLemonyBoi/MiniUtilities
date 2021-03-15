@@ -24,6 +24,7 @@ b0af0157b3c7ca8f49a2acf94a6fbbb589040034 data/forge/tags/blocks/storage_blocks/e
 4f2663acdf00728d6c932f76372cf6dcdfebf46d data/forge/tags/items/dusts/ender.json
 a0a4bc2e5885663d1652b97377879356c40a53e7 data/forge/tags/items/ores.json
 d715fdaa391c1237615b933c05b3e50f870c697c data/forge/tags/items/ores/ender.json
+ae5bb60b74f2899cd437f112a6ff208dc0d4aed5 data/forge/tags/items/rods/blaze.json
 c3e74f419b1a04966e0b6c4b55c8398c1f47227b data/forge/tags/items/storage_blocks.json
 b0af0157b3c7ca8f49a2acf94a6fbbb589040034 data/forge/tags/items/storage_blocks/ender_pearl.json
 a70dba31204992794e0a3b64f7505629232b1bde data/minecraft/advancements/recipes/misc/ender_pearl.json
@@ -38,6 +39,7 @@ c3472ac06887d9392b5715e21b36f28fe73d2d98 data/miniutilities/loot_tables/blocks/c
 bb12195bcdd335b26d64582f84848a28ec9af651 data/miniutilities/loot_tables/blocks/ender_lily.json
 7cabe50abba01036841cc91eba6bf16a53fa905d data/miniutilities/loot_tables/blocks/ender_ore.json
 ce18fe23633c0db09b7813e1ca21e9cda5d07352 data/miniutilities/loot_tables/blocks/ender_pearl_block.json
+76d9d39192a10ed94ca7cfefbd86d8129fcca5b3 data/miniutilities/loot_tables/blocks/flame_lily.json
 d0678e191193316a0ae8e0828e6a68144c23ec8e data/miniutilities/recipes/angel_block.json
 ec8362bc1bdd55a21f57c9f2331e660d4a938e81 data/miniutilities/recipes/ender_pearl_block.json
 ec2e862647e103fc4cf2f5b72c9187364892d0d0 data/miniutilities/recipes/smelting/ender_ore.json
