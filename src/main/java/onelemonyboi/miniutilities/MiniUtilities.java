@@ -14,13 +14,12 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
 import onelemonyboi.miniutilities.blocks.EarthBlocks;
 import onelemonyboi.miniutilities.items.BlockList;
 import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
 import onelemonyboi.miniutilities.world.Config;
-import onelemonyboi.miniutilities.world.OreGen;
+import onelemonyboi.miniutilities.world.WorldGen;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,7 +43,8 @@ public class MiniUtilities {
         EVENT_BUS.addListener(EarthBlocks::convertBlessed);
         EVENT_BUS.addListener(UnstableShears::instantShear);
         EVENT_BUS.addListener(UnstableHoe::hoeTransformation);
-        EVENT_BUS.addListener(OreGen::generateOres);
+        EVENT_BUS.addListener(WorldGen::generateOres);
+        EVENT_BUS.addListener(WorldGen::generatePlants);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
     }

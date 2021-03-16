@@ -2,16 +2,16 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "miniutilities:ender_dust"
+      "tag": "forge:dusts/ender"
     },
     {
-      "item": "miniutilities:ender_dust"
+      "tag": "forge:dusts/ender"
     },
     {
-      "item": "miniutilities:ender_dust"
+      "tag": "forge:dusts/ender"
     },
     {
-      "item": "miniutilities:ender_dust"
+      "tag": "forge:dusts/ender"
     }
   ],
   "result": {

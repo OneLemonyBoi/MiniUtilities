@@ -19,10 +19,10 @@ public class MURecipeProvider extends RecipeProvider {
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
         ShapelessRecipeBuilder.shapelessRecipe(Items.ENDER_PEARL)
-                .addIngredient(ItemList.EnderDust.get())
-                .addIngredient(ItemList.EnderDust.get())
-                .addIngredient(ItemList.EnderDust.get())
-                .addIngredient(ItemList.EnderDust.get())
+                .addIngredient(ModTags.Items.DUSTS_ENDER)
+                .addIngredient(ModTags.Items.DUSTS_ENDER)
+                .addIngredient(ModTags.Items.DUSTS_ENDER)
+                .addIngredient(ModTags.Items.DUSTS_ENDER)
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 
@@ -34,7 +34,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ItemList.AngelBlockItem.get())
-                .key('O', Items.OBSIDIAN)
+                .key('O', Tags.Items.OBSIDIAN)
                 .key('F', Items.FEATHER)
                 .key('G', Items.GOLD_INGOT)
                 .patternLine(" G ")
@@ -48,6 +48,15 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine(" I ")
                 .patternLine(" S ")
                 .patternLine(" D ")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ItemList.EnderLilySeeds.get())
+                .key('S', Tags.Items.SEEDS)
+                .key('E', Tags.Items.ENDER_PEARLS)
+                .patternLine("EEE")
+                .patternLine("ESE")
+                .patternLine("EEE")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 

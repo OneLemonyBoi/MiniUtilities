@@ -6,7 +6,7 @@
   ],
   "key": {
     "O": {
-      "item": "minecraft:obsidian"
+      "tag": "forge:obsidian"
     },
     "F": {
       "item": "minecraft:feather"

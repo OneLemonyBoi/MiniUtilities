@@ -14,6 +14,8 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,7 +39,7 @@ public class EnderLily extends CropsBlock {
     @Override
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos)
     {
-        return Tags.Blocks.END_STONES.contains(state.getBlock()) || state.getBlock() instanceof SpreadableSnowyDirtBlock || ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL.contains(state.getBlock()) || Tags.Blocks.DIRT.contains(state.getBlock());
+        return Tags.Blocks.END_STONES.contains(state.getBlock()) || state.getBlock() instanceof SpreadableSnowyDirtBlock || ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL.contains(state.getBlock()) || Tags.Blocks.DIRT.contains(state.getBlock()) || state.matchesBlock(Blocks.END_STONE);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -90,14 +92,12 @@ public class EnderLily extends CropsBlock {
         // Only here to implement new growth chance getter and make lily grow slower
 
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
-        if (worldIn.getLightSubtracted(pos, 0) >= 9) {
-            int i = this.getAge(state);
-            if (i < this.getMaxAge()) {
-                float f = getLilyGrowthChance(this, worldIn, pos);
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)((25.0F / f) * 4) + 1) == 0)) {
-                    worldIn.setBlockState(pos, this.withAge(i + 1), 2);
-                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-                }
+        int i = this.getAge(state);
+        if (i < this.getMaxAge()) {
+            float f = getLilyGrowthChance(this, worldIn, pos);
+            if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)((25.0F / f) * 4) + 1) == 0)) {
+                worldIn.setBlockState(pos, this.withAge(i + 1), 2);
+                net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
             }
         }
     }
@@ -144,5 +144,13 @@ public class EnderLily extends CropsBlock {
             }
         }
         return f;
+    }
+
+    @Override
+    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        BlockPos blockpos = pos.down();
+        if (state.getBlock() == this)
+            return worldIn.getBlockState(blockpos).canSustainPlant(worldIn, blockpos, Direction.UP, this);
+        return this.isValidGround(worldIn.getBlockState(blockpos), worldIn, blockpos);
     }
 }
