@@ -20,8 +20,8 @@ import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.EnderLily;
 import onelemonyboi.miniutilities.blocks.FlameLily;
-import onelemonyboi.miniutilities.items.BlockList;
-import onelemonyboi.miniutilities.items.ItemList;
+import onelemonyboi.miniutilities.init.BlockList;
+import onelemonyboi.miniutilities.init.ItemList;
 
 import java.util.List;
 import java.util.Map;

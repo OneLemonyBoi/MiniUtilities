@@ -15,7 +15,7 @@ import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import onelemonyboi.miniutilities.blocks.EnderLily;
 import onelemonyboi.miniutilities.blocks.FlameLily;
-import onelemonyboi.miniutilities.items.BlockList;
+import onelemonyboi.miniutilities.init.BlockList;
 
 import java.util.Random;
 

@@ -19,8 +19,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.fml.ModList;
-import onelemonyboi.miniutilities.items.ItemList;
+import onelemonyboi.miniutilities.init.ItemList;
 
 import java.util.Random;
 

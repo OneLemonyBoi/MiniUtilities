@@ -2,7 +2,7 @@ package onelemonyboi.miniutilities;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import onelemonyboi.miniutilities.items.BlockList;
+import onelemonyboi.miniutilities.init.BlockList;
 
 public class CreativeTab extends ItemGroup {
     private static final CreativeTab INSTANCE = new CreativeTab();

@@ -6,8 +6,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.items.BlockList;
-import onelemonyboi.miniutilities.items.ItemList;
+import onelemonyboi.miniutilities.init.BlockList;
+import onelemonyboi.miniutilities.init.ItemList;
 
 import java.util.function.Consumer;
 

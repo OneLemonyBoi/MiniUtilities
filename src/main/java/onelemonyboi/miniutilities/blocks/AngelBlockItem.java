@@ -1,8 +1,6 @@
 package onelemonyboi.miniutilities.blocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.ActionResult;
@@ -12,7 +10,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import onelemonyboi.miniutilities.CreativeTab;
-import onelemonyboi.miniutilities.items.BlockList;
+import onelemonyboi.miniutilities.init.BlockList;
 
 public class AngelBlockItem extends BlockItem {
     public AngelBlockItem(Block block)

@@ -6,7 +6,7 @@ import net.minecraft.data.ItemTagsProvider;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.items.ItemList;
+import onelemonyboi.miniutilities.init.ItemList;
 
 public class MUItemTagsProvider extends ItemTagsProvider {
     public MUItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper) {

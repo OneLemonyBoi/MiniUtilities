@@ -1,17 +1,14 @@
 package onelemonyboi.miniutilities.items.unstable;
 
 import com.google.common.collect.Sets;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import onelemonyboi.miniutilities.items.BlockList;
-import onelemonyboi.miniutilities.items.ItemList;
+import onelemonyboi.miniutilities.init.ItemList;
 
 import javax.annotation.Nonnull;
 import java.util.Set;

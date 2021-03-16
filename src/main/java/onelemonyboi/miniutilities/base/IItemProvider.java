@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.init;
+package onelemonyboi.miniutilities.base;
 
 import net.minecraft.item.BlockItem;
 

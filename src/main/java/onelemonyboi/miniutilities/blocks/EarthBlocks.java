@@ -2,12 +2,11 @@ package onelemonyboi.miniutilities.blocks;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import onelemonyboi.miniutilities.items.BlockList;
+import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.world.Config;
 
 public class EarthBlocks {

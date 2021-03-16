@@ -5,7 +5,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.items.BlockList;
+import onelemonyboi.miniutilities.init.BlockList;
 
 public class MUBlockTagsProvider extends BlockTagsProvider {
     public MUBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {

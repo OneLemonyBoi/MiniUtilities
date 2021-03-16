@@ -2,7 +2,7 @@ package onelemonyboi.miniutilities.blocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.ToolType;
-import onelemonyboi.miniutilities.init.StandardBlock;
+import onelemonyboi.miniutilities.base.StandardBlock;
 
 public class BaseBlock extends StandardBlock {
 

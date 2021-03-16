@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import onelemonyboi.miniutilities.items.ItemList;
+import onelemonyboi.miniutilities.init.ItemList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

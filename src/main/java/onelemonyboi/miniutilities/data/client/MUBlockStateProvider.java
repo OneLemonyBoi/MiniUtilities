@@ -4,7 +4,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.items.BlockList;
+import onelemonyboi.miniutilities.init.BlockList;
 
 public class MUBlockStateProvider extends BlockStateProvider {
     public MUBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {

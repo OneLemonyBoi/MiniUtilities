@@ -1,12 +1,14 @@
-package onelemonyboi.miniutilities.items;
+package onelemonyboi.miniutilities.init;
 
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.SwordItem;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.AngelBlockItem;
+import onelemonyboi.miniutilities.items.AngelRing;
+import onelemonyboi.miniutilities.items.ItemSeeds;
+import onelemonyboi.miniutilities.items.ItemTier;
+import onelemonyboi.miniutilities.items.Kikoku;
 import onelemonyboi.miniutilities.items.unstable.*;
 
 import static onelemonyboi.miniutilities.items.ItemTier.UNSTABLE;
@@ -24,6 +26,8 @@ public class ItemList {
             new ItemSeeds(BlockList.FlameLily.get()));
     public static final RegistryObject<Item> Cinderpearl = ModRegistry.ITEMS.register("cinderpearl", () ->
             new Item(new Item.Properties().group(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> AngelRing = ModRegistry.ITEMS.register("angel_ring", () ->
+            new AngelRing());
 
     // Unstable
     public static final RegistryObject<Item> UnstableAxe = ModRegistry.ITEMS.register("healing_axe", () ->
