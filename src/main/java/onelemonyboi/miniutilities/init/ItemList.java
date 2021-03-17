@@ -32,6 +32,17 @@ public class ItemList {
     public static final RegistryObject<Item> FeatherAngelRing = ModRegistry.ITEMS.register("feather_angel_ring", AngelRing::new);
     public static final RegistryObject<Item> BatAngelRing = ModRegistry.ITEMS.register("bat_angel_ring", AngelRing::new);
     public static final RegistryObject<Item> PeacockAngelRing = ModRegistry.ITEMS.register("peacock_angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> GoldWing = ModRegistry.ITEMS.register("goldwing", () ->
+            new Item(new Item.Properties()));
+    public static final RegistryObject<Item> EnderDragonWing = ModRegistry.ITEMS.register("enderdragonwing", () ->
+            new Item(new Item.Properties()));
+    public static final RegistryObject<Item> FeatherWing = ModRegistry.ITEMS.register("featherwing", () ->
+            new Item(new Item.Properties()));
+    public static final RegistryObject<Item> BatWing = ModRegistry.ITEMS.register("batwing", () ->
+            new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PeacockWing = ModRegistry.ITEMS.register("peacockwing", () ->
+            new Item(new Item.Properties()));
+
 
 
     // Unstable
