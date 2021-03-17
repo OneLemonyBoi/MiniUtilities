@@ -31,16 +31,6 @@ public class EarthBlocks {
         }
     }
 
-    public static void convertMarine(PlayerInteractEvent.RightClickBlock e) {
-        if (!Config.enable_marine_earth.get()) return;
-        PlayerEntity p = e.getPlayer();
-        World w = p.world;
-        BlockPos pos = e.getPos();
-        if (p.isSneaking() && !w.isRemote && e.getItemStack().getItem() == Items.HEART_OF_THE_SEA && w.getBlockState(pos).getBlock() == Blocks.DIRT) {
-            w.setBlockState(pos, BlockList.MarineEarth.get().getDefaultState());
-        }
-    }
-
     public static void convertBlursed(PlayerInteractEvent.RightClickBlock e) {
         if (!Config.enable_blursed_earth.get()) return;
         PlayerEntity p = e.getPlayer();

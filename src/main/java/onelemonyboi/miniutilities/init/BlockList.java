@@ -17,8 +17,7 @@ import java.util.function.Supplier;
 public class BlockList {
     public static final RegistryObject<Block> CursedEarth = register("cursed_earth", () -> new CursedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
     public static final RegistryObject<Block> BlessedEarth = register("blessed_earth", () -> new BlessedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
-    public static final RegistryObject<Block> MarineEarth = register("cursed_earth", () -> new CursedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
-    public static final RegistryObject<Block> BlursedEarth = register("blessed_earth", () -> new BlessedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
+    public static final RegistryObject<Block> BlursedEarth = register("blessed_earth", () -> new BlursedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
     public static final RegistryObject<Block> EnderOre = register("ender_ore", () -> new BaseBlock(Material.ROCK, 3, 3, 2, ToolType.PICKAXE));
     public static final RegistryObject<Block> EnderPearlBlock = register("ender_pearl_block", () -> new BaseBlock(Material.ROCK, 3, 3, 1, ToolType.PICKAXE));
     // ANGEL BLOCK TAKES 1 TICK TO BREAK

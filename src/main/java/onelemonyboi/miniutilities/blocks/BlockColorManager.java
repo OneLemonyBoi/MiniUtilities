@@ -20,9 +20,11 @@ public class BlockColorManager {
         final ItemColors itemColors = event.getItemColors();
 
         IBlockColor iBlockColor = (blockState, iEnviromentBlockReader, blockPos, i) -> Integer.decode("#222222");
-        IBlockColor iBlockColorBlessed = (blockState, iEnviromentBlockReader, blockPos, i) -> Integer.decode("#FFFFED");
+        IBlockColor iBlockColorBlessed = (blockState, iEnviromentBlockReader, blockPos, i) -> Integer.decode("#FFFF8D");
+        IBlockColor iBlockColorBlursed = (blockState, iEnviromentBlockReader, blockPos, i) -> Integer.decode("#919188");
         blockColors.register(iBlockColor, BlockList.CursedEarth.get());
         blockColors.register(iBlockColorBlessed, BlockList.BlessedEarth.get());
+        blockColors.register(iBlockColorBlursed, BlockList.BlursedEarth.get());
         IItemColor itemBlockColourHandler = (stack, tintIndex) ->
         {
             BlockState state = ((BlockItem) stack.getItem()).getBlock().getDefaultState();
@@ -31,6 +33,7 @@ public class BlockColorManager {
         if (itemBlockColourHandler != null) {
             itemColors.register(itemBlockColourHandler, BlockList.CursedEarth.get());
             itemColors.register(itemBlockColourHandler, BlockList.BlessedEarth.get());
+            itemColors.register(itemBlockColourHandler, BlockList.BlursedEarth.get());
         }
     }
 }
