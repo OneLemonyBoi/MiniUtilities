@@ -26,22 +26,29 @@ public class ItemList {
             new ItemSeeds(BlockList.FlameLily.get()));
     public static final RegistryObject<Item> Cinderpearl = ModRegistry.ITEMS.register("cinderpearl", () ->
             new Item(new Item.Properties().group(CreativeTab.getInstance())));
-    public static final RegistryObject<Item> AngelRing = ModRegistry.ITEMS.register("angel_ring", () ->
-            new AngelRing());
+    public static final RegistryObject<Item> BaseAngelRing = ModRegistry.ITEMS.register("angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> GoldAngelRing = ModRegistry.ITEMS.register("gold_angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> EnderDragonAngelRing = ModRegistry.ITEMS.register("ender_dragon_angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> FeatherAngelRing = ModRegistry.ITEMS.register("feather_angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> BatAngelRing = ModRegistry.ITEMS.register("bat_angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> PeacockAngelRing = ModRegistry.ITEMS.register("peacock_angel_ring", AngelRing::new);
+
 
     // Unstable
     public static final RegistryObject<Item> UnstableAxe = ModRegistry.ITEMS.register("healing_axe", () ->
-            new UnstableAxe(UNSTABLE, 2, -3, new Item.Properties().group(CreativeTab.getInstance())));
+            new UnstableAxe(UNSTABLE, 1, -3, new Item.Properties().group(CreativeTab.getInstance())));
     public static final RegistryObject<Item> UnstableHoe = ModRegistry.ITEMS.register("reversing_hoe", () ->
-            new UnstableHoe(UNSTABLE, 0, 1, new Item.Properties().group(CreativeTab.getInstance())));
+            new UnstableHoe(UNSTABLE, -8, 0, new Item.Properties().group(CreativeTab.getInstance())));
     public static final RegistryObject<Item> UnstableIngot = ModRegistry.ITEMS.register("unstable_ingot", () ->
             new UnstableIngot(new Item.Properties().group(CreativeTab.getInstance()).setNoRepair().maxDamage(200)));
     public static final RegistryObject<Item> UnstablePickaxe = ModRegistry.ITEMS.register("destruction_pickaxe", () ->
-            new UnstablePickaxe(UNSTABLE, 0, -2.8f, new Item.Properties().group(CreativeTab.getInstance())));
+            new UnstablePickaxe(UNSTABLE, -3, -2.8f, new Item.Properties().group(CreativeTab.getInstance())));
     public static final RegistryObject<Item> UnstableShears = ModRegistry.ITEMS.register("precision_shears", () ->
             new UnstableShears(new Item.Properties().group(CreativeTab.getInstance())));
     public static final RegistryObject<Item> UnstableShovel = ModRegistry.ITEMS.register("erosion_shovel", () ->
-            new UnstableShovel(UNSTABLE, 0, -1.5f, new Item.Properties().group(CreativeTab.getInstance())));
+            new UnstableShovel(UNSTABLE, -2.5f, -3, new Item.Properties().group(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> UnstableSword = ModRegistry.ITEMS.register("etheric_sword", () ->
+            new UnstableSword(UNSTABLE, -1, -2.4f, new Item.Properties().group(CreativeTab.getInstance())));
 
 
     public static void register() {}

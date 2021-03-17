@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import java.util.Set;
 
 public class UnstableShovel extends ShovelItem {
-    public UnstableShovel(IItemTier materialIn, int damage, float attackSpeed, Item.Properties properties) {
+    public UnstableShovel(IItemTier materialIn, float damage, float attackSpeed, Item.Properties properties) {
         super(materialIn, damage, attackSpeed, properties);
     }
 

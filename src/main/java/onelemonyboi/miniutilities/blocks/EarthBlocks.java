@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import onelemonyboi.miniutilities.init.BlockList;
+import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.world.Config;
 
 public class EarthBlocks {
@@ -25,8 +26,28 @@ public class EarthBlocks {
         PlayerEntity p = e.getPlayer();
         World w = p.world;
         BlockPos pos = e.getPos();
-        if (p.isSneaking() && !w.isRemote && e.getItemStack().getItem() == Items.IRON_BLOCK && w.getBlockState(pos).getBlock() == Blocks.DIRT) {
+        if (p.isSneaking() && !w.isRemote && e.getItemStack().getItem() == ItemList.UnstableIngot.get() && w.getBlockState(pos).getBlock() == Blocks.DIRT) {
             w.setBlockState(pos, BlockList.BlessedEarth.get().getDefaultState());
+        }
+    }
+
+    public static void convertMarine(PlayerInteractEvent.RightClickBlock e) {
+        if (!Config.enable_marine_earth.get()) return;
+        PlayerEntity p = e.getPlayer();
+        World w = p.world;
+        BlockPos pos = e.getPos();
+        if (p.isSneaking() && !w.isRemote && e.getItemStack().getItem() == Items.HEART_OF_THE_SEA && w.getBlockState(pos).getBlock() == Blocks.DIRT) {
+            w.setBlockState(pos, BlockList.MarineEarth.get().getDefaultState());
+        }
+    }
+
+    public static void convertBlursed(PlayerInteractEvent.RightClickBlock e) {
+        if (!Config.enable_blursed_earth.get()) return;
+        PlayerEntity p = e.getPlayer();
+        World w = p.world;
+        BlockPos pos = e.getPos();
+        if (p.isSneaking() && !w.isRemote && e.getItemStack().getItem() == Items.NETHER_STAR && w.getBlockState(pos).getBlock() == Blocks.DIRT) {
+            w.setBlockState(pos, BlockList.BlursedEarth.get().getDefaultState());
         }
     }
 }

@@ -1,17 +1,15 @@
 package onelemonyboi.miniutilities.proxy;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import onelemonyboi.miniutilities.renderer.AngelRingRenderer;
+import onelemonyboi.miniutilities.renderer.AngelRingRendererLeft;
+import onelemonyboi.miniutilities.renderer.AngelRingRendererRight;
+import onelemonyboi.miniutilities.renderer.KikokuRenderer;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -24,9 +22,17 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void init(FMLCommonSetupEvent event) {
-        Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getRenderManager().getSkinMap();
-        for (PlayerRenderer render : new PlayerRenderer[]{skinMap.get("default"), skinMap.get("slim")})
-            render.addLayer(new AngelRingRenderer(render));
+        Map<String, PlayerRenderer> skinMapAngelWingLeft = Minecraft.getInstance().getRenderManager().getSkinMap();
+        for (PlayerRenderer render : new PlayerRenderer[]{skinMapAngelWingLeft.get("default"), skinMapAngelWingLeft.get("slim")})
+            render.addLayer(new AngelRingRendererLeft(render));
+
+        Map<String, PlayerRenderer> skinMapAngelWingRight = Minecraft.getInstance().getRenderManager().getSkinMap();
+        for (PlayerRenderer render : new PlayerRenderer[]{skinMapAngelWingRight.get("default"), skinMapAngelWingRight.get("slim")})
+            render.addLayer(new AngelRingRendererRight(render));
+
+        Map<String, PlayerRenderer> skinMapKikoku = Minecraft.getInstance().getRenderManager().getSkinMap();
+        for (PlayerRenderer render : new PlayerRenderer[]{skinMapKikoku.get("default"), skinMapKikoku.get("slim")})
+            render.addLayer(new KikokuRenderer(render));
     }
 
     @Override

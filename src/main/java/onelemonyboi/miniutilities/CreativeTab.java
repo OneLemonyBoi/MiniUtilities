@@ -16,6 +16,6 @@ public class CreativeTab extends ItemGroup {
 
     public ItemStack createIcon()
     {
-        return new ItemStack(BlockList.BlessedEarth.get());
+        return new ItemStack(BlockList.AngelBlock.get());
     }
 }

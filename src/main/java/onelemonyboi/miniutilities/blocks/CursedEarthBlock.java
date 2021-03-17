@@ -19,32 +19,35 @@ import onelemonyboi.miniutilities.MiniUtilities;
 import java.util.List;
 import java.util.Random;
 
+// CREDIT FOR CODE BASE: TFARCENIM
 
 public class CursedEarthBlock extends GrassBlock {
     public CursedEarthBlock(Properties properties) {
         super(properties);
     }
 
+    // SPAWN RANGE: 200 - 800 (Similar to Spawner)
+
     @Deprecated
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onBlockAdded(state, world, pos, oldState, isMoving);
-        int i = 100;
+        int i = 200;
         if (i == 0) {
             i = 1;
         }
-        world.getPendingBlockTicks().scheduleTick(pos, this, world.rand.nextInt(100) + i);
+        world.getPendingBlockTicks().scheduleTick(pos, this, world.rand.nextInt(600) + i);
     }
 
     @Override
     @Deprecated
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!world.isRemote) {
-            int j = 100;
+            int j = 200;
             if (j == 0) {
                 j = 1;
             }
-            world.getPendingBlockTicks().scheduleTick(pos, this, world.rand.nextInt(100) + j);
+            world.getPendingBlockTicks().scheduleTick(pos, this, world.rand.nextInt(600) + j);
             if (!world.isAreaLoaded(pos, 3))
                 return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
             if (world.getLight(pos.up()) >= 7) {
@@ -61,7 +64,7 @@ public class CursedEarthBlock extends GrassBlock {
                 }
             }
 
-            world.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), random.nextInt(101));
+            world.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), random.nextInt(601));
             if (!world.getFluidState(pos.up()).isEmpty()) return;
             if (world.getWorldInfo().getDifficulty() == Difficulty.PEACEFUL) return;
             long mobcount = world.getEntities().filter(IMob.class::isInstance).count();

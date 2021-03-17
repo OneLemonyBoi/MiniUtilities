@@ -16,6 +16,8 @@ public class Config {
 
     public static ForgeConfigSpec.BooleanValue enable_cursed_earth;
     public static ForgeConfigSpec.BooleanValue enable_blessed_earth;
+    public static ForgeConfigSpec.BooleanValue enable_marine_earth;
+    public static ForgeConfigSpec.BooleanValue enable_blursed_earth;
     public static ForgeConfigSpec.IntValue max_kikoku_level;
     public static ForgeConfigSpec.IntValue unstable_ingot_type;
 
@@ -36,7 +38,9 @@ public class Config {
 
     private static void setupFirstBlockConfig(ForgeConfigSpec.Builder SERVER_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
         enable_cursed_earth = SERVER_BUILDER.comment("Should Cursed Earth be Obtainable?").define("Obtain Cursed", true); // Get by right clicking Wither Rose on Grass
-        enable_blessed_earth = SERVER_BUILDER.comment("Should Blessed Earth be Obtainable?").define("Obtain Blessed", true); // Get by right clicking Iron Block on Grass
+        enable_blessed_earth = SERVER_BUILDER.comment("Should Blessed Earth be Obtainable?").define("Obtain Blessed", true); // Get by right clicking Unstable Ingot on Grass
+        enable_cursed_earth = SERVER_BUILDER.comment("Should Marine Earth be Obtainable?").define("Obtain Marine", true); // Get by right clicking HotS on Grass
+        enable_blessed_earth = SERVER_BUILDER.comment("Should Blursed Earth be Obtainable?").define("Obtain Blursed", true); // Get by right clicking Nether Star on Grass
         max_kikoku_level = SERVER_BUILDER.comment("Max Level of Kikoku Enchant Adding?").defineInRange("Kikoku Max", 100, 1, 32767);
         unstable_ingot_type = SERVER_BUILDER.comment("What should the Unstable Ingot do when the time limit is reached?\n0: Slowness while holding\n1: After 10 seconds, slowly ramps up the damage\n2: Explodes after 10 seconds").defineInRange("Reaction Type", 1, 0, 2);
     }

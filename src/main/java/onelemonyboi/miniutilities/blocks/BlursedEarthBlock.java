@@ -6,13 +6,8 @@ import net.minecraft.block.GrassBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.MobSpawnInfo;
@@ -25,8 +20,8 @@ import java.util.Random;
 
 // CREDIT FOR CODE BASE: TFARCENIM
 
-public class BlessedEarthBlock extends GrassBlock {
-    public BlessedEarthBlock(Properties properties) {
+public class BlursedEarthBlock extends GrassBlock {
+    public BlursedEarthBlock(Properties properties) {
         super(properties);
     }
 
@@ -61,7 +56,7 @@ public class BlessedEarthBlock extends GrassBlock {
                     BlockState blockstate = this.getDefaultState();
                     for (int i = 0; i < 4; ++i) {
                         BlockPos pos1 = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
-                        if (world.getBlockState(pos1).getBlock().isIn(MiniUtilities.blessedspreadable) && world.getBlockState(pos1.up()).isAir(world, pos1.up())) {
+                        if (world.getBlockState(pos1).getBlock().isIn(MiniUtilities.blursedspreadable) && world.getBlockState(pos1.up()).isAir(world, pos1.up())) {
                             world.setBlockState(pos1, blockstate.with(SNOWY, world.getBlockState(pos1.up()).getBlock() == Blocks.SNOW));
                         }
                     }
@@ -107,6 +102,10 @@ public class BlessedEarthBlock extends GrassBlock {
         //required to account for structure based mobs such as wither skeletons
         ServerChunkProvider s = world.getChunkProvider();
         List<MobSpawnInfo.Spawners> spawnOptions = s.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.CREATURE, pos);
+        spawnOptions.addAll(s.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.WATER_CREATURE, pos));
+        spawnOptions.addAll(s.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.WATER_AMBIENT, pos));
+        spawnOptions.addAll(s.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.MONSTER, pos));
+        spawnOptions.addAll(s.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.AMBIENT, pos));
         //required to account for structure based mobs such as wither skeletons
         //there is nothing to spawn
         if (spawnOptions.size() == 0) {

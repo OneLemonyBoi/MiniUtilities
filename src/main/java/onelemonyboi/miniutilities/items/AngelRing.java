@@ -1,17 +1,14 @@
 package onelemonyboi.miniutilities.items;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.common.Mod;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.init.ItemList;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -76,8 +73,12 @@ public class AngelRing extends Item {
 
             @Override
             public boolean canEquip(String identifier, LivingEntity entityLivingBase) {
-                return !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.AngelRing.get(), entityLivingBase)
-                        .isPresent();
+                return !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.BaseAngelRing.get(), entityLivingBase).isPresent()
+                        && !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.BatAngelRing.get(), entityLivingBase).isPresent()
+                        && !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.GoldAngelRing.get(), entityLivingBase).isPresent()
+                        && !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.PeacockAngelRing.get(), entityLivingBase).isPresent()
+                        && !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.EnderDragonAngelRing.get(), entityLivingBase).isPresent()
+                        && !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.FeatherAngelRing.get(), entityLivingBase).isPresent();
             }
         };
 

@@ -38,6 +38,8 @@ public class MiniUtilities {
     public static final String MOD_ID = "miniutilities";
     public static final ITag<Block> cursedspreadable = BlockTags.makeWrapperTag(new ResourceLocation(MOD_ID, "cursedspreadable").toString());
     public static final ITag<Block> blessedspreadable = BlockTags.makeWrapperTag(new ResourceLocation(MOD_ID, "blessedspreadable").toString());
+    public static final ITag<Block> marinespreadable = BlockTags.makeWrapperTag(new ResourceLocation(MOD_ID, "blessedspreadable").toString());
+    public static final ITag<Block> blursedspreadable = BlockTags.makeWrapperTag(new ResourceLocation(MOD_ID, "blessedspreadable").toString());
     public static final ITag<EntityType<?>> blacklisted_entities = EntityTypeTags.getTagById(new ResourceLocation(MOD_ID, "blacklisted").toString());
     public static final Logger LOGGER = LogManager.getLogger();
     public static IProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
@@ -52,6 +54,8 @@ public class MiniUtilities {
         EVENT_BUS.register(this);
         EVENT_BUS.addListener(EarthBlocks::convertCursed);
         EVENT_BUS.addListener(EarthBlocks::convertBlessed);
+        EVENT_BUS.addListener(EarthBlocks::convertMarine);
+        EVENT_BUS.addListener(EarthBlocks::convertBlursed);
         EVENT_BUS.addListener(UnstableShears::instantShear);
         EVENT_BUS.addListener(UnstableHoe::hoeTransformation);
         EVENT_BUS.addListener(WorldGen::generateOres);
