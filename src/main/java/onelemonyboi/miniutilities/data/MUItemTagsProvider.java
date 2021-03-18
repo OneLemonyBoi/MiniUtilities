@@ -22,6 +22,6 @@ public class MUItemTagsProvider extends ItemTagsProvider {
 
         getOrCreateBuilder(ModTags.Items.DUSTS_ENDER).add(ItemList.EnderDust.get());
         getOrCreateBuilder(Tags.Items.DUSTS).addTag(ModTags.Items.DUSTS_ENDER);
-        getOrCreateBuilder(Tags.Items.RODS_BLAZE).add(ItemList.Cinderpearl.get());
+        getOrCreateBuilder(Tags.Items.RODS_BLAZE).add(ItemList.FlameLily.get());
     }
 }

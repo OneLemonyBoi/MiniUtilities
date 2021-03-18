@@ -24,7 +24,7 @@ public class ItemList {
             new ItemSeeds(BlockList.EnderLily.get()));
     public static final RegistryObject<Item> FlameLilySeeds = ModRegistry.ITEMS.register("flame_lily_seeds", () ->
             new ItemSeeds(BlockList.FlameLily.get()));
-    public static final RegistryObject<Item> Cinderpearl = ModRegistry.ITEMS.register("cinderpearl", () ->
+    public static final RegistryObject<Item> FlameLily = ModRegistry.ITEMS.register("flame_lily", () ->
             new Item(new Item.Properties().group(CreativeTab.getInstance())));
     public static final RegistryObject<Item> BaseAngelRing = ModRegistry.ITEMS.register("angel_ring", AngelRing::new);
     public static final RegistryObject<Item> GoldAngelRing = ModRegistry.ITEMS.register("gold_angel_ring", AngelRing::new);

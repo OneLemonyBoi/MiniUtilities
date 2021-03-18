@@ -58,13 +58,30 @@ public class MULootTableProvider extends LootTableProvider {
 
             registerDropSelfLootTable(BlockList.CursedEarth.get());
             registerDropSelfLootTable(BlockList.BlessedEarth.get());
+            registerDropSelfLootTable(BlockList.BlursedEarth.get());
             registerDropSelfLootTable(BlockList.EnderPearlBlock.get());
             registerLootTable(BlockList.AngelBlock.get(), blockNoDrop());
+            registerDropSelfLootTable(BlockList.WhiteLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.LightGrayLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.GrayLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.BlackLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.RedLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.OrangeLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.YellowLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.LimeLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.GreenLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.LightBlueLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.CyanLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.BlueLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.PurpleLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.MagentaLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.PinkLapisCaelestis.get());
+            registerDropSelfLootTable(BlockList.BrownLapisCaelestis.get());
 
             ILootCondition.IBuilder ilootcondition = BlockStateProperty.builder(BlockList.EnderLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EnderLily.AGE, 7));
             registerLootTable(BlockList.EnderLily.get(), withExplosionDecay(BlockList.EnderLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(Items.ENDER_PEARL))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
             ILootCondition.IBuilder ilootcondition1 = BlockStateProperty.builder(BlockList.FlameLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(FlameLily.AGE, 7));
-            registerLootTable(BlockList.FlameLily.get(), withExplosionDecay(BlockList.FlameLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.Cinderpearl.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
+            registerLootTable(BlockList.FlameLily.get(), withExplosionDecay(BlockList.FlameLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.FlameLily.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
         }
 
         @Override

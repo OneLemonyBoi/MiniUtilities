@@ -15,13 +15,13 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "miniutilities:cinderpearl"
+          "name": "miniutilities:flame_lily"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "miniutilities:flame_lily",
+          "block": "miniutilities:flame_lily_block",
           "properties": {
             "age": "7"
           }
@@ -45,7 +45,7 @@
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "miniutilities:flame_lily",
+          "block": "miniutilities:flame_lily_block",
           "properties": {
             "age": "7"
           }

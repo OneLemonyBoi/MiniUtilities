@@ -73,6 +73,23 @@ public class MiniUtilities {
         RenderTypeLookup.setRenderLayer(BlockList.CursedEarth.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.BlessedEarth.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.EnderLily.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.FlameLily.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.WhiteLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.LightGrayLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.GrayLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.BlackLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.RedLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.OrangeLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.YellowLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.LimeLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.GreenLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.LightBlueLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.CyanLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.BlueLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.PurpleLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.MagentaLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.PinkLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.BrownLapisCaelestis.get(), RenderType.getCutout());
     }
 
     private void enqueueIMC(InterModEnqueueEvent event) {

@@ -17,6 +17,22 @@ public class MUItemModelProvider extends ItemModelProvider {
         withExistingParent("ender_ore", modLoc("block/ender_ore"));
         withExistingParent("ender_pearl_block", modLoc("block/ender_pearl_block"));
         withExistingParent("angel_block", modLoc("block/angel_block"));
+        withExistingParent("white_lapis_caelestis", modLoc("block/white_lapis_caelestis"));
+        withExistingParent("light_gray_lapis_caelestis", modLoc("block/light_gray_lapis_caelestis"));
+        withExistingParent("gray_lapis_caelestis", modLoc("block/gray_lapis_caelestis"));
+        withExistingParent("black_lapis_caelestis", modLoc("block/black_lapis_caelestis"));
+        withExistingParent("red_lapis_caelestis", modLoc("block/red_lapis_caelestis"));
+        withExistingParent("orange_lapis_caelestis", modLoc("block/orange_lapis_caelestis"));
+        withExistingParent("yellow_lapis_caelestis", modLoc("block/yellow_lapis_caelestis"));
+        withExistingParent("lime_lapis_caelestis", modLoc("block/lime_lapis_caelestis"));
+        withExistingParent("green_lapis_caelestis", modLoc("block/green_lapis_caelestis"));
+        withExistingParent("light_blue_lapis_caelestis", modLoc("block/light_blue_lapis_caelestis"));
+        withExistingParent("cyan_lapis_caelestis", modLoc("block/cyan_lapis_caelestis"));
+        withExistingParent("blue_lapis_caelestis", modLoc("block/blue_lapis_caelestis"));
+        withExistingParent("purple_lapis_caelestis", modLoc("block/purple_lapis_caelestis"));
+        withExistingParent("magenta_lapis_caelestis", modLoc("block/magenta_lapis_caelestis"));
+        withExistingParent("pink_lapis_caelestis", modLoc("block/pink_lapis_caelestis"));
+        withExistingParent("brown_lapis_caelestis", modLoc("block/brown_lapis_caelestis"));
 
         ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 
@@ -29,7 +45,13 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "precision_shears");
         builder(itemGenerated, "erosion_shovel");
         builder(itemGenerated, "etheric_sword");
-
+        /*builder(itemGenerated, "base_angel_ring");
+        builder(itemGenerated, "feather_angel_ring");
+        builder(itemGenerated, "ender_dragon_angel_ring");
+        builder(itemGenerated, "gold_angel_ring");
+        builder(itemGenerated, "bat_angel_ring");
+        builder(itemGenerated, "peacock_angel_ring");
+*/
 
     }
 
