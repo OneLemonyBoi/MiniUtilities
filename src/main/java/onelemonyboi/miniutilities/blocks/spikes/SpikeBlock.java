@@ -27,7 +27,7 @@ public class SpikeBlock extends Block {
     private Boolean expDropTrue;
     private Boolean dontKill;
 
-    private static GameProfile PROFILE = new GameProfile(UUID.fromString("5c32fc23-8c26-47fe-91ed-9c204b22f430"), "[FakeOneLemonyBoi]");
+    private static GameProfile PROFILE = new GameProfile(UUID.fromString("5c32fc23-8c26-47fe-91ed-9c204b22f430"), "[Spikes]");
 
     public SpikeBlock(Properties properties, int damage, Boolean playerDamage, Boolean expDropTrue, Boolean dontKill) {
         super(properties);
