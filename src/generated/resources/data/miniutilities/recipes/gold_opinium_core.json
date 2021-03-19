@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XEX",
+    "E E",
+    "XEX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/gold"
+    },
+    "E": {
+      "item": "miniutilities:iron_opinium_core"
+    }
+  },
+  "result": {
+    "item": "miniutilities:gold_opinium_core"
+  }
+}

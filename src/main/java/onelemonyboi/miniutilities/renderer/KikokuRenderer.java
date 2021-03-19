@@ -36,15 +36,14 @@ public class KikokuRenderer extends LayerRenderer<AbstractClientPlayerEntity, Pl
         }
         for (ItemStack itemStack : inv.offHandInventory) {
             Item item = itemStack.getItem();
-            if (item == ItemList.Kikoku.get()) {inInvAndNotUsing = true;}
+            if (item == ItemList.Kikoku.get()) {inInvAndNotUsing = false;}
         }
         if (inv.getCurrentItem().getItem() == ItemList.Kikoku.get()) {inInvAndNotUsing = false;}
 
         if (player.hasPlayerInfo() && !player.isInvisible() && player.isWearing(PlayerModelPart.CAPE) && inInvAndNotUsing) {
             matrixStack.push();
             getEntityModel().bipedBody.translateRotate(matrixStack);
-            matrixStack.translate(0, 0.25, 0.25);
-            // TODO: Fix Sword Being Upside down
+            matrixStack.translate(0, 0.25, 0.2);
             matrixStack.scale(1f, -1f, -0.25f);
             matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
             Minecraft.getInstance().getItemRenderer().renderItem(player, ItemList.Kikoku.get().getDefaultInstance(), ItemCameraTransforms.TransformType.NONE, false, matrixStack, buffer, player.world, 0xF000F0, OverlayTexture.NO_OVERLAY);

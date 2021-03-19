@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XEX",
+    "E E",
+    "XEX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:gems/emerald"
+    },
+    "E": {
+      "item": "miniutilities:netherite_opinium_core"
+    }
+  },
+  "result": {
+    "item": "miniutilities:emerald_opinium_core"
+  }
+}

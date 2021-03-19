@@ -45,14 +45,29 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "precision_shears");
         builder(itemGenerated, "erosion_shovel");
         builder(itemGenerated, "etheric_sword");
+
+        builder(itemGenerated, "iron_opinium_core");
+        builder(itemGenerated, "gold_opinium_core");
+        builder(itemGenerated, "diamond_opinium_core");
+        builder(itemGenerated, "netherite_opinium_core");
+        builder(itemGenerated, "emerald_opinium_core");
+        builder(itemGenerated, "chorus_opinium_core");
+        builder(itemGenerated, "experience_opinium_core");
+        builder(itemGenerated, "nether_star_opinium_core");
+        builder(itemGenerated, "the_final_opinium_core");
+
         /*builder(itemGenerated, "base_angel_ring");
         builder(itemGenerated, "feather_angel_ring");
         builder(itemGenerated, "ender_dragon_angel_ring");
         builder(itemGenerated, "gold_angel_ring");
         builder(itemGenerated, "bat_angel_ring");
         builder(itemGenerated, "peacock_angel_ring");
+        builder(itemGenerated, "feather_wing");
+        builder(itemGenerated, "ender_dragon_wing");
+        builder(itemGenerated, "gold_wing");
+        builder(itemGenerated, "bat_wing");
+        builder(itemGenerated, "peacock_wing");
 */
-
     }
 
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {

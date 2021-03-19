@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XEX",
+    "E E",
+    "XEX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:experience_bottle"
+    },
+    "E": {
+      "item": "miniutilities:chorus_opinium_core"
+    }
+  },
+  "result": {
+    "item": "miniutilities:experience_opinium_core"
+  }
+}

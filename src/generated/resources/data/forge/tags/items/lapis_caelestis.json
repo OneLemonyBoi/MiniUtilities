@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:lapis_caelestis/white",
+    "#forge:lapis_caelestis/light_gray",
+    "#forge:lapis_caelestis/gray",
+    "#forge:lapis_caelestis/black",
+    "#forge:lapis_caelestis/red",
+    "#forge:lapis_caelestis/orange",
+    "#forge:lapis_caelestis/yellow",
+    "#forge:lapis_caelestis/lime",
+    "#forge:lapis_caelestis/green",
+    "#forge:lapis_caelestis/light_blue",
+    "#forge:lapis_caelestis/cyan",
+    "#forge:lapis_caelestis/blue",
+    "#forge:lapis_caelestis/purple",
+    "#forge:lapis_caelestis/magenta",
+    "#forge:lapis_caelestis/pink",
+    "#forge:lapis_caelestis/brown"
+  ]
+}
