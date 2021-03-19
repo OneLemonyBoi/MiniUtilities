@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.Tanks;
+package onelemonyboi.miniutilities.tileentities;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 
 public class DrumTile extends TileEntity {
     public static final TileEntityType<DrumTile> TYPE = TileEntityType.Builder
-            .create(DrumTile::new, BlockList.StoneDrum.get(), BlockList.IronDrum.get(), BlockList.ReinforcedLargeDrum.get(), BlockList.UnstableDrum.get(), BlockList.InfusedDrum.get())
+            .create(DrumTile::new, BlockList.StoneDrum.get(), BlockList.IronDrum.get(), BlockList.ReinforcedLargeDrum.get(), BlockList.NetheriteReinforcedDrum.get(), BlockList.UnstableDrum.get())
             .build(null);
 
     private FluidTank drum;

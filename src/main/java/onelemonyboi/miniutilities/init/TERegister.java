@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import onelemonyboi.miniutilities.Tanks.DrumTile;
+import onelemonyboi.miniutilities.tileentities.DrumTile;
 
 import static onelemonyboi.miniutilities.MiniUtilities.MOD_ID;
 

@@ -10,8 +10,9 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
-import onelemonyboi.miniutilities.Tanks.DrumBlock;
+import onelemonyboi.miniutilities.blocks.DrumBlock;
 import onelemonyboi.miniutilities.blocks.*;
+import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
 
 import java.util.function.Supplier;
 
@@ -47,8 +48,14 @@ public class BlockList {
     public static final RegistryObject<Block> IronDrum = register("iron_drum", () -> new DrumBlock(256000, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(4.0F)));
     public static final RegistryObject<Block> ReinforcedLargeDrum = register("reinforced_large_drum", () -> new DrumBlock(4096000, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(6.0F)));
     // So unstable it creates a new dimension :)
-    public static final RegistryObject<Block> UnstableDrum = register("unstable_drum", () -> new DrumBlock(65536000, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(8.0F)));
-    public static final RegistryObject<Block> InfusedDrum = register("infused_drum", () -> new DrumBlock(2147483647, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(12.0F)));
+    public static final RegistryObject<Block> NetheriteReinforcedDrum = register("netherite_reinforced_drum", () -> new DrumBlock(65536000, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(8.0F)));
+    public static final RegistryObject<Block> UnstableDrum = register("unstable_drum", () -> new DrumBlock(2147483647, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(12.0F)));
+
+    public static final RegistryObject<Block> WoodenSpikes = register("wooden_spikes", () -> new SpikeBlock(Block.Properties.create(Material.WOOD).harvestTool(ToolType.AXE).hardnessAndResistance(2.0F), 1, false, false, true));
+    public static final RegistryObject<Block> IronSpikes = register("iron_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(4.0F), 4, false, false, false));
+    public static final RegistryObject<Block> GoldSpikes = register("gold_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(6.0F), 4, false, true, false));
+    public static final RegistryObject<Block> DiamondSpikes = register("diamond_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(8.0F), 8, true, false, false));
+
 
 
     public static void register() {}
