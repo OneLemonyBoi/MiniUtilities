@@ -52,7 +52,7 @@ public class BlockList {
     public static final RegistryObject<Block> UnstableDrum = register("unstable_drum", () -> new DrumBlock(2147483647, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(12.0F)));
 
     public static final RegistryObject<Block> WoodenSpikes = register("wooden_spikes", () -> new SpikeBlock(Block.Properties.create(Material.WOOD).harvestTool(ToolType.AXE).hardnessAndResistance(2.0F), 1, false, false, true));
-    public static final RegistryObject<Block> IronSpikes = register("iron_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(4.0F), 4, false, false, false));
+    public static final RegistryObject<Block> IronSpikes = register("iron_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(4.0F), 2, false, false, false));
     public static final RegistryObject<Block> GoldSpikes = register("gold_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(6.0F), 4, false, true, false));
     public static final RegistryObject<Block> DiamondSpikes = register("diamond_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(8.0F), 8, true, false, false));
 

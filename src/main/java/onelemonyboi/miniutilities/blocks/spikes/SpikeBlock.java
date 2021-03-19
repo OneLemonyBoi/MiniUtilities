@@ -13,7 +13,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import onelemonyboi.miniutilities.MiniUtilities;
 
 import java.util.UUID;
 
@@ -38,7 +42,10 @@ public class SpikeBlock extends Block {
         if (worldIn.isRemote || !(entityIn instanceof LivingEntity)) return;
         FakePlayer fakePlayer = new SpikeFakePlayer(FakePlayerFactory.get((ServerWorld) worldIn, PROFILE));
         if (this.dontKill && ((LivingEntity) entityIn).getHealth() <= this.damage) {return;}
-        if (this.playerDamage) {entityIn.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer), this.damage);}
+        if (this.playerDamage) {
+            entityIn.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer), this.damage);
+            entityIn.setVelocity(0, 0, 0);
+        }
         else {entityIn.attackEntityFrom(DamageSource.CACTUS, this.damage);}
         if (this.expDropTrue) {
             ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, (LivingEntity) entityIn, 100, "field_70718_bc");}
