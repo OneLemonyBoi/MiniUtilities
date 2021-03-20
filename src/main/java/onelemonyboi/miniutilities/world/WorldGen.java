@@ -21,9 +21,9 @@ import java.util.Random;
 
 public class WorldGen {
     public static void generateOres(final BiomeLoadingEvent event) {
-        if (!(event.getCategory().equals(Biome.Category.NETHER) || event.getCategory().equals(Biome.Category.THEEND))) {
+        if (!(event.getCategory().equals(Biome.Category.NETHER) || event.getCategory().equals(Biome.Category.THEEND)) && Config.enable_ender_ore.get()) {
             generateOre(event.getGeneration(), OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-                    BlockList.EnderOre.get().getDefaultState(), 8, 0, 55, 12);
+                    BlockList.EnderOre.get().getDefaultState(), Config.vein_size.get(), Config.min_height.get(), Config.max_height.get(), Config.amount.get());
         }
     }
 
@@ -36,11 +36,11 @@ public class WorldGen {
     }
 
     public static void generatePlants(final BiomeLoadingEvent event) {
-        if (event.getCategory().equals(Biome.Category.THEEND)) {
+        if (event.getCategory().equals(Biome.Category.THEEND) && Config.enable_ender_lily.get()) {
             generatePlant(event.getGeneration(), "ender_lily_patch_feature", BlockList.EnderLily.get().getDefaultState().with(EnderLily.AGE, 7), 2, 1);
         }
 
-        if (event.getClimate().temperature >= 2) {
+        if (event.getClimate().temperature >= 2 && Config.enable_flame_lily.get()) {
             int randomInt = new Random().nextInt(20);
             if (randomInt == 1) {
                 generatePlant(event.getGeneration(), "flame_lily_patch_feature", BlockList.FlameLily.get().getDefaultState().with(FlameLily.AGE, 7), 1, 1);

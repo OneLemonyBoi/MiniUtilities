@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ItemList;
@@ -26,7 +27,7 @@ public class EarthBlocks {
         PlayerEntity p = e.getPlayer();
         World w = p.world;
         BlockPos pos = e.getPos();
-        if (p.isSneaking() && !w.isRemote && e.getItemStack().getItem() == ItemList.UnstableIngot.get() && w.getBlockState(pos).getBlock() == Blocks.DIRT) {
+        if (p.isSneaking() && !w.isRemote && Tags.Items.STORAGE_BLOCKS_IRON.contains(e.getItemStack().getItem()) && w.getBlockState(pos).getBlock() == Blocks.DIRT) {
             w.setBlockState(pos, BlockList.BlessedEarth.get().getDefaultState());
         }
     }
@@ -36,7 +37,7 @@ public class EarthBlocks {
         PlayerEntity p = e.getPlayer();
         World w = p.world;
         BlockPos pos = e.getPos();
-        if (p.isSneaking() && !w.isRemote && e.getItemStack().getItem() == Items.NETHER_STAR && w.getBlockState(pos).getBlock() == Blocks.DIRT) {
+        if (p.isSneaking() && !w.isRemote && e.getItemStack().getItem() == ItemList.UnstableIngot.get() && w.getBlockState(pos).getBlock() == Blocks.DIRT) {
             w.setBlockState(pos, BlockList.BlursedEarth.get().getDefaultState());
         }
     }
