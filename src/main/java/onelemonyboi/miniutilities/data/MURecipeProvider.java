@@ -6,6 +6,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.StonecuttingRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.BlockList;
@@ -506,6 +507,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("YZY")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
+        SmithingRecipeBuilder.smithingRecipe(Ingredient.fromItems(BlockList.DiamondSpikes.get()), Ingredient.fromItems(Items.NETHERITE_INGOT), BlockList.NetheriteSpikes.get().asItem()).addCriterion("has_cobblestone", hasItem(Items.COBBLESTONE)).build(consumer, Registry.ITEM.getKey(BlockList.NetheriteSpikes.get().asItem()).getPath() + "_smithing");
 
 
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlockList.EnderOre.get()), ItemList.EnderDust.get(), 0.7f, 200)

@@ -94,6 +94,7 @@ public class MiniUtilities {
         RenderTypeLookup.setRenderLayer(BlockList.IronSpikes.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.GoldSpikes.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.DiamondSpikes.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.NetheriteSpikes.get(), RenderType.getCutout());
     }
 
     private void enqueueIMC(InterModEnqueueEvent event) {

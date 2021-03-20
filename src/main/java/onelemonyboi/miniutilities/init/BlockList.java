@@ -55,6 +55,7 @@ public class BlockList {
     public static final RegistryObject<Block> IronSpikes = register("iron_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(4.0F), 2, false, false, false));
     public static final RegistryObject<Block> GoldSpikes = register("gold_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(6.0F), 4, false, true, false));
     public static final RegistryObject<Block> DiamondSpikes = register("diamond_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(8.0F), 8, true, false, false));
+    public static final RegistryObject<Block> NetheriteSpikes = register("netherite_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(16.0F), 16, true, true, false));
 
 
 
