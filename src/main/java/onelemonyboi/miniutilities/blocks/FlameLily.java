@@ -68,7 +68,7 @@ public class FlameLily extends CropsBlock {
         if (state.get(AGE) != 7) {
             return ActionResultType.PASS;
         } else if (state.get(AGE) == 7) {
-            spawnAsEntity(worldIn, pos, new ItemStack(Items.ENDER_PEARL, 1));
+            spawnAsEntity(worldIn, pos, new ItemStack(ItemList.FlameLily.get(), 1));
             worldIn.playSound((PlayerEntity)null, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
             worldIn.setBlockState(pos, state.with(AGE, 4), 2);
             return ActionResultType.func_233537_a_(worldIn.isRemote);
