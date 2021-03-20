@@ -17,7 +17,7 @@ public class EarthBlocks {
         World world = playerEntity.world;
         BlockPos pos = event.getPos();
         if (playerEntity.isSneaking() && !world.isRemote && event.getItemStack().getItem() == Items.WITHER_ROSE && world.getBlockState(pos).getBlock() == Blocks.DIRT) {
-            world.setBlockState(pos, BlockList.BlessedEarth.get().getDefaultState());
+            world.setBlockState(pos, BlockList.CursedEarth.get().getDefaultState());
         }
     }
 

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "miniutilities:block/unstable_drum"
+    }
+  }
+}

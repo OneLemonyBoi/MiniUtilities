@@ -60,6 +60,7 @@ public class MULootTableProvider extends LootTableProvider {
             registerDropSelfLootTable(BlockList.BlessedEarth.get());
             registerDropSelfLootTable(BlockList.BlursedEarth.get());
             registerDropSelfLootTable(BlockList.EnderPearlBlock.get());
+            registerDropSelfLootTable(BlockList.UnstableBlock.get());
             registerLootTable(BlockList.AngelBlock.get(), blockNoDrop());
             registerDropSelfLootTable(BlockList.WhiteLapisCaelestis.get());
             registerDropSelfLootTable(BlockList.LightGrayLapisCaelestis.get());
@@ -77,6 +78,15 @@ public class MULootTableProvider extends LootTableProvider {
             registerDropSelfLootTable(BlockList.MagentaLapisCaelestis.get());
             registerDropSelfLootTable(BlockList.PinkLapisCaelestis.get());
             registerDropSelfLootTable(BlockList.BrownLapisCaelestis.get());
+            registerLootTable(BlockList.StoneDrum.get(), blockNoDrop());
+            registerLootTable(BlockList.IronDrum.get(), blockNoDrop());
+            registerLootTable(BlockList.ReinforcedLargeDrum.get(), blockNoDrop());
+            registerLootTable(BlockList.NetheriteReinforcedDrum.get(), blockNoDrop());
+            registerLootTable(BlockList.UnstableDrum.get(), blockNoDrop());
+            registerDropSelfLootTable(BlockList.WoodenSpikes.get());
+            registerDropSelfLootTable(BlockList.IronSpikes.get());
+            registerDropSelfLootTable(BlockList.GoldSpikes.get());
+            registerDropSelfLootTable(BlockList.DiamondSpikes.get());
 
             ILootCondition.IBuilder ilootcondition = BlockStateProperty.builder(BlockList.EnderLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EnderLily.AGE, 7));
             registerLootTable(BlockList.EnderLily.get(), withExplosionDecay(BlockList.EnderLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(Items.ENDER_PEARL))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));

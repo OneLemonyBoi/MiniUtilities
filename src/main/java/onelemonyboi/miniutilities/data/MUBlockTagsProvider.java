@@ -18,6 +18,8 @@ public class MUBlockTagsProvider extends BlockTagsProvider {
         getOrCreateBuilder(Tags.Blocks.ORES).addTag(ModTags.Blocks.ORES_ENDER);
         getOrCreateBuilder(ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL).add(BlockList.EnderPearlBlock.get());
         getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).addTag(ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL);
+        getOrCreateBuilder(ModTags.Blocks.STORAGE_BLOCKS_UNSTABLE).add(BlockList.UnstableBlock.get());
+        getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).addTag(ModTags.Blocks.STORAGE_BLOCKS_UNSTABLE);
 
         // LAPIS CAELESTIS
         getOrCreateBuilder(ModTags.Blocks.WHITE_LAPIS_CAELESTIS).add(BlockList.WhiteLapisCaelestis.get());

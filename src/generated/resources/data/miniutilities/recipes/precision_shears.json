@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XY ",
+    "YX "
+  ],
+  "key": {
+    "X": {
+      "item": "miniutilities:angel_block"
+    },
+    "Y": {
+      "item": "miniutilities:unstable_ingot"
+    }
+  },
+  "result": {
+    "item": "miniutilities:precision_shears"
+  }
+}

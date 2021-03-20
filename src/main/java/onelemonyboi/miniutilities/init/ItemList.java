@@ -66,15 +66,15 @@ public class ItemList {
 
     // Unstable Armour + Infused Armor
 
-    public static final RegistryObject<Item> UnstableHelmet = ModRegistry.ITEMS.register("unstable_helmet", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlotType.HEAD, (new Item.Properties()).group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> UnstableChestplate = ModRegistry.ITEMS.register("unstable_chestplate", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlotType.CHEST, (new Item.Properties()).group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> UnstableLeggings = ModRegistry.ITEMS.register("unstable_leggings", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlotType.LEGS, (new Item.Properties()).group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> UnstableBoots = ModRegistry.ITEMS.register("unstable_boots", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlotType.FEET, (new Item.Properties()).group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> UnstableHelmet = ModRegistry.ITEMS.register("unstable_helmet", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlotType.HEAD, (new Item.Properties()).group(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> UnstableChestplate = ModRegistry.ITEMS.register("unstable_chestplate", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlotType.CHEST, (new Item.Properties()).group(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> UnstableLeggings = ModRegistry.ITEMS.register("unstable_leggings", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlotType.LEGS, (new Item.Properties()).group(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> UnstableBoots = ModRegistry.ITEMS.register("unstable_boots", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlotType.FEET, (new Item.Properties()).group(CreativeTab.getInstance())));
 
-    public static final RegistryObject<Item> InfusedHelmet = ModRegistry.ITEMS.register("infused_helmet", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlotType.HEAD, (new Item.Properties()).group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> InfusedChestplate = ModRegistry.ITEMS.register("infused_chestplate", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlotType.CHEST, (new Item.Properties()).group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> InfusedLeggings = ModRegistry.ITEMS.register("infused_leggings", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlotType.LEGS, (new Item.Properties()).group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> InfusedBoots = ModRegistry.ITEMS.register("infused_boots", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlotType.FEET, (new Item.Properties()).group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> InfusedHelmet = ModRegistry.ITEMS.register("infused_helmet", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlotType.HEAD, (new Item.Properties()).group(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> InfusedChestplate = ModRegistry.ITEMS.register("infused_chestplate", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlotType.CHEST, (new Item.Properties()).group(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> InfusedLeggings = ModRegistry.ITEMS.register("infused_leggings", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlotType.LEGS, (new Item.Properties()).group(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> InfusedBoots = ModRegistry.ITEMS.register("infused_boots", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlotType.FEET, (new Item.Properties()).group(CreativeTab.getInstance())));
 
     // Opinium Cores
 

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=down": { "model": "miniutilities:block/wooden_spikes", "x": 180 },
+    "facing=up": { "model": "miniutilities:block/wooden_spikes" },
+    "facing=north": { "model": "miniutilities:block/wooden_spikes", "x": 90 },
+    "facing=south": { "model": "miniutilities:block/wooden_spikes", "x": 90, "y": 180 },
+    "facing=west": { "model": "miniutilities:block/wooden_spikes", "x": 90, "y": 270 },
+    "facing=east": { "model": "miniutilities:block/wooden_spikes", "x": 90, "y": 90 }
+  }
+}

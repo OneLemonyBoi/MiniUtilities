@@ -18,6 +18,7 @@ public class MUItemTagsProvider extends ItemTagsProvider {
         copy(ModTags.Blocks.ORES_ENDER, ModTags.Items.ORES_ENDER);
         copy(Tags.Blocks.ORES, Tags.Items.ORES);
         copy(ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL, ModTags.Items.STORAGE_BLOCKS_ENDER_PEARL);
+        copy(ModTags.Blocks.STORAGE_BLOCKS_UNSTABLE, ModTags.Items.STORAGE_BLOCKS_UNSTABLE);
         copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS);
 
         copy(ModTags.Blocks.LAPIS_CAELESTIS, ModTags.Items.LAPIS_CAELESTIS);

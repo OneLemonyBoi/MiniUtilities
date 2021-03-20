@@ -183,27 +183,11 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine(" X ")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ItemList.UnstableHoe.get())
-                .key('X', Items.OBSIDIAN)
-                .key('Y', ItemList.UnstableIngot.get())
-                .patternLine(" YY")
-                .patternLine(" X ")
-                .patternLine(" X ")
-                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
-                .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ItemList.UnstableAxe.get())
                 .key('X', Items.OBSIDIAN)
                 .key('Y', ItemList.UnstableIngot.get())
                 .patternLine("YY ")
                 .patternLine("YX ")
-                .patternLine(" X ")
-                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
-                .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ItemList.UnstableAxe.get())
-                .key('X', Items.OBSIDIAN)
-                .key('Y', ItemList.UnstableIngot.get())
-                .patternLine(" YY")
-                .patternLine(" XY")
                 .patternLine(" X ")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
@@ -225,7 +209,7 @@ public class MURecipeProvider extends RecipeProvider {
 
 
         // EARTHS
-        ShapedRecipeBuilder.shapedRecipe(BlockList.CursedEarth.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.CursedEarth.get(), 8)
                 .key('X', Items.DIRT)
                 .key('Y', Items.WITHER_ROSE)
                 .patternLine("XXX")
@@ -233,7 +217,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.BlessedEarth.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.BlessedEarth.get(), 8)
                 .key('X', Items.DIRT)
                 .key('Y', Tags.Items.STORAGE_BLOCKS_IRON)
                 .patternLine("XXX")
@@ -241,7 +225,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.BlursedEarth.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.BlursedEarth.get(), 8)
                 .key('X', Items.DIRT)
                 .key('Y', Tags.Items.NETHER_STARS)
                 .patternLine("XXX")
@@ -251,16 +235,13 @@ public class MURecipeProvider extends RecipeProvider {
                 .build(consumer);
 
         // LAPIS CAELESTIS
-        ShapedRecipeBuilder.shapedRecipe(BlockList.GrayLapisCaelestis.get())
-                .key('X', Tags.Items.STONE)
-                .key('Y', ItemList.UnstableIngot.get())
-                .patternLine("XXX")
-                .patternLine("XYX")
-                .patternLine("XXX")
+        ShapelessRecipeBuilder.shapelessRecipe(BlockList.GrayLapisCaelestis.get(), 8)
+                .addIngredient(Items.STONE, 8)
+                .addIngredient(ItemList.UnstableIngot.get())
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(BlockList.WhiteLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.WhiteLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_WHITE)
                 .patternLine("XXX")
@@ -268,7 +249,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.LightGrayLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.LightGrayLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_LIGHT_GRAY)
                 .patternLine("XXX")
@@ -276,15 +257,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.GrayLapisCaelestis.get())
-                .key('X', ModTags.Items.LAPIS_CAELESTIS)
-                .key('Y', Tags.Items.DYES_GRAY)
-                .patternLine("XXX")
-                .patternLine("XYX")
-                .patternLine("XXX")
-                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
-                .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.BlackLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.BlackLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_BLACK)
                 .patternLine("XXX")
@@ -292,7 +265,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.RedLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.RedLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_RED)
                 .patternLine("XXX")
@@ -300,7 +273,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.OrangeLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.OrangeLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_ORANGE)
                 .patternLine("XXX")
@@ -308,7 +281,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.YellowLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.YellowLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_YELLOW)
                 .patternLine("XXX")
@@ -316,7 +289,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.LimeLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.LimeLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_LIME)
                 .patternLine("XXX")
@@ -324,7 +297,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.GreenLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.GreenLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_GREEN)
                 .patternLine("XXX")
@@ -332,7 +305,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.LightBlueLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.LightBlueLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_LIGHT_BLUE)
                 .patternLine("XXX")
@@ -340,7 +313,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.CyanLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.CyanLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_CYAN)
                 .patternLine("XXX")
@@ -348,7 +321,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.BlueLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.BlueLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_BLUE)
                 .patternLine("XXX")
@@ -356,7 +329,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.PurpleLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.PurpleLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_PURPLE)
                 .patternLine("XXX")
@@ -364,7 +337,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.MagentaLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.MagentaLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_MAGENTA)
                 .patternLine("XXX")
@@ -372,7 +345,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.PinkLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.PinkLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_PINK)
                 .patternLine("XXX")
@@ -380,7 +353,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(BlockList.BrownLapisCaelestis.get())
+        ShapedRecipeBuilder.shapedRecipe(BlockList.BrownLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_BROWN)
                 .patternLine("XXX")
@@ -389,6 +362,150 @@ public class MURecipeProvider extends RecipeProvider {
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 
+        // ARMOUR
+        ShapedRecipeBuilder.shapedRecipe(ItemList.UnstableHelmet.get())
+                .key('X', ItemList.UnstableIngot.get())
+                .patternLine("XXX")
+                .patternLine("X X")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.UnstableChestplate.get())
+                .key('X', ItemList.UnstableIngot.get())
+                .patternLine("X X")
+                .patternLine("XXX")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.UnstableLeggings.get())
+                .key('X', ItemList.UnstableIngot.get())
+                .patternLine("XXX")
+                .patternLine("X X")
+                .patternLine("X X")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.UnstableBoots.get())
+                .key('X', ItemList.UnstableIngot.get())
+                .patternLine("X X")
+                .patternLine("X X")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ItemList.InfusedHelmet.get())
+                .key('X', ItemList.UnstableIngot.get())
+                .key('Y', ItemList.EXPOpiniumCore.get())
+                .patternLine("XXX")
+                .patternLine("XYX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.InfusedChestplate.get())
+                .key('X', ItemList.UnstableIngot.get())
+                .key('Y', ItemList.EXPOpiniumCore.get())
+                .patternLine("XYX")
+                .patternLine("XXX")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.InfusedLeggings.get())
+                .key('X', ItemList.UnstableIngot.get())
+                .key('Y', ItemList.EXPOpiniumCore.get())
+                .patternLine("XXX")
+                .patternLine("XYX")
+                .patternLine("X X")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.InfusedBoots.get())
+                .key('X', ItemList.UnstableIngot.get())
+                .key('Y', ItemList.EXPOpiniumCore.get())
+                .patternLine("X X")
+                .patternLine("X X")
+                .patternLine("Y Y")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
+        // DRUMS
+        ShapedRecipeBuilder.shapedRecipe(BlockList.StoneDrum.get())
+                .key('X', Items.SMOOTH_STONE)
+                .key('Y', Items.SMOOTH_STONE_SLAB)
+                .key('Z', Items.BOWL)
+                .patternLine("XYX")
+                .patternLine("XZX")
+                .patternLine("XYX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.IronDrum.get())
+                .key('X', Items.IRON_INGOT)
+                .key('Y', Items.HEAVY_WEIGHTED_PRESSURE_PLATE)
+                .key('Z', Items.CAULDRON)
+                .patternLine("XYX")
+                .patternLine("XZX")
+                .patternLine("XYX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.ReinforcedLargeDrum.get())
+                .key('X', Tags.Items.GEMS_DIAMOND)
+                .key('Y', Items.LIGHT_WEIGHTED_PRESSURE_PLATE)
+                .key('Z', BlockList.IronDrum.get())
+                .patternLine("XYX")
+                .patternLine("XZX")
+                .patternLine("XYX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.NetheriteReinforcedDrum.get())
+                .key('X', Tags.Items.INGOTS_NETHERITE)
+                .key('Y', Items.IRON_BLOCK)
+                .key('Z', BlockList.ReinforcedLargeDrum.get())
+                .patternLine("XYX")
+                .patternLine("XZX")
+                .patternLine("XYX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.UnstableDrum.get())
+                .key('X', ItemList.UnstableIngot.get())
+                .key('Y', Tags.Items.INGOTS_NETHERITE)
+                .key('Z', BlockList.NetheriteReinforcedDrum.get())
+                .patternLine("XYX")
+                .patternLine("XZX")
+                .patternLine("XYX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
+        // Spikes
+        ShapedRecipeBuilder.shapedRecipe(BlockList.WoodenSpikes.get())
+                .key('X', Items.WOODEN_SWORD)
+                .key('Y', Items.OAK_PLANKS)
+                .key('Z', Items.OAK_LOG)
+                .patternLine(" X ")
+                .patternLine("XYX")
+                .patternLine("YZY")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.IronSpikes.get())
+                .key('X', Items.IRON_SWORD)
+                .key('Y', Tags.Items.INGOTS_IRON)
+                .key('Z', Tags.Items.STORAGE_BLOCKS_IRON)
+                .patternLine(" X ")
+                .patternLine("XYX")
+                .patternLine("YZY")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.GoldSpikes.get())
+                .key('X', Items.GOLDEN_SWORD)
+                .key('Y', Tags.Items.INGOTS_GOLD)
+                .key('Z', Tags.Items.STORAGE_BLOCKS_GOLD)
+                .patternLine(" X ")
+                .patternLine("XYX")
+                .patternLine("YZY")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.DiamondSpikes.get())
+                .key('X', Items.DIAMOND_SWORD)
+                .key('Y', Tags.Items.GEMS_DIAMOND)
+                .key('Z', Tags.Items.STORAGE_BLOCKS_DIAMOND)
+                .patternLine(" X ")
+                .patternLine("XYX")
+                .patternLine("YZY")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
 
 
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlockList.EnderOre.get()), ItemList.EnderDust.get(), 0.7f, 200)

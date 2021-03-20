@@ -28,7 +28,7 @@ import java.util.UUID;
 
 public class Kikoku extends SwordItem {
     public static Attribute DIVINE_DAMAGE = new RangedAttribute("attribute.miniutilities.divinedamage", 0.0D, 0.0D, Double.MAX_VALUE);
-    public static Attribute ARMOR_PIERCING_DAMAGE = new RangedAttribute("miniutilities.armorpiercingdamage", 0.0D, 0.0D, Double.MAX_VALUE);
+    public static Attribute ARMOR_PIERCING_DAMAGE = new RangedAttribute("attribute.miniutilities.armorpiercingdamage", 0.0D, 0.0D, Double.MAX_VALUE);
     public static Attribute SOUL_DAMAGE = new RangedAttribute("attribute.miniutilities.souldamage", 0.0D, 0.0D, Double.MAX_VALUE);
     public static UUID SOUL_DAMAGE_MODIFIER = UUID.fromString("d2928c01-5d7d-41c5-bd3a-9ca8f43c8ff8");
 
@@ -136,7 +136,7 @@ public class Kikoku extends SwordItem {
                 }
             }
 
-            event.setCost(cost * 2);
+            event.setCost(20);
 
             ItemStack copy = left.copy();
             EnchantmentHelper.setEnchantments(map3, copy);

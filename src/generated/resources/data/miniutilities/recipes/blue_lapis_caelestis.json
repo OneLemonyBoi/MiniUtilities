@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:lapis_caelestis"
+    },
+    "Y": {
+      "tag": "forge:dyes/blue"
+    }
+  },
+  "result": {
+    "item": "miniutilities:blue_lapis_caelestis"
+  }
+}

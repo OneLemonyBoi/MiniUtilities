@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:dirt"
+    },
+    "Y": {
+      "item": "minecraft:wither_rose"
+    }
+  },
+  "result": {
+    "item": "miniutilities:cursed_earth"
+  }
+}

@@ -1,7 +1,6 @@
 package onelemonyboi.miniutilities.blocks.spikes;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
 

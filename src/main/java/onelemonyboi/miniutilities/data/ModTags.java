@@ -13,6 +13,7 @@ public class ModTags {
     public static final class Blocks {
         public static final ITag.INamedTag<Block> ORES_ENDER = forge("ores/ender");
         public static final ITag.INamedTag<Block> STORAGE_BLOCKS_ENDER_PEARL = forge("storage_blocks/ender_pearl");
+        public static final ITag.INamedTag<Block> STORAGE_BLOCKS_UNSTABLE = forge("storage_blocks/unstable");
 
         // LAPIS CAELESTIS
         public static final ITag.INamedTag<Block> LAPIS_CAELESTIS = forge("lapis_caelestis");
@@ -46,6 +47,7 @@ public class ModTags {
         public static final ITag.INamedTag<Item> ORES_ENDER = forge("ores/ender");
         public static final ITag.INamedTag<Item> DUSTS_ENDER = forge("dusts/ender");
         public static final ITag.INamedTag<Item> STORAGE_BLOCKS_ENDER_PEARL = forge("storage_blocks/ender_pearl");
+        public static final ITag.INamedTag<Item> STORAGE_BLOCKS_UNSTABLE = forge("storage_blocks/unstable");
 
         // LAPIS CAELESTIS
         public static final ITag.INamedTag<Item> LAPIS_CAELESTIS = forge("lapis_caelestis");

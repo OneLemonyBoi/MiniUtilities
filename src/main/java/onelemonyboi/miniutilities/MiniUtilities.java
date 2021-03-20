@@ -90,6 +90,10 @@ public class MiniUtilities {
         RenderTypeLookup.setRenderLayer(BlockList.MagentaLapisCaelestis.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.PinkLapisCaelestis.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.BrownLapisCaelestis.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.WoodenSpikes.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.IronSpikes.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.GoldSpikes.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DiamondSpikes.get(), RenderType.getCutout());
     }
 
     private void enqueueIMC(InterModEnqueueEvent event) {

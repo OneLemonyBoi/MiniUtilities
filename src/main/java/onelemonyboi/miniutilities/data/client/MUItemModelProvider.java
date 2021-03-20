@@ -37,7 +37,6 @@ public class MUItemModelProvider extends ItemModelProvider {
         ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 
         builder(itemGenerated, "ender_dust");
-        builder(itemGenerated, "kikoku");
         builder(itemGenerated, "healing_axe");
         builder(itemGenerated, "reversing_hoe");
         builder(itemGenerated, "unstable_ingot");
@@ -55,6 +54,15 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "experience_opinium_core");
         builder(itemGenerated, "nether_star_opinium_core");
         builder(itemGenerated, "the_final_opinium_core");
+
+        builder(itemGenerated, "unstable_helmet");
+        builder(itemGenerated, "unstable_chestplate");
+        builder(itemGenerated, "unstable_leggings");
+        builder(itemGenerated, "unstable_boots");
+        builder(itemGenerated, "infused_helmet");
+        builder(itemGenerated, "infused_chestplate");
+        builder(itemGenerated, "infused_leggings");
+        builder(itemGenerated, "infused_boots");
 
         /*builder(itemGenerated, "base_angel_ring");
         builder(itemGenerated, "feather_angel_ring");
