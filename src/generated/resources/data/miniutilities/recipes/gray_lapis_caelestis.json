@@ -1,34 +1,18 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "miniutilities:unstable_ingot"
-    },
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:stone"
-    }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
   ],
+  "key": {
+    "X": {
+      "tag": "forge:lapis_caelestis"
+    },
+    "Y": {
+      "tag": "forge:dyes/gray"
+    }
+  },
   "result": {
     "item": "miniutilities:gray_lapis_caelestis",
     "count": 8

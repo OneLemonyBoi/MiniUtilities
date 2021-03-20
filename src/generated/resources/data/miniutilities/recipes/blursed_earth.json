@@ -10,7 +10,7 @@
       "item": "minecraft:dirt"
     },
     "Y": {
-      "tag": "forge:nether_stars"
+      "item": "miniutilities:unstable_ingot"
     }
   },
   "result": {

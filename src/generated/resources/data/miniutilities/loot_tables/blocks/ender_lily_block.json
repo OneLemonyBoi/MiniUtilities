@@ -21,7 +21,7 @@
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "miniutilities:ender_lily",
+          "block": "miniutilities:ender_lily_block",
           "properties": {
             "age": "7"
           }
@@ -45,7 +45,7 @@
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "miniutilities:ender_lily",
+          "block": "miniutilities:ender_lily_block",
           "properties": {
             "age": "7"
           }

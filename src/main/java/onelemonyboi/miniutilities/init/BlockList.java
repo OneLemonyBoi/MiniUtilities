@@ -25,7 +25,7 @@ public class BlockList {
     public static final RegistryObject<Block> EnderPearlBlock = register("ender_pearl_block", () -> new BaseBlock(Material.ROCK, 3, 3, 1, ToolType.PICKAXE));
     // ANGEL BLOCK TAKES 1 TICK TO BREAK
     public static final RegistryObject<Block> AngelBlock = registerNoItem("angel_block", () -> new AngelBlock(Material.ROCK, 0.01F, 3F, 1));
-    public static final RegistryObject<Block> EnderLily = registerNoTab("ender_lily", () -> new EnderLily());
+    public static final RegistryObject<Block> EnderLily = registerNoTab("ender_lily_block", () -> new EnderLily());
     public static final RegistryObject<Block> FlameLily = registerNoTab("flame_lily_block", () -> new FlameLily());
     public static final RegistryObject<Block> WhiteLapisCaelestis = register("white_lapis_caelestis", LapisCaelestis::new);
     public static final RegistryObject<Block> LightGrayLapisCaelestis = register("light_gray_lapis_caelestis", LapisCaelestis::new);

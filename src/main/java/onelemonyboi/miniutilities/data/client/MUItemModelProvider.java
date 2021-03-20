@@ -64,7 +64,7 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "infused_leggings");
         builder(itemGenerated, "infused_boots");
 
-        builder(itemGenerated, "base_angel_ring");
+        builder(itemGenerated, "angel_ring");
         builder(itemGenerated, "feather_angel_ring");
         builder(itemGenerated, "ender_dragon_angel_ring");
         builder(itemGenerated, "gold_angel_ring");
@@ -75,6 +75,10 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "gold_wing");
         builder(itemGenerated, "bat_wing");
         builder(itemGenerated, "peacock_wing");
+
+        builder(itemGenerated, "ender_lily_seeds");
+        builder(itemGenerated, "flame_lily_seeds");
+        builder(itemGenerated, "flame_lily");
     }
 
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {

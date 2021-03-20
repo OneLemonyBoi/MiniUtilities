@@ -30,11 +30,11 @@ public class AngelRingRendererLeft extends LayerRenderer<AbstractClientPlayerEnt
         Item item = ItemStack.EMPTY.getItem();
         if (player.hasPlayerInfo() && !player.isInvisible() && player.isWearing(PlayerModelPart.CAPE) && isEquipped(player)) {
             if (isBaseEquipped(player)) {item = ItemStack.EMPTY.getItem();}
-            else if (isGoldEquipped(player)) {item = Items.GOLD_INGOT;} // TEMP
-            else if (isFeatherEquipped(player)) {item = Items.FEATHER;} // TEMP
-            else if (isBatEquipped(player)) {item = Items.COAL;} // TEMP
-            else if (isPeacockEquipped(player)) {item = Items.LAPIS_LAZULI;} // TEMP
-            else if (isEnderDragonEquipped(player)) {item = Items.DRAGON_HEAD;} // TEMP
+            else if (isGoldEquipped(player)) {item = ItemList.GoldWing.get();}
+            else if (isFeatherEquipped(player)) {item = ItemList.FeatherWing.get();}
+            else if (isBatEquipped(player)) {item = ItemList.BatWing.get();}
+            else if (isPeacockEquipped(player)) {item = ItemList.PeacockWing.get();}
+            else if (isEnderDragonEquipped(player)) {item = ItemList.EnderDragonWing.get();}
             matrixStack.push();
             getEntityModel().bipedBody.translateRotate(matrixStack);
             matrixStack.translate(0.25, 0.25, 0.25);
