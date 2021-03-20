@@ -55,7 +55,6 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "nether_star_opinium_core");
         builder(itemGenerated, "the_final_opinium_core");
 
-        /*
         builder(itemGenerated, "unstable_helmet");
         builder(itemGenerated, "unstable_chestplate");
         builder(itemGenerated, "unstable_leggings");
@@ -76,7 +75,6 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "gold_wing");
         builder(itemGenerated, "bat_wing");
         builder(itemGenerated, "peacock_wing");
-*/
     }
 
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {

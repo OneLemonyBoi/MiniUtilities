@@ -228,7 +228,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockList.BlursedEarth.get(), 8)
                 .key('X', Items.DIRT)
-                .key('Y', Tags.Items.NETHER_STARS)
+                .key('Y', ItemList.UnstableIngot.get())
                 .patternLine("XXX")
                 .patternLine("XYX")
                 .patternLine("XXX")
