@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "tag": "forge:angelring"
+    }
+  ],
+  "result": {
+    "item": "miniutilities:feather_angel_ring"
+  }
+}

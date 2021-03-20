@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "tag": "forge:angelring"
+    }
+  ],
+  "result": {
+    "item": "miniutilities:bat_angel_ring"
+  }
+}

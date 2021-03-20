@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AYA",
+    "YXY",
+    "YZY"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:nether_stars"
+    },
+    "Y": {
+      "item": "miniutilities:unstable_ingot"
+    },
+    "Z": {
+      "tag": "forge:ingots/gold"
+    },
+    "A": {
+      "tag": "forge:glass"
+    }
+  },
+  "result": {
+    "item": "miniutilities:angel_ring"
+  }
+}

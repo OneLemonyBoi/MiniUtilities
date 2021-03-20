@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYX",
+    "XZX",
+    "XYX"
+  ],
+  "key": {
+    "X": {
+      "item": "miniutilities:unstable_ingot"
+    },
+    "Y": {
+      "tag": "forge:ingots/netherite"
+    },
+    "Z": {
+      "item": "miniutilities:netherite_reinforced_drum"
+    }
+  },
+  "result": {
+    "item": "miniutilities:unstable_drum"
+  }
+}

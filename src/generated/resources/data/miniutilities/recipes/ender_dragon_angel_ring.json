@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "tag": "forge:dyes/black"
+    },
+    {
+      "tag": "forge:dyes/black"
+    },
+    {
+      "tag": "forge:angelring"
+    }
+  ],
+  "result": {
+    "item": "miniutilities:ender_dragon_angel_ring"
+  }
+}

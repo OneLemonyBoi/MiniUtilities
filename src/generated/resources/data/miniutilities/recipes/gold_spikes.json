@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "XYX",
+    "YZY"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:golden_sword"
+    },
+    "Y": {
+      "tag": "forge:ingots/gold"
+    },
+    "Z": {
+      "tag": "forge:storage_blocks/gold"
+    }
+  },
+  "result": {
+    "item": "miniutilities:gold_spikes"
+  }
+}

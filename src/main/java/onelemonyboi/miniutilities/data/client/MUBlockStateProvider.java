@@ -15,7 +15,6 @@ public class MUBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         simpleBlock(BlockList.EnderOre.get());
         simpleBlock(BlockList.EnderPearlBlock.get());
-        simpleBlock(BlockList.UnstableBlock.get());
         simpleBlock(BlockList.AngelBlock.get());
 
         // Lapis Caelestis

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XYX"
+  ],
+  "key": {
+    "X": {
+      "item": "miniutilities:unstable_ingot"
+    },
+    "Y": {
+      "item": "miniutilities:experience_opinium_core"
+    }
+  },
+  "result": {
+    "item": "miniutilities:infused_helmet"
+  }
+}

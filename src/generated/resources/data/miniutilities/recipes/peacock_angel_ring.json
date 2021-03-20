@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "tag": "forge:dyes/blue"
+    },
+    {
+      "tag": "forge:dyes/lime"
+    },
+    {
+      "tag": "forge:angelring"
+    }
+  ],
+  "result": {
+    "item": "miniutilities:peacock_angel_ring"
+  }
+}

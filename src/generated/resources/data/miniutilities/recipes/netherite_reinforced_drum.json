@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYX",
+    "XZX",
+    "XYX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/netherite"
+    },
+    "Y": {
+      "item": "minecraft:iron_block"
+    },
+    "Z": {
+      "item": "miniutilities:reinforced_large_drum"
+    }
+  },
+  "result": {
+    "item": "miniutilities:netherite_reinforced_drum"
+  }
+}

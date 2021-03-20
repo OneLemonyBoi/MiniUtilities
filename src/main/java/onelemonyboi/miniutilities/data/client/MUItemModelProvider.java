@@ -55,6 +55,7 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "nether_star_opinium_core");
         builder(itemGenerated, "the_final_opinium_core");
 
+        /*
         builder(itemGenerated, "unstable_helmet");
         builder(itemGenerated, "unstable_chestplate");
         builder(itemGenerated, "unstable_leggings");
@@ -64,7 +65,7 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "infused_leggings");
         builder(itemGenerated, "infused_boots");
 
-        /*builder(itemGenerated, "base_angel_ring");
+        builder(itemGenerated, "base_angel_ring");
         builder(itemGenerated, "feather_angel_ring");
         builder(itemGenerated, "ender_dragon_angel_ring");
         builder(itemGenerated, "gold_angel_ring");

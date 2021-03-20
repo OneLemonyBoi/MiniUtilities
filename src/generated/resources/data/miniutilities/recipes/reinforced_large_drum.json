@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYX",
+    "XZX",
+    "XYX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:gems/diamond"
+    },
+    "Y": {
+      "item": "minecraft:light_weighted_pressure_plate"
+    },
+    "Z": {
+      "item": "miniutilities:iron_drum"
+    }
+  },
+  "result": {
+    "item": "miniutilities:reinforced_large_drum"
+  }
+}

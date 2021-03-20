@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "XYX",
+    "YZY"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:diamond_sword"
+    },
+    "Y": {
+      "tag": "forge:gems/diamond"
+    },
+    "Z": {
+      "tag": "forge:storage_blocks/diamond"
+    }
+  },
+  "result": {
+    "item": "miniutilities:diamond_spikes"
+  }
+}

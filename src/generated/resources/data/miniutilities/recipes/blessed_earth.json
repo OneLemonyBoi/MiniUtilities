@@ -14,6 +14,7 @@
     }
   },
   "result": {
-    "item": "miniutilities:blessed_earth"
+    "item": "miniutilities:blessed_earth",
+    "count": 8
   }
 }

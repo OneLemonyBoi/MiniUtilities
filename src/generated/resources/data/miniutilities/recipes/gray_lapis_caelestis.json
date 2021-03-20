@@ -14,22 +14,23 @@
       "item": "minecraft:stone"
     },
     {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:stone"
-    },
-    {
       "item": "miniutilities:unstable_ingot"
+    },
+    {
+      "item": "minecraft:stone"
+    },
+    {
+      "item": "minecraft:stone"
+    },
+    {
+      "item": "minecraft:stone"
+    },
+    {
+      "item": "minecraft:stone"
     }
   ],
   "result": {
-    "item": "miniutilities:gray_lapis_caelestis"
+    "item": "miniutilities:gray_lapis_caelestis",
+    "count": 8
   }
 }

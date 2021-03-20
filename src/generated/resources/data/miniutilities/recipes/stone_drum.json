@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYX",
+    "XZX",
+    "XYX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:smooth_stone"
+    },
+    "Y": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "Z": {
+      "item": "minecraft:bowl"
+    }
+  },
+  "result": {
+    "item": "miniutilities:stone_drum"
+  }
+}

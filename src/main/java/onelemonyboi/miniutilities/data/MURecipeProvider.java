@@ -236,12 +236,6 @@ public class MURecipeProvider extends RecipeProvider {
                 .build(consumer);
 
         // LAPIS CAELESTIS
-        ShapelessRecipeBuilder.shapelessRecipe(BlockList.GrayLapisCaelestis.get(), 8)
-                .addIngredient(Items.STONE, 8)
-                .addIngredient(ItemList.UnstableIngot.get())
-                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
-                .build(consumer);
-
         ShapedRecipeBuilder.shapedRecipe(BlockList.WhiteLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_WHITE)
@@ -253,6 +247,14 @@ public class MURecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shapedRecipe(BlockList.LightGrayLapisCaelestis.get(), 8)
                 .key('X', ModTags.Items.LAPIS_CAELESTIS)
                 .key('Y', Tags.Items.DYES_LIGHT_GRAY)
+                .patternLine("XXX")
+                .patternLine("XYX")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.GrayLapisCaelestis.get(), 8)
+                .key('X', ModTags.Items.LAPIS_CAELESTIS)
+                .key('Y', Tags.Items.DYES_GRAY)
                 .patternLine("XXX")
                 .patternLine("XYX")
                 .patternLine("XXX")
@@ -509,6 +511,40 @@ public class MURecipeProvider extends RecipeProvider {
                 .build(consumer);
         SmithingRecipeBuilder.smithingRecipe(Ingredient.fromItems(BlockList.DiamondSpikes.get()), Ingredient.fromItems(Items.NETHERITE_INGOT), BlockList.NetheriteSpikes.get().asItem()).addCriterion("has_cobblestone", hasItem(Items.COBBLESTONE)).build(consumer, Registry.ITEM.getKey(BlockList.NetheriteSpikes.get().asItem()).getPath() + "_smithing");
 
+        // Angel Ring
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.BaseAngelRing.get())
+                .addIngredient(Ingredient.fromTag(Tags.Items.GLASS_COLORLESS), 2)
+                .addIngredient(ModTags.Items.ANGELRING)
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.FeatherAngelRing.get())
+                .addIngredient(Items.FEATHER, 2)
+                .addIngredient(ModTags.Items.ANGELRING)
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.EnderDragonAngelRing.get())
+                .addIngredient(Items.LEATHER, 2)
+                .addIngredient(Ingredient.fromTag(Tags.Items.DYES_BLACK), 2)
+                .addIngredient(ModTags.Items.ANGELRING)
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.GoldAngelRing.get())
+                .addIngredient(Ingredient.fromTag(Tags.Items.INGOTS_GOLD), 2)
+                .addIngredient(ModTags.Items.ANGELRING)
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.BatAngelRing.get())
+                .addIngredient(Items.COAL, 2)
+                .addIngredient(ModTags.Items.ANGELRING)
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.PeacockAngelRing.get())
+                .addIngredient(Items.FEATHER, 2)
+                .addIngredient(Ingredient.fromTag(Tags.Items.DYES_BLUE))
+                .addIngredient(Ingredient.fromTag(Tags.Items.DYES_LIME))
+                .addIngredient(ModTags.Items.ANGELRING)
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
 
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlockList.EnderOre.get()), ItemList.EnderDust.get(), 0.7f, 200)
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))

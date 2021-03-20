@@ -51,11 +51,11 @@ public class BlockList {
     public static final RegistryObject<Block> NetheriteReinforcedDrum = register("netherite_reinforced_drum", () -> new DrumBlock(65536000, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(8.0F)));
     public static final RegistryObject<Block> UnstableDrum = register("unstable_drum", () -> new DrumBlock(2147483647, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(12.0F)));
 
-    public static final RegistryObject<Block> WoodenSpikes = register("wooden_spikes", () -> new SpikeBlock(Block.Properties.create(Material.WOOD).harvestTool(ToolType.AXE).hardnessAndResistance(2.0F), 1, false, false, true));
-    public static final RegistryObject<Block> IronSpikes = register("iron_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(4.0F), 2, false, false, false));
-    public static final RegistryObject<Block> GoldSpikes = register("gold_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(6.0F), 4, false, true, false));
-    public static final RegistryObject<Block> DiamondSpikes = register("diamond_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(8.0F), 8, true, false, false));
-    public static final RegistryObject<Block> NetheriteSpikes = register("netherite_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(16.0F), 16, true, true, false));
+    public static final RegistryObject<Block> WoodenSpikes = register("wooden_spikes", () -> new SpikeBlock(Block.Properties.create(Material.WOOD).harvestTool(ToolType.AXE).hardnessAndResistance(2.0F).harvestLevel(0), 1, false, false, true));
+    public static final RegistryObject<Block> IronSpikes = register("iron_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(4.0F).harvestLevel(1), 2, false, false, false));
+    public static final RegistryObject<Block> GoldSpikes = register("gold_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(6.0F).harvestLevel(1), 4, false, true, false));
+    public static final RegistryObject<Block> DiamondSpikes = register("diamond_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(8.0F).harvestLevel(2), 8, true, false, false));
+    public static final RegistryObject<Block> NetheriteSpikes = register("netherite_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(16.0F).harvestLevel(3), 16, true, true, false));
 
 
 

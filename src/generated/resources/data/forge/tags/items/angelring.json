@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "miniutilities:angel_ring",
+    "miniutilities:bat_angel_ring",
+    "miniutilities:peacock_angel_ring",
+    "miniutilities:ender_dragon_angel_ring",
+    "miniutilities:feather_angel_ring",
+    "miniutilities:gold_angel_ring"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYX",
+    "XZX",
+    "XYX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    },
+    "Z": {
+      "item": "minecraft:cauldron"
+    }
+  },
+  "result": {
+    "item": "miniutilities:iron_drum"
+  }
+}

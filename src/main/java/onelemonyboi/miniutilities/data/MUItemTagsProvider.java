@@ -42,5 +42,11 @@ public class MUItemTagsProvider extends ItemTagsProvider {
         getOrCreateBuilder(ModTags.Items.DUSTS_ENDER).add(ItemList.EnderDust.get());
         getOrCreateBuilder(Tags.Items.DUSTS).addTag(ModTags.Items.DUSTS_ENDER);
         getOrCreateBuilder(Tags.Items.RODS_BLAZE).add(ItemList.FlameLily.get());
+        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.BaseAngelRing.get());
+        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.BatAngelRing.get());
+        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.PeacockAngelRing.get());
+        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.EnderDragonAngelRing.get());
+        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.FeatherAngelRing.get());
+        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.GoldAngelRing.get());
     }
 }
