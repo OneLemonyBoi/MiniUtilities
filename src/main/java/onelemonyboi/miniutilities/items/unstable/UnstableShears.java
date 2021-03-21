@@ -46,7 +46,7 @@ public class UnstableShears extends ShearsItem {
         PlayerEntity player = event.getPlayer();
         World world = player.world;
         BlockPos pos = event.getPos();
-        if (player.isSneaking() && !world.isRemote && stack.getItem() == ItemList.UnstableShears.get() && world.getBlockState(pos).getHarvestLevel() <= 2) {
+        if (player.isSneaking() && !world.isRemote && stack.getItem() == ItemList.UnstableShears.get() && world.getBlockState(pos).getHarvestLevel() <= 2 && world.getBlockState(pos).getHarvestLevel() >= 0) {
             player.addItemStackToInventory(new ItemStack(world.getBlockState(pos).getBlock()));
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
         }
