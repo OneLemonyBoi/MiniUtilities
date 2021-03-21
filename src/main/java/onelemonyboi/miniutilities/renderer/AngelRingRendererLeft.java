@@ -37,7 +37,7 @@ public class AngelRingRendererLeft extends LayerRenderer<AbstractClientPlayerEnt
             else if (isEnderDragonEquipped(player)) {item = ItemList.EnderDragonWing.get();}
             matrixStack.push();
             getEntityModel().bipedBody.translateRotate(matrixStack);
-            matrixStack.translate(0.4, 0.3, 0.25);
+            matrixStack.translate(0.4, 0.2, 0.40);
             matrixStack.scale(1f, -1f, -0.25f);
             matrixStack.rotate(Vector3f.YP.rotationDegrees(45));
             Minecraft.getInstance().getItemRenderer().renderItem(player, new ItemStack(item), ItemCameraTransforms.TransformType.NONE, false, matrixStack, buffer, player.world, 0xF000F0, OverlayTexture.NO_OVERLAY);

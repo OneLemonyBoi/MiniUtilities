@@ -8,15 +8,16 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.ItemList;
 
 import java.util.function.Supplier;
 
 public enum MUArmorMaterial implements IArmorMaterial {
-    UNSTABLE("unstable", 0, new int[]{3, 6, 8, 3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 1.0F, 0.1F, () -> {
+    UNSTABLE(MiniUtilities.MOD_ID + ":unstable", 0, new int[]{3, 6, 8, 3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 1.0F, 0.1F, () -> {
         return Ingredient.fromItems(ItemList.UnstableIngot.get());
     }),
-    INFUSEDUNSTABLE("netherite", 0, new int[]{6, 12, 16, 6}, 50, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 6.0F, 0.5F, () -> {
+    INFUSEDUNSTABLE(MiniUtilities.MOD_ID + ":infused", 0, new int[]{6, 12, 16, 6}, 50, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 6.0F, 0.5F, () -> {
         return Ingredient.fromItems(ItemList.UnstableIngot.get());
     });
 
