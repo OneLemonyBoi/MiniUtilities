@@ -1,6 +1,6 @@
 {
-    "parent": "block/crop",
+    "parent": "block/cross",
     "textures": {
-        "crop": "xlfoodmod:block/flame_lily_block_stage_5"
+        "cross": "miniutilities:block/flame_lily_block_stage_5"
     }
 }
