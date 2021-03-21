@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:stone"
+    },
+    "Y": {
+      "item": "miniutilities:unstable_ingot"
+    }
+  },
+  "result": {
+    "item": "miniutilities:gray_lapis_caelestis",
+    "count": 8
+  }
+}
