@@ -15,6 +15,7 @@ import net.minecraft.world.server.ServerChunkProvider;
 import net.minecraft.world.server.ServerWorld;
 import onelemonyboi.miniutilities.MiniUtilities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -101,7 +102,8 @@ public class BlursedEarthBlock extends GrassBlock {
     private Entity findMonsterToSpawn(ServerWorld world, BlockPos pos, Random rand) {
         //required to account for structure based mobs such as wither skeletons
         ServerChunkProvider s = world.getChunkProvider();
-        List<MobSpawnInfo.Spawners> spawnOptions = s.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.CREATURE, pos);
+        List<MobSpawnInfo.Spawners> spawnOptions = new ArrayList<>();
+        spawnOptions.addAll(s.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.CREATURE, pos));
         spawnOptions.addAll(s.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.WATER_CREATURE, pos));
         spawnOptions.addAll(s.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.WATER_AMBIENT, pos));
         spawnOptions.addAll(s.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.MONSTER, pos));
