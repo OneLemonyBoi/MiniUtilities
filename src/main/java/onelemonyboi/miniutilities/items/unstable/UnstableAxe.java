@@ -43,10 +43,13 @@ public class UnstableAxe extends AxeItem {
     public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
         if (entity instanceof LivingEntity) {
             if (((LivingEntity) entity).getCreatureAttribute() == CreatureAttribute.UNDEAD)
-                entity.attackEntityFrom(DamageSource.causePlayerDamage(player), 8);
-            else ((LivingEntity) entity).heal(8);
+                entity.attackEntityFrom(DamageSource.causePlayerDamage(player), 4);
+            else {
+                ((LivingEntity) entity).heal(8);
+                return true;
+            }
             player.attackEntityFrom(DamageSource.MAGIC, 2);
         }
-        return true;
+        return false;
     }
 }

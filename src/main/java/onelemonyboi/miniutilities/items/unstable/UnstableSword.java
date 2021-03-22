@@ -32,24 +32,13 @@ import java.util.UUID;
 import static onelemonyboi.miniutilities.items.Kikoku.*;
 
 public class UnstableSword extends SwordItem {
-    UUID ARMOR_PIERCING_MODIFER = UUID.fromString("c7097a94-17f9-481c-bde0-04c12b9d9a23");
-
     public UnstableSword(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties builder) {
         super(tier, attackDamageIn, attackSpeedIn, builder);
     }
 
-    @Nonnull
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
-
-        ListMultimap<Attribute, AttributeModifier> multimaps = ArrayListMultimap.create();
-        if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(ARMOR_PIERCING_MODIFER, "Armor Piercing Damage Modifier", 1D, AttributeModifier.Operation.ADDITION));
-        }
-        for (Attribute attribute : multimap.keySet()) {
-            multimaps.putAll(attribute, multimap.get(attribute));
-        }
-        return multimaps;
+    public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
+        entity.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, 1);
+        return false;
     }
 }

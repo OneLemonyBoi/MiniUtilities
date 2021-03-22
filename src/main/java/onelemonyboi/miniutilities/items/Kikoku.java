@@ -130,7 +130,7 @@ public class Kikoku extends SwordItem {
                     cost += addValue;
                     map3.put(entry.getKey(), addValue);
                 } else {
-                    int value = Math.min(curValue + addValue, Config.max_kikoku_level.get());
+                    int value = Math.min(curValue + addValue, enchantment.getMaxLevel() * Config.max_kikoku_multiplier.get());
                     cost += value - curValue;
                     map3.put(entry.getKey(), value);
                 }

@@ -11,7 +11,7 @@ public enum ItemTier implements IItemTier {
     KIKOKU(5, 0, 16.0F, 0.0F, 250, () -> {
         return Ingredient.fromItems(ItemList.UnstableIngot.get());
     }),
-    UNSTABLE(4, 0, 8.0F, 8.0F, 25, () -> {
+    UNSTABLE(4, 0, 8.0F, 8.0F, 20, () -> {
         return Ingredient.fromItems(ItemList.UnstableIngot.get());
     });
 
