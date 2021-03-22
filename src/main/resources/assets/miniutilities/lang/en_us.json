@@ -1,10 +1,13 @@
 {
   "itemGroup.miniutilities": "Mini Utilities",
+
   "attribute.miniutilities.divinedamage": "Divine Damage",
   "attribute.miniutilities.armorpiercingdamage": "Armor Piercing Damage",
   "attribute.miniutilities.souldamage": "Soul Damage",
+
   "text.miniutilities.ingotisunstable": "This Ingot is Unstable!",
   "text.miniutilities.unstableingot": "Unstable Ingot",
+
   "block.miniutilities.cursed_earth": "Cursed Earth",
   "block.miniutilities.blessed_earth": "Blessed Earth",
   "block.miniutilities.ender_ore": "Ender Ore",
@@ -38,6 +41,7 @@
   "block.miniutilities.netherite_spikes": "Netherite Spikes",
   "block.miniutilities.ender_pearl_block": "Ender Pearl Block",
   "block.miniutilities.angel_block": "Angel Block",
+  
   "item.miniutilities.angel_ring": "Angel Ring",
   "item.miniutilities.flame_lily_seeds": "Flame Lily Seeds",
   "item.miniutilities.destruction_pickaxe": "Destruction Pickaxe",

@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 
 group = 'onelemonyboi'
-version = '1.0.0'
+version = '1.0.0-alpha'
 archivesBaseName = 'miniutilities'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
@@ -114,11 +114,11 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : "miniutilities",
-                //"Specification-Vendor": "miniutilities authors",
+                "Specification-Vendor"    : "onelemonyboi",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.version,
-                //"Implementation-Vendor": "miniutilities authors",
+                "Implementation-Vendor"   : "onelemonyboi",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
