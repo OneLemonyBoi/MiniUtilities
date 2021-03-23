@@ -72,6 +72,7 @@ public class MiniUtilities {
     {
         RenderTypeLookup.setRenderLayer(BlockList.CursedEarth.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.BlessedEarth.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.BlursedEarth.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.EnderLily.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.FlameLily.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.WhiteLapisCaelestis.get(), RenderType.getCutout());
