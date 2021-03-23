@@ -24,6 +24,8 @@ public class AngelRingRendererRight extends LayerRenderer<AbstractClientPlayerEn
         super(playerModel);
     }
 
+    // TODO: Add check for armor to make it look better when armor is off
+
     @Override
     public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight, AbstractClientPlayerEntity player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         String name = player.getGameProfile().getName();

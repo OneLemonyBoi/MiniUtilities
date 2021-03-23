@@ -555,6 +555,12 @@ public class MURecipeProvider extends RecipeProvider {
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 
+        // Item
+        ShapelessRecipeBuilder.shapelessRecipe(Items.BLAZE_POWDER, 2)
+                .addIngredient(ItemList.FlameLily.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlockList.EnderOre.get()), ItemList.EnderDust.get(), 0.7f, 200)
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer, modId("smelting/ender_ore"));
