@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 
 group = 'onelemonyboi'
-version = '1.0.0-alpha'
+version = '1.0.1-alpha'
 archivesBaseName = 'miniutilities'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
