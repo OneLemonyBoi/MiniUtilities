@@ -3,9 +3,12 @@ package onelemonyboi.miniutilities.blocks;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -54,5 +57,20 @@ public class DrumBlock extends ContainerBlock {
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new DrumTile(this.mb);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof DrumTile) {
+            ItemStack itemStack = new ItemStack(this);
+            double Randomizer = Math.random();
+            CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
+            itemStack.setTagInfo("BlockEntityTag", compoundNBT);
+            ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX() + Randomizer, pos.getY(), pos.getZ() + Randomizer, itemStack);
+            worldIn.addEntity(itemEntity);
+        }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 }

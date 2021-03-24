@@ -102,7 +102,7 @@ public class UnstableIngot extends Item {
             if (!(slot.getSlotIndex() == 0)) {
                 ItemStack stack = slot.getStack();
                 if ((stack.getItem() instanceof UnstableIngot)) {
-
+                    stack.setDamage(stack.getDamage() - 1);
                 }
             }
         }
