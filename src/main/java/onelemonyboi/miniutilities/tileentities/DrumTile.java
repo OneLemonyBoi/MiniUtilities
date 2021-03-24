@@ -17,16 +17,13 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import onelemonyboi.miniutilities.init.BlockList;
+import onelemonyboi.miniutilities.init.TEList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.stream.Stream;
 
 public class DrumTile extends TileEntity {
-    public static final TileEntityType<DrumTile> TYPE = TileEntityType.Builder
-            .create(DrumTile::new, BlockList.StoneDrum.get(), BlockList.IronDrum.get(), BlockList.ReinforcedLargeDrum.get(), BlockList.NetheriteReinforcedDrum.get(), BlockList.UnstableDrum.get())
-            .build(null);
-
     private FluidTank drum;
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> drum);
 
@@ -35,7 +32,7 @@ public class DrumTile extends TileEntity {
     }
 
     public DrumTile(int mb) {
-        super(TYPE);
+        super(TEList.DrumTile.get());
         this.drum = new FluidTank(mb) {
             @Override
             public int fill(FluidStack resource, FluidAction action) {
