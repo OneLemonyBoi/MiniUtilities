@@ -1,5 +1,6 @@
 package onelemonyboi.miniutilities.testlmaoidkwhytfthisishere;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -32,6 +33,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
+import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.TEList;
 
 import javax.annotation.Nonnull;
@@ -131,7 +133,8 @@ public class TestTE extends LockableLootTileEntity implements ITickableTileEntit
                     InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), itemStack);
                 }
             }
-            // TODO: Fix the bug where only one item goes into 1st slot. Suspect is the canCombine function, use Breakpoints to find values
+            // TODO: Fix the bug where only one item goes into 1st slot. Suspect is the canCombine function, use Breakpoints to find issues
+            // TODO: Fix the bug above, issue is the shrink and grow lines which are very very broken and make no sense please fix
 
             world.destroyBlock(blockPos, false);
         }
@@ -145,7 +148,9 @@ public class TestTE extends LockableLootTileEntity implements ITickableTileEntit
         } else if (stack1.getCount() > stack1.getMaxStackSize()) {
             return false;
         } else {
-            return ItemStack.areItemStackTagsEqual(stack1, stack2);
+            Boolean buffer = ItemStack.areItemStackTagsEqual(stack1, stack2);
+            MiniUtilities.LOGGER.debug(buffer.toString());
+            return buffer;
         }
     }
 }
