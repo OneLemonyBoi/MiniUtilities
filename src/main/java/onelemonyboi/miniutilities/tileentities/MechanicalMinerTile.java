@@ -1,26 +1,19 @@
-package onelemonyboi.miniutilities.testlmaoidkwhytfthisishere;
+package onelemonyboi.miniutilities.tileentities;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -29,23 +22,17 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.VanillaInventoryCodeHooks;
-import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.tileentities.containers.MechanicalMinerContainer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 
-public class TestTE extends LockableLootTileEntity implements ITickableTileEntity {
+public class MechanicalMinerTile extends LockableLootTileEntity implements ITickableTileEntity {
     public static int slots = 9;
 
     protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
 
-    public TestTE() {
+    public MechanicalMinerTile() {
         super(TEList.TestTEE.get());
     }
 
@@ -66,12 +53,12 @@ public class TestTE extends LockableLootTileEntity implements ITickableTileEntit
 
     @Override
     protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.testmini.display_case");
+        return new TranslationTextComponent("container.miniutilities.mechanical_miner");
     }
 
     @Override
     protected Container createMenu(int id, PlayerInventory player) {
-        return new TestContainer(id, player, this);
+        return new MechanicalMinerContainer(id, player, this);
     }
 
     @Override
@@ -92,17 +79,16 @@ public class TestTE extends LockableLootTileEntity implements ITickableTileEntit
         }
     }
 
+    /**
+     * Insert the specified stack to the specified inventory and return any leftover items
+     * Includes modified form of HopperTileEntity#insertSlot
+     */
+
     @Override
     public void tick() {
         if (!world.isRemote && !world.isBlockPowered(this.getPos())){
             BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
 
-            // Temp Code
-            // if (!world.isRemote && !world.isBlockPowered(this.getPos())){
-            //    this.world.destroyBlock(blockPos, true);
-            //}
-
-            // Get Inventory
             IInventory iinventory = (IInventory) this.getTileEntity();
             if (iinventory == null) {
                 List<Entity> list = world.getEntitiesInAABBexcluding(null, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY() - 0.5D, this.getPos().getZ() - 0.5D, this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D), EntityPredicates.HAS_INVENTORY);
@@ -110,33 +96,31 @@ public class TestTE extends LockableLootTileEntity implements ITickableTileEntit
                     iinventory = (IInventory) list.get(world.rand.nextInt(list.size()));
                 }
             }
-
+            // Loot Generation
             LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
             List<ItemStack> lists = world.getBlockState(blockPos).getDrops(lootcontext$builder);
+
+            // Iteration UwU
             for (ItemStack itemStack : lists) {
                 int i = iinventory.getSizeInventory();
                 for (int j = 0; j < i && !itemStack.isEmpty(); ++j) {
-                    // itemStack = insertStack(source, iinventory, itemStack, j, Direction.NORTH);
                     ItemStack itemStack1 = iinventory.getStackInSlot(j);
                     if (itemStack1.isEmpty()) {
                         iinventory.setInventorySlotContents(j, itemStack);
                         itemStack = ItemStack.EMPTY;
                     } else if (canCombine(itemStack, itemStack1)) {
                         int x = itemStack.getMaxStackSize() - itemStack1.getCount();
-                        int y = Math.min(itemStack.getCount(), i);
-                        itemStack.shrink(j);
-                        itemStack1.grow(j);
+                        int y = Math.min(itemStack.getCount(), x);
+                        itemStack.shrink(y);
+                        itemStack1.grow(y);
                     }
                 }
                 iinventory.markDirty();
                 if (!itemStack.isEmpty()) {
-                    InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), itemStack);
+                    InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY() + 1, this.getPos().getZ(), itemStack); // Hidden Gem
                 }
             }
-            // TODO: Fix the bug where only one item goes into 1st slot. Suspect is the canCombine function, use Breakpoints to find issues
-            // TODO: Fix the bug above, issue is the shrink and grow lines which are very very broken and make no sense please fix
-
-            world.destroyBlock(blockPos, false);
+            world.destroyBlock(blockPos, false); // Very kool break animations!
         }
     }
 
@@ -149,7 +133,6 @@ public class TestTE extends LockableLootTileEntity implements ITickableTileEntit
             return false;
         } else {
             Boolean buffer = ItemStack.areItemStackTagsEqual(stack1, stack2);
-            MiniUtilities.LOGGER.debug(buffer.toString());
             return buffer;
         }
     }

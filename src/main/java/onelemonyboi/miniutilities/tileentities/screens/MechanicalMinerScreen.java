@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.testlmaoidkwhytfthisishere;
+package onelemonyboi.miniutilities.tileentities.screens;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -8,12 +8,13 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import onelemonyboi.miniutilities.MiniUtilities;
+import onelemonyboi.miniutilities.tileentities.containers.MechanicalMinerContainer;
 
-public class TestScreen extends ContainerScreen<TestContainer> {
+public class MechanicalMinerScreen extends ContainerScreen<MechanicalMinerContainer> {
     private static final ResourceLocation TestDisplay = new ResourceLocation(MiniUtilities.MOD_ID,
-            "textures/gui/test_block.png");
+            "textures/gui/mechanical_miner.png");
 
-    public TestScreen(TestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public MechanicalMinerScreen(MechanicalMinerContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
 
         this.guiLeft = 0;

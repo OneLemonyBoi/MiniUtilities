@@ -26,7 +26,7 @@ import onelemonyboi.miniutilities.items.unstable.UnstableShears;
 import onelemonyboi.miniutilities.proxy.ClientProxy;
 import onelemonyboi.miniutilities.proxy.IProxy;
 import onelemonyboi.miniutilities.proxy.ServerProxy;
-import onelemonyboi.miniutilities.testlmaoidkwhytfthisishere.TestScreen;
+import onelemonyboi.miniutilities.tileentities.screens.MechanicalMinerScreen;
 import onelemonyboi.miniutilities.world.Config;
 import onelemonyboi.miniutilities.world.WorldGen;
 import org.apache.logging.log4j.LogManager;
@@ -100,7 +100,7 @@ public class MiniUtilities {
         RenderTypeLookup.setRenderLayer(BlockList.DiamondSpikes.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.NetheriteSpikes.get(), RenderType.getCutout());
 
-        ScreenManager.registerFactory(ContainerList.TestContainer.get(), TestScreen::new);
+        ScreenManager.registerFactory(ContainerList.TestContainer.get(), MechanicalMinerScreen::new);
     }
 
     private void enqueueIMC(InterModEnqueueEvent event) {

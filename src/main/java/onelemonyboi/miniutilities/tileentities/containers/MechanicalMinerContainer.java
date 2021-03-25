@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.testlmaoidkwhytfthisishere;
+package onelemonyboi.miniutilities.tileentities.containers;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -10,18 +10,18 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraftforge.items.IItemHandler;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
+import onelemonyboi.miniutilities.tileentities.MechanicalMinerTile;
 
 import java.util.Objects;
 
 
-public class TestContainer extends Container implements ITickableTileEntity {
-    public final TestTE te;
+public class MechanicalMinerContainer extends Container implements ITickableTileEntity {
+    public final MechanicalMinerTile te;
     private final IWorldPosCallable canInteractWithCallable;
 
-    public TestContainer(final int windowId, final PlayerInventory playerInv, final TestTE te) {
+    public MechanicalMinerContainer(final int windowId, final PlayerInventory playerInv, final MechanicalMinerTile te) {
         super(ContainerList.TestContainer.get(), windowId);
         this.te = te;
         this.canInteractWithCallable = IWorldPosCallable.of(te.getWorld(), te.getPos());
@@ -56,16 +56,16 @@ public class TestContainer extends Container implements ITickableTileEntity {
         }
     }
 
-    public TestContainer(final int windowId, final PlayerInventory playerInv, final PacketBuffer data) {
+    public MechanicalMinerContainer(final int windowId, final PlayerInventory playerInv, final PacketBuffer data) {
         this(windowId, playerInv, getTileEntity(playerInv, data));
     }
 
-    private static TestTE getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
+    private static MechanicalMinerTile getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(data, "Packet Buffer cannot be null.");
         final TileEntity te = playerInv.player.world.getTileEntity(data.readBlockPos());
-        if (te instanceof TestTE) {
-            return (TestTE) te;
+        if (te instanceof MechanicalMinerTile) {
+            return (MechanicalMinerTile) te;
         }
         throw new IllegalStateException("Tile Entity Is Not Correct");
     }
@@ -82,11 +82,11 @@ public class TestContainer extends Container implements ITickableTileEntity {
         if (slot != null && slot.getHasStack()) {
             ItemStack stack1 = slot.getStack();
             stack = stack1.copy();
-            if (index < TestTE.slots
-                    && !this.mergeItemStack(stack1, TestTE.slots, this.inventorySlots.size(), true)) {
+            if (index < MechanicalMinerTile.slots
+                    && !this.mergeItemStack(stack1, MechanicalMinerTile.slots, this.inventorySlots.size(), true)) {
                 return ItemStack.EMPTY;
             }
-            if (!this.mergeItemStack(stack1, 0, TestTE.slots, false)) {
+            if (!this.mergeItemStack(stack1, 0, MechanicalMinerTile.slots, false)) {
                 return ItemStack.EMPTY;
             }
 
