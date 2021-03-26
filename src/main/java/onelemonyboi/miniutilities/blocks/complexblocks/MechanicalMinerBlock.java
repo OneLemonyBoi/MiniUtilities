@@ -48,7 +48,7 @@ public class MechanicalMinerBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof MechanicalMinerTile && (player.getHeldItem(handIn).getItem().getTags().contains(ModTags.Items.WRENCH))) {
+            if (te instanceof MechanicalMinerTile && (player.getHeldItem(handIn).getItem() == Items.GRASS)) {
                 switch (((MechanicalMinerTile) te).redstonemode) {
                     case 1:
                         ((MechanicalMinerTile) te).redstonemode = 2;
