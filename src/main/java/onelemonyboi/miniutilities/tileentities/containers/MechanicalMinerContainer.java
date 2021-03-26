@@ -17,7 +17,7 @@ import onelemonyboi.miniutilities.tileentities.MechanicalMinerTile;
 import java.util.Objects;
 
 
-public class MechanicalMinerContainer extends Container implements ITickableTileEntity {
+public class MechanicalMinerContainer extends Container {
     public final MechanicalMinerTile te;
     private final IWorldPosCallable canInteractWithCallable;
 
@@ -72,7 +72,7 @@ public class MechanicalMinerContainer extends Container implements ITickableTile
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.TestBlocks.get());
+        return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.MechanicalMiner.get());
     }
 
     @Override
@@ -97,10 +97,5 @@ public class MechanicalMinerContainer extends Container implements ITickableTile
             }
         }
         return stack;
-    }
-
-    @Override
-    public void tick() {
-
     }
 }

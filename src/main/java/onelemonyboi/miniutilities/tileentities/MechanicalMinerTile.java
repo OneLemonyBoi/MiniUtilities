@@ -30,10 +30,16 @@ import java.util.List;
 public class MechanicalMinerTile extends LockableLootTileEntity implements ITickableTileEntity {
     public static int slots = 9;
 
+    // 1: Always on
+    // 2: Redstone to Enable
+    // 3: Redstone to Disable
+    public Integer redstonemode;
+
     protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
 
     public MechanicalMinerTile() {
-        super(TEList.TestTEE.get());
+        super(TEList.MechanicalMinerTile.get());
+        this.redstonemode = 1;
     }
 
     @Override
@@ -86,41 +92,14 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
 
     @Override
     public void tick() {
-        if (!world.isRemote && !world.isBlockPowered(this.getPos())){
-            BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
-
-            IInventory iinventory = (IInventory) this.getTileEntity();
-            if (iinventory == null) {
-                List<Entity> list = world.getEntitiesInAABBexcluding(null, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY() - 0.5D, this.getPos().getZ() - 0.5D, this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D), EntityPredicates.HAS_INVENTORY);
-                if (!list.isEmpty()) {
-                    iinventory = (IInventory) list.get(world.rand.nextInt(list.size()));
-                }
-            }
-            // Loot Generation
-            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
-            List<ItemStack> lists = world.getBlockState(blockPos).getDrops(lootcontext$builder);
-
-            // Iteration UwU
-            for (ItemStack itemStack : lists) {
-                int i = iinventory.getSizeInventory();
-                for (int j = 0; j < i && !itemStack.isEmpty(); ++j) {
-                    ItemStack itemStack1 = iinventory.getStackInSlot(j);
-                    if (itemStack1.isEmpty()) {
-                        iinventory.setInventorySlotContents(j, itemStack);
-                        itemStack = ItemStack.EMPTY;
-                    } else if (canCombine(itemStack, itemStack1)) {
-                        int x = itemStack.getMaxStackSize() - itemStack1.getCount();
-                        int y = Math.min(itemStack.getCount(), x);
-                        itemStack.shrink(y);
-                        itemStack1.grow(y);
-                    }
-                }
-                iinventory.markDirty();
-                if (!itemStack.isEmpty()) {
-                    InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY() + 1, this.getPos().getZ(), itemStack); // Hidden Gem
-                }
-            }
-            world.destroyBlock(blockPos, false); // Very kool break animations!
+        if (!world.isRemote && this.redstonemode == 1){
+            blockBreaker();
+        }
+        else if (!world.isRemote && world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
+            blockBreaker();
+        }
+        else if (!world.isRemote && !world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
+            blockBreaker();
         }
     }
 
@@ -135,5 +114,42 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
             Boolean buffer = ItemStack.areItemStackTagsEqual(stack1, stack2);
             return buffer;
         }
+    }
+
+    protected void blockBreaker() {
+        BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
+
+        IInventory iinventory = (IInventory) this.getTileEntity();
+        if (iinventory == null) {
+            List<Entity> list = world.getEntitiesInAABBexcluding(null, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY() - 0.5D, this.getPos().getZ() - 0.5D, this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D), EntityPredicates.HAS_INVENTORY);
+            if (!list.isEmpty()) {
+                iinventory = (IInventory) list.get(world.rand.nextInt(list.size()));
+            }
+        }
+        // Loot Generation
+        LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
+        List<ItemStack> lists = world.getBlockState(blockPos).getDrops(lootcontext$builder);
+
+        // Iteration UwU
+        for (ItemStack itemStack : lists) {
+            int i = iinventory.getSizeInventory();
+            for (int j = 0; j < i && !itemStack.isEmpty(); ++j) {
+                ItemStack itemStack1 = iinventory.getStackInSlot(j);
+                if (itemStack1.isEmpty()) {
+                    iinventory.setInventorySlotContents(j, itemStack);
+                    itemStack = ItemStack.EMPTY;
+                } else if (canCombine(itemStack, itemStack1)) {
+                    int x = itemStack.getMaxStackSize() - itemStack1.getCount();
+                    int y = Math.min(itemStack.getCount(), x);
+                    itemStack.shrink(y);
+                    itemStack1.grow(y);
+                }
+            }
+            iinventory.markDirty();
+            if (!itemStack.isEmpty()) {
+                InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY() + 1, this.getPos().getZ(), itemStack); // Hidden Gem
+            }
+        }
+        world.destroyBlock(blockPos, false); // Very kool break animations!
     }
 }

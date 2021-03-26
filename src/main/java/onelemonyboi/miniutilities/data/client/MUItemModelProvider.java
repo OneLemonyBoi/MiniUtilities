@@ -79,6 +79,8 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "ender_lily_seeds");
         builder(itemGenerated, "flame_lily_seeds");
         builder(itemGenerated, "flame_lily");
+
+        // builder(itemGenerated, "wrench");
     }
 
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {

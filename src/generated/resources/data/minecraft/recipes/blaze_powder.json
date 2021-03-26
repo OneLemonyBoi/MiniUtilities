@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "miniutilities:flame_lily"
+    }
+  ],
+  "result": {
+    "item": "minecraft:blaze_powder",
+    "count": 2
+  }
+}
