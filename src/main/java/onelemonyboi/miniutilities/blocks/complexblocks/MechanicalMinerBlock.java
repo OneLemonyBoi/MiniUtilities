@@ -1,9 +1,6 @@
 package onelemonyboi.miniutilities.blocks.complexblocks;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -16,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -23,6 +21,8 @@ import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.tileentities.MechanicalMinerTile;
+
+import java.util.UUID;
 
 public class MechanicalMinerBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -48,16 +48,19 @@ public class MechanicalMinerBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof MechanicalMinerTile && (player.getHeldItem(handIn).getItem() == Items.GRASS)) {
+            if (te instanceof MechanicalMinerTile && (player.getHeldItem(handIn).getItem().getTags().contains(ModTags.Items.WRENCH))) {
                 switch (((MechanicalMinerTile) te).redstonemode) {
                     case 1:
                         ((MechanicalMinerTile) te).redstonemode = 2;
+                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"), UUID.randomUUID());
                         break;
                     case 2:
                         ((MechanicalMinerTile) te).redstonemode = 3;
+                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"), UUID.randomUUID());
                         break;
                     case 3:
                         ((MechanicalMinerTile) te).redstonemode = 1;
+                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"), UUID.randomUUID());
                         break;
                 }
                 return ActionResultType.CONSUME;
@@ -67,7 +70,7 @@ public class MechanicalMinerBlock extends Block {
                 return ActionResultType.CONSUME;
             }
         }
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return ActionResultType.CONSUME;
     }
 
     @Deprecated
