@@ -10,6 +10,9 @@
   "text.miniutilities.redstonemodeswitchedtoone": "Redstone Mode: Always On",
   "text.miniutilities.redstonemodeswitchedtotwo": "Redstone Mode: Redstone Enables",
   "text.miniutilities.redstonemodeswitchedtothree": "Redstone Mode: Redstone Disables",
+  "text.miniutilities.waittime": "Time per Operation: ",
+  "text.miniutilities.seconds": " Seconds",
+  "text.miniutilities.info": "Block Info:",
 
   "block.miniutilities.cursed_earth": "Cursed Earth",
   "block.miniutilities.blessed_earth": "Blessed Earth",

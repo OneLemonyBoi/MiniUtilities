@@ -142,6 +142,8 @@ cacce2378f941e73089f7ec491fc4d8480160aec data/forge/tags/items/rods/blaze.json
 761a56983213db7da1b857996830f823023975fa data/forge/tags/items/storage_blocks.json
 b0af0157b3c7ca8f49a2acf94a6fbbb589040034 data/forge/tags/items/storage_blocks/ender_pearl.json
 35122a938fe902b5fa5701c6aa3b0efafd07b0cc data/forge/tags/items/storage_blocks/unstable.json
+9dffb04940273d59a82da1bc19ec736affeb8bf9 data/forge/tags/items/upgrades.json
+f58f9c9a64bbe7e8fb66df2660a97a85d0c210a5 data/forge/tags/items/upgrades/speed.json
 17d352a7f408297b3535181596ba5b3570d894c2 data/forge/tags/items/wrench.json
 092a7fc84ef197782354885b8ef69fa69a6f8de3 data/minecraft/advancements/recipes/brewing/blaze_powder.json
 bd751b658a66490dcdbc9bdca08edc2c424cb6ba data/minecraft/advancements/recipes/miniutilities/netherite_spikes_smithing.json

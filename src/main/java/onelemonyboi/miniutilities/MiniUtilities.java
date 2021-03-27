@@ -19,6 +19,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import onelemonyboi.miniutilities.blocks.EarthBlocks;
+import onelemonyboi.miniutilities.blocks.complexblocks.MechanicalMinerBlock;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
 import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
@@ -61,6 +62,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(UnstableHoe::hoeTransformation);
         EVENT_BUS.addListener(WorldGen::generateOres);
         EVENT_BUS.addListener(WorldGen::generatePlants);
+        EVENT_BUS.addListener(MechanicalMinerBlock::onKeyPress);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
     }

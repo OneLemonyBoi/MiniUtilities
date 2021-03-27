@@ -34,12 +34,16 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
     // 2: Redstone to Enable
     // 3: Redstone to Disable
     public Integer redstonemode;
+    public Integer timer;
+    public Integer waittime;
 
     protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
 
     public MechanicalMinerTile() {
         super(TEList.MechanicalMinerTile.get());
         this.redstonemode = 1;
+        this.timer = 0;
+        this.waittime = 20;
     }
 
     @Override
@@ -92,6 +96,9 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
 
     @Override
     public void tick() {
+        this.timer++;
+        if (this.timer != this.waittime) {return;}
+        this.timer = 0;
         if (!world.isRemote && this.redstonemode == 1){
             blockBreaker();
         }
@@ -118,7 +125,6 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
 
     protected void blockBreaker() {
         BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
-
         IInventory iinventory = (IInventory) this.getTileEntity();
         if (iinventory == null) {
             List<Entity> list = world.getEntitiesInAABBexcluding(null, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY() - 0.5D, this.getPos().getZ() - 0.5D, this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D), EntityPredicates.HAS_INVENTORY);
