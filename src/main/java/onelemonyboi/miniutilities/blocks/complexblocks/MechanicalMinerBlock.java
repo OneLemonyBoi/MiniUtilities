@@ -93,6 +93,11 @@ public class MechanicalMinerBlock extends Block {
                     TE.waittime = TE.waittime - 5;
                     TE.timer = 0;
                 }
+                else if (TE.waittime == 5){
+                    TE.waittime = 1;
+                    player.getHeldItem(handIn).shrink(1);
+                    TE.timer = 0;
+                }
             }
             else if (te instanceof MechanicalMinerTile) {
                 NetworkHooks.openGui((ServerPlayerEntity) player, (MechanicalMinerTile) te, pos);
