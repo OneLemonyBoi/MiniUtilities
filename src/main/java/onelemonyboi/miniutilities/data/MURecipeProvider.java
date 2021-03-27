@@ -568,6 +568,26 @@ public class MURecipeProvider extends RecipeProvider {
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 
+        // Mechanical Miner
+        ShapedRecipeBuilder.shapedRecipe(BlockList.MechanicalMiner.get())
+                .key('X', Items.IRON_INGOT)
+                .key('Y', Items.REDSTONE_BLOCK)
+                .key('Z', Items.DIAMOND_PICKAXE)
+                .key('A', Items.GOLD_INGOT)
+                .patternLine("XZX")
+                .patternLine("AYA")
+                .patternLine("XAX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.SpeedUpgrade.get())
+                .key('X', Items.GOLD_INGOT)
+                .key('Y', Items.REDSTONE)
+                .patternLine("XYX")
+                .patternLine("Y Y")
+                .patternLine("XYX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlockList.EnderOre.get()), ItemList.EnderDust.get(), 0.7f, 200)
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer, modId("smelting/ender_ore"));
