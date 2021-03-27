@@ -19,6 +19,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import onelemonyboi.miniutilities.blocks.EarthBlocks;
+import onelemonyboi.miniutilities.blocks.complexblocks.MechanicalMinerBlock;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
 import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
@@ -26,6 +27,7 @@ import onelemonyboi.miniutilities.items.unstable.UnstableShears;
 import onelemonyboi.miniutilities.proxy.ClientProxy;
 import onelemonyboi.miniutilities.proxy.IProxy;
 import onelemonyboi.miniutilities.proxy.ServerProxy;
+import onelemonyboi.miniutilities.tileentities.screens.MechanicalMinerScreen;
 import onelemonyboi.miniutilities.world.Config;
 import onelemonyboi.miniutilities.world.WorldGen;
 import org.apache.logging.log4j.LogManager;
@@ -60,6 +62,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(UnstableHoe::hoeTransformation);
         EVENT_BUS.addListener(WorldGen::generateOres);
         EVENT_BUS.addListener(WorldGen::generatePlants);
+        EVENT_BUS.addListener(MechanicalMinerBlock::onKeyPress);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
     }
@@ -98,6 +101,8 @@ public class MiniUtilities {
         RenderTypeLookup.setRenderLayer(BlockList.GoldSpikes.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.DiamondSpikes.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.NetheriteSpikes.get(), RenderType.getCutout());
+
+        ScreenManager.registerFactory(ContainerList.TestContainer.get(), MechanicalMinerScreen::new);
     }
 
     private void enqueueIMC(InterModEnqueueEvent event) {

@@ -69,6 +69,10 @@ public class ModTags {
         public static final ITag.INamedTag<Item> PINK_LAPIS_CAELESTIS = forge("lapis_caelestis/pink");
         public static final ITag.INamedTag<Item> BROWN_LAPIS_CAELESTIS = forge("lapis_caelestis/brown");
 
+        public static final ITag.INamedTag<Item> WRENCH = forge("wrench");
+        public static final ITag.INamedTag<Item> UPGRADES_SPEED = forge("upgrades/speed");
+        public static final ITag.INamedTag<Item> UPGRADES = forge("upgrades");
+
         private static ITag.INamedTag<Item> forge(String path) {
             return ItemTags.makeWrapperTag(new ResourceLocation("forge", path).toString());
         }
