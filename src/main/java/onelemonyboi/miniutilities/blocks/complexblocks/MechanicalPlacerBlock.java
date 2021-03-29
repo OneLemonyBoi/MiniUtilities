@@ -4,9 +4,14 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -22,6 +27,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.tileentities.DrumTile;
 import onelemonyboi.miniutilities.tileentities.MechanicalPlacerTile;
 import org.lwjgl.glfw.GLFW;
 
@@ -116,6 +122,19 @@ public class MechanicalPlacerBlock extends Block {
     @Deprecated
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof MechanicalPlacerTile) {
+            ItemStack itemStack = new ItemStack(this);
+            CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
+            itemStack.setTagInfo("BlockEntityTag", compoundNBT);
+            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+        }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {

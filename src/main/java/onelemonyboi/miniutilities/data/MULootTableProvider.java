@@ -88,7 +88,8 @@ public class MULootTableProvider extends LootTableProvider {
             registerDropSelfLootTable(BlockList.GoldSpikes.get());
             registerDropSelfLootTable(BlockList.DiamondSpikes.get());
             registerDropSelfLootTable(BlockList.NetheriteSpikes.get());
-            registerLootTable(BlockList.MechanicalMiner.get(), BlockLootTables::droppingWithName);
+            registerLootTable(BlockList.MechanicalMiner.get(), blockNoDrop());
+            registerLootTable(BlockList.MechanicalPlacer.get(), blockNoDrop());
 
             ILootCondition.IBuilder ilootcondition = BlockStateProperty.builder(BlockList.EnderLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EnderLily.AGE, 7));
             registerLootTable(BlockList.EnderLily.get(), withExplosionDecay(BlockList.EnderLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(Items.ENDER_PEARL))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));

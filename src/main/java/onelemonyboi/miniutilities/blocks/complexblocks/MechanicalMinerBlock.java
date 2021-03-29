@@ -2,9 +2,13 @@ package onelemonyboi.miniutilities.blocks.complexblocks;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -21,6 +25,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.tileentities.DrumTile;
 import onelemonyboi.miniutilities.tileentities.MechanicalMinerTile;
 import org.lwjgl.glfw.GLFW;
 
@@ -123,6 +128,19 @@ public class MechanicalMinerBlock extends Block {
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof MechanicalMinerTile) {
+            ItemStack itemStack = new ItemStack(this);
+            CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
+            itemStack.setTagInfo("BlockEntityTag", compoundNBT);
+            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+        }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
     @SubscribeEvent
