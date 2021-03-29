@@ -12,6 +12,7 @@ import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.DrumBlock;
 import onelemonyboi.miniutilities.blocks.*;
+import onelemonyboi.miniutilities.blocks.complexblocks.MechanicalPlacerBlock;
 import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.MechanicalMinerBlock;
 
@@ -58,6 +59,7 @@ public class BlockList {
     public static final RegistryObject<Block> NetheriteSpikes = register("netherite_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(16.0F).harvestLevel(3), 16, true, true, false));
 
     public static final RegistryObject<Block> MechanicalMiner = register("mechanical_miner", MechanicalMinerBlock::new);
+    public static final RegistryObject<Block> MechanicalPlacer = register("mechanical_placer", MechanicalPlacerBlock::new);
 
 
     public static void register() {}
