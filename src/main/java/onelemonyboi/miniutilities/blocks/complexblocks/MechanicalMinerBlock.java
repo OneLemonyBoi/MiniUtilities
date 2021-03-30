@@ -25,7 +25,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.tileentities.DrumTile;
 import onelemonyboi.miniutilities.tileentities.MechanicalMinerTile;
 import org.lwjgl.glfw.GLFW;
 
@@ -100,6 +99,7 @@ public class MechanicalMinerBlock extends Block {
                 }
                 else if (TE.waittime == 5){
                     TE.waittime = 1;
+                    player.getHeldItem(handIn).shrink(1);
                     player.getHeldItem(handIn).shrink(1);
                     TE.timer = 0;
                 }

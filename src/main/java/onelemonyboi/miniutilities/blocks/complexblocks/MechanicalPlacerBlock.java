@@ -98,6 +98,7 @@ public class MechanicalPlacerBlock extends Block {
                 MechanicalPlacerTile TE = ((MechanicalPlacerTile) te);
                 if (TE.waittime > 5) {
                     TE.waittime = TE.waittime - 5;
+                    player.getHeldItem(handIn).shrink(1);
                     TE.timer = 0;
                 }
                 else if (TE.waittime == 5){

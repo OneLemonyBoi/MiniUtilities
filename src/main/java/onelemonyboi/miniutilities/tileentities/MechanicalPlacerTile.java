@@ -1,19 +1,15 @@
 package onelemonyboi.miniutilities.tileentities;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SnowballItem;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -22,12 +18,9 @@ import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.server.ServerWorld;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.tileentities.containers.MechanicalMinerContainer;
 import onelemonyboi.miniutilities.tileentities.containers.MechanicalPlacerContainer;
 
 import java.util.List;
@@ -94,11 +87,6 @@ public class MechanicalPlacerTile extends LockableLootTileEntity implements ITic
         }
     }
 
-    /**
-     * Insert the specified stack to the specified inventory and return any leftover items
-     * Includes modified form of HopperTileEntity#insertSlot
-     */
-
     @Override
     public void tick() {
         this.timer++;
@@ -129,7 +117,8 @@ public class MechanicalPlacerTile extends LockableLootTileEntity implements ITic
         for (int j = 0; j < i && !flag; ++j) {
             ItemStack itemStack1 = iinventory.getStackInSlot(j);
             Item item1 = itemStack1.getItem();
-            if (!itemStack1.isEmpty() && item1 instanceof BlockItem) {
+            Boolean airChecker = world.getBlockState(blockPos) == Blocks.AIR.getDefaultState() || world.getBlockState(blockPos) == Blocks.CAVE_AIR.getDefaultState() || world.getBlockState(blockPos) == Blocks.VOID_AIR.getDefaultState();
+            if (!itemStack1.isEmpty() && item1 instanceof BlockItem && airChecker) {
                 world.setBlockState(blockPos, ((BlockItem) item1).getBlock().getDefaultState());
                 itemStack1.shrink(1);
                 flag = true;
