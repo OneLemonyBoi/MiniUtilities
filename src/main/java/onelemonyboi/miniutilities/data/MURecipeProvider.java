@@ -568,7 +568,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 
-        // Mechanical Miner
+        // Machines
         ShapedRecipeBuilder.shapedRecipe(BlockList.MechanicalMiner.get())
                 .key('X', Items.IRON_INGOT)
                 .key('Y', Items.REDSTONE_BLOCK)
@@ -579,6 +579,17 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XAX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.MechanicalPlacer.get())
+                .key('X', Items.GOLD_INGOT)
+                .key('Y', Items.REDSTONE_BLOCK)
+                .key('Z', Items.DISPENSER)
+                .key('A', Items.DIAMOND)
+                .patternLine("XZX")
+                .patternLine("AYA")
+                .patternLine("XAX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
         ShapedRecipeBuilder.shapedRecipe(ItemList.SpeedUpgrade.get())
                 .key('X', Items.GOLD_INGOT)
                 .key('Y', Items.REDSTONE)
