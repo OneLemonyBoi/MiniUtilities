@@ -95,11 +95,11 @@ public class MechanicalMinerBlock extends Block {
                 MechanicalMinerTile TE = ((MechanicalMinerTile) te);
                 if (TE.waittime > 5) {
                     TE.waittime = TE.waittime - 5;
+                    player.getHeldItem(handIn).shrink(1);
                     TE.timer = 0;
                 }
                 else if (TE.waittime == 5){
                     TE.waittime = 1;
-                    player.getHeldItem(handIn).shrink(1);
                     player.getHeldItem(handIn).shrink(1);
                     TE.timer = 0;
                 }
