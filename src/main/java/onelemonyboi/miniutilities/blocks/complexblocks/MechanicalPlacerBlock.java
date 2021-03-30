@@ -24,7 +24,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.UUID;
 
-public class MechanicalPlacerBlock extends DirectionalMachine {
+public class MechanicalPlacerBlock extends DirectionalMechanicalMachine {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public static Boolean keyPressed = false;

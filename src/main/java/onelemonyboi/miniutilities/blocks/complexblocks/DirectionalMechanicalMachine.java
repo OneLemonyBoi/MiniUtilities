@@ -17,10 +17,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import onelemonyboi.miniutilities.tileentities.MechanicalMinerTile;
 
-public abstract class DirectionalMachine extends Block {
+public abstract class DirectionalMechanicalMachine extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
-    public DirectionalMachine(Properties properties) {
+    public DirectionalMechanicalMachine(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }

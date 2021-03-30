@@ -23,7 +23,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.UUID;
 
-public class MechanicalMinerBlock extends DirectionalMachine {
+public class MechanicalMinerBlock extends DirectionalMechanicalMachine {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public static Boolean keyPressed = false;
