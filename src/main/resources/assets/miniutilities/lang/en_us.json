@@ -85,5 +85,7 @@
   "item.miniutilities.infused_helmet": "Infused Helmet",
   "item.miniutilities.infused_chestplate": "Infused Chestplate",
   "item.miniutilities.infused_leggings": "Infused Leggings",
-  "item.miniutilities.infused_boots": "Infused Boots"
+  "item.miniutilities.infused_boots": "Infused Boots",
+  "item.miniutilities.wrench": "Wrench",
+  "item.miniutilities.speed_upgrade": "Speed Upgrade"
 }
