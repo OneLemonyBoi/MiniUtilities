@@ -55,8 +55,9 @@ public class MechanicalMinerBlock extends Block {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
+            Boolean wrenchCheck = ModTags.Items.WRENCH.contains(player.getHeldItem(handIn).getItem()) || ModTags.Items.WRENCHES.contains(player.getHeldItem(handIn).getItem()) || ModTags.Items.TOOLS_WRENCH.contains(player.getHeldItem(handIn).getItem());
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof MechanicalMinerTile && ModTags.Items.WRENCH.contains(player.getHeldItem(handIn).getItem()) && keyPressed) {
+            if (te instanceof MechanicalMinerTile && wrenchCheck && keyPressed) {
                 MechanicalMinerTile TE = ((MechanicalMinerTile) te);
                 player.sendMessage(new TranslationTextComponent("text.miniutilities.info"), UUID.randomUUID());
                 if (TE.redstonemode == 1) {
@@ -73,7 +74,7 @@ public class MechanicalMinerBlock extends Block {
                         .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
                         .appendString(")"), UUID.randomUUID());
             }
-            else if (te instanceof MechanicalMinerTile && ModTags.Items.WRENCH.contains(player.getHeldItem(handIn).getItem())) {
+            else if (te instanceof MechanicalMinerTile && wrenchCheck) {
                 MechanicalMinerTile TE = ((MechanicalMinerTile) te);
                 switch (TE.redstonemode) {
                     case 1:

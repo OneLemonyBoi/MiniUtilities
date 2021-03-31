@@ -58,8 +58,9 @@ public class MechanicalPlacerBlock extends Block {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
+            Boolean wrenchCheck = ModTags.Items.WRENCH.contains(player.getHeldItem(handIn).getItem()) || ModTags.Items.WRENCHES.contains(player.getHeldItem(handIn).getItem()) || ModTags.Items.TOOLS_WRENCH.contains(player.getHeldItem(handIn).getItem());
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof MechanicalPlacerTile && ModTags.Items.WRENCH.contains(player.getHeldItem(handIn).getItem()) && keyPressed) {
+            if (te instanceof MechanicalPlacerTile && wrenchCheck && keyPressed) {
                 MechanicalPlacerTile TE = ((MechanicalPlacerTile) te);
                 player.sendMessage(new TranslationTextComponent("text.miniutilities.info"), UUID.randomUUID());
                 if (TE.redstonemode == 1) {
@@ -76,7 +77,7 @@ public class MechanicalPlacerBlock extends Block {
                         .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
                         .appendString(")"), UUID.randomUUID());
             }
-            else if (te instanceof MechanicalPlacerTile && ModTags.Items.WRENCH.contains(player.getHeldItem(handIn).getItem())) {
+            else if (te instanceof MechanicalPlacerTile && wrenchCheck) {
                 MechanicalPlacerTile TE = ((MechanicalPlacerTile) te);
                 switch (TE.redstonemode) {
                     case 1:
