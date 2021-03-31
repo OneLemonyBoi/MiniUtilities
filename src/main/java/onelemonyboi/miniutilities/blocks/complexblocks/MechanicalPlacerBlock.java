@@ -33,11 +33,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.UUID;
 
-<<<<<<< HEAD
-public class MechanicalPlacerBlock extends DirectionalMechanicalMachine {
-=======
 public class MechanicalPlacerBlock extends Block {
->>>>>>> parent of 3b1ee6a (Switching over to base class for machines)
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public static Boolean keyPressed = false;
