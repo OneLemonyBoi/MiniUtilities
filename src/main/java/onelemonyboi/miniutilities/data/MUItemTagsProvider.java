@@ -50,6 +50,9 @@ public class MUItemTagsProvider extends ItemTagsProvider {
         getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.GoldAngelRing.get());
 
         getOrCreateBuilder(ModTags.Items.WRENCH).add(ItemList.Wrench.get());
+        getOrCreateBuilder(ModTags.Items.WRENCHES).add(ItemList.Wrench.get());
+        getOrCreateBuilder(ModTags.Items.TOOLS_WRENCH).add(ItemList.Wrench.get());
+        getOrCreateBuilder(ModTags.Items.TOOLS).addTag(ModTags.Items.TOOLS_WRENCH);
         getOrCreateBuilder(ModTags.Items.UPGRADES).addTag(ModTags.Items.UPGRADES_SPEED);
         getOrCreateBuilder(ModTags.Items.UPGRADES_SPEED).add(ItemList.SpeedUpgrade.get());
     }

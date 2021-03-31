@@ -72,6 +72,7 @@ public class ModTags {
         public static final ITag.INamedTag<Item> WRENCH = forge("wrench");
         public static final ITag.INamedTag<Item> WRENCHES = forge("wrenches");
         public static final ITag.INamedTag<Item> TOOLS_WRENCH = forge("tools/wrench");
+        public static final ITag.INamedTag<Item> TOOLS = forge("tools");
         public static final ITag.INamedTag<Item> UPGRADES_SPEED = forge("upgrades/speed");
         public static final ITag.INamedTag<Item> UPGRADES = forge("upgrades");
 

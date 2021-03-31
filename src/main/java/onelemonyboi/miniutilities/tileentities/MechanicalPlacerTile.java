@@ -70,20 +70,24 @@ public class MechanicalPlacerTile extends LockableLootTileEntity implements ITic
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
-        if(!this.checkLootAndWrite(compound)) {
-            ItemStackHelper.saveAllItems(compound, this.items);
+    public CompoundNBT write(CompoundNBT tag) {
+        super.write(tag);
+        tag.putInt("RedstoneMode", this.redstonemode);
+        tag.putInt("WaitTime", this.waittime);
+        if(!this.checkLootAndWrite(tag)) {
+            ItemStackHelper.saveAllItems(tag, this.items);
         }
-        return compound;
+        return tag;
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
-        super.read(state, nbt);
+    public void read(BlockState state, CompoundNBT tag) {
+        super.read(state, tag);
+        this.redstonemode = tag.getInt("RedstoneMode");
+        this.waittime = tag.getInt("WaitTime");
         this.items = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
-        if (!this.checkLootAndRead(nbt)) {
-            ItemStackHelper.loadAllItems(nbt, this.items);
+        if (!this.checkLootAndRead(tag)) {
+            ItemStackHelper.loadAllItems(tag, this.items);
         }
     }
 
