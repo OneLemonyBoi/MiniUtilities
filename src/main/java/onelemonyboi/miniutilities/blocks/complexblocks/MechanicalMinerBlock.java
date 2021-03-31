@@ -2,14 +2,21 @@ package onelemonyboi.miniutilities.blocks.complexblocks;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -23,7 +30,11 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.UUID;
 
+<<<<<<< HEAD
 public class MechanicalMinerBlock extends DirectionalMechanicalMachine {
+=======
+public class MechanicalMinerBlock extends Block {
+>>>>>>> parent of 3b1ee6a (Switching over to base class for machines)
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public static Boolean keyPressed = false;
@@ -35,6 +46,11 @@ public class MechanicalMinerBlock extends DirectionalMechanicalMachine {
     }
 
     @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return TEList.MechanicalMinerTile.get().create();
     }
@@ -43,9 +59,8 @@ public class MechanicalMinerBlock extends DirectionalMechanicalMachine {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
-            Boolean wrenchCheck = ModTags.Items.WRENCH.contains(player.getHeldItem(handIn).getItem()) || ModTags.Items.WRENCHES.contains(player.getHeldItem(handIn).getItem()) || ModTags.Items.TOOLS_WRENCH.contains(player.getHeldItem(handIn).getItem());
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof MechanicalMinerTile && wrenchCheck && keyPressed) {
+            if (te instanceof MechanicalMinerTile && ModTags.Items.WRENCH.contains(player.getHeldItem(handIn).getItem()) && keyPressed) {
                 MechanicalMinerTile TE = ((MechanicalMinerTile) te);
                 player.sendMessage(new TranslationTextComponent("text.miniutilities.info"), UUID.randomUUID());
                 if (TE.redstonemode == 1) {
@@ -62,7 +77,7 @@ public class MechanicalMinerBlock extends DirectionalMechanicalMachine {
                         .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
                         .appendString(")"), UUID.randomUUID());
             }
-            else if (te instanceof MechanicalMinerTile && wrenchCheck) {
+            else if (te instanceof MechanicalMinerTile && ModTags.Items.WRENCH.contains(player.getHeldItem(handIn).getItem())) {
                 MechanicalMinerTile TE = ((MechanicalMinerTile) te);
                 switch (TE.redstonemode) {
                     case 1:
@@ -99,6 +114,37 @@ public class MechanicalMinerBlock extends DirectionalMechanicalMachine {
             }
         }
         return ActionResultType.CONSUME;
+    }
+
+    @Deprecated
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
+    }
+
+    @Deprecated
+    public BlockState mirror(BlockState state, Mirror mirrorIn) {
+        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+    }
+
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof MechanicalMinerTile) {
+            ItemStack itemStack = new ItemStack(this);
+            CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
+            itemStack.setTagInfo("BlockEntityTag", compoundNBT);
+            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+        }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
     @SubscribeEvent
