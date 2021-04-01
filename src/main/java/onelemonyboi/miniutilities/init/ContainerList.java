@@ -8,8 +8,8 @@ import onelemonyboi.miniutilities.tileentities.containers.MechanicalMinerContain
 import onelemonyboi.miniutilities.tileentities.containers.MechanicalPlacerContainer;
 
 public class ContainerList {
-    public static final RegistryObject<ContainerType<MechanicalMinerContainer>> MinerContainer = ModRegistry.CONTAINER.register("miner_container", () -> IForgeContainerType.create(MechanicalMinerContainer::new));
-    public static final RegistryObject<ContainerType<MechanicalPlacerContainer>> PlacerContainer = ModRegistry.CONTAINER.register("placer_container", () -> IForgeContainerType.create(MechanicalPlacerContainer::new));
+    public static final RegistryObject<ContainerType<MechanicalMinerContainer>> MinerContainer = ModRegistry.CONTAINERS.register("miner_container", () -> IForgeContainerType.create(MechanicalMinerContainer::new));
+    public static final RegistryObject<ContainerType<MechanicalPlacerContainer>> PlacerContainer = ModRegistry.CONTAINERS.register("placer_container", () -> IForgeContainerType.create(MechanicalPlacerContainer::new));
 
     public static void register() {}
 }

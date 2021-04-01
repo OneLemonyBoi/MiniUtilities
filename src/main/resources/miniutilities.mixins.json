@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "onelemonyboi.miniutilities.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "miniutilities.refmap.json",
+  "mixins": [
+  ],
+  "client":[
+    "BowMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}
