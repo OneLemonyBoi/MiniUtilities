@@ -24,8 +24,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.world.Config;
+import org.spongepowered.asm.mixin.injection.At;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -52,7 +54,7 @@ public class Kikoku extends SwordItem {
 
         ListMultimap<Attribute, AttributeModifier> multimaps = ArrayListMultimap.create();
         if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 3D, AttributeModifier.Operation.ADDITION));
+            multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 4, AttributeModifier.Operation.ADDITION));
             multimaps.put(DIVINE_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "God Damage Modifier", 2, AttributeModifier.Operation.ADDITION));
             multimaps.put(SOUL_DAMAGE, new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage Modifier", 0.25, AttributeModifier.Operation.ADDITION));
         }
@@ -64,15 +66,28 @@ public class Kikoku extends SwordItem {
 
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (target == null || !target.canBeAttackedWithItem()) return false;
-        if (attacker.world.isRemote) return false;
-
+        if (target == null || !target.canBeAttackedWithItem() || attacker.world.isRemote) {
+            return false;
+        }
+        Map<Enchantment, Integer> stackEnchantments = EnchantmentHelper.getEnchantments(stack);
+        MiniUtilities.LOGGER.debug(stackEnchantments.toString());
         if (target instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) target;
-            if (player.isCreative() && target.isInvulnerableTo(DamageSource.ANVIL))
-                target.attackEntityFrom(DIVINE_DAMAGE_SOURCE, 3);
-        } else {
-            target.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, 4);
+            if (player.isCreative()) {
+                for (Map.Entry<Attribute, AttributeModifier> entry : stack.getAttributeModifiers(EquipmentSlotType.MAINHAND).entries()) {
+                     if (entry.getKey() == DIVINE_DAMAGE) {
+                         target.attackEntityFrom(DIVINE_DAMAGE_SOURCE, (float) entry.getValue().getAmount());
+                     }
+                     if (entry.getKey() == ARMOR_PIERCING_DAMAGE) {
+                         target.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, (float) entry.getValue().getAmount());
+                     }
+                }
+            }
+        }
+        for (Map.Entry<Attribute, AttributeModifier> entry : stack.getAttributeModifiers(EquipmentSlotType.MAINHAND).entries()) {
+            if (entry.getKey() == ARMOR_PIERCING_DAMAGE) {
+                target.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, (float) entry.getValue().getAmount());
+            }
         }
         drainHealth(target);
         return true;
@@ -126,43 +141,3 @@ public class Kikoku extends SwordItem {
         event.setOutput(enchantedSword);
     }
 }
-
-/*
-
-    @Override
-    public int getItemStackLimit(ItemStack stack) {
-        return 1;
-    }
-
-    @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (target == null || !target.canBeAttackedWithItem()) return false;
-        if (attacker.world.isRemote) return false;
-
-        boolean flag = !target.isInvulnerableTo(DamageSource.ANVIL);
-        boolean cKill = false;
-        if (target instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) target;
-            if (player.isCreative() && target.isInvulnerableTo(DamageSource.ANVIL))
-                target.attackEntityFrom(DamageSource.OUT_OF_WORLD, 3);
-        }
-        else {
-            target.attackEntityFrom(DamageSource.OUT_OF_WORLD, 4);
-        }
-        target.setHealth(target.getHealth() - 0.25f);
-        return true;
-    }
-
-    @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        return true;
-    }
-
-    @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("miniutilities.armorpiercing"));
-        tooltip.add(new TranslationTextComponent("miniutilities.divinedamage"));
-        tooltip.add(new TranslationTextComponent("miniutilities.permanenthealthloss").mergeStyle(TextFormatting.BLUE));
-    }
-*/
