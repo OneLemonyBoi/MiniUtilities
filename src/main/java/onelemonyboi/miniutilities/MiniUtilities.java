@@ -23,6 +23,7 @@ import onelemonyboi.miniutilities.blocks.complexblocks.MechanicalMinerBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.MechanicalPlacerBlock;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
+import onelemonyboi.miniutilities.items.Kikoku;
 import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
 import onelemonyboi.miniutilities.proxy.ClientProxy;
@@ -66,6 +67,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(WorldGen::generatePlants);
         EVENT_BUS.addListener(MechanicalMinerBlock::onKeyPress);
         EVENT_BUS.addListener(MechanicalPlacerBlock::onKeyPress);
+        EVENT_BUS.addListener(Kikoku::AnvilUpdateEvent);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
     }

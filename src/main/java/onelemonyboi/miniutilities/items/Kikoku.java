@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,10 +16,15 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.world.Config;
 
 import javax.annotation.Nonnull;
@@ -35,12 +41,8 @@ public class Kikoku extends SwordItem {
     public static final DamageSource DIVINE_DAMAGE_SOURCE = (new DamageSource("divineDamage")).setDamageBypassesArmor().setDamageAllowedInCreativeMode().setDamageIsAbsolute();
     public static final DamageSource ARMOR_PIERCING_DAMAGE_SOURCE = (new DamageSource("divineDamage")).setDamageBypassesArmor().setDamageIsAbsolute();
 
-    public TextureAtlasSprite sprite;
-    private ModelRenderer.ModelBox sword;
-
     public Kikoku(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties builderIn) {
         super(tier, attackDamageIn, attackSpeedIn, builderIn);
-        MinecraftForge.EVENT_BUS.register(new OPAnvilHandler(this));
     }
 
     @Nonnull
@@ -52,9 +54,9 @@ public class Kikoku extends SwordItem {
         if (equipmentSlot == EquipmentSlotType.MAINHAND) {
             multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 3D, AttributeModifier.Operation.ADDITION));
             multimaps.put(DIVINE_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "God Damage Modifier", 2, AttributeModifier.Operation.ADDITION));
-            multimaps.put(SOUL_DAMAGE, new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage Modifier", 10 / 39.0, AttributeModifier.Operation.ADDITION));
+            multimaps.put(SOUL_DAMAGE, new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage Modifier", 0.25, AttributeModifier.Operation.ADDITION));
         }
-        for (Attribute attribute: multimap.keySet()) {
+        for (Attribute attribute : multimap.keySet()) {
             multimaps.putAll(attribute, multimap.get(attribute));
         }
         return multimaps;
@@ -69,8 +71,7 @@ public class Kikoku extends SwordItem {
             PlayerEntity player = (PlayerEntity) target;
             if (player.isCreative() && target.isInvulnerableTo(DamageSource.ANVIL))
                 target.attackEntityFrom(DIVINE_DAMAGE_SOURCE, 3);
-        }
-        else {
+        } else {
             target.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, 4);
         }
         drainHealth(target);
@@ -78,70 +79,51 @@ public class Kikoku extends SwordItem {
     }
 
     private void drainHealth(LivingEntity target) {
-        double health = 0;
-        AttributeModifier attributeModifier = target.getAttribute(Attributes.MAX_HEALTH).getModifier(SOUL_DAMAGE_MODIFIER);
-        if (attributeModifier != null) {
-            health = attributeModifier.getAmount();
-            if (health == -1) return;
+        if (target.getAttribute(Attributes.MAX_HEALTH).getModifier(SOUL_DAMAGE_MODIFIER) == null) {
+            AttributeModifier attributeModifier = new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage", -0.25, AttributeModifier.Operation.ADDITION);
+            target.getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(attributeModifier);
         }
-
-        health -= 1 / 39F;
-
-        if (health < -1) {health = -1;}
-
-        target.getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage", health, AttributeModifier.Operation.ADDITION));
-        if (health <= -1) {
-            target.attackEntityFrom(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
+        else {
+            AttributeModifier attributeModifier = new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage", -0.25 + target.getAttribute(Attributes.MAX_HEALTH).getModifier(SOUL_DAMAGE_MODIFIER).getAmount(), AttributeModifier.Operation.ADDITION);
+            target.getAttribute(Attributes.MAX_HEALTH).removePersistentModifier(SOUL_DAMAGE_MODIFIER);
+            target.getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(attributeModifier);
         }
-
     }
 
-    public static class OPAnvilHandler {
-
-        @Nonnull
-        private final Item item;
-
-        public OPAnvilHandler(@Nonnull Item item) {
-            this.item = item;
+    public static void AnvilUpdateEvent(AnvilUpdateEvent event) {
+        ItemStack sword = event.getLeft();
+        ItemStack book = event.getRight();
+        if (sword == null || sword.getItem() != ItemList.Kikoku.get() || book == null) {
+            return;
         }
 
-        @SubscribeEvent
-        public void anvil(AnvilUpdateEvent event) {
-            ItemStack left = event.getLeft();
-            ItemStack right = event.getRight();
-            if (left == null || left.getItem() != item || right == null)
-                return;
+        Map<Enchantment, Integer> swordMap = EnchantmentHelper.getEnchantments(sword);
+        Map<Enchantment, Integer> bookMap = EnchantmentHelper.getEnchantments(book);
+        if (bookMap.isEmpty()) {
+            return;
+        }
+        Map<Enchantment, Integer> outputMap = new HashMap<>(swordMap);
+        int costCounter = 0;
 
-            Map<Enchantment, Integer> map1 = EnchantmentHelper.getEnchantments(left);
-            Map<Enchantment, Integer> map2 = EnchantmentHelper.getEnchantments(right);
-            if (map2.isEmpty()) return;
-
-            Map<Enchantment, Integer> map3 = new HashMap<>(map1);
-
-            int cost = 0;
-
-            for (Map.Entry<Enchantment, Integer> entry : map2.entrySet()) {
-                Enchantment enchantment = entry.getKey();
-                if (enchantment == null) continue;
-
-                Integer curValue = map1.get(entry.getKey());
-                Integer addValue = entry.getValue();
-                if (curValue == null) {
-                    cost += addValue;
-                    map3.put(entry.getKey(), addValue);
-                } else {
-                    int value = Math.min(curValue + addValue, enchantment.getMaxLevel() * Config.max_kikoku_multiplier.get());
-                    cost += value - curValue;
-                    map3.put(entry.getKey(), value);
-                }
+        for (Map.Entry<Enchantment, Integer> entry : bookMap.entrySet()) {
+            Enchantment enchantment = entry.getKey();
+            if (enchantment == null) {continue;}
+            Integer curValue = swordMap.get(entry.getKey());
+            Integer addValue = entry.getValue();
+            if (curValue == null) {
+                outputMap.put(entry.getKey(), addValue);
+            } else {
+                int value = Math.min(curValue + addValue, enchantment.getMaxLevel() * Config.max_kikoku_multiplier.get());
+                outputMap.put(entry.getKey(), value);
             }
+            costCounter += enchantment.getMaxLevel() * 5;
 
-            event.setCost(20);
-
-            ItemStack copy = left.copy();
-            EnchantmentHelper.setEnchantments(map3, copy);
-            event.setOutput(copy);
         }
+        event.setCost(costCounter);
+
+        ItemStack enchantedSword = sword.copy();
+        EnchantmentHelper.setEnchantments(outputMap, enchantedSword);
+        event.setOutput(enchantedSword);
     }
 }
 
