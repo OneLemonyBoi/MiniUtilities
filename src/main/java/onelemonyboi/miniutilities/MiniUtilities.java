@@ -19,15 +19,27 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import onelemonyboi.miniutilities.blocks.EarthBlocks;
+<<<<<<< Updated upstream
 import onelemonyboi.miniutilities.blocks.complexblocks.MechanicalMinerBlock;
+=======
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalMinerBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalPlacerBlock;
+>>>>>>> Stashed changes
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
 import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
+import onelemonyboi.miniutilities.misc.KeyBindings;
+import onelemonyboi.miniutilities.misc.KeyBindingsHandler;
 import onelemonyboi.miniutilities.proxy.ClientProxy;
 import onelemonyboi.miniutilities.proxy.IProxy;
 import onelemonyboi.miniutilities.proxy.ServerProxy;
+<<<<<<< Updated upstream
 import onelemonyboi.miniutilities.tileentities.screens.MechanicalMinerScreen;
+=======
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.screens.MechanicalMinerScreen;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.screens.MechanicalPlacerScreen;
+>>>>>>> Stashed changes
 import onelemonyboi.miniutilities.world.Config;
 import onelemonyboi.miniutilities.world.WorldGen;
 import org.apache.logging.log4j.LogManager;
@@ -63,6 +75,13 @@ public class MiniUtilities {
         EVENT_BUS.addListener(WorldGen::generateOres);
         EVENT_BUS.addListener(WorldGen::generatePlants);
         EVENT_BUS.addListener(MechanicalMinerBlock::onKeyPress);
+<<<<<<< Updated upstream
+=======
+        EVENT_BUS.addListener(MechanicalPlacerBlock::onKeyPress);
+        EVENT_BUS.addListener(Kikoku::AnvilUpdateEvent);
+        EVENT_BUS.addListener(Kikoku::AnvilRepairEvent);
+        EVENT_BUS.addListener(KeyBindingsHandler::keybinds);
+>>>>>>> Stashed changes
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
     }
@@ -102,7 +121,14 @@ public class MiniUtilities {
         RenderTypeLookup.setRenderLayer(BlockList.DiamondSpikes.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.NetheriteSpikes.get(), RenderType.getCutout());
 
+<<<<<<< Updated upstream
         ScreenManager.registerFactory(ContainerList.TestContainer.get(), MechanicalMinerScreen::new);
+=======
+        ScreenManager.registerFactory(ContainerList.MinerContainer.get(), MechanicalMinerScreen::new);
+        ScreenManager.registerFactory(ContainerList.PlacerContainer.get(), MechanicalPlacerScreen::new);
+
+        KeyBindings.register();
+>>>>>>> Stashed changes
     }
 
     private void enqueueIMC(InterModEnqueueEvent event) {

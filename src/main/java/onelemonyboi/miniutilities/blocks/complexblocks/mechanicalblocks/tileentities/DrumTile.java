@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.tileentities;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -6,7 +6,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.server.ServerWorld;
@@ -16,7 +15,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.TEList;
 
 import javax.annotation.Nonnull;
@@ -76,7 +74,7 @@ public class DrumTile extends TileEntity {
     }
 
     public void sendToClients() {
-        if (!this.getWorld().isRemote) {
+        if (!world.isRemote) {
             ServerWorld world = (ServerWorld) this.getWorld();
             Stream<ServerPlayerEntity> entities = world.getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(this.getPos()), false);
             SUpdateTileEntityPacket packet = this.getUpdatePacket();

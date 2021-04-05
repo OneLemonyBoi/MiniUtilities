@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.tileentities.containers;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -10,9 +10,9 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalMinerTile;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
-import onelemonyboi.miniutilities.tileentities.MechanicalMinerTile;
 
 import java.util.Objects;
 

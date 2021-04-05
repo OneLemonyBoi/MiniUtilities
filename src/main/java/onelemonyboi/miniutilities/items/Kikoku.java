@@ -47,7 +47,6 @@ public class Kikoku extends SwordItem {
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
         Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
-
         ListMultimap<Attribute, AttributeModifier> multimaps = ArrayListMultimap.create();
         if (equipmentSlot == EquipmentSlotType.MAINHAND) {
             multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 3D, AttributeModifier.Operation.ADDITION));
@@ -104,6 +103,7 @@ public class Kikoku extends SwordItem {
         public OPAnvilHandler(@Nonnull Item item) {
             this.item = item;
         }
+<<<<<<< Updated upstream
 
         @SubscribeEvent
         public void anvil(AnvilUpdateEvent event) {
@@ -134,6 +134,22 @@ public class Kikoku extends SwordItem {
                     cost += value - curValue;
                     map3.put(entry.getKey(), value);
                 }
+=======
+        Map<Enchantment, Integer> swordMap = EnchantmentHelper.getEnchantments(sword);
+        Map<Enchantment, Integer> bookMap = EnchantmentHelper.getEnchantments(book);
+        if (bookMap.isEmpty()) { return; }
+        Map<Enchantment, Integer> outputMap = new HashMap<>(swordMap);
+        int costCounter = 0;
+        for (Map.Entry<Enchantment, Integer> entry : bookMap.entrySet()) {
+            Enchantment enchantment = entry.getKey();
+            if (enchantment == null) {continue;}
+            Integer currentValue = swordMap.get(entry.getKey());
+            Integer addValue = entry.getValue();
+            if (currentValue == null) { outputMap.put(entry.getKey(), addValue); }
+            else {
+                int value = Math.min(currentValue + addValue, enchantment.getMaxLevel() * Config.max_kikoku_multiplier.get());
+                outputMap.put(entry.getKey(), value);
+>>>>>>> Stashed changes
             }
 
             event.setCost(20);
@@ -142,6 +158,7 @@ public class Kikoku extends SwordItem {
             EnchantmentHelper.setEnchantments(map3, copy);
             event.setOutput(copy);
         }
+<<<<<<< Updated upstream
     }
 }
 
@@ -150,6 +167,12 @@ public class Kikoku extends SwordItem {
     @Override
     public int getItemStackLimit(ItemStack stack) {
         return 1;
+=======
+        event.setCost(costCounter);
+        ItemStack enchantedSword = sword.copy();
+        EnchantmentHelper.setEnchantments(outputMap, enchantedSword);
+        event.setOutput(enchantedSword);
+>>>>>>> Stashed changes
     }
 
     @Override

@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.tileentities;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -23,7 +23,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.tileentities.containers.MechanicalMinerContainer;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalMinerContainer;
 
 import java.util.List;
 
