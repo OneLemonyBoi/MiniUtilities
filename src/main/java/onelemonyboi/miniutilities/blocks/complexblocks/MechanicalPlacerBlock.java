@@ -27,7 +27,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.tileentities.DrumTile;
 import onelemonyboi.miniutilities.tileentities.MechanicalPlacerTile;
 import org.lwjgl.glfw.GLFW;
 
