@@ -28,6 +28,7 @@ import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
 import onelemonyboi.miniutilities.misc.KeyBindings;
 import onelemonyboi.miniutilities.misc.KeyBindingsHandler;
+import onelemonyboi.miniutilities.packets.Packet;
 import onelemonyboi.miniutilities.proxy.ClientProxy;
 import onelemonyboi.miniutilities.proxy.IProxy;
 import onelemonyboi.miniutilities.proxy.ServerProxy;
@@ -74,6 +75,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(KeyBindingsHandler::keybinds);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
+        Packet.main();
     }
 
     private void setup(final FMLCommonSetupEvent event)
