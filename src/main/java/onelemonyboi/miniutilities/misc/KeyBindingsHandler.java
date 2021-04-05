@@ -10,7 +10,7 @@ public class KeyBindingsHandler {
     public static void keybinds(TickEvent.PlayerTickEvent event) {
         if (event.player.world.isRemote && KeyBindings.preventChange.isKeyDown()) {
             keyBindingPressed = !keyBindingPressed;
-            Packet.INSTANCE.send(PacketDistributor.ALL.noArg(), new KeyPressUpdate(keyBindingPressed));
+            Packet.INSTANCE.sendToServer(new KeyPressUpdate(keyBindingPressed));
         }
     }
 }
