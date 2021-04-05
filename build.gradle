@@ -113,6 +113,7 @@ dependencies {
     compileOnly fg.deobf("curse.maven:curios-309927:3231111:api")
     runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")
     implementation fg.deobf("curse.maven:ctm-267602:3137659")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:3157997")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

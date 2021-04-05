@@ -3,6 +3,8 @@ package onelemonyboi.miniutilities.items;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.block.SoundType;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.enchantment.Enchantment;
@@ -21,8 +23,10 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.ItemList;
@@ -41,7 +45,7 @@ public class Kikoku extends SwordItem {
     public static UUID SOUL_DAMAGE_MODIFIER = UUID.fromString("d2928c01-5d7d-41c5-bd3a-9ca8f43c8ff8");
 
     public static final DamageSource DIVINE_DAMAGE_SOURCE = (new DamageSource("divineDamage")).setDamageBypassesArmor().setDamageAllowedInCreativeMode().setDamageIsAbsolute();
-    public static final DamageSource ARMOR_PIERCING_DAMAGE_SOURCE = (new DamageSource("divineDamage")).setDamageBypassesArmor().setDamageIsAbsolute();
+    public static final DamageSource ARMOR_PIERCING_DAMAGE_SOURCE = (new DamageSource("armourPiercingDamage")).setDamageBypassesArmor().setDamageIsAbsolute();
 
     public Kikoku(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties builderIn) {
         super(tier, attackDamageIn, attackSpeedIn, builderIn);
@@ -54,8 +58,8 @@ public class Kikoku extends SwordItem {
 
         ListMultimap<Attribute, AttributeModifier> multimaps = ArrayListMultimap.create();
         if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 4, AttributeModifier.Operation.ADDITION));
-            multimaps.put(DIVINE_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "God Damage Modifier", 2, AttributeModifier.Operation.ADDITION));
+            multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 3, AttributeModifier.Operation.ADDITION));
+            multimaps.put(DIVINE_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Divine Damage Modifier", 1, AttributeModifier.Operation.ADDITION));
             multimaps.put(SOUL_DAMAGE, new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage Modifier", 0.25, AttributeModifier.Operation.ADDITION));
         }
         for (Attribute attribute : multimap.keySet()) {
@@ -70,24 +74,22 @@ public class Kikoku extends SwordItem {
             return false;
         }
         Map<Enchantment, Integer> stackEnchantments = EnchantmentHelper.getEnchantments(stack);
-        MiniUtilities.LOGGER.debug(stackEnchantments.toString());
         if (target instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) target;
             if (player.isCreative()) {
-                for (Map.Entry<Attribute, AttributeModifier> entry : stack.getAttributeModifiers(EquipmentSlotType.MAINHAND).entries()) {
-                     if (entry.getKey() == DIVINE_DAMAGE) {
-                         target.attackEntityFrom(DIVINE_DAMAGE_SOURCE, (float) entry.getValue().getAmount());
-                     }
-                     if (entry.getKey() == ARMOR_PIERCING_DAMAGE) {
-                         target.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, (float) entry.getValue().getAmount());
-                     }
+                try {
+                    target.attackEntityFrom(DamageSource.CACTUS, ((stackEnchantments.get(Enchantments.SHARPNESS) * 0.5F) + 2.5F));
+                }
+                catch(Exception e) {
+                    target.attackEntityFrom(DamageSource.CACTUS, 2);
                 }
             }
         }
-        for (Map.Entry<Attribute, AttributeModifier> entry : stack.getAttributeModifiers(EquipmentSlotType.MAINHAND).entries()) {
-            if (entry.getKey() == ARMOR_PIERCING_DAMAGE) {
-                target.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, (float) entry.getValue().getAmount());
-            }
+        try {
+            target.attackEntityFrom(DamageSource.CACTUS, ((stackEnchantments.get(Enchantments.SHARPNESS) * 0.5F) + 4.5F));
+        }
+        catch(Exception e) {
+            target.attackEntityFrom(DamageSource.CACTUS, 4);
         }
         drainHealth(target);
         return true;
@@ -131,13 +133,20 @@ public class Kikoku extends SwordItem {
                 int value = Math.min(curValue + addValue, enchantment.getMaxLevel() * Config.max_kikoku_multiplier.get());
                 outputMap.put(entry.getKey(), value);
             }
-            costCounter += enchantment.getMaxLevel() * 5;
-
+            costCounter += (curValue + addValue) * 5;
         }
         event.setCost(costCounter);
 
         ItemStack enchantedSword = sword.copy();
         EnchantmentHelper.setEnchantments(outputMap, enchantedSword);
         event.setOutput(enchantedSword);
+    }
+
+    public static void AnvilRepairEvent(AnvilRepairEvent event) {
+        if (event.getItemResult().getItem() == ItemList.Kikoku.get() && event.getPlayer() instanceof ClientPlayerEntity) {
+            ClientPlayerEntity clientPlayerEntity = (ClientPlayerEntity) event.getPlayer();
+            clientPlayerEntity.addPotionEffect(new EffectInstance(Effects.LEVITATION, 5));
+            clientPlayerEntity.playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+        }
     }
 }
