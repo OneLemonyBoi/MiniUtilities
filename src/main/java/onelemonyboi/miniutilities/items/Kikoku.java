@@ -14,10 +14,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -78,10 +75,12 @@ public class Kikoku extends SwordItem {
         if (target instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) target;
             if (player.isCreative()) {
-                target.attackEntityFrom(DamageSource.CACTUS, (sharpnessLevel * 0.5F) + 2.5F);
+                target.hurtResistantTime = 0;
+                target.attackEntityFrom(DIVINE_DAMAGE_SOURCE, (sharpnessLevel * 0.5F) + 2.5F);
             }
         }
-        target.attackEntityFrom(DamageSource.CACTUS, ((sharpnessLevel * 0.5F) + 4.5F));
+        target.hurtResistantTime = 0;
+        target.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, ((sharpnessLevel * 0.5F) + 4.5F));
         drainHealth(target);
         return true;
     }
@@ -101,7 +100,7 @@ public class Kikoku extends SwordItem {
     public static void AnvilUpdateEvent(AnvilUpdateEvent event) {
         ItemStack sword = event.getLeft();
         ItemStack book = event.getRight();
-        if (sword == null || sword.getItem() != ItemList.Kikoku.get() || book == null) {
+        if (sword == null || sword.getItem() != ItemList.Kikoku.get() || book == null || book.getItem() != Items.ENCHANTED_BOOK) {
             return;
         }
 
