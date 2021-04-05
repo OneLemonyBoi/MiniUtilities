@@ -52,7 +52,6 @@ public class Kikoku extends SwordItem {
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
         Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
-
         ListMultimap<Attribute, AttributeModifier> multimaps = ArrayListMultimap.create();
         if (equipmentSlot == EquipmentSlotType.MAINHAND) {
             multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 3, AttributeModifier.Operation.ADDITION));
@@ -103,7 +102,6 @@ public class Kikoku extends SwordItem {
         if (sword == null || sword.getItem() != ItemList.Kikoku.get() || book == null || book.getItem() != Items.ENCHANTED_BOOK) {
             return;
         }
-
         Map<Enchantment, Integer> swordMap = EnchantmentHelper.getEnchantments(sword);
         Map<Enchantment, Integer> bookMap = EnchantmentHelper.getEnchantments(book);
         if (bookMap.isEmpty()) { return; }
@@ -122,10 +120,14 @@ public class Kikoku extends SwordItem {
             costCounter += (currentValue + addValue) * 5;
         }
         event.setCost(costCounter);
-
         ItemStack enchantedSword = sword.copy();
         EnchantmentHelper.setEnchantments(outputMap, enchantedSword);
         event.setOutput(enchantedSword);
+    }
+
+    @Override
+    public int getItemStackLimit(ItemStack stack) {
+        return 1;
     }
 
     public static void AnvilRepairEvent(AnvilRepairEvent event) {

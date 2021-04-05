@@ -1,13 +1,11 @@
-package onelemonyboi.miniutilities.blocks;
+package onelemonyboi.miniutilities.blocks.complexblocks;
 
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -18,9 +16,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import onelemonyboi.miniutilities.tileentities.DrumTile;
-
-import java.util.List;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.DrumTile;
 
 public class DrumBlock extends ContainerBlock {
     public final int mb;

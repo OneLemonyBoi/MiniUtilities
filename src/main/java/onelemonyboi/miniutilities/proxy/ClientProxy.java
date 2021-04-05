@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class ClientProxy implements IProxy {
     @Override
-    public void preInit(FMLCommonSetupEvent event) { // GUI/Container Stuff
+    public void preInit(FMLCommonSetupEvent event) {
 
     }
 

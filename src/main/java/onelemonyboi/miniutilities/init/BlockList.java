@@ -10,11 +10,11 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
-import onelemonyboi.miniutilities.blocks.DrumBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.DrumBlock;
 import onelemonyboi.miniutilities.blocks.*;
-import onelemonyboi.miniutilities.blocks.complexblocks.MechanicalPlacerBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalPlacerBlock;
 import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
-import onelemonyboi.miniutilities.blocks.complexblocks.MechanicalMinerBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalMinerBlock;
 
 import java.util.function.Supplier;
 
@@ -22,9 +22,9 @@ public class BlockList {
     public static final RegistryObject<Block> CursedEarth = register("cursed_earth", () -> new CursedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
     public static final RegistryObject<Block> BlessedEarth = register("blessed_earth", () -> new BlessedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
     public static final RegistryObject<Block> BlursedEarth = register("blursed_earth", () -> new BlursedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
-    public static final RegistryObject<Block> EnderOre = register("ender_ore", () -> new BaseBlock(Material.ROCK, 3, 3, 2, ToolType.PICKAXE));
-    public static final RegistryObject<Block> UnstableBlock = register("unstable_block", () -> new BaseBlock(Material.ROCK, 12, 12, 3, ToolType.PICKAXE));
-    public static final RegistryObject<Block> EnderPearlBlock = register("ender_pearl_block", () -> new BaseBlock(Material.ROCK, 3, 3, 1, ToolType.PICKAXE));
+    public static final RegistryObject<Block> EnderOre = register("ender_ore", () -> new Block(Block.Properties.create(Material.ROCK).harvestLevel(2).hardnessAndResistance(3).harvestTool(ToolType.PICKAXE)));
+    public static final RegistryObject<Block> UnstableBlock = register("unstable_block", () -> new Block(Block.Properties.create(Material.ROCK).harvestLevel(3).hardnessAndResistance(12).harvestTool(ToolType.PICKAXE)));
+    public static final RegistryObject<Block> EnderPearlBlock = register("ender_pearl_block", () -> new Block(Block.Properties.create(Material.ROCK).harvestLevel(1).hardnessAndResistance(3).harvestTool(ToolType.PICKAXE)));
     // ANGEL BLOCK TAKES 1 TICK TO BREAK
     public static final RegistryObject<Block> AngelBlock = registerNoItem("angel_block", () -> new AngelBlock(Material.ROCK, 0.01F, 3F, 1));
     public static final RegistryObject<Block> EnderLily = registerNoTab("ender_lily_block", () -> new EnderLily());
