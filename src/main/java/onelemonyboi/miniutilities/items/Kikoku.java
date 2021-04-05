@@ -74,23 +74,14 @@ public class Kikoku extends SwordItem {
             return false;
         }
         Map<Enchantment, Integer> stackEnchantments = EnchantmentHelper.getEnchantments(stack);
+        Integer sharpnessLevel = stackEnchantments.get(Enchantments.SHARPNESS) == null ? -1 : stackEnchantments.get(Enchantments.SHARPNESS);
         if (target instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) target;
             if (player.isCreative()) {
-                try {
-                    target.attackEntityFrom(DamageSource.CACTUS, ((stackEnchantments.get(Enchantments.SHARPNESS) * 0.5F) + 2.5F));
-                }
-                catch(Exception e) {
-                    target.attackEntityFrom(DamageSource.CACTUS, 2);
-                }
+                target.attackEntityFrom(DamageSource.CACTUS, (sharpnessLevel * 0.5F) + 2.5F);
             }
         }
-        try {
-            target.attackEntityFrom(DamageSource.CACTUS, ((stackEnchantments.get(Enchantments.SHARPNESS) * 0.5F) + 4.5F));
-        }
-        catch(Exception e) {
-            target.attackEntityFrom(DamageSource.CACTUS, 4);
-        }
+        target.attackEntityFrom(DamageSource.CACTUS, ((sharpnessLevel * 0.5F) + 4.5F));
         drainHealth(target);
         return true;
     }
@@ -116,24 +107,20 @@ public class Kikoku extends SwordItem {
 
         Map<Enchantment, Integer> swordMap = EnchantmentHelper.getEnchantments(sword);
         Map<Enchantment, Integer> bookMap = EnchantmentHelper.getEnchantments(book);
-        if (bookMap.isEmpty()) {
-            return;
-        }
+        if (bookMap.isEmpty()) { return; }
         Map<Enchantment, Integer> outputMap = new HashMap<>(swordMap);
         int costCounter = 0;
-
         for (Map.Entry<Enchantment, Integer> entry : bookMap.entrySet()) {
             Enchantment enchantment = entry.getKey();
             if (enchantment == null) {continue;}
-            Integer curValue = swordMap.get(entry.getKey());
+            Integer currentValue = swordMap.get(entry.getKey());
             Integer addValue = entry.getValue();
-            if (curValue == null) {
-                outputMap.put(entry.getKey(), addValue);
-            } else {
-                int value = Math.min(curValue + addValue, enchantment.getMaxLevel() * Config.max_kikoku_multiplier.get());
+            if (currentValue == null) { outputMap.put(entry.getKey(), addValue); }
+            else {
+                int value = Math.min(currentValue + addValue, enchantment.getMaxLevel() * Config.max_kikoku_multiplier.get());
                 outputMap.put(entry.getKey(), value);
             }
-            costCounter += (curValue + addValue) * 5;
+            costCounter += (currentValue + addValue) * 5;
         }
         event.setCost(costCounter);
 

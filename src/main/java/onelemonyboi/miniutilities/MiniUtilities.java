@@ -68,6 +68,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(MechanicalMinerBlock::onKeyPress);
         EVENT_BUS.addListener(MechanicalPlacerBlock::onKeyPress);
         EVENT_BUS.addListener(Kikoku::AnvilUpdateEvent);
+        EVENT_BUS.addListener(Kikoku::AnvilRepairEvent);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
     }
