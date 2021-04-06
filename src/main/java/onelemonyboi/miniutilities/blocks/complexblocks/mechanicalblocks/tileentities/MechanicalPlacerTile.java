@@ -34,6 +34,7 @@ public class MechanicalPlacerTile extends LockableLootTileEntity implements ITic
     public Integer redstonemode;
     public Integer timer;
     public Integer waittime;
+    public Boolean event;
 
     protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
 
@@ -42,6 +43,7 @@ public class MechanicalPlacerTile extends LockableLootTileEntity implements ITic
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 20;
+        this.event = false;
     }
 
     @Override
@@ -105,6 +107,7 @@ public class MechanicalPlacerTile extends LockableLootTileEntity implements ITic
         else if (!world.isRemote && !world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
             blockPlacer();
         }
+        this.event = false;
     }
 
     protected void blockPlacer() {

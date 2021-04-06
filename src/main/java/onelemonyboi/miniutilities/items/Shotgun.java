@@ -14,7 +14,7 @@ public class Shotgun extends Enchantment {
     }
 
     public int getMaxEnchantability(int enchantmentLevel) {
-        return 10000;
+        return 100;
     }
 
     /**

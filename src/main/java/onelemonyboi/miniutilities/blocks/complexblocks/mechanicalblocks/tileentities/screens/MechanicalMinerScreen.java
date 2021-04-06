@@ -34,6 +34,8 @@ public class MechanicalMinerScreen extends ContainerScreen<MechanicalMinerContai
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
         this.font.drawText(matrixStack, this.playerInventory.getDisplayName(), (float) this.playerInventoryTitleX,
                 (float) this.playerInventoryTitleY, 4210752);
+        this.font.drawText(matrixStack, this.playerInventory.getDisplayName(), (float) this.playerInventoryTitleX,
+                6, 4210752);
     }
 
     @SuppressWarnings("deprecation")

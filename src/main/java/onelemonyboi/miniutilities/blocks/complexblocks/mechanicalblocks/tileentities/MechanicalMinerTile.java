@@ -37,6 +37,7 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
     public Integer redstonemode;
     public Integer timer;
     public Integer waittime;
+    public Boolean event;
 
     protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
 
@@ -45,6 +46,7 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 20;
+        this.event = false;
     }
 
     @Override
@@ -113,6 +115,7 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
         else if (!world.isRemote && !world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
             blockBreaker();
         }
+        this.event = false;
     }
 
     private static boolean canCombine(ItemStack stack1, ItemStack stack2) {
