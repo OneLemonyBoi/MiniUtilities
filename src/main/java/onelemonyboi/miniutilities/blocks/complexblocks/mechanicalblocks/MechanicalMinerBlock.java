@@ -2,7 +2,7 @@ package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -19,17 +19,15 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalMinerTile;
-import onelemonyboi.miniutilities.misc.KeyBindingsHandler;
-import onelemonyboi.miniutilities.packets.Packet;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.UUID;
+
+import static onelemonyboi.miniutilities.misc.KeyBindingsHandler.keyBindingPressed;
 
 public class MechanicalMinerBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -52,30 +50,17 @@ public class MechanicalMinerBlock extends Block {
         return TEList.MechanicalMinerTile.get().create();
     }
 
+    @Override
+    public void onBlockClicked(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+        super.onBlockClicked(state, worldIn, pos, player);
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
-            Boolean wrenchCheck = ModTags.Items.WRENCH.contains(player.getHeldItem(handIn).getItem()) || ModTags.Items.WRENCHES.contains(player.getHeldItem(handIn).getItem()) || ModTags.Items.TOOLS_WRENCH.contains(player.getHeldItem(handIn).getItem());
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof MechanicalMinerTile && wrenchCheck && keyPressed) {
-                MechanicalMinerTile TE = ((MechanicalMinerTile) te);
-                player.sendMessage(new TranslationTextComponent("text.miniutilities.info"), UUID.randomUUID());
-                if (TE.redstonemode == 1) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"), UUID.randomUUID());
-                }
-                else if (TE.redstonemode == 2) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"), UUID.randomUUID());
-                }
-                else if (TE.redstonemode == 3) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"), UUID.randomUUID());
-                }
-                player.sendMessage(new TranslationTextComponent("text.miniutilities.waittime")
-                        .appendString(TE.waittime.toString() + " ticks(" + String.valueOf(TE.waittime.floatValue() / 20))
-                        .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
-                        .appendString(")"), UUID.randomUUID());
-            }
-            else if (te instanceof MechanicalMinerTile && wrenchCheck) {
+            if (te instanceof MechanicalMinerTile && keyBindingPressed) {
                 MechanicalMinerTile TE = ((MechanicalMinerTile) te);
                 switch (TE.redstonemode) {
                     case 1:
@@ -107,11 +92,38 @@ public class MechanicalMinerBlock extends Block {
                 }
             }
             else if (te instanceof MechanicalMinerTile) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (MechanicalMinerTile) te, pos);
-                return ActionResultType.CONSUME;
+                MechanicalMinerTile TE = ((MechanicalMinerTile) te);
+                if (TE.event == false) {
+                    NetworkHooks.openGui((ServerPlayerEntity) player, (MechanicalMinerTile) te, pos);
+                    return ActionResultType.CONSUME;
+                }
             }
         }
         return ActionResultType.CONSUME;
+    }
+
+    public static void PlayerInteractEvent(PlayerInteractEvent event) {
+        if (!event.getWorld().isRemote()) {
+            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalMinerTile && Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
+                MechanicalMinerTile TE = (MechanicalMinerTile) (event.getWorld().getTileEntity(event.getPos()));
+                PlayerEntity player = event.getPlayer();
+                player.sendMessage(new TranslationTextComponent("text.miniutilities.info"), UUID.randomUUID());
+                if (TE.redstonemode == 1) {
+                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"), UUID.randomUUID());
+                }
+                else if (TE.redstonemode == 2) {
+                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"), UUID.randomUUID());
+                }
+                else if (TE.redstonemode == 3) {
+                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"), UUID.randomUUID());
+                }
+                player.sendMessage(new TranslationTextComponent("text.miniutilities.waittime")
+                        .appendString(TE.waittime.toString() + " ticks(" + String.valueOf(TE.waittime.floatValue() / 20))
+                        .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
+                        .appendString(")"), UUID.randomUUID());
+                TE.event = true;
+            }
+        }
     }
 
     @Deprecated
@@ -143,17 +155,5 @@ public class MechanicalMinerBlock extends Block {
             InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
         }
         super.onReplaced(state, worldIn, pos, newState, isMoving);
-    }
-
-    @SubscribeEvent
-    public static void onKeyPress(InputEvent.KeyInputEvent event) {
-        if (event.getKey() == GLFW.GLFW_KEY_LEFT_ALT) {
-            if (event.getAction() == GLFW.GLFW_PRESS) {
-                keyPressed = true;
-            }
-            else if (event.getAction() == GLFW.GLFW_RELEASE) {
-                keyPressed = false;
-            }
-        }
     }
 }

@@ -50,6 +50,8 @@
   "block.miniutilities.netherite_spikes": "Netherite Spikes",
   "block.miniutilities.ender_pearl_block": "Ender Pearl Block",
   "block.miniutilities.angel_block": "Angel Block",
+  "block.miniutilities.mechanical_miner": "Mechanical Miner",
+  "block.miniutilities.mechanical_placer": "Mechanical Placer",
 
   "item.miniutilities.angel_ring": "Angel Ring",
   "item.miniutilities.flame_lily_seeds": "Flame Lily Seeds",
@@ -85,5 +87,8 @@
   "item.miniutilities.infused_helmet": "Infused Helmet",
   "item.miniutilities.infused_chestplate": "Infused Chestplate",
   "item.miniutilities.infused_leggings": "Infused Leggings",
-  "item.miniutilities.infused_boots": "Infused Boots"
+  "item.miniutilities.infused_boots": "Infused Boots",
+  "item.miniutilities.speed_upgrade": "Speed Upgrade",
+
+  "enchantment.miniutilities.shotgun": "Shotgun"
 }

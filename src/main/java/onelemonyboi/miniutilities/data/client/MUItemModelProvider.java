@@ -80,7 +80,6 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "flame_lily_seeds");
         builder(itemGenerated, "flame_lily");
 
-        builder(itemGenerated, "wrench");
         builder(itemGenerated, "speed_upgrade");
     }
 

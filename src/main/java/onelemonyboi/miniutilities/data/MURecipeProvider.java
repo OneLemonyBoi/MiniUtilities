@@ -560,13 +560,6 @@ public class MURecipeProvider extends RecipeProvider {
                 .addIngredient(ItemList.FlameLily.get())
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ItemList.Wrench.get())
-                .key('X', Items.IRON_INGOT)
-                .patternLine("X X")
-                .patternLine("XXX")
-                .patternLine(" X ")
-                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
-                .build(consumer);
 
         // Machines
         ShapedRecipeBuilder.shapedRecipe(BlockList.MechanicalMiner.get())

@@ -86,7 +86,6 @@ public class ItemList {
     public static final RegistryObject<Item> NetherStarOpiniumCore = ModRegistry.ITEMS.register("nether_star_opinium_core", () -> new Item(new Item.Properties().group(CreativeTab.getInstance())));
     public static final RegistryObject<Item> TheFinalOpiniumCore = ModRegistry.ITEMS.register("the_final_opinium_core", () -> new Item(new Item.Properties().group(CreativeTab.getInstance())));
 
-    public static final RegistryObject<Item> Wrench = ModRegistry.ITEMS.register("wrench", () -> new Item(new Item.Properties().group(CreativeTab.getInstance())));
     public static final RegistryObject<Item> SpeedUpgrade = ModRegistry.ITEMS.register("speed_upgrade", () -> new Item(new Item.Properties().group(CreativeTab.getInstance())));
 
     public static void register() {}
