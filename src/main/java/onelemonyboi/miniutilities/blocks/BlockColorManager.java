@@ -20,8 +20,8 @@ public class BlockColorManager {
         final ItemColors itemColors = event.getItemColors();
 
         IBlockColor iBlockColor = (blockState, iEnviromentBlockReader, blockPos, i) -> Integer.decode("#222222");
-        IBlockColor iBlockColorBlessed = (blockState, iEnviromentBlockReader, blockPos, i) -> Integer.decode("#FFFF8D");
-        IBlockColor iBlockColorBlursed = (blockState, iEnviromentBlockReader, blockPos, i) -> Integer.decode("#919188");
+        IBlockColor iBlockColorBlessed = (blockState, iEnviromentBlockReader, blockPos, i) -> Integer.decode("#FFFFFF");
+        IBlockColor iBlockColorBlursed = (blockState, iEnviromentBlockReader, blockPos, i) -> Integer.decode("#919191");
         blockColors.register(iBlockColor, BlockList.CursedEarth.get());
         blockColors.register(iBlockColorBlessed, BlockList.BlessedEarth.get());
         blockColors.register(iBlockColorBlursed, BlockList.BlursedEarth.get());
