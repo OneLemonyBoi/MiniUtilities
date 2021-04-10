@@ -4,7 +4,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalMinerTile;
-import onelemonyboi.miniutilities.blocks.DrumTile;
+import onelemonyboi.miniutilities.blocks.complexblocks.DrumTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalPlacerTile;
 
 public class TEList {
