@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities;
+package onelemonyboi.miniutilities.blocks;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
