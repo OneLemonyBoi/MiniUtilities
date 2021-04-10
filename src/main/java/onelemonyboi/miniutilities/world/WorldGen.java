@@ -41,10 +41,7 @@ public class WorldGen {
         }
 
         if (event.getClimate().temperature >= 2 && Config.enable_flame_lily.get()) {
-            int randomInt = new Random().nextInt(20);
-            if (randomInt == 1) {
-                generatePlant(event.getGeneration(), "flame_lily_patch_feature", BlockList.FlameLily.get().getDefaultState().with(FlameLily.AGE, 7), 1, 1);
-            }
+            generatePlant(event.getGeneration(), "flame_lily_patch_feature", BlockList.FlameLily.get().getDefaultState().with(FlameLily.AGE, 7), 1, 1);
         }
     }
 
