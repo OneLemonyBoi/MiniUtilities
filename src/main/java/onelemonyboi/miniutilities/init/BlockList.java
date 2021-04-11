@@ -12,6 +12,7 @@ import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.complexblocks.DrumBlock;
 import onelemonyboi.miniutilities.blocks.*;
+import onelemonyboi.miniutilities.blocks.complexblocks.QuantumQuarryBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalPlacerBlock;
 import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalMinerBlock;
@@ -60,7 +61,7 @@ public class BlockList {
 
     public static final RegistryObject<Block> MechanicalMiner = register("mechanical_miner", MechanicalMinerBlock::new);
     public static final RegistryObject<Block> MechanicalPlacer = register("mechanical_placer", MechanicalPlacerBlock::new);
-
+    public static final RegistryObject<Block> QuantumQuarry = register("quantum_quarry", QuantumQuarryBlock::new);
 
     public static void register() {}
 

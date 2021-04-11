@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -23,23 +24,24 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalMinerTile;
+import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.miniutilities.data.ModTags;
+import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.world.Config;
 
+import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.UUID;
 
 import static onelemonyboi.miniutilities.misc.KeyBindingsHandler.keyBindingPressed;
 
-public class QuantumQuarry extends Block {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
-
+public class QuantumQuarryBlock extends Block {
     public static Boolean keyPressed = false;
 
-    public QuantumQuarry() {
+    public QuantumQuarryBlock() {
         super(Properties.create(Material.IRON).hardnessAndResistance(3F)
                 .sound(SoundType.METAL));
-        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 
     @Override
@@ -49,7 +51,7 @@ public class QuantumQuarry extends Block {
 
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return TEList.MechanicalMinerTile.get().create();
+        return TEList.QuantumQuarryTile.get().create();
     }
 
     @Override
@@ -62,8 +64,8 @@ public class QuantumQuarry extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof MechanicalMinerTile && keyBindingPressed) {
-                MechanicalMinerTile TE = ((MechanicalMinerTile) te);
+            if (te instanceof QuantumQuarryTile && keyBindingPressed) {
+                QuantumQuarryTile TE = ((QuantumQuarryTile) te);
                 switch (TE.redstonemode) {
                     case 1:
                         TE.redstonemode = 2;
@@ -80,23 +82,23 @@ public class QuantumQuarry extends Block {
                 }
                 return ActionResultType.CONSUME;
             }
-            else if (te instanceof MechanicalMinerTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
-                MechanicalMinerTile TE = ((MechanicalMinerTile) te);
-                if (TE.waittime > 5) {
-                    TE.waittime = TE.waittime - 5;
+            else if (te instanceof QuantumQuarryTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
+                QuantumQuarryTile TE = ((QuantumQuarryTile) te);
+                if (TE.waittime > 25) {
+                    TE.waittime = TE.waittime - 25;
                     player.getHeldItem(handIn).shrink(1);
                     TE.timer = 0;
                 }
-                else if (TE.waittime == 5){
+                else if (TE.waittime == 25){
                     TE.waittime = 1;
                     player.getHeldItem(handIn).shrink(1);
                     TE.timer = 0;
                 }
             }
-            else if (te instanceof MechanicalMinerTile) {
-                MechanicalMinerTile TE = ((MechanicalMinerTile) te);
-                if (TE.event == false) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, (MechanicalMinerTile) te, pos);
+            else if (te instanceof QuantumQuarryTile) {
+                QuantumQuarryTile TE = ((QuantumQuarryTile) te);
+                if (!TE.event) {
+                    NetworkHooks.openGui((ServerPlayerEntity) player, (QuantumQuarryTile) te, pos);
                     return ActionResultType.CONSUME;
                 }
             }
@@ -106,8 +108,8 @@ public class QuantumQuarry extends Block {
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
         if (!event.getWorld().isRemote()) {
-            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalMinerTile && Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
-                MechanicalMinerTile TE = (MechanicalMinerTile) (event.getWorld().getTileEntity(event.getPos()));
+            if (event.getWorld().getTileEntity(event.getPos()) instanceof QuantumQuarryTile && Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
+                QuantumQuarryTile TE = (QuantumQuarryTile) (event.getWorld().getTileEntity(event.getPos()));
                 PlayerEntity player = event.getPlayer();
                 player.sendMessage(new TranslationTextComponent("text.miniutilities.info"), UUID.randomUUID());
                 if (TE.redstonemode == 1) {
@@ -128,31 +130,15 @@ public class QuantumQuarry extends Block {
         }
     }
 
-    @Deprecated
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.with(FACING, rotation.rotate(state.get(FACING)));
-    }
-
-    @Deprecated
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
-    }
-
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
-    }
-
     @Override
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity instanceof MechanicalMinerTile) {
+        if (tileEntity instanceof QuantumQuarryTile) {
             ItemStack itemStack = new ItemStack(this);
             CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
+            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemList.SpeedUpgrade.get(), Math.round((1200 - compoundNBT.getInt("WaitTime")) / 25.0F)));
+            compoundNBT.putInt("WaitTime", 1200);
             itemStack.setTagInfo("BlockEntityTag", compoundNBT);
             InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
         }

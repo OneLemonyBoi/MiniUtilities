@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.screens;
+package onelemonyboi.miniutilities.blocks.complexblocks;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -9,13 +9,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalPlacerContainer;
 
-public class MechanicalPlacerScreen extends ContainerScreen<MechanicalPlacerContainer> {
+public class QuantumQuarryScreen extends ContainerScreen<QuantumQuarryContainer> {
     private static final ResourceLocation TestDisplay = new ResourceLocation(MiniUtilities.MOD_ID,
             "textures/gui/mechanical_miner.png");
 
-    public MechanicalPlacerScreen(MechanicalPlacerContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public QuantumQuarryScreen(QuantumQuarryContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
 
         this.guiLeft = 0;
@@ -26,7 +25,7 @@ public class MechanicalPlacerScreen extends ContainerScreen<MechanicalPlacerCont
 
     @Override
     public ITextComponent getTitle() {
-        return new StringTextComponent("Mechanical Placer");
+        return new StringTextComponent("Quantum Quarry").mergeStyle(TextFormatting.BLUE);
     }
 
     @Override
