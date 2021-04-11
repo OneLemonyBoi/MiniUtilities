@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:blaze_powder"
+      "miniutilities:quantum_quarry"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:blaze_powder"
+        "recipe": "miniutilities:quantum_quarry"
       }
     }
   },

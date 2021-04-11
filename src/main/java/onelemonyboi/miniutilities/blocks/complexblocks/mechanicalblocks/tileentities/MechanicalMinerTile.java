@@ -25,6 +25,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalMinerContainer;
+import onelemonyboi.miniutilities.misc.InventoryHandling;
 
 import java.util.List;
 
@@ -118,19 +119,6 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
         this.event = false;
     }
 
-    private static boolean canCombine(ItemStack stack1, ItemStack stack2) {
-        if (stack1.getItem() != stack2.getItem()) {
-            return false;
-        } else if (stack1.getDamage() != stack2.getDamage()) {
-            return false;
-        } else if (stack1.getCount() > stack1.getMaxStackSize()) {
-            return false;
-        } else {
-            Boolean buffer = ItemStack.areItemStackTagsEqual(stack1, stack2);
-            return buffer;
-        }
-    }
-
     protected void blockBreaker() {
         BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
         IInventory iinventory = (IInventory) this.getTileEntity();
@@ -144,26 +132,7 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
         LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
         List<ItemStack> lists = world.getBlockState(blockPos).getDrops(lootcontext$builder);
 
-        // Iteration UwU
-        for (ItemStack itemStack : lists) {
-            int i = iinventory.getSizeInventory();
-            for (int j = 0; j < i && !itemStack.isEmpty(); ++j) {
-                ItemStack itemStack1 = iinventory.getStackInSlot(j);
-                if (itemStack1.isEmpty()) {
-                    iinventory.setInventorySlotContents(j, itemStack);
-                    itemStack = ItemStack.EMPTY;
-                } else if (canCombine(itemStack, itemStack1)) {
-                    int x = itemStack.getMaxStackSize() - itemStack1.getCount();
-                    int y = Math.min(itemStack.getCount(), x);
-                    itemStack.shrink(y);
-                    itemStack1.grow(y);
-                }
-            }
-            iinventory.markDirty();
-            if (!itemStack.isEmpty()) {
-                InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY() + 1, this.getPos().getZ(), itemStack); // Hidden Gem
-            }
-        }
+        InventoryHandling.InventoryInsert(lists, iinventory, world, this);
         world.destroyBlock(blockPos, false); // Very kool break animations!
     }
 }

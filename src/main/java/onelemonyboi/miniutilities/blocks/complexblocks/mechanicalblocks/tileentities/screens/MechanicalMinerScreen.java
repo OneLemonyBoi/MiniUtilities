@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalMinerContainer;
 
@@ -24,6 +25,11 @@ public class MechanicalMinerScreen extends ContainerScreen<MechanicalMinerContai
     }
 
     @Override
+    public ITextComponent getTitle() {
+        return new StringTextComponent("Mechanical Miner");
+    }
+
+    @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
@@ -34,7 +40,7 @@ public class MechanicalMinerScreen extends ContainerScreen<MechanicalMinerContai
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
         this.font.drawText(matrixStack, this.playerInventory.getDisplayName(), (float) this.playerInventoryTitleX,
                 (float) this.playerInventoryTitleY, 4210752);
-        this.font.drawText(matrixStack, this.playerInventory.getDisplayName(), (float) this.playerInventoryTitleX,
+        this.font.drawText(matrixStack, this.getTitle(), (float) this.playerInventoryTitleX,
                 6, 4210752);
     }
 

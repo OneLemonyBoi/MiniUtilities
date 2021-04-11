@@ -7,7 +7,7 @@
   ],
   "key": {
     "X": {
-      "tag": "forge:ingots/netherite"
+      "tag": "forge:ores/netherite_scrap"
     },
     "Y": {
       "item": "minecraft:iron_block"

@@ -1,7 +1,10 @@
 package onelemonyboi.miniutilities.world;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class Config {
@@ -23,6 +26,9 @@ public class Config {
     public static ForgeConfigSpec.IntValue min_height;
     public static ForgeConfigSpec.IntValue max_height;
     public static ForgeConfigSpec.IntValue amount;
+
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> ore_chances;
+    private static final List<String> ore_default = ImmutableList.of("minecraft:coal_ore:20", "minecraft:iron_ore:8", "minecraft:gold_ore:2", "minecraft:diamond_ore:1", "minecraft:lapis_ore:4");
 
     public static ForgeConfigSpec.BooleanValue enable_ender_lily;
     public static ForgeConfigSpec.BooleanValue enable_flame_lily;
@@ -61,5 +67,7 @@ public class Config {
 
         enable_ender_lily = SERVER_BUILDER.comment("Should Ender Lilies Generate?").define("Ender Lily Generation", true);
         enable_flame_lily = SERVER_BUILDER.comment("Should Flame Lilies Generate?").define("Flame Lily Generation", true);
+
+        ore_chances = SERVER_BUILDER.comment("List ores and their weight, in this format: [minecraft:coal_ore:10]").defineList("ore_list", () -> ore_default, ore -> ore instanceof String);
     }
 }

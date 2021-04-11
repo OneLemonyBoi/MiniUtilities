@@ -2,6 +2,7 @@ package onelemonyboi.miniutilities.data;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.data.*;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.StonecuttingRecipe;
@@ -454,7 +455,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockList.NetheriteReinforcedDrum.get())
-                .key('X', Tags.Items.INGOTS_NETHERITE)
+                .key('X', Tags.Items.ORES_NETHERITE_SCRAP)
                 .key('Y', Items.IRON_BLOCK)
                 .key('Z', BlockList.ReinforcedLargeDrum.get())
                 .patternLine("XYX")
@@ -559,7 +560,7 @@ public class MURecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapelessRecipe(Items.BLAZE_POWDER, 2)
                 .addIngredient(ItemList.FlameLily.get())
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
-                .build(consumer);
+                .build(consumer, new ResourceLocation("miniutilities/blaze_powder"));
 
         // Machines
         ShapedRecipeBuilder.shapedRecipe(BlockList.MechanicalMiner.get())
@@ -580,6 +581,19 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XZX")
                 .patternLine("AYA")
                 .patternLine("XAX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.QuantumQuarry.get())
+                .key('X', Items.REDSTONE_BLOCK)
+                .key('Y', ItemList.DiamondOpiniumCore.get())
+                .key('Z', Items.NETHERITE_PICKAXE)
+                .key('A', Items.NETHERITE_SHOVEL)
+                .key('B', BlockList.MechanicalMiner.get())
+                .key('C', BlockList.EnderPearlBlock.get())
+                .key('D', Blocks.OBSERVER)
+                .patternLine("YXY")
+                .patternLine("ZBA")
+                .patternLine("CDC")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 

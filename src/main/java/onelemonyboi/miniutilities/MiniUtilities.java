@@ -19,6 +19,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import onelemonyboi.miniutilities.blocks.EarthBlocks;
+import onelemonyboi.miniutilities.blocks.complexblocks.QuantumQuarryBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.QuantumQuarryScreen;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalMinerBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalPlacerBlock;
 import onelemonyboi.miniutilities.init.BlockList;
@@ -73,6 +75,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(KeyBindingsHandler::keybinds);
         EVENT_BUS.addListener(MechanicalMinerBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(MechanicalPlacerBlock::PlayerInteractEvent);
+        EVENT_BUS.addListener(QuantumQuarryBlock::PlayerInteractEvent);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
         Packet.main();
@@ -115,6 +118,7 @@ public class MiniUtilities {
 
         ScreenManager.registerFactory(ContainerList.MinerContainer.get(), MechanicalMinerScreen::new);
         ScreenManager.registerFactory(ContainerList.PlacerContainer.get(), MechanicalPlacerScreen::new);
+        ScreenManager.registerFactory(ContainerList.QuarryContainer.get(), QuantumQuarryScreen::new);
 
         KeyBindings.register();
     }

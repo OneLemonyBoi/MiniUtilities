@@ -112,12 +112,15 @@ public class Kikoku extends SwordItem {
             if (enchantment == null) {continue;}
             Integer currentValue = swordMap.get(entry.getKey());
             Integer addValue = entry.getValue();
-            if (currentValue == null) { outputMap.put(entry.getKey(), addValue); }
+            if (currentValue == null) {
+                outputMap.put(entry.getKey(), addValue);
+                costCounter += addValue * 5;
+            }
             else {
                 int value = Math.min(currentValue + addValue, enchantment.getMaxLevel() * Config.max_kikoku_multiplier.get());
                 outputMap.put(entry.getKey(), value);
+                costCounter += (currentValue + addValue) * 5;
             }
-            costCounter += (currentValue + addValue) * 5;
         }
         event.setCost(costCounter);
         ItemStack enchantedSword = sword.copy();

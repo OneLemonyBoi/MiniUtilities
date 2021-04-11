@@ -16,7 +16,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.DrumTile;
 
 public class DrumBlock extends ContainerBlock {
     public final int mb;
