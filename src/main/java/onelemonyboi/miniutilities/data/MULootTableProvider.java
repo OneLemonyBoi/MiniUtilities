@@ -88,6 +88,7 @@ public class MULootTableProvider extends LootTableProvider {
             registerDropSelfLootTable(BlockList.GoldSpikes.get());
             registerDropSelfLootTable(BlockList.DiamondSpikes.get());
             registerDropSelfLootTable(BlockList.NetheriteSpikes.get());
+            registerDropSelfLootTable(BlockList.QuantumQuarry.get());
             registerLootTable(BlockList.MechanicalMiner.get(), blockNoDrop());
             registerLootTable(BlockList.MechanicalPlacer.get(), blockNoDrop());
 

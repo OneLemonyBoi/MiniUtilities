@@ -34,5 +34,6 @@ public class MUBlockStateProvider extends BlockStateProvider {
         simpleBlock(BlockList.MagentaLapisCaelestis.get());
         simpleBlock(BlockList.PinkLapisCaelestis.get());
         simpleBlock(BlockList.BrownLapisCaelestis.get());
+        simpleBlock(BlockList.QuantumQuarry.get());
     }
 }
