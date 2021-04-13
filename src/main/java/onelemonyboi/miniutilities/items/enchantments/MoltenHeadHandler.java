@@ -29,13 +29,11 @@ public class MoltenHeadHandler {
                     .withParameter(LootParameters.TOOL, event.getPlayer().getHeldItem(Hand.MAIN_HAND))); // Makes lootcontext to calculate drops
             List<ItemStack> drops = event.getState().getDrops(lootcontext$builder); // Calculates drops
             for (ItemStack item : drops) { // Iteration
-                MiniUtilities.LOGGER.debug(item);
                 ItemStack stack = serverWorld.getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(item), serverWorld)
                         .map(FurnaceRecipe::getRecipeOutput)
                         .filter(itemStack -> !itemStack.isEmpty())
                         .map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, item.getCount() * itemStack.getCount()))
                         .orElse(item); // Recipe as var
-                MiniUtilities.LOGGER.debug(stack);
                 InventoryHelper.spawnItemStack(event.getPlayer().world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), stack); // Spawns Itemstack
             }
             event.getPlayer().world.destroyBlock(event.getPos(), false); // Breaks block
