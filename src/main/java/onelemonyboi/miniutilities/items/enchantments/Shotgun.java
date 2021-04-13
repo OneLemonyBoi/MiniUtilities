@@ -1,8 +1,9 @@
-package onelemonyboi.miniutilities.items;
+package onelemonyboi.miniutilities.items.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.util.text.ITextComponent;
 
 public class Shotgun extends Enchantment {
     public Shotgun(Rarity rarityIn, EquipmentSlotType... slots) {
@@ -10,13 +11,12 @@ public class Shotgun extends Enchantment {
     }
 
     public int getMinEnchantability(int enchantmentLevel) {
-        return 5;
+        return 2 * enchantmentLevel;
     }
 
     public int getMaxEnchantability(int enchantmentLevel) {
-        return 100;
+        return 50 * enchantmentLevel;
     }
-
     /**
      * Returns the maximum level that the enchantment can have.
      */
@@ -24,5 +24,8 @@ public class Shotgun extends Enchantment {
         return 4;
     }
 
-
+    @Override
+    public ITextComponent getDisplayName(int level) {
+        return super.getDisplayName(level);
+    }
 }

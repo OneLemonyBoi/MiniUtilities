@@ -26,10 +26,12 @@ import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.Mechanic
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
 import onelemonyboi.miniutilities.items.Kikoku;
+import onelemonyboi.miniutilities.items.enchantments.MoltenHeadHandler;
 import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
 import onelemonyboi.miniutilities.misc.KeyBindings;
 import onelemonyboi.miniutilities.misc.KeyBindingsHandler;
+import onelemonyboi.miniutilities.misc.PatreonRewards;
 import onelemonyboi.miniutilities.packets.Packet;
 import onelemonyboi.miniutilities.proxy.ClientProxy;
 import onelemonyboi.miniutilities.proxy.IProxy;
@@ -76,6 +78,8 @@ public class MiniUtilities {
         EVENT_BUS.addListener(MechanicalMinerBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(MechanicalPlacerBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(QuantumQuarryBlock::PlayerInteractEvent);
+        EVENT_BUS.addListener(MoltenHeadHandler::handleBlockBreak);
+        EVENT_BUS.addListener(PatreonRewards::PatreonRewardsHandling);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
         Packet.main();

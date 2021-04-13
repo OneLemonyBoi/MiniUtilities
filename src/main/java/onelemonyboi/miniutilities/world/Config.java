@@ -33,6 +33,8 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue enable_ender_lily;
     public static ForgeConfigSpec.BooleanValue enable_flame_lily;
 
+    public static ForgeConfigSpec.IntValue exp_given_from_pearl;
+
 
     static {
 
@@ -56,6 +58,8 @@ public class Config {
         enable_blursed_earth = SERVER_BUILDER.comment("Should Blursed Earth be Obtainable?").define("Obtain Blursed", true); // Get by right clicking Unstable Ingot on Grass
         max_kikoku_multiplier = SERVER_BUILDER.comment("What Should the Max Multiplier of Kikoku Enchant be?").defineInRange("Kikoku Max", 2, 1, 5000);
         unstable_ingot_type = SERVER_BUILDER.comment("What should the Unstable Ingot do when the time limit is reached?\n0: Slowness while holding\n1: After 10 seconds, slowly ramps up the damage\n2: Explodes after 10 seconds").defineInRange("Reaction Type", 1, 0, 2);
+
+        exp_given_from_pearl = SERVER_BUILDER.comment("How much EXP should base experience pearls give?").defineInRange("EXP Given from EXP Pearls", 10, 1, 128);
     }
 
     private static void setupSecondBlockConfig(ForgeConfigSpec.Builder SERVER_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
