@@ -31,7 +31,7 @@ import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
 import onelemonyboi.miniutilities.misc.KeyBindings;
 import onelemonyboi.miniutilities.misc.KeyBindingsHandler;
-import onelemonyboi.miniutilities.misc.PatreonRewards;
+import onelemonyboi.miniutilities.rewards.PatreonRewards;
 import onelemonyboi.miniutilities.packets.Packet;
 import onelemonyboi.miniutilities.proxy.ClientProxy;
 import onelemonyboi.miniutilities.proxy.IProxy;

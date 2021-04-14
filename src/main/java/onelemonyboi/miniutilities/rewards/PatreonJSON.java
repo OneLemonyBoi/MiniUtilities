@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.misc;
+package onelemonyboi.miniutilities.rewards;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
