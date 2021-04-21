@@ -9,6 +9,7 @@ import onelemonyboi.miniutilities.blocks.AngelBlockItem;
 import onelemonyboi.miniutilities.items.*;
 import onelemonyboi.miniutilities.items.ItemTier;
 import onelemonyboi.miniutilities.items.unstable.*;
+import onelemonyboi.lemonlib.items.*;
 
 import static onelemonyboi.miniutilities.items.ItemTier.UNSTABLE;
 
