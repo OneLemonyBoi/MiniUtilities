@@ -90,6 +90,17 @@
   "item.miniutilities.infused_leggings": "Infused Leggings",
   "item.miniutilities.infused_boots": "Infused Boots",
   "item.miniutilities.speed_upgrade": "Speed Upgrade",
+  "item.miniutilities.experience_pearl": "\u00A7aExperience Pearl\u00A7a",
+  "item.miniutilities.experience_pearl_1x": "\u00A7a1x Compressed Experience Pearl\u00A7a",
+  "item.miniutilities.experience_pearl_2x": "\u00A7a2x Compressed Experience Pearl\u00A7a",
+  "item.miniutilities.experience_pearl_3x": "\u00A7a3x Compressed Experience Pearl\u00A7a",
+  "item.miniutilities.experience_pearl_4x": "\u00A7a4x Compressed Experience Pearl\u00A7a",
+  "item.miniutilities.experience_pearl_5x": "\u00A7a5x Compressed Experience Pearl\u00A7a",
+  "item.miniutilities.experience_pearl_6x": "\u00A7a6x Compressed Experience Pearl\u00A7a",
+  "item.miniutilities.experience_pearl_7x": "\u00A7a7x Compressed Experience Pearl\u00A7a",
+  "item.miniutilities.experience_pearl_8x": "\u00A7a8x Compressed Experience Pearl\u00A7a",
 
-  "enchantment.miniutilities.shotgun": "Shotgun"
+  "enchantment.miniutilities.shotgun": "Shotgun",
+  "enchantment.miniutilities.molten_head": "\u00A74Molten Tool Head\u00A74",
+  "enchantment.miniutilities.experience_harvester": "\u00A7aExperience Harvester\u00A7a"
 }

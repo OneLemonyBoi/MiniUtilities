@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraftforge.items.SlotItemHandler;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
 
@@ -29,13 +30,13 @@ public class QuantumQuarryContainer extends Container {
             for (int col = 0; col < 3; col++) {
                 switch (row) {
                     case 0:
-                        this.addSlot(new Slot((IInventory) te, col + row * 3, 62 + col * 18, 17));
+                        this.addSlot(new SlotItemHandler(te.itemSH, col + row * 3, 62 + col * 18, 17));
                         break;
                     case 1:
-                        this.addSlot(new Slot((IInventory) te, col + row * 3, 62 + col * 18, 35));
+                        this.addSlot(new SlotItemHandler(te.itemSH, col + row * 3, 62 + col * 18, 35));
                         break;
                     case 2:
-                        this.addSlot(new Slot((IInventory) te, col + row * 3, 62 + col * 18, 53));
+                        this.addSlot(new SlotItemHandler(te.itemSH, col + row * 3, 62 + col * 18, 53));
                         break;
                 }
             }

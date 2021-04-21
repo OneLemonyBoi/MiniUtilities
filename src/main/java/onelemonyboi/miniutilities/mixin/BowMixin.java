@@ -23,7 +23,7 @@ public class BowMixin {
     }
     @Inject(at = @At(shift = At.Shift.BEFORE, value = "INVOKE", target = "Lnet/minecraft/world/World;addEntity(Lnet/minecraft/entity/Entity;)Z"), method = "Lnet/minecraft/item/BowItem;onPlayerStoppedUsing(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;I)V", locals = LocalCapture.CAPTURE_FAILHARD)
     private void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft, CallbackInfo ci, PlayerEntity playerEntity, boolean bool1, ItemStack itemStack, int i, float f, boolean bool2, ArrowItem arrowItem, AbstractArrowEntity abstractarrowentity) {
-        Integer inter = EnchantmentHelper.getEnchantmentLevel(EnchantmentList.MultiShot.get(), stack);
+        Integer inter = EnchantmentHelper.getEnchantmentLevel(EnchantmentList.Shotgun.get(), stack);
         for (int x = 0; x < inter; x++) {
             AbstractArrowEntity abstractarrowentity2 = arrowItem.createArrow(worldIn, itemStack, playerEntity);
             abstractarrowentity2 = customArrow(abstractarrowentity2);

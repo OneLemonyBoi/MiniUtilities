@@ -2,6 +2,7 @@ package onelemonyboi.miniutilities.blocks.complexblocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -22,22 +23,26 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
+import onelemonyboi.lemonlib.blocks.EnergyTileBase;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.misc.CustomEnergyStorage;
-import onelemonyboi.miniutilities.misc.InventoryHandling;
+import onelemonyboi.lemonlib.*;
 import onelemonyboi.miniutilities.world.Config;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class QuantumQuarryTile extends LockableLootTileEntity implements ITickableTileEntity {
+public class QuantumQuarryTile extends EnergyTileBase {
     public static int slots = 9;
-    protected final CustomEnergyStorage energy = new CustomEnergyStorage(10000000, 10000000, 0, true, false);
-    private LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> energy);
+
+    public final MUItemStackHandler itemSH = new MUItemStackHandler(9);
+    private final LazyOptional<MUItemStackHandler> lazyItemStorage = LazyOptional.of(() -> itemSH);
 
     // 1: Always on
     // 2: Redstone to Enable
@@ -51,7 +56,7 @@ public class QuantumQuarryTile extends LockableLootTileEntity implements ITickab
     protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
 
     public QuantumQuarryTile() {
-        super(TEList.QuantumQuarryTile.get());
+        super(TEList.QuantumQuarryTile.get(), 10000000, 10000000, 0);
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 1200;
@@ -60,27 +65,13 @@ public class QuantumQuarryTile extends LockableLootTileEntity implements ITickab
     }
 
     @Override
-    public int getSizeInventory() {
-        return slots;
-    }
-
-    @Override
-    protected NonNullList<ItemStack> getItems() {
-        return this.items;
-    }
-
-    @Override
-    protected void setItems(NonNullList<ItemStack> itemsIn) {
-        this.items = itemsIn;
-    }
-
-    @Override
-    protected ITextComponent getDefaultName() {
+    public ITextComponent getDisplayName() {
         return new TranslationTextComponent("container.miniutilities.mechanical_miner");
     }
 
+    @Nullable
     @Override
-    protected Container createMenu(int id, PlayerInventory player) {
+    public Container createMenu(int id, PlayerInventory player, PlayerEntity entity) {
         return new QuantumQuarryContainer(id, player, this);
     }
 
@@ -89,9 +80,7 @@ public class QuantumQuarryTile extends LockableLootTileEntity implements ITickab
         super.write(tag);
         tag.putInt("RedstoneMode", this.redstonemode);
         tag.putInt("WaitTime", this.waittime);
-        if(!this.checkLootAndWrite(tag)) {
-            ItemStackHelper.saveAllItems(tag, this.items);
-        }
+        tag.put("itemSH", itemSH.serializeNBT());
         energy.write(tag);
         return tag;
     }
@@ -99,13 +88,10 @@ public class QuantumQuarryTile extends LockableLootTileEntity implements ITickab
     @Override
     public void read(BlockState state, CompoundNBT tag) {
         super.read(state, tag);
-        this.items = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+        itemSH.deserializeNBT(tag.getCompound("itemSH"));
         this.redstonemode = tag.getInt("RedstoneMode");
         this.waittime = tag.getInt("WaitTime");
         energy.read(tag);
-        if (!this.checkLootAndRead(tag)) {
-            ItemStackHelper.loadAllItems(tag, this.items);
-        }
     }
 
     public static int calcRFCost(int waittime) {
@@ -123,8 +109,8 @@ public class QuantumQuarryTile extends LockableLootTileEntity implements ITickab
         this.timer++;
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
-        if (calcRFCost(this.waittime) <= this.energy.getEnergyStored()) {
-            this.energy.setEnergy(this.energy.getEnergyStored() - calcRFCost(this.waittime));
+        if (calcRFCost(this.waittime) <= energy.getEnergyStored()) {
+            energy.setEnergy(energy.getEnergyStored() - calcRFCost(this.waittime));
             if (!world.isRemote && this.redstonemode == 1){
                 oreGen();
             }
@@ -153,10 +139,15 @@ public class QuantumQuarryTile extends LockableLootTileEntity implements ITickab
         InventoryHandling.InventoryInsert(lists, iinventory, world, this);
     }
 
+    @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if(cap == CapabilityEnergy.ENERGY && !world.isRemote)
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return lazyItemStorage.cast();
+        }
+        if (cap == CapabilityEnergy.ENERGY && !world.isRemote) {
             return lazyEnergy.cast();
+        }
         return super.getCapability(cap, side);
     }
 
@@ -164,5 +155,6 @@ public class QuantumQuarryTile extends LockableLootTileEntity implements ITickab
     public void remove() {
         super.remove();
         lazyEnergy.invalidate();
+        lazyItemStorage.invalidate();
     }
 }

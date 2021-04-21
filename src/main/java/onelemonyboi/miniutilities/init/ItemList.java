@@ -9,6 +9,7 @@ import onelemonyboi.miniutilities.blocks.AngelBlockItem;
 import onelemonyboi.miniutilities.items.*;
 import onelemonyboi.miniutilities.items.ItemTier;
 import onelemonyboi.miniutilities.items.unstable.*;
+import onelemonyboi.lemonlib.items.*;
 
 import static onelemonyboi.miniutilities.items.ItemTier.UNSTABLE;
 
@@ -87,6 +88,16 @@ public class ItemList {
     public static final RegistryObject<Item> TheFinalOpiniumCore = ModRegistry.ITEMS.register("the_final_opinium_core", () -> new Item(new Item.Properties().group(CreativeTab.getInstance())));
 
     public static final RegistryObject<Item> SpeedUpgrade = ModRegistry.ITEMS.register("speed_upgrade", () -> new Item(new Item.Properties().group(CreativeTab.getInstance())));
+
+    public static final RegistryObject<Item> ExperiencePearl = ModRegistry.ITEMS.register("experience_pearl", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> ExperiencePearl1x = ModRegistry.ITEMS.register("experience_pearl_1x", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance()), 1));
+    public static final RegistryObject<Item> ExperiencePearl2x = ModRegistry.ITEMS.register("experience_pearl_2x", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance()), 2));
+    public static final RegistryObject<Item> ExperiencePearl3x = ModRegistry.ITEMS.register("experience_pearl_3x", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance()), 3));
+    public static final RegistryObject<Item> ExperiencePearl4x = ModRegistry.ITEMS.register("experience_pearl_4x", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance()), 4));
+    public static final RegistryObject<Item> ExperiencePearl5x = ModRegistry.ITEMS.register("experience_pearl_5x", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance()), 5));
+    public static final RegistryObject<Item> ExperiencePearl6x = ModRegistry.ITEMS.register("experience_pearl_6x", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance()), 6));
+    public static final RegistryObject<Item> ExperiencePearl7x = ModRegistry.ITEMS.register("experience_pearl_7x", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance()), 7));
+    public static final RegistryObject<Item> ExperiencePearl8x = ModRegistry.ITEMS.register("experience_pearl_8x", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance()), 8));
 
     public static void register() {}
 }

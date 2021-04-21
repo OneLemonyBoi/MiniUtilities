@@ -25,7 +25,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalMinerContainer;
-import onelemonyboi.miniutilities.misc.InventoryHandling;
+import onelemonyboi.lemonlib.*;
 
 import java.util.List;
 

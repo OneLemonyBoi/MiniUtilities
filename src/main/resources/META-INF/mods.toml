@@ -70,3 +70,9 @@ description='''
    versionRange="[MC1.16.1-1.1.2.6,)"
    ordering="NONE"
    side="BOTH"
+[[dependencies.miniutilities]]
+   modId="lemonlib"
+   mandatory=true
+   versionRange="[1.0.0,)"
+   ordering="NONE"
+   side="BOTH"

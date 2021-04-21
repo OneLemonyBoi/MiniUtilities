@@ -3,14 +3,18 @@ package onelemonyboi.miniutilities.data;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.*;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.StonecuttingRecipe;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.BlockList;
+import onelemonyboi.miniutilities.init.EnchantmentList;
 import onelemonyboi.miniutilities.init.ItemList;
 
 import java.util.Collections;
@@ -603,6 +607,64 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine("XYX")
                 .patternLine("Y Y")
                 .patternLine("XYX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
+        // Experience Pearls
+        ShapedRecipeBuilder.shapedRecipe(ItemList.ExperiencePearl1x.get())
+                .key('X', ItemList.ExperiencePearl.get())
+                .patternLine("XXX")
+                .patternLine("X X")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.ExperiencePearl2x.get())
+                .key('X', ItemList.ExperiencePearl1x.get())
+                .patternLine("XXX")
+                .patternLine("X X")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.ExperiencePearl3x.get())
+                .key('X', ItemList.ExperiencePearl2x.get())
+                .patternLine("XXX")
+                .patternLine("X X")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.ExperiencePearl4x.get())
+                .key('X', ItemList.ExperiencePearl3x.get())
+                .patternLine("XXX")
+                .patternLine("X X")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.ExperiencePearl5x.get())
+                .key('X', ItemList.ExperiencePearl4x.get())
+                .patternLine("XXX")
+                .patternLine("X X")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.ExperiencePearl6x.get())
+                .key('X', ItemList.ExperiencePearl5x.get())
+                .patternLine("XXX")
+                .patternLine("X X")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.ExperiencePearl7x.get())
+                .key('X', ItemList.ExperiencePearl6x.get())
+                .patternLine("XXX")
+                .patternLine("X X")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemList.ExperiencePearl8x.get())
+                .key('X', ItemList.ExperiencePearl7x.get())
+                .patternLine("XXX")
+                .patternLine("X X")
+                .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 
