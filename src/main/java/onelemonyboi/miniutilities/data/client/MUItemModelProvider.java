@@ -81,6 +81,17 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "flame_lily");
 
         builder(itemGenerated, "speed_upgrade");
+
+        builder(itemGenerated, "experience_pearl");
+        builder(itemGenerated, "experience_pearl_1x");
+        builder(itemGenerated, "experience_pearl_2x");
+        builder(itemGenerated, "experience_pearl_3x");
+        builder(itemGenerated, "experience_pearl_4x");
+        builder(itemGenerated, "experience_pearl_5x");
+        builder(itemGenerated, "experience_pearl_6x");
+        builder(itemGenerated, "experience_pearl_7x");
+        builder(itemGenerated, "experience_pearl_8x");
+
     }
 
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {
