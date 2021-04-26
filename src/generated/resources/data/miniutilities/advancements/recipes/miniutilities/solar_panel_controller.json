@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:extra/unpack3x"
+      "miniutilities:solar_panel_controller"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:extra/unpack3x"
+        "recipe": "miniutilities:solar_panel_controller"
       }
     }
   },

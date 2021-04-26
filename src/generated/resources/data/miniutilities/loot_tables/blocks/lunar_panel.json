@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "miniutilities:solar_panel"
+          "name": "miniutilities:lunar_panel"
         }
       ],
       "conditions": [

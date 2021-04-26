@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ZZZ",
+    "YAY",
+    "XYX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:gold_ingot"
+    },
+    "Y": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Z": {
+      "item": "miniutilities:ender_tile"
+    },
+    "A": {
+      "item": "minecraft:glowstone"
+    }
+  },
+  "result": {
+    "item": "miniutilities:solar_panel",
+    "count": 2
+  }
+}

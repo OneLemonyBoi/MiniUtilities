@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:extra/unpack6x"
+      "miniutilities:unpack1x"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:extra/unpack6x"
+        "recipe": "miniutilities:unpack1x"
       }
     }
   },

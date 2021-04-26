@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:extra/unpack7x"
+      "miniutilities:ender_dust_to_ender_pearl"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:extra/unpack7x"
+        "recipe": "miniutilities:ender_dust_to_ender_pearl"
       }
     }
   },
