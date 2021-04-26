@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://maven.minecraftforge.net' }
         jcenter()
         mavenCentral()
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
@@ -100,6 +100,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
+        url = "https://minecraft.curseforge.com/api/maven/"
         url = "https://maven.theillusivec4.top/"
         url = "https://www.cursemaven.com"
     }
@@ -115,7 +116,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")
     implementation fg.deobf("curse.maven:ctm-267602:3137659")
     implementation fg.deobf("curse.maven:the-one-probe-245211:3157997")
-    implementation fg.deobf("curse.maven:lemon-lib-471136:3283674")
+    implementation fg.deobf("curse.maven:lemon-lib-471136:3287802")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

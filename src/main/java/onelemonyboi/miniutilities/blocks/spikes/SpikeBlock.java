@@ -66,7 +66,7 @@ public class SpikeBlock extends Block {
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getFace());
+        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
     public static final VoxelShape NorthShape = Block.makeCuboidShape(0, 0, 9, 16, 16, 16);

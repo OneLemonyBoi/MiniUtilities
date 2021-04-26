@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.blocks;
+package onelemonyboi.miniutilities.blocks.earth;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;

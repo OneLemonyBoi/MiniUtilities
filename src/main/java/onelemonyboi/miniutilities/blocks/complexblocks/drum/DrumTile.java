@@ -1,7 +1,6 @@
-package onelemonyboi.miniutilities.blocks.complexblocks;
+package onelemonyboi.miniutilities.blocks.complexblocks.drum;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -16,7 +15,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import onelemonyboi.miniutilities.init.TEList;
 
 import javax.annotation.Nonnull;

@@ -7,7 +7,7 @@
   ],
   "key": {
     "X": {
-      "item": "minecraft:experience_bottle"
+      "tag": "forge:experience_containers"
     },
     "E": {
       "item": "miniutilities:chorus_opinium_core"

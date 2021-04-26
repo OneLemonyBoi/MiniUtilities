@@ -35,6 +35,8 @@ public class Config {
 
     public static ForgeConfigSpec.IntValue exp_given_from_pearl;
 
+    public static ForgeConfigSpec.IntValue solar_panel_generation;
+
 
     static {
 
@@ -60,6 +62,8 @@ public class Config {
         unstable_ingot_type = SERVER_BUILDER.comment("What should the Unstable Ingot do when the time limit is reached?\n0: Slowness while holding\n1: After 10 seconds, slowly ramps up the damage\n2: Explodes after 10 seconds").defineInRange("Reaction Type", 1, 0, 2);
 
         exp_given_from_pearl = SERVER_BUILDER.comment("How much EXP should base experience pearls give?").defineInRange("EXP Given from EXP Pearls", 10, 1, 128);
+
+        solar_panel_generation = SERVER_BUILDER.comment("How much RF should the Solar Panel Generate?").defineInRange("Solar Panel Generation", 4, 0, 1000000);
     }
 
     private static void setupSecondBlockConfig(ForgeConfigSpec.Builder SERVER_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {

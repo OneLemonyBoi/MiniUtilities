@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.blocks;
+package onelemonyboi.miniutilities.blocks.earth;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -95,11 +95,11 @@ public class BlessedEarthBlock extends GrassBlock {
 
     private static void spawnParticles(World world, BlockPos pos) {
         Random random = world.rand;
-        Direction.Axis direction$axis = Direction.NORTH.getAxis();
-        double d1 = direction$axis == Direction.Axis.X ? 0.5D + 0.5625D * (double)Direction.NORTH.getXOffset() : (double)random.nextFloat();
-        double d2 = direction$axis == Direction.Axis.Y ? 0.5D + 0.5625D * (double)Direction.NORTH.getYOffset() : (double)random.nextFloat();
-        double d3 = direction$axis == Direction.Axis.Z ? 0.5D + 0.5625D * (double)Direction.NORTH.getZOffset() : (double)random.nextFloat();
-        world.addParticle(new RedstoneParticleData(0.0F, 0.0F, 0.0F, 1.0F), (double)pos.getX() + d1, (double)pos.getY() + d2, (double)pos.getZ() + d3, 0.0D, 0.0D, 0.0D);
+        Direction.Axis direction$axis = Direction.UP.getAxis();
+        double d1 = direction$axis == Direction.Axis.X ? 0.5D + 0.5625D * (double)Direction.UP.getXOffset() : (double)random.nextFloat();
+        double d2 = direction$axis == Direction.Axis.Y ? 0.5D + 0.5625D * (double)Direction.UP.getYOffset() : (double)random.nextFloat();
+        double d3 = direction$axis == Direction.Axis.Z ? 0.5D + 0.5625D * (double)Direction.UP.getZOffset() : (double)random.nextFloat();
+        world.addParticle(new RedstoneParticleData(1.0F, 1.0F, 1.0F, 1.0F), (double)pos.getX() + d1, (double)pos.getY() + d2, (double)pos.getZ() + d3, 0.0D, 0.0D, 0.0D);
     }
 
     @Override

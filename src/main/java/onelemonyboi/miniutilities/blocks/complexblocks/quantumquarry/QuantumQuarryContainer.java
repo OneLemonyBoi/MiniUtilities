@@ -1,8 +1,7 @@
-package onelemonyboi.miniutilities.blocks.complexblocks;
+package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -81,8 +80,7 @@ public class QuantumQuarryContainer extends Container {
         if (slot != null && slot.getHasStack()) {
             ItemStack stack1 = slot.getStack();
             stack = stack1.copy();
-            if (index < QuantumQuarryTile.slots
-                    && !this.mergeItemStack(stack1, QuantumQuarryTile.slots, this.inventorySlots.size(), true)) {
+            if (index < QuantumQuarryTile.slots && !this.mergeItemStack(stack1, QuantumQuarryTile.slots, this.inventorySlots.size(), true)) {
                 return ItemStack.EMPTY;
             }
             if (!this.mergeItemStack(stack1, 0, QuantumQuarryTile.slots, false)) {

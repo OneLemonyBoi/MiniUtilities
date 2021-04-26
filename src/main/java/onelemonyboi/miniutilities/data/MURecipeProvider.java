@@ -34,7 +34,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .addIngredient(ModTags.Items.DUSTS_ENDER)
                 .addIngredient(ModTags.Items.DUSTS_ENDER)
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
-                .build(consumer);
+                .build(consumer, modId("ender_dust_to_ender_pearl"));
 
         ShapedRecipeBuilder.shapedRecipe(BlockList.EnderPearlBlock.get())
                 .key('#', Items.ENDER_PEARL)
@@ -126,7 +126,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .build(consumer);
 
         ShapedRecipeBuilder.shapedRecipe(ItemList.EXPOpiniumCore.get())
-                .key('X', Items.EXPERIENCE_BOTTLE)
+                .key('X', ModTags.Items.EXPERIENCE_CONTAINERS)
                 .key('E', ItemList.ChorusOpiniumCore.get())
                 .patternLine("XEX")
                 .patternLine("E E")
@@ -564,7 +564,7 @@ public class MURecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapelessRecipe(Items.BLAZE_POWDER, 2)
                 .addIngredient(ItemList.FlameLily.get())
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
-                .build(consumer, new ResourceLocation("miniutilities/blaze_powder"));
+                .build(consumer, modId("flame_lily_to_blaze_powder"));
 
         // Machines
         ShapedRecipeBuilder.shapedRecipe(BlockList.MechanicalMiner.get())
@@ -664,6 +664,83 @@ public class MURecipeProvider extends RecipeProvider {
                 .key('X', ItemList.ExperiencePearl7x.get())
                 .patternLine("XXX")
                 .patternLine("X X")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.ExperiencePearl.get(), 8)
+                .addIngredient(ItemList.ExperiencePearl1x.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("unpack1x"));
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.ExperiencePearl1x.get(), 8)
+                .addIngredient(ItemList.ExperiencePearl2x.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("unpack2x"));
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.ExperiencePearl2x.get(), 8)
+                .addIngredient(ItemList.ExperiencePearl3x.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("unpack3x"));
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.ExperiencePearl3x.get(), 8)
+                .addIngredient(ItemList.ExperiencePearl4x.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("unpack4x"));
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.ExperiencePearl4x.get(), 8)
+                .addIngredient(ItemList.ExperiencePearl5x.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("unpack5x"));
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.ExperiencePearl5x.get(), 8)
+                .addIngredient(ItemList.ExperiencePearl6x.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("unpack6x"));
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.ExperiencePearl6x.get(), 8)
+                .addIngredient(ItemList.ExperiencePearl7x.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("unpack7x"));
+        ShapelessRecipeBuilder.shapelessRecipe(ItemList.ExperiencePearl7x.get(), 8)
+                .addIngredient(ItemList.ExperiencePearl8x.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("unpack8x"));
+
+        ShapelessRecipeBuilder.shapelessRecipe(BlockList.ChorusTile.get(), 8)
+                .addIngredient(Ingredient.fromTag(Tags.Items.GLASS_PANES), 4)
+                .addIngredient(Items.CHORUS_FRUIT, 1)
+                .addIngredient(Ingredient.fromTag(Tags.Items.GLASS_PANES), 4)
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(BlockList.EnderTile.get(), 8)
+                .addIngredient(Ingredient.fromTag(Tags.Items.GLASS_PANES), 4)
+                .addIngredient(Ingredient.fromTag(Tags.Items.ENDER_PEARLS), 1)
+                .addIngredient(Ingredient.fromTag(Tags.Items.GLASS_PANES), 4)
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
+        // RF Generators
+        ShapedRecipeBuilder.shapedRecipe(BlockList.SolarPanel.get(), 2)
+                .key('X', Items.GOLD_INGOT)
+                .key('Y', Items.IRON_INGOT)
+                .key('Z', BlockList.EnderTile.get())
+                .key('A', Items.GLOWSTONE)
+                .patternLine("ZZZ")
+                .patternLine("YAY")
+                .patternLine("XYX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.LunarPanel.get(), 2)
+                .key('X', Items.GOLD_INGOT)
+                .key('Y', Items.IRON_INGOT)
+                .key('Z', BlockList.ChorusTile.get())
+                .key('A', Items.LAPIS_LAZULI)
+                .patternLine("ZZZ")
+                .patternLine("YAY")
+                .patternLine("XYX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.SolarPanelController.get())
+                .key('X', Items.IRON_INGOT)
+                .key('Y', ItemList.GoldOpiniumCore.get())
+                .key('Z', BlockList.EnderTile.get())
+                .key('A', Blocks.REDSTONE_BLOCK)
+                .patternLine("YZY")
+                .patternLine("XAX")
                 .patternLine("XXX")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);

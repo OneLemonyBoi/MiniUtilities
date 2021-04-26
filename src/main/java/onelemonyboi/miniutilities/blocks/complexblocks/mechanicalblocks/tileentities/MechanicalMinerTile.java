@@ -2,11 +2,13 @@ package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileent
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
@@ -23,14 +25,24 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import onelemonyboi.lemonlib.blocks.TileBase;
+import onelemonyboi.miniutilities.blocks.complexblocks.MUItemStackHandler;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalMinerContainer;
 import onelemonyboi.lemonlib.*;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class MechanicalMinerTile extends LockableLootTileEntity implements ITickableTileEntity {
+public class MechanicalMinerTile extends TileBase implements INamedContainerProvider {
     public static int slots = 9;
+
+    public final MUItemStackHandler itemSH = new MUItemStackHandler(9);
+    private final LazyOptional<MUItemStackHandler> lazyItemStorage = LazyOptional.of(() -> itemSH);
 
     // 1: Always on
     // 2: Redstone to Enable
@@ -39,8 +51,6 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
     public Integer timer;
     public Integer waittime;
     public Boolean event;
-
-    protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
 
     public MechanicalMinerTile() {
         super(TEList.MechanicalMinerTile.get());
@@ -51,27 +61,12 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
     }
 
     @Override
-    public int getSizeInventory() {
-        return slots;
-    }
-
-    @Override
-    protected NonNullList<ItemStack> getItems() {
-        return this.items;
-    }
-
-    @Override
-    protected void setItems(NonNullList<ItemStack> itemsIn) {
-        this.items = itemsIn;
-    }
-
-    @Override
-    protected ITextComponent getDefaultName() {
+    public ITextComponent getDisplayName() {
         return new TranslationTextComponent("container.miniutilities.mechanical_miner");
     }
 
     @Override
-    protected Container createMenu(int id, PlayerInventory player) {
+    public Container createMenu(int id, PlayerInventory player, PlayerEntity entity) {
         return new MechanicalMinerContainer(id, player, this);
     }
 
@@ -80,21 +75,16 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
         super.write(tag);
         tag.putInt("RedstoneMode", this.redstonemode);
         tag.putInt("WaitTime", this.waittime);
-        if(!this.checkLootAndWrite(tag)) {
-            ItemStackHelper.saveAllItems(tag, this.items);
-        }
+        tag.put("itemSH", itemSH.serializeNBT());
         return tag;
     }
 
     @Override
     public void read(BlockState state, CompoundNBT tag) {
         super.read(state, tag);
-        this.items = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+        itemSH.deserializeNBT(tag.getCompound("itemSH"));
         this.redstonemode = tag.getInt("RedstoneMode");
         this.waittime = tag.getInt("WaitTime");
-        if (!this.checkLootAndRead(tag)) {
-            ItemStackHelper.loadAllItems(tag, this.items);
-        }
     }
 
     /**
@@ -121,18 +111,29 @@ public class MechanicalMinerTile extends LockableLootTileEntity implements ITick
 
     protected void blockBreaker() {
         BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
-        IInventory iinventory = (IInventory) this.getTileEntity();
-        if (iinventory == null) {
-            List<Entity> list = world.getEntitiesInAABBexcluding(null, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY() - 0.5D, this.getPos().getZ() - 0.5D, this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D), EntityPredicates.HAS_INVENTORY);
-            if (!list.isEmpty()) {
-                iinventory = (IInventory) list.get(world.rand.nextInt(list.size()));
-            }
-        }
+
         // Loot Generation
-        LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
+        LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
         List<ItemStack> lists = world.getBlockState(blockPos).getDrops(lootcontext$builder);
 
-        InventoryHandling.InventoryInsert(lists, iinventory, world, this);
+        for (ItemStack itemStack : lists) {
+            for (int i = 0; i < 9; i++) {
+                itemStack = this.itemSH.insertItem(i, itemStack, false);
+            }
+            if (!itemStack.isEmpty()) {
+                InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY() + 1, this.getPos().getZ(), itemStack);
+            }
+        }
         world.destroyBlock(blockPos, false); // Very kool break animations!
+        this.markDirty();
+    }
+
+    @Nonnull
+    @Override
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return lazyItemStorage.cast();
+        }
+        return super.getCapability(cap, side);
     }
 }

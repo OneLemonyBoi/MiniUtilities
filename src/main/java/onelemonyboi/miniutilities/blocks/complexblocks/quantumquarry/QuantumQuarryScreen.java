@@ -1,7 +1,8 @@
-package onelemonyboi.miniutilities.blocks.complexblocks;
+package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -19,8 +20,8 @@ public class QuantumQuarryScreen extends ContainerScreen<QuantumQuarryContainer>
 
         this.guiLeft = 0;
         this.guiTop = 0;
-        this.xSize = 175;
-        this.ySize = 201;
+        this.xSize = 176;
+        this.ySize = 166;
     }
 
     @Override

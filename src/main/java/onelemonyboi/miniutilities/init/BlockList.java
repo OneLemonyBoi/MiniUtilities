@@ -10,10 +10,16 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
-import onelemonyboi.miniutilities.blocks.complexblocks.DrumBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.LunarPanelBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelController;
+import onelemonyboi.miniutilities.blocks.complexblocks.drum.DrumBlock;
 import onelemonyboi.miniutilities.blocks.*;
-import onelemonyboi.miniutilities.blocks.complexblocks.QuantumQuarryBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalPlacerBlock;
+import onelemonyboi.miniutilities.blocks.earth.BlessedEarthBlock;
+import onelemonyboi.miniutilities.blocks.earth.BlursedEarthBlock;
+import onelemonyboi.miniutilities.blocks.earth.CursedEarthBlock;
 import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalMinerBlock;
 
@@ -62,6 +68,12 @@ public class BlockList {
     public static final RegistryObject<Block> MechanicalMiner = register("mechanical_miner", MechanicalMinerBlock::new);
     public static final RegistryObject<Block> MechanicalPlacer = register("mechanical_placer", MechanicalPlacerBlock::new);
     public static final RegistryObject<Block> QuantumQuarry = register("quantum_quarry", QuantumQuarryBlock::new);
+
+    public static final RegistryObject<Block> SolarPanel = register("solar_panel", () -> new SolarPanelBlock(AbstractBlock.Properties.from(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> LunarPanel = register("lunar_panel", () -> new LunarPanelBlock(AbstractBlock.Properties.from(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> SolarPanelController = register("solar_panel_controller", () -> new SolarPanelController());
+    public static final RegistryObject<Block> EnderTile = register("ender_tile", EnderTileBlock::new);
+    public static final RegistryObject<Block> ChorusTile = register("chorus_tile", ChorusTileBlock::new);
 
     public static void register() {}
 

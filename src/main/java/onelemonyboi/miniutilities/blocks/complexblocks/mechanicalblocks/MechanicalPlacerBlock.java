@@ -23,7 +23,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
+import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryTile;
 import onelemonyboi.miniutilities.data.ModTags;
+import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalPlacerTile;
 
@@ -113,9 +115,11 @@ public class MechanicalPlacerBlock extends Block {
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity instanceof MechanicalPlacerTile) {
+        if (tileEntity instanceof QuantumQuarryTile) {
             ItemStack itemStack = new ItemStack(this);
             CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
+            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemList.SpeedUpgrade.get(), Math.round((20 - compoundNBT.getInt("WaitTime")) / 5.0F)));
+            compoundNBT.putInt("WaitTime", 20);
             itemStack.setTagInfo("BlockEntityTag", compoundNBT);
             InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
         }

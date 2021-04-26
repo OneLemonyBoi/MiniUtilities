@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.blocks.complexblocks;
+package onelemonyboi.miniutilities.blocks.complexblocks.drum;
 
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
