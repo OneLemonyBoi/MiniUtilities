@@ -3,6 +3,7 @@ package onelemonyboi.miniutilities.data;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
+import net.minecraft.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
@@ -51,5 +52,8 @@ public class MUItemTagsProvider extends ItemTagsProvider {
 
         getOrCreateBuilder(ModTags.Items.UPGRADES).addTag(ModTags.Items.UPGRADES_SPEED);
         getOrCreateBuilder(ModTags.Items.UPGRADES_SPEED).add(ItemList.SpeedUpgrade.get());
+
+        getOrCreateBuilder(ModTags.Items.EXPERIENCE_CONTAINERS).add(ItemList.ExperiencePearl.get());
+        getOrCreateBuilder(ModTags.Items.EXPERIENCE_CONTAINERS).add(Items.EXPERIENCE_BOTTLE);
     }
 }

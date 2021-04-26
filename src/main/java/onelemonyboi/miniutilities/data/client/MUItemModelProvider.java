@@ -34,6 +34,8 @@ public class MUItemModelProvider extends ItemModelProvider {
         withExistingParent("pink_lapis_caelestis", modLoc("block/pink_lapis_caelestis"));
         withExistingParent("brown_lapis_caelestis", modLoc("block/brown_lapis_caelestis"));
 
+        withExistingParent("quantum_quarry", modLoc("block/quantum_quarry"));
+
         ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 
         builder(itemGenerated, "ender_dust");

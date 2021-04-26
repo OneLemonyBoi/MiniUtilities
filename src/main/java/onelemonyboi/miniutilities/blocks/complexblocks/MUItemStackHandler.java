@@ -10,6 +10,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 
 public class MUItemStackHandler implements IItemHandler, IItemHandlerModifiable, INBTSerializable<CompoundNBT> {
+    // TODO: MOVE TO LEMONLIB
+
     public final ItemStackHandler internal;
 
     public MUItemStackHandler(int slots) {

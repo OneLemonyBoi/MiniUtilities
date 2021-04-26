@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "miniutilities:block/quantum_quarry"
+    }
+  }
+}

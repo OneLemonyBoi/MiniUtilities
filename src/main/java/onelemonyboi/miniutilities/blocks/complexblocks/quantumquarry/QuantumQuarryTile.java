@@ -1,19 +1,16 @@
-package onelemonyboi.miniutilities.blocks.complexblocks;
+package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.ByteArrayNBT;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.IntArrayNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -22,11 +19,10 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
-import onelemonyboi.miniutilities.MiniUtilities;
+import onelemonyboi.miniutilities.blocks.complexblocks.MUItemStackHandler;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.lemonlib.*;
 import onelemonyboi.miniutilities.world.Config;
@@ -34,11 +30,10 @@ import onelemonyboi.miniutilities.world.Config;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class QuantumQuarryTile extends EnergyTileBase {
+public class QuantumQuarryTile extends EnergyTileBase implements INamedContainerProvider {
     public static int slots = 9;
 
     public final MUItemStackHandler itemSH = new MUItemStackHandler(9);
@@ -66,7 +61,7 @@ public class QuantumQuarryTile extends EnergyTileBase {
 
     @Override
     public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.miniutilities.mechanical_miner");
+        return new TranslationTextComponent("container.miniutilities.quantum_quarry");
     }
 
     @Nullable
@@ -107,10 +102,14 @@ public class QuantumQuarryTile extends EnergyTileBase {
     public void tick() {
         this.event = false;
         this.timer++;
+        if (calcRFCost(this.waittime) <= energy.getEnergyStored()) {
+            energy.internalConsumeEnergy(calcRFCost(this.waittime));
+        }
+        else {
+            return;
+        }
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
-        if (calcRFCost(this.waittime) <= energy.getEnergyStored()) {
-            energy.setEnergy(energy.getEnergyStored() - calcRFCost(this.waittime));
             if (!world.isRemote && this.redstonemode == 1){
                 oreGen();
             }
@@ -120,7 +119,6 @@ public class QuantumQuarryTile extends EnergyTileBase {
             else if (!world.isRemote && !world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
                 oreGen();
             }
-        }
     }
 
     protected void oreGen() {
@@ -133,10 +131,15 @@ public class QuantumQuarryTile extends EnergyTileBase {
                 }
             }
         }
-        IInventory iinventory = (IInventory) this.getTileEntity();
-        List<ItemStack> lists = new ArrayList<ItemStack>();
-        lists.add(new ItemStack(Item.getItemFromBlock(this.oreList.get(new Random().nextInt(this.oreList.size())))));
-        InventoryHandling.InventoryInsert(lists, iinventory, world, this);
+        QuantumQuarryTile te = ((QuantumQuarryTile) this.getTileEntity());
+        ItemStack insertStack = new ItemStack(Item.getItemFromBlock(this.oreList.get(new Random().nextInt(this.oreList.size()))));
+        for (int i = 0; i < 9; i++) {
+            insertStack = this.itemSH.insertItem(i, insertStack, false);
+        }
+        if (!insertStack.isEmpty()) {
+            InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY() + 1, this.getPos().getZ(), insertStack);
+        }
+        this.markDirty();
     }
 
     @Nonnull

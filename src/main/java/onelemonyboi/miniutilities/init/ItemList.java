@@ -2,15 +2,17 @@ package onelemonyboi.miniutilities.init;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
+import onelemonyboi.lemonlib.items.*;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.AngelBlockItem;
 import onelemonyboi.miniutilities.items.*;
 import onelemonyboi.miniutilities.items.ItemTier;
 import onelemonyboi.miniutilities.items.unstable.*;
-import onelemonyboi.lemonlib.items.*;
 
+import static onelemonyboi.miniutilities.MiniUtilities.MOD_ID;
 import static onelemonyboi.miniutilities.items.ItemTier.UNSTABLE;
 
 public class ItemList {
@@ -21,9 +23,9 @@ public class ItemList {
     public static final RegistryObject<Item> Kikoku = ModRegistry.ITEMS.register("kikoku", () ->
             new Kikoku(ItemTier.KIKOKU,  13, -2.4F, (new Item.Properties().group(CreativeTab.getInstance()))));
     public static final RegistryObject<Item> EnderLilySeeds = ModRegistry.ITEMS.register("ender_lily_seeds", () ->
-            new ItemSeeds(BlockList.EnderLily.get()));
+            new ItemSeeds(BlockList.EnderLily.get(), CreativeTab.getInstance()));
     public static final RegistryObject<Item> FlameLilySeeds = ModRegistry.ITEMS.register("flame_lily_seeds", () ->
-            new ItemSeeds(BlockList.FlameLily.get()));
+            new ItemSeeds(BlockList.FlameLily.get(), CreativeTab.getInstance()));
     public static final RegistryObject<Item> FlameLily = ModRegistry.ITEMS.register("flame_lily", () ->
             new FuelItems(new Item.Properties().group(CreativeTab.getInstance()), 2400));
 

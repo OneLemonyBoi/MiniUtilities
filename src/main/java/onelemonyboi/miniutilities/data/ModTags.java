@@ -72,6 +72,8 @@ public class ModTags {
         public static final ITag.INamedTag<Item> UPGRADES_SPEED = forge("upgrades/speed");
         public static final ITag.INamedTag<Item> UPGRADES = forge("upgrades");
 
+        public static final ITag.INamedTag<Item> EXPERIENCE_CONTAINERS = forge("experience_containers");
+
         private static ITag.INamedTag<Item> forge(String path) {
             return ItemTags.makeWrapperTag(new ResourceLocation("forge", path).toString());
         }
