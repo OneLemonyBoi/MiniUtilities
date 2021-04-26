@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "YZY",
+    "XAX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "miniutilities:gold_opinium_core"
+    },
+    "Z": {
+      "item": "miniutilities:ender_tile"
+    },
+    "A": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "miniutilities:solar_panel_controller"
+  }
+}
