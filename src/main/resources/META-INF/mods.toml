@@ -65,7 +65,7 @@ description='''
    side="BOTH"
 [[dependencies.miniutilities]]
    modId="ctm"
-   mandatory=true
+   mandatory=false
    # This version range declares a minimum of the current minecraft version up to but not including the next major version
    versionRange="[MC1.16.1-1.1.2.6,)"
    ordering="NONE"
@@ -73,6 +73,6 @@ description='''
 [[dependencies.miniutilities]]
    modId="lemonlib"
    mandatory=true
-   versionRange="[1.0.0,)"
+   versionRange="[1.2.8,)"
    ordering="NONE"
    side="BOTH"
