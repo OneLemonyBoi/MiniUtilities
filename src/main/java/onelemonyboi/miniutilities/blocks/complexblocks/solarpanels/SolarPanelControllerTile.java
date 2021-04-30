@@ -39,7 +39,7 @@ public class SolarPanelControllerTile extends EnergyTileBase {
         for (Direction d : Direction.values()) {
             if (d == Direction.UP || d == Direction.DOWN) {continue;}
             BlockState blockState = world.getBlockState(pos.offset(d));
-            if (posList.contains(pos.offset(d))) {continue;}
+            if (posList.contains(pos.offset(d)) || !world.canSeeSky(pos.offset(d))) {continue;}
             if (blockState.getBlock() instanceof SolarPanelBlock && world.isDaytime()) {
                 posList.add(pos.offset(d));
                 activeSolarCount++;
