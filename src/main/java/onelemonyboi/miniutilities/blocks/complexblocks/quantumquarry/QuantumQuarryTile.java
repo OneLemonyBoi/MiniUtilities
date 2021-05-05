@@ -97,20 +97,28 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
 
     @Override
     public void tick() {
-        this.timer++;
-        if (energy.simulateInternalConsumeEnergy(calcRFCost(this.waittime)) != calcRFCost(this.waittime)) {return;}
+        if (world.isRemote()) {return;}
 
-        energy.internalConsumeEnergy(calcRFCost(this.waittime));
+
+        // TODO: CREATE METHOD IN ENERGYTILEBASE THAT CHANGES EXTRACT'S DUMB BUG
+        this.timer++;
         this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+        energy.setMaxExtract(Integer.MAX_VALUE);
+        if (energy.simulateInternalConsumeEnergy(calcRFCost(this.waittime)) != calcRFCost(this.waittime)) {
+            energy.setMaxExtract(0);
+            return;
+        }
+        energy.internalConsumeEnergy(calcRFCost(this.waittime));
+        energy.setMaxExtract(0);
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
-        if (!world.isRemote && this.redstonemode == 1){
+        if (this.redstonemode == 1){
             oreGen();
         }
-        else if (!world.isRemote && world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
+        else if (world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
             oreGen();
         }
-        else if (!world.isRemote && !world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
+        else if (!world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
             oreGen();
         }
     }

@@ -30,6 +30,8 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
 
     @Override
     public void tick() {
+        if (world.isRemote()) {return;}
+
         posList = new ArrayList<BlockPos>();
         if (world.getDayTime() % 20 == 0) {
             activeSolarCount = 0;
@@ -51,16 +53,20 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
             BlockState blockState = world.getBlockState(pos.offset(d));
             if (posList.contains(pos.offset(d)) || !world.canSeeSky(pos.offset(d))) {continue;}
             if (blockState.getBlock() instanceof SolarPanelBlock) {
-                if (world.isDaytime()) {activeSolarCount++;}
+                if (world.isDaytime()) {
+                    activeSolarCount++;
+                }
                 posList.add(pos.offset(d));
                 solarPanelRecursion(pos.offset(d));
             }
             else if (blockState.getBlock() instanceof LunarPanelBlock) {
-                if (world.isNightTime()) {activeSolarCount++;}
+                if (world.isNightTime()) {
+                    activeSolarCount++;
+                }
                 posList.add(pos.offset(d));
                 solarPanelRecursion(pos.offset(d));
             }
-            else if (blockState.getBlock() instanceof SolarPanelController && !pos.offset(d).getCoordinatesAsString().equals(getPos().getCoordinatesAsString())) {
+            else if (blockState.getBlock() instanceof SolarPanelController && pos.offset(d) != getPos()) {
                 world.destroyBlock(pos.offset(d), true);
                 activeSolarCount = 0;
             }

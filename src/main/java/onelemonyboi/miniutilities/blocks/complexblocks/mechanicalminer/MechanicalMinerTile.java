@@ -85,16 +85,18 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
 
     @Override
     public void tick() {
+        if (world.isRemote()) {return;}
+
         this.timer++;
         if (this.timer != this.waittime) {return;}
         this.timer = 0;
-        if (!world.isRemote && this.redstonemode == 1){
+        if (this.redstonemode == 1){
             blockBreaker();
         }
-        else if (!world.isRemote && world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
+        else if (world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
             blockBreaker();
         }
-        else if (!world.isRemote && !world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
+        else if (!world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
             blockBreaker();
         }
     }
