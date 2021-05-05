@@ -188,6 +188,8 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         return output;
     }
 
+    // TODO: ADD THESE 2 OVERRIDES TO LIB
+
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
         this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());

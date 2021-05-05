@@ -54,6 +54,7 @@ public class QuantumQuarryBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity te = worldIn.getTileEntity(pos);
+            if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {return ActionResultType.CONSUME;}
             if (te instanceof QuantumQuarryTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
                 QuantumQuarryTile TE = ((QuantumQuarryTile) te);
                 if (TE.waittime > 25) {
@@ -70,7 +71,6 @@ public class QuantumQuarryBlock extends Block {
                 }
             }
             else if (te instanceof QuantumQuarryTile) {
-                QuantumQuarryTile TE = ((QuantumQuarryTile) te);
                 NetworkHooks.openGui((ServerPlayerEntity) player, (QuantumQuarryTile) te, pos);
                 return ActionResultType.CONSUME;
             }
