@@ -1,8 +1,7 @@
-package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -12,7 +11,6 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraftforge.items.SlotItemHandler;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalPlacerTile;
 
 import java.util.Objects;
 

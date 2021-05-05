@@ -1,28 +1,25 @@
-package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
@@ -30,15 +27,16 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import onelemonyboi.lemonlib.blocks.TileBase;
 import onelemonyboi.miniutilities.blocks.complexblocks.MUItemStackHandler;
+import onelemonyboi.miniutilities.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalMinerContainer;
-import onelemonyboi.lemonlib.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
-public class MechanicalMinerTile extends TileBase implements INamedContainerProvider {
+public class MechanicalMinerTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier {
     public static int slots = 9;
 
     public final MUItemStackHandler itemSH = new MUItemStackHandler(9);
@@ -50,14 +48,12 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
     public Integer redstonemode;
     public Integer timer;
     public Integer waittime;
-    public Boolean event;
 
     public MechanicalMinerTile() {
         super(TEList.MechanicalMinerTile.get());
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 20;
-        this.event = false;
     }
 
     @Override
@@ -87,11 +83,6 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         this.waittime = tag.getInt("WaitTime");
     }
 
-    /**
-     * Insert the specified stack to the specified inventory and return any leftover items
-     * Includes modified form of HopperTileEntity#insertSlot
-     */
-
     @Override
     public void tick() {
         this.timer++;
@@ -106,7 +97,6 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         else if (!world.isRemote && !world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
             blockBreaker();
         }
-        this.event = false;
     }
 
     protected void blockBreaker() {
@@ -125,8 +115,10 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
             }
         }
         world.destroyBlock(blockPos, false); // Very kool break animations!
+        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
         this.markDirty();
     }
+
 
     @Nonnull
     @Override
@@ -135,5 +127,40 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
             return lazyItemStorage.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public List<ITextComponent> getInfo() {
+        List<ITextComponent> output = new ArrayList<>();
+
+        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(new StringTextComponent(""));
+        switch (this.redstonemode) {
+            case 1:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"));
+                break;
+            case 2:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"));
+                break;
+            case 3:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"));
+                break;
+        }
+        output.add(new TranslationTextComponent("text.miniutilities.waittime")
+                .appendString(this.waittime.toString() + " ticks(" + String.valueOf(this.waittime.floatValue() / 20))
+                .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
+                .appendString(")"));
+        return output;
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
+    }
+
+    @Override
+    @Nullable
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
     }
 }

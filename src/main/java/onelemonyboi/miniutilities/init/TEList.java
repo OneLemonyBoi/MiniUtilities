@@ -5,9 +5,9 @@ import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelControllerTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryTile;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalMinerTile;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.drum.DrumTile;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalPlacerTile;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerTile;
 
 public class TEList {
     public static final RegistryObject<TileEntityType<DrumTile>> DrumTile = ModRegistry.TE.register("drum", () -> TileEntityType.Builder.create(DrumTile::new, BlockList.StoneDrum.get(), BlockList.IronDrum.get(), BlockList.ReinforcedLargeDrum.get(), BlockList.NetheriteReinforcedDrum.get(), BlockList.UnstableDrum.get()).build(null));

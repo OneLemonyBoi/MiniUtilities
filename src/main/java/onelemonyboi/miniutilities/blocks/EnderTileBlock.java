@@ -36,9 +36,6 @@ public class EnderTileBlock extends Block {
         for (int x = 1; x <= (256 - yPos); x++) {
             Boolean blockCheck = !worldIn.isAirBlock(entityIn.getPosition().up(x)) && worldIn.getBlockState(entityIn.getPosition().up(x)).getBlock() != Blocks.BEDROCK && worldIn.isAirBlock(entityIn.getPosition().up(x+1)) && worldIn.isAirBlock(entityIn.getPosition().up(x+2));
             if (blockCheck){
-                MiniUtilities.LOGGER.debug(worldIn.getBlockState(entityIn.getPosition().up(x)).toString());
-                MiniUtilities.LOGGER.debug(worldIn.getBlockState(entityIn.getPosition().up(x+1)).toString());
-                MiniUtilities.LOGGER.debug(worldIn.getBlockState(entityIn.getPosition().up(x+2)).toString());
                 entityIn.teleportKeepLoaded(entityIn.getPosX(), yPos + x + 1, entityIn.getPosZ());
                 entityIn.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 return;

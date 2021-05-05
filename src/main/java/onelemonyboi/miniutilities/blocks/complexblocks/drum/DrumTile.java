@@ -8,6 +8,9 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -15,13 +18,16 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import onelemonyboi.miniutilities.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
-public class DrumTile extends TileEntity {
+public class DrumTile extends TileEntity implements RenderInfoIdentifier {
     private FluidTank drum;
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> drum);
 
@@ -104,5 +110,16 @@ public class DrumTile extends TileEntity {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return holder.cast();
         return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public List<ITextComponent> getInfo() {
+        List<ITextComponent> output = new ArrayList<>();
+
+        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(new StringTextComponent(""));
+        output.add(new TranslationTextComponent("text.miniutilities.drumamount").appendString(": " + this.drum.getFluidAmount()));
+        output.add(new TranslationTextComponent("text.miniutilities.drumcapacity").appendString(": " + this.drum.getCapacity()));
+        return output;
     }
 }

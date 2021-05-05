@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.screens;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -9,7 +9,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalMinerContainer;
 
 public class MechanicalMinerScreen extends ContainerScreen<MechanicalMinerContainer> {
     private static final ResourceLocation TestDisplay = new ResourceLocation(MiniUtilities.MOD_ID,

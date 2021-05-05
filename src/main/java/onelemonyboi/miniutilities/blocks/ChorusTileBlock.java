@@ -37,9 +37,6 @@ public class ChorusTileBlock extends Block {
         for (int x = 1; x <= yPos; x++) {
             Boolean blockCheck = !worldIn.isAirBlock(entityIn.getPosition().down(x)) && worldIn.getBlockState(entityIn.getPosition().down(x)).getBlock() != Blocks.BEDROCK && worldIn.isAirBlock(entityIn.getPosition().down(x+1)) && worldIn.isAirBlock(entityIn.getPosition().down(x+2));
             if (blockCheck){
-                MiniUtilities.LOGGER.debug(worldIn.getBlockState(entityIn.getPosition().down(x)).toString());
-                MiniUtilities.LOGGER.debug(worldIn.getBlockState(entityIn.getPosition().down(x+1)).toString());
-                MiniUtilities.LOGGER.debug(worldIn.getBlockState(entityIn.getPosition().down(x+2)).toString());
                 entityIn.teleportKeepLoaded(entityIn.getPosX(), yPos + x + 1, entityIn.getPosZ());
                 entityIn.playSound(SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT, 1, 1);
                 return;

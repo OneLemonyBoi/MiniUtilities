@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -25,7 +25,6 @@ import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuar
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalMinerTile;
 
 import java.util.UUID;
 
@@ -55,43 +54,25 @@ public class MechanicalMinerBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof MechanicalMinerTile && keyBindingPressed) {
-                MechanicalMinerTile TE = ((MechanicalMinerTile) te);
-                switch (TE.redstonemode) {
-                    case 1:
-                        TE.redstonemode = 2;
-                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"), UUID.randomUUID());
-                        break;
-                    case 2:
-                        TE.redstonemode = 3;
-                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"), UUID.randomUUID());
-                        break;
-                    case 3:
-                        TE.redstonemode = 1;
-                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"), UUID.randomUUID());
-                        break;
-                }
-                return ActionResultType.CONSUME;
-            }
-            else if (te instanceof MechanicalMinerTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
+            if (te instanceof MechanicalMinerTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
                 MechanicalMinerTile TE = ((MechanicalMinerTile) te);
                 if (TE.waittime > 5) {
                     TE.waittime = TE.waittime - 5;
                     player.getHeldItem(handIn).shrink(1);
                     TE.timer = 0;
+                    TE.getWorld().notifyBlockUpdate(TE.getPos(), TE.getBlockState(), TE.getBlockState(), 3);
                 }
                 else if (TE.waittime == 5){
                     TE.waittime = 1;
                     player.getHeldItem(handIn).shrink(1);
                     TE.timer = 0;
+                    TE.getWorld().notifyBlockUpdate(TE.getPos(), TE.getBlockState(), TE.getBlockState(), 3);
                 }
             }
             else if (te instanceof MechanicalMinerTile) {
                 MechanicalMinerTile TE = ((MechanicalMinerTile) te);
-                if (TE.event == false) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, (MechanicalMinerTile) te, pos);
-                    return ActionResultType.CONSUME;
-                }
+                NetworkHooks.openGui((ServerPlayerEntity) player, (MechanicalMinerTile) te, pos);
+                return ActionResultType.CONSUME;
             }
         }
         return ActionResultType.CONSUME;
@@ -101,22 +82,17 @@ public class MechanicalMinerBlock extends Block {
         if (!event.getWorld().isRemote()) {
             if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalMinerTile && Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
                 MechanicalMinerTile TE = (MechanicalMinerTile) (event.getWorld().getTileEntity(event.getPos()));
-                PlayerEntity player = event.getPlayer();
-                player.sendMessage(new TranslationTextComponent("text.miniutilities.info"), UUID.randomUUID());
-                if (TE.redstonemode == 1) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"), UUID.randomUUID());
+                if (TE.waittime > 1 && TE.waittime < 20) {
+                    TE.waittime = TE.waittime + 5;
+                    InventoryHelper.spawnItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    TE.timer = 0;
+                    TE.getWorld().notifyBlockUpdate(TE.getPos(), TE.getBlockState(), TE.getBlockState(), 3);
+                } else if (TE.waittime == 1) {
+                    TE.waittime = 5;
+                    InventoryHelper.spawnItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    TE.timer = 0;
+                    TE.getWorld().notifyBlockUpdate(TE.getPos(), TE.getBlockState(), TE.getBlockState(), 3);
                 }
-                else if (TE.redstonemode == 2) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"), UUID.randomUUID());
-                }
-                else if (TE.redstonemode == 3) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"), UUID.randomUUID());
-                }
-                player.sendMessage(new TranslationTextComponent("text.miniutilities.waittime")
-                        .appendString(TE.waittime.toString() + " ticks(" + String.valueOf(TE.waittime.floatValue() / 20))
-                        .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
-                        .appendString(")"), UUID.randomUUID());
-                TE.event = true;
             }
         }
     }
@@ -146,8 +122,6 @@ public class MechanicalMinerBlock extends Block {
         if (tileEntity instanceof QuantumQuarryTile) {
             ItemStack itemStack = new ItemStack(this);
             CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
-            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemList.SpeedUpgrade.get(), Math.round((20 - compoundNBT.getInt("WaitTime")) / 5.0F)));
-            compoundNBT.putInt("WaitTime", 20);
             itemStack.setTagInfo("BlockEntityTag", compoundNBT);
             InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
         }
