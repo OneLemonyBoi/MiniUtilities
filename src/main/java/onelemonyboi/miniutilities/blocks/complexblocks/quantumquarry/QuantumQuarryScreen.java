@@ -13,7 +13,7 @@ import onelemonyboi.miniutilities.MiniUtilities;
 
 public class QuantumQuarryScreen extends ContainerScreen<QuantumQuarryContainer> {
     private static final ResourceLocation TestDisplay = new ResourceLocation(MiniUtilities.MOD_ID,
-            "textures/gui/mechanical_miner.png");
+            "textures/gui/base.png");
 
     public QuantumQuarryScreen(QuantumQuarryContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);

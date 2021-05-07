@@ -11,7 +11,7 @@ import onelemonyboi.miniutilities.MiniUtilities;
 
 public class MechanicalPlacerScreen extends ContainerScreen<MechanicalPlacerContainer> {
     private static final ResourceLocation TestDisplay = new ResourceLocation(MiniUtilities.MOD_ID,
-            "textures/gui/mechanical_miner.png");
+            "textures/gui/base.png");
 
     public MechanicalPlacerScreen(MechanicalPlacerContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);

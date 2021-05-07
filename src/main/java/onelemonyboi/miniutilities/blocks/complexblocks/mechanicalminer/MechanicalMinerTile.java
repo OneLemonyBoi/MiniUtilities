@@ -8,9 +8,13 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.PickaxeItem;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.IntNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -22,10 +26,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import onelemonyboi.lemonlib.blocks.TileBase;
+import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.blocks.complexblocks.MUItemStackHandler;
 import onelemonyboi.miniutilities.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
@@ -37,9 +43,17 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class MechanicalMinerTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier {
-    public static int slots = 9;
+    public static int slots = 10;
 
-    public final MUItemStackHandler itemSH = new MUItemStackHandler(9);
+    public final MUItemStackHandler itemSH = new MUItemStackHandler(10) {
+        @Override
+        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+            if (slot == 8) {
+                return stack.getItem() instanceof PickaxeItem;
+            }
+            return super.isItemValid(slot, stack);
+        }
+    };
     private final LazyOptional<MUItemStackHandler> lazyItemStorage = LazyOptional.of(() -> itemSH);
 
     // 1: Always on
@@ -54,6 +68,10 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 20;
+        ItemStack itemStack = new ItemStack(Items.IRON_PICKAXE);
+        CompoundNBT nbt = new CompoundNBT();
+        nbt.putBoolean("MechanicalMinerDefault", true);
+        itemStack.setTag(nbt);
     }
 
     @Override
@@ -86,7 +104,7 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
     @Override
     public void tick() {
         if (world.isRemote()) {return;}
-
+        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
         this.timer++;
         if (this.timer != this.waittime) {return;}
         this.timer = 0;
@@ -105,7 +123,9 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
 
         // Loot Generation
-        LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
+        BlockState state = world.getBlockState(blockPos);
+        if (getPickaxe().getHarvestLevel(ToolType.PICKAXE, null, state) < state.getBlock().getHarvestLevel(state)) {return;}
+        LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, getPickaxe()).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
         List<ItemStack> lists = world.getBlockState(blockPos).getDrops(lootcontext$builder);
 
         for (ItemStack itemStack : lists) {
@@ -117,7 +137,6 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
             }
         }
         world.destroyBlock(blockPos, false); // Very kool break animations!
-        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
         this.markDirty();
     }
 
@@ -164,5 +183,9 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
     @Nullable
     public SUpdateTileEntityPacket getUpdatePacket() {
         return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
+    }
+
+    public ItemStack getPickaxe() {
+        return this.itemSH.getStackInSlot(9).getItem() == Items.AIR ? new ItemStack(Items.IRON_PICKAXE) : this.itemSH.getStackInSlot(9);
     }
 }

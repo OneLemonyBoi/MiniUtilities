@@ -41,6 +41,9 @@ public class MechanicalMinerContainer extends Container {
             }
         }
 
+        // Pickaxe Slot
+        this.addSlot(new SlotItemHandler(te.itemSH, 9, 62 + 4 * 18, 17));
+
         // Main Player Inventory
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {

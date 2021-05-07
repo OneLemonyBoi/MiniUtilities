@@ -63,13 +63,11 @@ public class MechanicalPlacerBlock extends Block {
                     TE.waittime = TE.waittime - 5;
                     player.getHeldItem(handIn).shrink(1);
                     TE.timer = 0;
-                    TE.getWorld().notifyBlockUpdate(TE.getPos(), TE.getBlockState(), TE.getBlockState(), 3);
                 }
                 else if (TE.waittime == 5){
                     TE.waittime = 1;
                     player.getHeldItem(handIn).shrink(1);
                     TE.timer = 0;
-                    TE.getWorld().notifyBlockUpdate(TE.getPos(), TE.getBlockState(), TE.getBlockState(), 3);
                 }
             }
             else if (te instanceof MechanicalPlacerTile) {
@@ -119,13 +117,11 @@ public class MechanicalPlacerBlock extends Block {
                     TE.waittime = TE.waittime + 5;
                     InventoryHelper.spawnItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
                     TE.timer = 0;
-                    TE.getWorld().notifyBlockUpdate(TE.getPos(), TE.getBlockState(), TE.getBlockState(), 3);
                 }
                 else if (TE.waittime == 1){
                     TE.waittime = 5;
                     InventoryHelper.spawnItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
                     TE.timer = 0;
-                    TE.getWorld().notifyBlockUpdate(TE.getPos(), TE.getBlockState(), TE.getBlockState(), 3);
                 }
             }
         }

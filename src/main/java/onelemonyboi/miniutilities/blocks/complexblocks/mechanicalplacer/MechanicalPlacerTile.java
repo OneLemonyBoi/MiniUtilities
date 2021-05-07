@@ -80,7 +80,7 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
     @Override
     public void tick() {
         if (world.isRemote()) {return;}
-
+        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
         this.timer++;
         if (this.timer != this.waittime) {return;}
         this.timer = 0;
