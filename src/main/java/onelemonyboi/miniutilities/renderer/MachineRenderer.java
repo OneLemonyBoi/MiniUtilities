@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.misc;
+package onelemonyboi.miniutilities.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -22,7 +22,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.identifiers.RenderInfoIdentifier;
+import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 
 import java.util.ArrayList;
 import java.util.List;

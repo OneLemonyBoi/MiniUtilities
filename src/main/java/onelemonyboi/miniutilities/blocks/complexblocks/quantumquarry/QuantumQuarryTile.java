@@ -25,8 +25,8 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
-import onelemonyboi.miniutilities.blocks.complexblocks.MUItemStackHandler;
-import onelemonyboi.miniutilities.identifiers.RenderInfoIdentifier;
+import onelemonyboi.lemonlib.MUItemStackHandler;
+import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.lemonlib.*;
 import onelemonyboi.miniutilities.world.Config;
@@ -98,18 +98,11 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     @Override
     public void tick() {
         if (world.isRemote()) {return;}
-
-
-        // TODO: CREATE METHOD IN ENERGYTILEBASE THAT CHANGES EXTRACT'S DUMB BUG
         this.timer++;
         this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
-        energy.setMaxExtract(Integer.MAX_VALUE);
-        if (energy.simulateInternalConsumeEnergy(calcRFCost(this.waittime)) != calcRFCost(this.waittime)) {
-            energy.setMaxExtract(0);
+        if (!energy.checkedMachineConsume(calcRFCost(this.waittime))) {
             return;
         }
-        energy.internalConsumeEnergy(calcRFCost(this.waittime));
-        energy.setMaxExtract(0);
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
         if (this.redstonemode == 1){
@@ -186,18 +179,5 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         output.add(new StringTextComponent("Power: " + this.energy.toString()));
         output.add(new StringTextComponent("RF/t Consumption: " + calcRFCost(this.waittime)));
         return output;
-    }
-
-    // TODO: ADD THESE 2 OVERRIDES TO LIB
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
-    }
-
-    @Override
-    @Nullable
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
     }
 }

@@ -32,8 +32,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import onelemonyboi.lemonlib.blocks.TileBase;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.blocks.complexblocks.MUItemStackHandler;
-import onelemonyboi.miniutilities.identifiers.RenderInfoIdentifier;
+import onelemonyboi.lemonlib.MUItemStackHandler;
+import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
 
 import javax.annotation.Nonnull;

@@ -11,7 +11,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.identifiers.RenderInfoIdentifier;
+import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.world.Config;
 
