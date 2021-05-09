@@ -7,7 +7,7 @@ import onelemonyboi.miniutilities.MiniUtilities;
 
 public class Packet {
     private static final String CHANNEL_NAME = "main";
-    private static final String PROTOCOL_VERSION = "1";
+    private static final String PROTOCOL_VERSION = "2";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(MiniUtilities.MOD_ID, CHANNEL_NAME),
             () -> PROTOCOL_VERSION,
@@ -19,14 +19,10 @@ public class Packet {
         int id = 0;
         INSTANCE.registerMessage(
                 id++,
-                KeyPressUpdate.class,
-                KeyPressUpdate::encode,
-                KeyPressUpdate::decode,
-                KeyPressUpdate::handle
+                RedstoneModeUpdate.class,
+                RedstoneModeUpdate::encode,
+                RedstoneModeUpdate::decode,
+                RedstoneModeUpdate::handle
         );
-    }
-
-    public static void updateKey(Boolean key) {
-        INSTANCE.sendToServer(new KeyPressUpdate(key));
     }
 }

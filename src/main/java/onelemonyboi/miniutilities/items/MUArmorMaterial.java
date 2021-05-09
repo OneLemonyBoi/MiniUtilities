@@ -2,6 +2,7 @@ package onelemonyboi.miniutilities.items;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
@@ -19,6 +20,9 @@ public enum MUArmorMaterial implements IArmorMaterial {
     }),
     INFUSEDUNSTABLE(MiniUtilities.MOD_ID + ":infused", 0, new int[]{6, 12, 16, 6}, 50, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 6.0F, 0.5F, () -> {
         return Ingredient.fromItems(ItemList.UnstableIngot.get());
+    }),
+    BOOSTER("booster", 64, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
+        return null;
     });
 
     private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};

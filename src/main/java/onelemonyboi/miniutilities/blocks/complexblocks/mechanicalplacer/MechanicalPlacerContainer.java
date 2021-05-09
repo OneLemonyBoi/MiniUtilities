@@ -14,7 +14,6 @@ import onelemonyboi.miniutilities.init.ContainerList;
 
 import java.util.Objects;
 
-
 public class MechanicalPlacerContainer extends Container {
     public final MechanicalPlacerTile te;
     private final IWorldPosCallable canInteractWithCallable;

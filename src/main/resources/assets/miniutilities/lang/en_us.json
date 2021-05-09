@@ -7,9 +7,9 @@
 
   "text.miniutilities.ingotisunstable": "This Ingot is Unstable!",
   "text.miniutilities.unstableingot": "Unstable Ingot",
-  "text.miniutilities.redstonemodeswitchedtoone": "Redstone Mode: Always On",
-  "text.miniutilities.redstonemodeswitchedtotwo": "Redstone Mode: Redstone Enables",
-  "text.miniutilities.redstonemodeswitchedtothree": "Redstone Mode: Redstone Disables",
+  "text.miniutilities.redstonemodeone": "Redstone Mode: Always On",
+  "text.miniutilities.redstonemodetwo": "Redstone Mode: Redstone Enables",
+  "text.miniutilities.redstonemodethree": "Redstone Mode: Redstone Disables",
   "text.miniutilities.waittime": "Time per Operation: ",
   "text.miniutilities.seconds": " Seconds",
   "text.miniutilities.info": "Block Info:",

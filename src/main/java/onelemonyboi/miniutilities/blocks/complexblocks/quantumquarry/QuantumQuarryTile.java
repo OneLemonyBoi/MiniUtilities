@@ -99,11 +99,12 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     public void tick() {
         if (world.isRemote()) {return;}
         this.timer++;
-        this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
         if (!energy.checkedMachineConsume(calcRFCost(this.waittime))) {
             return;
         }
-        if (this.timer < this.waittime) {return;}
+        // TODO: TROUBLESHOOT WHY THIS IS NOT WORKING
+        if (this.timer != this.waittime) {return;}
         this.timer = 0;
         if (this.redstonemode == 1){
             oreGen();
@@ -163,13 +164,13 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         output.add(new StringTextComponent(""));
         switch (this.redstonemode) {
             case 1:
-                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"));
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeone"));
                 break;
             case 2:
-                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"));
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodetwo"));
                 break;
             case 3:
-                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"));
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodethree"));
                 break;
         }
         output.add(new TranslationTextComponent("text.miniutilities.waittime")
@@ -179,5 +180,16 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         output.add(new StringTextComponent("Power: " + this.energy.toString()));
         output.add(new StringTextComponent("RF/t Consumption: " + calcRFCost(this.waittime)));
         return output;
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
+    }
+
+    @Override
+    @Nullable
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
     }
 }

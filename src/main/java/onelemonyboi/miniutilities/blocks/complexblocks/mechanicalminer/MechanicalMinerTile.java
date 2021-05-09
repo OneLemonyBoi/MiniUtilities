@@ -104,7 +104,7 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
     @Override
     public void tick() {
         if (world.isRemote()) {return;}
-        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
         this.timer++;
         if (this.timer != this.waittime) {return;}
         this.timer = 0;
@@ -158,13 +158,13 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         output.add(new StringTextComponent(""));
         switch (this.redstonemode) {
             case 1:
-                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"));
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeone"));
                 break;
             case 2:
-                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"));
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodetwo"));
                 break;
             case 3:
-                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"));
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodethree"));
                 break;
         }
         output.add(new TranslationTextComponent("text.miniutilities.waittime")

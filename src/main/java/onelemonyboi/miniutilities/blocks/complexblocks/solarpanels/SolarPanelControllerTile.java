@@ -40,11 +40,9 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
         power = Config.solar_panel_generation.get();
         power *= activeSolarCount;
         power *= activeSolarCount/50.0 + 1;
-        energy.setMaxRecieve(Integer.MAX_VALUE);
-        energy.internalProduceEnergy((int) power);
-        energy.setMaxRecieve(0);
+        energy.machineProduce((int) power);
         energy.outputToSide(world, pos, Direction.UP, Config.solar_panel_generation.get() * 4096);
-        this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+        this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
     }
 
     public void solarPanelRecursion(BlockPos pos) {

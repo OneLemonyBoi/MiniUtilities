@@ -124,7 +124,7 @@ public class MiniUtilities {
         ScreenManager.registerFactory(ContainerList.PlacerContainer.get(), MechanicalPlacerScreen::new);
         ScreenManager.registerFactory(ContainerList.QuarryContainer.get(), QuantumQuarryScreen::new);
 
-        KeyBindings.register();
+//        KeyBindings.register();
     }
 
     private void enqueueIMC(InterModEnqueueEvent event) {
