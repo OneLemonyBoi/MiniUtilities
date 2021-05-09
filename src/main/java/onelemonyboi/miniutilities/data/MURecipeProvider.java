@@ -745,6 +745,16 @@ public class MURecipeProvider extends RecipeProvider {
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
 
+        ShapedRecipeBuilder.shapedRecipe(ItemList.MagicalEgg.get())
+                .key('X', Items.EGG)
+                .key('Y', ItemList.ExperiencePearl.get())
+                .key('Y', ItemList.UnstableIngot.get())
+                .patternLine(" Y ")
+                .patternLine("ZXZ")
+                .patternLine(" Y ")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlockList.EnderOre.get()), ItemList.EnderDust.get(), 0.7f, 200)
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer, modId("smelting/ender_ore"));

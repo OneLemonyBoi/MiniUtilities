@@ -94,6 +94,8 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "experience_pearl_7x");
         builder(itemGenerated, "experience_pearl_8x");
 
+        builder(itemGenerated, "magical_egg");
+
     }
 
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {
