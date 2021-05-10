@@ -11,8 +11,10 @@ import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,7 +30,7 @@ public class ChorusTileBlock extends Block {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return Block.makeCuboidShape(0, 0, 0, 16, 2, 16);
+        return VoxelShapes.combineAndSimplify(Block.makeCuboidShape(1, 1, 1, 15, 2, 15), Block.makeCuboidShape(0, 0, 0, 16, 1, 16), IBooleanFunction.OR);
     }
 
     @Override
