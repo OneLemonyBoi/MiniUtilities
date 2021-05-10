@@ -23,7 +23,6 @@ import onelemonyboi.miniutilities.packets.RedstoneModeUpdate;
 public class QuantumQuarryScreen extends ContainerScreen<QuantumQuarryContainer> {
     private static final ResourceLocation Base = new ResourceLocation(MiniUtilities.MOD_ID,
             "textures/gui/base.png");
-    public Item redstoneRenderedItem;
     public ItemStackButton button;
 
     public QuantumQuarryScreen(QuantumQuarryContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -33,7 +32,6 @@ public class QuantumQuarryScreen extends ContainerScreen<QuantumQuarryContainer>
         this.guiTop = 0;
         this.xSize = 176;
         this.ySize = 166;
-        this.redstoneRenderedItem = Items.REDSTONE;
     }
 
     @Override
