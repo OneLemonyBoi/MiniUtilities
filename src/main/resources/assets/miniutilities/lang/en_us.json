@@ -53,6 +53,11 @@
   "block.miniutilities.mechanical_miner": "Mechanical Miner",
   "block.miniutilities.mechanical_placer": "Mechanical Placer",
   "block.miniutilities.quantum_quarry": "Quantum Quarry",
+  "block.miniutilities.ender_tile": "Ender Tile",
+  "block.miniutilities.chorus_tile": "Chorus Tile",
+  "block.miniutilities.solar_panel": "Solar Panel",
+  "block.miniutilities.lunar_panel": "Lunar Panel",
+  "block.miniutilities.solar_panel_controller": "Solar Panel Controller",
 
   "item.miniutilities.angel_ring": "Angel Ring",
   "item.miniutilities.flame_lily_seeds": "Flame Lily Seeds",
@@ -99,6 +104,7 @@
   "item.miniutilities.experience_pearl_6x": "\u00A7a6x Compressed Experience Pearl\u00A7a",
   "item.miniutilities.experience_pearl_7x": "\u00A7a7x Compressed Experience Pearl\u00A7a",
   "item.miniutilities.experience_pearl_8x": "\u00A7a8x Compressed Experience Pearl\u00A7a",
+  "item.miniutilities.magical_egg": "Magical Egg",
 
   "enchantment.miniutilities.shotgun": "Shotgun",
   "enchantment.miniutilities.molten_head": "\u00A74Molten Tool Head\u00A74",

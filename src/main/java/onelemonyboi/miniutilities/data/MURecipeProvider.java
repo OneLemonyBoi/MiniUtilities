@@ -748,7 +748,7 @@ public class MURecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shapedRecipe(ItemList.MagicalEgg.get())
                 .key('X', Items.EGG)
                 .key('Y', ItemList.ExperiencePearl.get())
-                .key('Y', ItemList.UnstableIngot.get())
+                .key('Z', ItemList.UnstableIngot.get())
                 .patternLine(" Y ")
                 .patternLine("ZXZ")
                 .patternLine(" Y ")

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " Y ",
+    "ZXZ",
+    " Y "
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:egg"
+    },
+    "Y": {
+      "item": "miniutilities:experience_pearl"
+    },
+    "Z": {
+      "item": "miniutilities:unstable_ingot"
+    }
+  },
+  "result": {
+    "item": "miniutilities:magical_egg"
+  }
+}
