@@ -8,9 +8,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
-import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.world.Config;
@@ -25,7 +23,7 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
     public static double power = 0;
 
     public SolarPanelControllerTile() {
-        super(TEList.SolarPanelControllerTile.get(), Config.solar_panel_generation.get() * 4096, 0, Config.solar_panel_generation.get() * 4096);
+        super(TEList.SolarPanelControllerTile.get(), Config.solarPanelGeneration.get() * 4096, 0, Config.solarPanelGeneration.get() * 4096);
     }
 
     @Override
@@ -37,11 +35,11 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
             activeSolarCount = 0;
             solarPanelRecursion(this.getPos());
         }
-        power = Config.solar_panel_generation.get();
+        power = Config.solarPanelGeneration.get();
         power *= activeSolarCount;
         power *= activeSolarCount/50.0 + 1;
         energy.machineProduce((int) power);
-        energy.outputToSide(world, pos, Direction.UP, Config.solar_panel_generation.get() * 4096);
+        energy.outputToSide(world, pos, Direction.UP, Config.solarPanelGeneration.get() * 4096);
         this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
     }
 

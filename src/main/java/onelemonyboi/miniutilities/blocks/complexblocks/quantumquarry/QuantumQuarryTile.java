@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -28,7 +27,6 @@ import onelemonyboi.lemonlib.blocks.EnergyTileBase;
 import onelemonyboi.lemonlib.MUItemStackHandler;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.lemonlib.*;
 import onelemonyboi.miniutilities.world.Config;
 
 import javax.annotation.Nonnull;
@@ -119,7 +117,7 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
 
     protected void oreGen() {
         if (this.oreList.isEmpty()) {
-            for (String str : Config.ore_chances.get()) {
+            for (String str : Config.oreChances.get()) {
                 String[] chancesSplit = str.split(":");
                 Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(chancesSplit[0], chancesSplit[1]));
                 for (int i = 0; i < Integer.parseInt(chancesSplit[2]); i++) {

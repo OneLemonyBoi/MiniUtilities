@@ -3,10 +3,7 @@ package onelemonyboi.miniutilities.items;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.block.SoundType;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -15,20 +12,14 @@ import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvents;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.world.Config;
-import org.spongepowered.asm.mixin.injection.At;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -117,7 +108,7 @@ public class Kikoku extends SwordItem {
                 costCounter += addValue * 5;
             }
             else {
-                int value = Math.min(currentValue + addValue, enchantment.getMaxLevel() * Config.max_kikoku_multiplier.get());
+                int value = Math.min(currentValue + addValue, enchantment.getMaxLevel() * Config.maxKikokuMultiplier.get());
                 outputMap.put(entry.getKey(), value);
                 costCounter += (currentValue + addValue) * 5;
             }

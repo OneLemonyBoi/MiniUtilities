@@ -29,10 +29,12 @@ public class MagicalEggEntity extends ProjectileItemEntity {
 
     public MagicalEggEntity(World worldIn, LivingEntity throwerIn) {
         super(EntityList.SpecialEgg.get(), throwerIn, worldIn);
+        this.setItem(new ItemStack(ItemList.MagicalEgg.get()));
     }
 
     public MagicalEggEntity(World worldIn, double x, double y, double z) {
         super(EntityList.SpecialEgg.get(), x, y, z, worldIn);
+        this.setItem(new ItemStack(ItemList.MagicalEgg.get()));
     }
 
     /**

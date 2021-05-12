@@ -21,7 +21,7 @@ public class ExperiencePearl extends Item {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        playerIn.giveExperiencePoints(Config.exp_given_from_pearl.get() * (int) (Math.pow(8, this.compressed)));
+        playerIn.giveExperiencePoints(Config.expGivenFromPearl.get() * (int) (Math.pow(8, this.compressed)));
         return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
     }
 }
