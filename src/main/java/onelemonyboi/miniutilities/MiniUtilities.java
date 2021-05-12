@@ -1,9 +1,11 @@
 package onelemonyboi.miniutilities;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
@@ -12,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -25,6 +28,7 @@ import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.Mechanica
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerBlock;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
+import onelemonyboi.miniutilities.init.EntityList;
 import onelemonyboi.miniutilities.items.Kikoku;
 import onelemonyboi.miniutilities.items.enchantments.MoltenHeadHandler;
 import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
@@ -121,6 +125,8 @@ public class MiniUtilities {
         ScreenManager.registerFactory(ContainerList.MinerContainer.get(), MechanicalMinerScreen::new);
         ScreenManager.registerFactory(ContainerList.PlacerContainer.get(), MechanicalPlacerScreen::new);
         ScreenManager.registerFactory(ContainerList.QuarryContainer.get(), QuantumQuarryScreen::new);
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityList.SpecialEgg.get(), (manager) -> new SpriteRenderer(manager, Minecraft.getInstance().getItemRenderer()));
 
 //        KeyBindings.register();
     }

@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -11,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.network.IPacket;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
@@ -19,6 +21,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.NetworkHooks;
 import onelemonyboi.miniutilities.init.EntityList;
 import onelemonyboi.miniutilities.init.ItemList;
 
@@ -29,12 +32,10 @@ public class MagicalEggEntity extends ProjectileItemEntity {
 
     public MagicalEggEntity(World worldIn, LivingEntity throwerIn) {
         super(EntityList.SpecialEgg.get(), throwerIn, worldIn);
-        this.setItem(new ItemStack(ItemList.MagicalEgg.get()));
     }
 
     public MagicalEggEntity(World worldIn, double x, double y, double z) {
         super(EntityList.SpecialEgg.get(), x, y, z, worldIn);
-        this.setItem(new ItemStack(ItemList.MagicalEgg.get()));
     }
 
     /**
@@ -51,12 +52,17 @@ public class MagicalEggEntity extends ProjectileItemEntity {
 
     protected void onEntityHit(EntityRayTraceResult result) {
         super.onEntityHit(result);
-        if (!(result.getEntity() instanceof LivingEntity)) {
+        if (!(result.getEntity() instanceof LivingEntity) || result.getEntity() instanceof PlayerEntity) {
             return;
         }
         LivingEntity entity = (LivingEntity) result.getEntity();
-        InventoryHelper.spawnItemStack(this.getEntityWorld(), this.getShooter().getPosX(), this.getShooter().getPosY(), this.getShooter().getPosZ(), new ItemStack(SpawnEggItem.getEgg(entity.getType())));
-        entity.setHealth(0);
+        try {
+            InventoryHelper.spawnItemStack(this.getEntityWorld(), entity.getPosX(), entity.getPosY(), entity.getPosZ(), new ItemStack(SpawnEggItem.getEgg(entity.getType())));
+            entity.remove();
+        }
+        catch (Exception e) {
+
+        }
     }
 
     /**
@@ -72,5 +78,10 @@ public class MagicalEggEntity extends ProjectileItemEntity {
 
     protected Item getDefaultItem() {
         return ItemList.MagicalEgg.get();
+    }
+
+    @Override
+    public IPacket<?> createSpawnPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }
