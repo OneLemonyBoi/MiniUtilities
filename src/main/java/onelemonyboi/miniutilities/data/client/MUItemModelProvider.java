@@ -1,6 +1,7 @@
 package onelemonyboi.miniutilities.data.client;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -33,19 +34,35 @@ public class MUItemModelProvider extends ItemModelProvider {
         withExistingParent("magenta_lapis_caelestis", modLoc("block/magenta_lapis_caelestis"));
         withExistingParent("pink_lapis_caelestis", modLoc("block/pink_lapis_caelestis"));
         withExistingParent("brown_lapis_caelestis", modLoc("block/brown_lapis_caelestis"));
-
+        withExistingParent("mechanical_miner", modLoc("block/mechanical_miner"));
+        withExistingParent("mechanical_placer", modLoc("block/mechanical_placer"));
         withExistingParent("quantum_quarry", modLoc("block/quantum_quarry"));
+        withExistingParent("stone_drum", modLoc("block/stone_drum"));
+        withExistingParent("iron_drum", modLoc("block/iron_drum"));
+        withExistingParent("reinforced_large_drum", modLoc("block/reinforced_large_drum"));
+        withExistingParent("netherite_reinforced_drum", modLoc("block/netherite_reinforced_drum"));
+        withExistingParent("unstable_drum", modLoc("block/unstable_drum"));
+        withExistingParent("wooden_spikes", modLoc("block/wooden_spikes"));
+        withExistingParent("iron_spikes", modLoc("block/iron_spikes"));
+        withExistingParent("gold_spikes", modLoc("block/gold_spikes"));
+        withExistingParent("diamond_spikes", modLoc("block/diamond_spikes"));
+        withExistingParent("netherite_spikes", modLoc("block/netherite_spikes"));
+        withExistingParent("unstable_block", modLoc("block/unstable_block"));
+        withExistingParent("cursed_earth", new ResourceLocation("block/grass_block"));
+        withExistingParent("blessed_earth", new ResourceLocation("block/grass_block"));
+        withExistingParent("blursed_earth", new ResourceLocation("block/grass_block"));
 
         ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
+        ModelFile itemHandheld = getExistingFile(mcLoc("item/handheld"));
 
         builder(itemGenerated, "ender_dust");
-        builder(itemGenerated, "healing_axe");
-        builder(itemGenerated, "reversing_hoe");
+        builder(itemHandheld, "healing_axe");
+        builder(itemHandheld, "reversing_hoe");
         builder(itemGenerated, "unstable_ingot");
-        builder(itemGenerated, "destruction_pickaxe");
-        builder(itemGenerated, "precision_shears");
-        builder(itemGenerated, "erosion_shovel");
-        builder(itemGenerated, "etheric_sword");
+        builder(itemHandheld, "destruction_pickaxe");
+        builder(itemHandheld, "precision_shears");
+        builder(itemHandheld, "erosion_shovel");
+        builder(itemHandheld, "etheric_sword");
 
         builder(itemGenerated, "iron_opinium_core");
         builder(itemGenerated, "gold_opinium_core");
@@ -95,7 +112,6 @@ public class MUItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "experience_pearl_8x");
 
         builder(itemGenerated, "magical_egg");
-
     }
 
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {

@@ -1,10 +1,5 @@
 {
   "variants": {
-	"facing=down": { "model": "miniutilities:block/lunar_panel", "x": 180 },
-	"facing=up": { "model": "miniutilities:block/lunar_panel" },
-	"facing=north": { "model": "miniutilities:block/lunar_panel", "x": 90 },
-	"facing=south": { "model": "miniutilities:block/lunar_panel", "x": 90, "y": 180 },
-	"facing=west": { "model": "miniutilities:block/lunar_panel", "x": 90, "y": 270 },
-	"facing=east": { "model": "miniutilities:block/lunar_panel", "x": 90, "y": 90 }
+	"": { "model": "miniutilities:block/lunar_panel" }
   }
 }

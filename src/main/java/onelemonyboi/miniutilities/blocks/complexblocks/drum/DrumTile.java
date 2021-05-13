@@ -118,6 +118,7 @@ public class DrumTile extends TileEntity implements RenderInfoIdentifier {
 
         output.add(this.getBlockState().getBlock().getTranslatedName());
         output.add(new StringTextComponent(""));
+        output.add(new TranslationTextComponent("text.miniutilities.fluidname").appendString(": " + this.drum.getFluid().getDisplayName()));
         output.add(new TranslationTextComponent("text.miniutilities.drumamount").appendString(": " + this.drum.getFluidAmount()));
         output.add(new TranslationTextComponent("text.miniutilities.drumcapacity").appendString(": " + this.drum.getCapacity()));
         return output;

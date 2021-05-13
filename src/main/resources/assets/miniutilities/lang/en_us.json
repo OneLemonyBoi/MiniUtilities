@@ -12,7 +12,9 @@
   "text.miniutilities.redstonemodethree": "Redstone Mode: Redstone Disables",
   "text.miniutilities.waittime": "Time per Operation: ",
   "text.miniutilities.seconds": " Seconds",
-  "text.miniutilities.info": "Block Info:",
+  "text.miniutilities.fluidname": "Fluid",
+  "text.miniutilities.drumamount": "Amount",
+  "text.miniutilities.drumcapacity": "Capacity",
 
   "container.miniutilities.mechanical_miner": "Mechanical Miner",
   "container.miniutilities.mechanical_placer": "Mechanical Placer",
