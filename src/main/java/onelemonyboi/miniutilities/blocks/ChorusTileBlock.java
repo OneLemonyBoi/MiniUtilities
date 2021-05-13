@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import onelemonyboi.miniutilities.MiniUtilities;
+import onelemonyboi.miniutilities.init.BlockList;
 
 import java.util.Random;
 
@@ -37,9 +38,14 @@ public class ChorusTileBlock extends Block {
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         int yPos = entityIn.getPosition().getY();
         for (int x = 1; x <= yPos; x++) {
-            Boolean blockCheck = !worldIn.isAirBlock(entityIn.getPosition().down(x)) && worldIn.getBlockState(entityIn.getPosition().down(x)).getBlock() != Blocks.BEDROCK && worldIn.isAirBlock(entityIn.getPosition().down(x+1)) && worldIn.isAirBlock(entityIn.getPosition().down(x+2));
+            Boolean blockCheck = !worldIn.isAirBlock(entityIn.getPosition().down(x+2)) &&
+                    worldIn.getBlockState(entityIn.getPosition().down(x+2)).getBlock() != Blocks.BEDROCK &&
+                    worldIn.getBlockState(entityIn.getPosition().up(x)).getBlock() != BlockList.EnderTile.get() &&
+                    worldIn.isAirBlock(entityIn.getPosition().down(x+1)) &&
+                    worldIn.isAirBlock(entityIn.getPosition().down(x));
+
             if (blockCheck){
-                entityIn.teleportKeepLoaded(entityIn.getPosX(), yPos + x + 1, entityIn.getPosZ());
+                entityIn.teleportKeepLoaded(entityIn.getPosX(), yPos - x - 1, entityIn.getPosZ());
                 entityIn.playSound(SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT, 1, 1);
                 return;
             }
@@ -57,6 +63,6 @@ public class ChorusTileBlock extends Block {
         double d1 = direction$axis == Direction.Axis.X ? 0.5D: (double)random.nextFloat();
         double d2 = direction$axis == Direction.Axis.Y ? 0.5D : (double)random.nextFloat();
         double d3 = direction$axis == Direction.Axis.Z ? 0.5D : (double)random.nextFloat();
-        world.addParticle(new RedstoneParticleData(1, 0, 1, 1), (double)pos.getX() + d1, (double)pos.getY() + d2, (double)pos.getZ() + d3, 0.0D, 0.0D, 0.0D);
+        world.addParticle(ParticleTypes.PORTAL, (double)pos.getX() + d1, (double)pos.getY() + d2, (double)pos.getZ() + d3, 0.0D, 0.0D, 0.0D);
     }
 }

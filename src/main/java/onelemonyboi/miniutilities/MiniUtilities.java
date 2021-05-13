@@ -30,6 +30,7 @@ import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
 import onelemonyboi.miniutilities.init.EntityList;
 import onelemonyboi.miniutilities.items.Kikoku;
+import onelemonyboi.miniutilities.items.enchantments.ExperienceHarvesterHandler;
 import onelemonyboi.miniutilities.items.enchantments.MoltenHeadHandler;
 import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
@@ -83,6 +84,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(MechanicalPlacerBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(QuantumQuarryBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(MoltenHeadHandler::handleBlockBreak);
+        EVENT_BUS.addListener(ExperienceHarvesterHandler::handleEntityKill);
         EVENT_BUS.addListener(MachineRenderer::blockRenderInfo);
         Packet.main();
     }

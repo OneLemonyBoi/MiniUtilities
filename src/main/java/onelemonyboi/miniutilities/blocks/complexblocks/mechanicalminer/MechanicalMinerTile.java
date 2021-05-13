@@ -106,7 +106,7 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         if (world.isRemote()) {return;}
         world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
         this.timer++;
-        if (this.timer != this.waittime) {return;}
+        if (this.timer < this.waittime) {return;}
         this.timer = 0;
         if (this.redstonemode == 1){
             blockBreaker();

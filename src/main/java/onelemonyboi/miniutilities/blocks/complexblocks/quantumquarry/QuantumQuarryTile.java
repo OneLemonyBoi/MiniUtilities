@@ -101,8 +101,7 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         if (!energy.checkedMachineConsume(calcRFCost(this.waittime))) {
             return;
         }
-        // TODO: TROUBLESHOOT WHY THIS IS NOT WORKING
-        if (this.timer != this.waittime) {return;}
+        if (this.timer < this.waittime) {return;}
         this.timer = 0;
         if (this.redstonemode == 1){
             oreGen();
