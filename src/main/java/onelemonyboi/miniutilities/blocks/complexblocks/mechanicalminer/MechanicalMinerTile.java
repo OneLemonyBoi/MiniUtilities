@@ -48,10 +48,7 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
     public final MUItemStackHandler itemSH = new MUItemStackHandler(10) {
         @Override
         public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-            if (slot == 8) {
-                return stack.getItem() instanceof PickaxeItem;
-            }
-            return super.isItemValid(slot, stack);
+            return (slot == 9) == (stack.getItem() instanceof PickaxeItem);
         }
     };
     private final LazyOptional<MUItemStackHandler> lazyItemStorage = LazyOptional.of(() -> itemSH);
