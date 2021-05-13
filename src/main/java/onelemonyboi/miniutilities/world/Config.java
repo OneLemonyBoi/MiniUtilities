@@ -10,7 +10,6 @@ import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.LunarPanelBlo
 import java.util.List;
 
 @Mod.EventBusSubscriber
-// TODO HIGH PRIORITY: FIX CONFIGS
 public class Config {
     public static final String CATEGORY_GENERAL = "General Settings";
     public static final String CATEGORY_ORE = "World Generation";

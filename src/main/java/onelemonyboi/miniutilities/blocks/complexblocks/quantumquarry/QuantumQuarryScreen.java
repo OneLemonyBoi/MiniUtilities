@@ -2,28 +2,25 @@ package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
+import onelemonyboi.lemonlib.blocks.ItemStackButton;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.misc.ItemStackButton;
 import onelemonyboi.miniutilities.packets.Packet;
 import onelemonyboi.miniutilities.packets.RedstoneModeUpdate;
 
 public class QuantumQuarryScreen extends ContainerScreen<QuantumQuarryContainer> {
     private static final ResourceLocation Base = new ResourceLocation(MiniUtilities.MOD_ID,
             "textures/gui/base.png");
-    public ItemStackButton button;
+    public ItemStackButton redstoneButton;
 
     public QuantumQuarryScreen(QuantumQuarryContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
@@ -50,8 +47,8 @@ public class QuantumQuarryScreen extends ContainerScreen<QuantumQuarryContainer>
                 break;
         }
 
-        button = new ItemStackButton(this.guiLeft + 156, this.guiTop + 4, 16, 16, new StringTextComponent(""), this::changeRedstone, baseItem, this::displayMode);
-        addButton(button);
+        redstoneButton = new ItemStackButton(this.guiLeft + 156, this.guiTop + 4, 16, 16, new StringTextComponent(""), this::changeRedstone, baseItem, this::displayMode);
+        addButton(redstoneButton);
     }
 
     @Override
@@ -85,29 +82,29 @@ public class QuantumQuarryScreen extends ContainerScreen<QuantumQuarryContainer>
     }
 
     public void changeRedstone(Button x) {
-        if (button.item == Items.REDSTONE) {
-            button.item = Items.GLOWSTONE_DUST;
+        if (redstoneButton.item == Items.REDSTONE) {
+            redstoneButton.item = Items.GLOWSTONE_DUST;
             Packet.INSTANCE.sendToServer(new RedstoneModeUpdate(2, this.container.te.getPos()));
         }
-        else if (button.item == Items.GLOWSTONE_DUST) {
-            button.item = Items.GUNPOWDER;
+        else if (redstoneButton.item == Items.GLOWSTONE_DUST) {
+            redstoneButton.item = Items.GUNPOWDER;
             Packet.INSTANCE.sendToServer(new RedstoneModeUpdate(3, this.container.te.getPos()));
         }
-        else if (button.item == Items.GUNPOWDER) {
-            button.item = Items.REDSTONE;
+        else if (redstoneButton.item == Items.GUNPOWDER) {
+            redstoneButton.item = Items.REDSTONE;
             Packet.INSTANCE.sendToServer(new RedstoneModeUpdate(1, this.container.te.getPos()));
         }
     }
 
     public void displayMode(Button buttons, MatrixStack matrixStack, int mouseX, int mouseY) {
         TranslationTextComponent tooltip;
-        if (button.item == Items.REDSTONE) {
+        if (redstoneButton.item == Items.REDSTONE) {
             tooltip = new TranslationTextComponent("text.miniutilities.redstonemodeone");
         }
-        else if (button.item == Items.GLOWSTONE_DUST) {
+        else if (redstoneButton.item == Items.GLOWSTONE_DUST) {
             tooltip = new TranslationTextComponent("text.miniutilities.redstonemodetwo");
         }
-        else if (button.item == Items.GUNPOWDER) {
+        else if (redstoneButton.item == Items.GUNPOWDER) {
             tooltip = new TranslationTextComponent("text.miniutilities.redstonemodethree");
         }
         else {
