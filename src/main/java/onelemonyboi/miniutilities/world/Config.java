@@ -5,6 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.LunarPanelBlock;
 
 import java.util.List;
 
@@ -24,6 +25,10 @@ public class Config {
     public static ForgeConfigSpec.IntValue unstableIngotType;
     public static ForgeConfigSpec.BooleanValue enableEnderLily;
     public static ForgeConfigSpec.BooleanValue enableFlameLily;
+    public static ForgeConfigSpec.IntValue expGivenFromPearl;
+    public static ForgeConfigSpec.IntValue solarPanelGeneration;
+    public static ForgeConfigSpec.IntValue lunarPanelGeneration;
+    public static ForgeConfigSpec.IntValue panelMultiplier;
 
     public static ForgeConfigSpec.BooleanValue enableEnderOre;
     public static ForgeConfigSpec.IntValue enderOreVeinSize;
@@ -33,10 +38,6 @@ public class Config {
 
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> oreChances;
     private static final List<String> oreDefaults = ImmutableList.of("minecraft:coal_ore:20", "minecraft:iron_ore:8", "minecraft:gold_ore:2", "minecraft:diamond_ore:1", "minecraft:lapis_ore:4");
-
-    public static ForgeConfigSpec.IntValue expGivenFromPearl;
-
-    public static ForgeConfigSpec.IntValue solarPanelGeneration;
 
 
     public static void register() {
@@ -62,11 +63,12 @@ public class Config {
         enableBlursedEarth = COMMON_BUILDER.comment("Should Blursed Earth be Obtainable?").define("Obtain Blursed", true); // Get by right clicking Unstable Ingot on Grass
         maxKikokuMultiplier = COMMON_BUILDER.comment("What Should the Max Multiplier of Kikoku Enchant be?").defineInRange("Kikoku Max", 2, 1, 5000);
         unstableIngotType = COMMON_BUILDER.comment("What should the Unstable Ingot do when the time limit is reached?\n0: Slowness while holding\n1: After 10 seconds, slowly ramps up the damage\n2: Explodes after 10 seconds").defineInRange("Reaction Type", 1, 0, 2);
-
         expGivenFromPearl = COMMON_BUILDER.comment("How much EXP should base experience pearls give?").defineInRange("EXP Given from EXP Pearls", 10, 1, 128);
-
+        enableEnderLily = COMMON_BUILDER.comment("Should Ender Lilies Generate?").define("Ender Lily Generation", true);
+        enableFlameLily = COMMON_BUILDER.comment("Should Flame Lilies Generate?").define("Flame Lily Generation", true);
         solarPanelGeneration = COMMON_BUILDER.comment("How much RF should the Solar Panel Generate?").defineInRange("Solar Panel Generation", 4, 0, 1000000);
-
+        lunarPanelGeneration = COMMON_BUILDER.comment("How much RF should the Lunar Panel Generate?").defineInRange("Lunar Panel Generation", 4, 0, 1000000);
+        panelMultiplier = COMMON_BUILDER.comment("How many Panels should it take to increase the multiplier by 1?").defineInRange("Panel Multiplier Amount", 50, 1, 1000000);
         oreChances = COMMON_BUILDER.comment("List ores and their weight, in this format: [minecraft:coal_ore:10]").defineList("ore_list", () -> oreDefaults, ore -> ore instanceof String);
 //        CLIENT_BUILDER.pop();
         COMMON_BUILDER.pop();
@@ -81,10 +83,6 @@ public class Config {
         enderOreMinHeight = COMMON_BUILDER.comment("What should the minimum generation height be for Ender Ore?").defineInRange("Ender Ore Min", 0, 0, 256);
         enderOreMaxHeight = COMMON_BUILDER.comment("What should the maximum generation height be for Ender Ore?").defineInRange("Ender Ore Max", 55, 0, 256);
         enderOreAmount = COMMON_BUILDER.comment("How many times should Ender Ore try to generate?").defineInRange("Ender Ore Gen Attempts", 12, 0, 255);
-
-        enableEnderLily = COMMON_BUILDER.comment("Should Ender Lilies Generate?").define("Ender Lily Generation", true);
-        enableFlameLily = COMMON_BUILDER.comment("Should Flame Lilies Generate?").define("Flame Lily Generation", true);
-
 //        CLIENT_BUILDER.pop();
         COMMON_BUILDER.pop();
     }

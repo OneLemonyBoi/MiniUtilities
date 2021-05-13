@@ -36,8 +36,11 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
             solarPanelRecursion(this.getPos());
         }
         power = Config.solarPanelGeneration.get();
+        if (world.isNightTime()) {
+            power = Config.lunarPanelGeneration.get();
+        }
         power *= activeSolarCount;
-        power *= activeSolarCount/50.0 + 1;
+        power *= activeSolarCount / (float) Config.panelMultiplier.get() + 1;
         energy.machineProduce((int) power);
         energy.outputToSide(world, pos, Direction.UP, Config.solarPanelGeneration.get() * 4096);
         this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
@@ -47,7 +50,7 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
         for (Direction d : Direction.values()) {
             if (d == Direction.UP || d == Direction.DOWN) {continue;}
             BlockState blockState = world.getBlockState(pos.offset(d));
-            if (posList.contains(pos.offset(d)) || !world.canSeeSky(pos.offset(d))) {continue;}
+            if (posList.contains(pos.offset(d)) || !world.canSeeSky(pos.offset(d)) || !world.isAreaLoaded(pos.offset(d), 1)) {continue;}
             if (blockState.getBlock() instanceof SolarPanelBlock) {
                 if (world.isDaytime()) {
                     activeSolarCount++;
