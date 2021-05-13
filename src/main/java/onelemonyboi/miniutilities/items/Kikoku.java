@@ -16,8 +16,11 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+import onelemonyboi.miniutilities.init.AttributeList;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.world.Config;
 
@@ -27,9 +30,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Kikoku extends SwordItem {
-    public static Attribute DIVINE_DAMAGE = new RangedAttribute("attribute.miniutilities.divinedamage", 0.0D, 0.0D, Double.MAX_VALUE);
-    public static Attribute ARMOR_PIERCING_DAMAGE = new RangedAttribute("attribute.miniutilities.armorpiercingdamage", 0.0D, 0.0D, Double.MAX_VALUE);
-    public static Attribute SOUL_DAMAGE = new RangedAttribute("attribute.miniutilities.souldamage", 0.0D, 0.0D, Double.MAX_VALUE);
     public static UUID SOUL_DAMAGE_MODIFIER = UUID.fromString("d2928c01-5d7d-41c5-bd3a-9ca8f43c8ff8");
 
     public static final DamageSource DIVINE_DAMAGE_SOURCE = (new DamageSource("divineDamage")).setDamageBypassesArmor().setDamageAllowedInCreativeMode().setDamageIsAbsolute();
@@ -45,9 +45,9 @@ public class Kikoku extends SwordItem {
         Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
         ListMultimap<Attribute, AttributeModifier> multimaps = ArrayListMultimap.create();
         if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimaps.put(ARMOR_PIERCING_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 3, AttributeModifier.Operation.ADDITION));
-            multimaps.put(DIVINE_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Divine Damage Modifier", 1, AttributeModifier.Operation.ADDITION));
-            multimaps.put(SOUL_DAMAGE, new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage Modifier", 0.25, AttributeModifier.Operation.ADDITION));
+            multimaps.put(AttributeList.ArmorPiercingDamage.get(), new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 3, AttributeModifier.Operation.ADDITION));
+            multimaps.put(AttributeList.DivineDamage.get(), new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Divine Damage Modifier", 1, AttributeModifier.Operation.ADDITION));
+            multimaps.put(AttributeList.SoulDamage.get(), new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage Modifier", 0.25, AttributeModifier.Operation.ADDITION));
         }
         for (Attribute attribute : multimap.keySet()) {
             multimaps.putAll(attribute, multimap.get(attribute));

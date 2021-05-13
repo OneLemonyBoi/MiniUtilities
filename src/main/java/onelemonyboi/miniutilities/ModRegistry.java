@@ -3,6 +3,8 @@ package onelemonyboi.miniutilities;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
@@ -20,6 +22,7 @@ public class ModRegistry {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MiniUtilities.MOD_ID);
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, MiniUtilities.MOD_ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MiniUtilities.MOD_ID);
+    public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, MiniUtilities.MOD_ID);
 
     public static void register() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -29,6 +32,7 @@ public class ModRegistry {
         CONTAINERS.register(modEventBus);
         ENCHANTMENTS.register(modEventBus);
         ENTITIES.register(modEventBus);
+        ATTRIBUTES.register(modEventBus);
 
         BlockList.register();
         ItemList.register();
@@ -36,5 +40,6 @@ public class ModRegistry {
         ContainerList.register();
         EnchantmentList.register();
         EntityList.register();
+        AttributeList.register();
     }
 }

@@ -65,10 +65,6 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 20;
-        ItemStack itemStack = new ItemStack(Items.IRON_PICKAXE);
-        CompoundNBT nbt = new CompoundNBT();
-        nbt.putBoolean("MechanicalMinerDefault", true);
-        itemStack.setTag(nbt);
     }
 
     @Override
