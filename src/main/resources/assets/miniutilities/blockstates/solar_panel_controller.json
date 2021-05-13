@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "miniutilities:block/solar_panel_controller"
+    }
+  }
+}

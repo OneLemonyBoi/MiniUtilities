@@ -101,5 +101,7 @@ public class ItemList {
     public static final RegistryObject<Item> ExperiencePearl7x = ModRegistry.ITEMS.register("experience_pearl_7x", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance()), 7));
     public static final RegistryObject<Item> ExperiencePearl8x = ModRegistry.ITEMS.register("experience_pearl_8x", () -> new ExperiencePearl(new Item.Properties().group(CreativeTab.getInstance()), 8));
 
+    public static final RegistryObject<Item> MagicalEgg = ModRegistry.ITEMS.register("magical_egg", () -> new MagicalEgg(new Item.Properties().group(CreativeTab.getInstance())));
+
     public static void register() {}
 }

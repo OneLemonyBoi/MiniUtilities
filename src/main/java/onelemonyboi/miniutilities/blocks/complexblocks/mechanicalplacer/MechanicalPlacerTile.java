@@ -1,42 +1,36 @@
-package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
 import onelemonyboi.lemonlib.blocks.TileBase;
-import onelemonyboi.miniutilities.blocks.complexblocks.MUItemStackHandler;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalPlacerContainer;
+import onelemonyboi.lemonlib.MUItemStackHandler;
+import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class MechanicalPlacerTile extends TileBase implements INamedContainerProvider {
+public class MechanicalPlacerTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier {
     public static int slots = 9;
 
     public final MUItemStackHandler itemSH = new MUItemStackHandler(9);
@@ -48,14 +42,12 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
     public Integer redstonemode;
     public Integer timer;
     public Integer waittime;
-    public Boolean event;
 
     public MechanicalPlacerTile() {
         super(TEList.MechanicalPlacerTile.get());
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 20;
-        this.event = false;
     }
 
     @Override
@@ -87,19 +79,20 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
 
     @Override
     public void tick() {
+        if (world.isRemote()) {return;}
+        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
         this.timer++;
-        if (this.timer != this.waittime) {return;}
+        if (this.timer < this.waittime) {return;}
         this.timer = 0;
-        if (!world.isRemote && this.redstonemode == 1){
+        if (this.redstonemode == 1){
             blockPlacer();
         }
-        else if (!world.isRemote && world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
+        else if (world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
             blockPlacer();
         }
-        else if (!world.isRemote && !world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
+        else if (!world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
             blockPlacer();
         }
-        this.event = false;
     }
 
     protected void blockPlacer() {
@@ -124,5 +117,40 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
             return lazyItemStorage.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public List<ITextComponent> getInfo() {
+        List<ITextComponent> output = new ArrayList<>();
+
+        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(new StringTextComponent(""));
+        switch (this.redstonemode) {
+            case 1:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeone"));
+                break;
+            case 2:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodetwo"));
+                break;
+            case 3:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodethree"));
+                break;
+        }
+        output.add(new TranslationTextComponent("text.miniutilities.waittime")
+                .appendString(this.waittime.toString() + " ticks(" + String.valueOf(this.waittime.floatValue() / 20))
+                .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
+                .appendString(")"));
+        return output;
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
+    }
+
+    @Override
+    @Nullable
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
     }
 }

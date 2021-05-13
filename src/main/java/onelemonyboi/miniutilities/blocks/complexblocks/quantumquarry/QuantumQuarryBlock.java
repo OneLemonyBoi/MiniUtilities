@@ -29,8 +29,6 @@ import java.util.UUID;
 import static onelemonyboi.miniutilities.misc.KeyBindingsHandler.keyBindingPressed;
 
 public class QuantumQuarryBlock extends Block {
-    public static Boolean keyPressed = false;
-
     public QuantumQuarryBlock() {
         super(Properties.create(Material.IRON).hardnessAndResistance(3F)
                 .sound(SoundType.METAL));
@@ -56,25 +54,8 @@ public class QuantumQuarryBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof QuantumQuarryTile && keyBindingPressed) {
-                QuantumQuarryTile TE = ((QuantumQuarryTile) te);
-                switch (TE.redstonemode) {
-                    case 1:
-                        TE.redstonemode = 2;
-                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"), UUID.randomUUID());
-                        break;
-                    case 2:
-                        TE.redstonemode = 3;
-                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"), UUID.randomUUID());
-                        break;
-                    case 3:
-                        TE.redstonemode = 1;
-                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"), UUID.randomUUID());
-                        break;
-                }
-                return ActionResultType.CONSUME;
-            }
-            else if (te instanceof QuantumQuarryTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
+            if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {return ActionResultType.CONSUME;}
+            if (te instanceof QuantumQuarryTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
                 QuantumQuarryTile TE = ((QuantumQuarryTile) te);
                 if (TE.waittime > 25) {
                     TE.waittime = TE.waittime - 25;
@@ -88,11 +69,8 @@ public class QuantumQuarryBlock extends Block {
                 }
             }
             else if (te instanceof QuantumQuarryTile) {
-                QuantumQuarryTile TE = ((QuantumQuarryTile) te);
-                if (!TE.event) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, (QuantumQuarryTile) te, pos);
-                    return ActionResultType.CONSUME;
-                }
+                NetworkHooks.openGui((ServerPlayerEntity) player, (QuantumQuarryTile) te, pos);
+                return ActionResultType.CONSUME;
             }
         }
         return ActionResultType.CONSUME;
@@ -101,23 +79,17 @@ public class QuantumQuarryBlock extends Block {
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
         if (!event.getWorld().isRemote()) {
             if (event.getWorld().getTileEntity(event.getPos()) instanceof QuantumQuarryTile && Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
-                QuantumQuarryTile TE = (QuantumQuarryTile) (event.getWorld().getTileEntity(event.getPos()));
-                PlayerEntity player = event.getPlayer();
-                player.sendMessage(new TranslationTextComponent("text.miniutilities.info"), UUID.randomUUID());
-                if (TE.redstonemode == 1) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"), UUID.randomUUID());
+                QuantumQuarryTile TE = (QuantumQuarryTile) event.getWorld().getTileEntity(event.getPos());
+                if (TE.waittime > 1 && TE.waittime < 1200) {
+                    TE.waittime = TE.waittime + 25;
+                    InventoryHelper.spawnItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    TE.timer = 0;
                 }
-                else if (TE.redstonemode == 2) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"), UUID.randomUUID());
+                else if (TE.waittime == 1){
+                    TE.waittime = 25;
+                    InventoryHelper.spawnItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    TE.timer = 0;
                 }
-                else if (TE.redstonemode == 3) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"), UUID.randomUUID());
-                }
-                player.sendMessage(new TranslationTextComponent("text.miniutilities.waittime")
-                        .appendString(TE.waittime.toString() + " ticks(" + String.valueOf(TE.waittime.floatValue() / 20))
-                        .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
-                        .appendString(")"), UUID.randomUUID());
-                TE.event = true;
             }
         }
     }
@@ -129,8 +101,6 @@ public class QuantumQuarryBlock extends Block {
         if (tileEntity instanceof QuantumQuarryTile) {
             ItemStack itemStack = new ItemStack(this);
             CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
-            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemList.SpeedUpgrade.get(), Math.round((1200 - compoundNBT.getInt("WaitTime")) / 25.0F)));
-            compoundNBT.putInt("WaitTime", 1200);
             itemStack.setTagInfo("BlockEntityTag", compoundNBT);
             InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
         }

@@ -16,12 +16,12 @@ import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelCon
 import onelemonyboi.miniutilities.blocks.complexblocks.drum.DrumBlock;
 import onelemonyboi.miniutilities.blocks.*;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryBlock;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalPlacerBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerBlock;
 import onelemonyboi.miniutilities.blocks.earth.BlessedEarthBlock;
 import onelemonyboi.miniutilities.blocks.earth.BlursedEarthBlock;
 import onelemonyboi.miniutilities.blocks.earth.CursedEarthBlock;
 import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.MechanicalMinerBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerBlock;
 
 import java.util.function.Supplier;
 

@@ -14,76 +14,46 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalPlacerTile;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerTile;
+
+import java.util.stream.Stream;
 
 import static net.minecraft.block.BarrelBlock.PROPERTY_FACING;
 
 public class SolarPanelBlock extends Block {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
-
     public SolarPanelBlock(Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 
-    @Deprecated
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.with(FACING, rotation.rotate(state.get(FACING)));
-    }
-
-    @Deprecated
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
-    }
-
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
-    }
-
-    public static final VoxelShape NorthShape = Block.makeCuboidShape(0, 0, 8, 16, 16, 16);
-    public static final VoxelShape SouthShape = Block.makeCuboidShape(0, 0, 0, 16, 16, 8);
-    public static final VoxelShape WestShape = Block.makeCuboidShape(8, 0, 0, 16, 16, 16);
-    public static final VoxelShape EastShape = Block.makeCuboidShape(0, 0, 0, 8, 16, 16);
-    public static final VoxelShape UpShape = Block.makeCuboidShape(0, 0, 0, 16, 8, 16);
-    public static final VoxelShape DownShape = Block.makeCuboidShape(0, 8, 0, 16, 16, 16);
+    public static final VoxelShape UpShape = Stream.of(
+            Block.makeCuboidShape(0, 0, 0, 16, 6, 16),
+            Block.makeCuboidShape(1, 13, 1, 15, 15, 15),
+            Block.makeCuboidShape(0.75, 12.75, 6, 15.25, 14.75, 10),
+            Block.makeCuboidShape(6, 12.75, 0.75, 10, 14.75, 15.25),
+            Block.makeCuboidShape(0, 14, 0, 1, 15.25, 16),
+            Block.makeCuboidShape(15, 14, 0, 16, 15.25, 16),
+            Block.makeCuboidShape(1, 14, 0, 15, 15.25, 1),
+            Block.makeCuboidShape(1, 14, 15, 15, 15.25, 16),
+            Block.makeCuboidShape(6, 12, 6, 10, 13, 10),
+            Block.makeCuboidShape(6.5, 9, 6.5, 9.5, 12, 9.5),
+            Block.makeCuboidShape(6, 7, 6, 10, 9, 10),
+            Block.makeCuboidShape(4, 6, 4, 12, 7, 12),
+            Block.makeCuboidShape(11, 12, 7, 13, 13, 9),
+            Block.makeCuboidShape(11.25, 11, 7.25, 11.75, 12, 7.75),
+            Block.makeCuboidShape(12.25, 6, 8.25, 12.75, 12, 8.75),
+            Block.makeCuboidShape(12, 6, 8, 13, 6.25, 9),
+            Block.makeCuboidShape(9.25, 10.5, 7.25, 11.75, 11, 7.75),
+            Block.makeCuboidShape(9.25, 10.25, 7, 9.75, 11.25, 8)
+    ).reduce((v1, v2) -> {return VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR);}).get();
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Direction dir = state.get(PROPERTY_FACING);
-        switch (dir) {
-            case NORTH:
-                return NorthShape;
-            case SOUTH:
-                return SouthShape;
-            case WEST:
-                return WestShape;
-            case EAST:
-                return EastShape;
-            case UP:
-                return UpShape;
-            default:
-                return DownShape;
-        }
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity instanceof MechanicalPlacerTile) {
-            ItemStack itemStack = new ItemStack(this);
-            CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
-            itemStack.setTagInfo("BlockEntityTag", compoundNBT);
-            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
-        }
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
+        return UpShape;
     }
 }

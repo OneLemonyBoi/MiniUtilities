@@ -1,8 +1,7 @@
-package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -10,19 +9,17 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraftforge.items.SlotItemHandler;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalMinerTile;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
 
 import java.util.Objects;
 
-
-public class MechanicalMinerContainer extends Container {
-    public final MechanicalMinerTile te;
+public class MechanicalPlacerContainer extends Container {
+    public final MechanicalPlacerTile te;
     private final IWorldPosCallable canInteractWithCallable;
 
-    public MechanicalMinerContainer(final int windowId, final PlayerInventory playerInv, final MechanicalMinerTile te) {
-        super(ContainerList.MinerContainer.get(), windowId);
+    public MechanicalPlacerContainer(final int windowId, final PlayerInventory playerInv, final MechanicalPlacerTile te) {
+        super(ContainerList.PlacerContainer.get(), windowId);
         this.te = te;
         this.canInteractWithCallable = IWorldPosCallable.of(te.getWorld(), te.getPos());
 
@@ -56,23 +53,23 @@ public class MechanicalMinerContainer extends Container {
         }
     }
 
-    public MechanicalMinerContainer(final int windowId, final PlayerInventory playerInv, final PacketBuffer data) {
+    public MechanicalPlacerContainer(final int windowId, final PlayerInventory playerInv, final PacketBuffer data) {
         this(windowId, playerInv, getTileEntity(playerInv, data));
     }
 
-    private static MechanicalMinerTile getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
+    private static MechanicalPlacerTile getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(data, "Packet Buffer cannot be null.");
         final TileEntity te = playerInv.player.world.getTileEntity(data.readBlockPos());
-        if (te instanceof MechanicalMinerTile) {
-            return (MechanicalMinerTile) te;
+        if (te instanceof MechanicalPlacerTile) {
+            return (MechanicalPlacerTile) te;
         }
         throw new IllegalStateException("Tile Entity Is Not Correct");
     }
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.MechanicalMiner.get());
+        return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.MechanicalPlacer.get());
     }
 
     @Override
@@ -82,10 +79,11 @@ public class MechanicalMinerContainer extends Container {
         if (slot != null && slot.getHasStack()) {
             ItemStack stack1 = slot.getStack();
             stack = stack1.copy();
-            if (index < MechanicalMinerTile.slots && !this.mergeItemStack(stack1, MechanicalMinerTile.slots, this.inventorySlots.size(), true)) {
+            if (index < MechanicalPlacerTile.slots
+                    && !this.mergeItemStack(stack1, MechanicalPlacerTile.slots, this.inventorySlots.size(), true)) {
                 return ItemStack.EMPTY;
             }
-            if (!this.mergeItemStack(stack1, 0, MechanicalMinerTile.slots, false)) {
+            if (!this.mergeItemStack(stack1, 0, MechanicalPlacerTile.slots, false)) {
                 return ItemStack.EMPTY;
             }
 

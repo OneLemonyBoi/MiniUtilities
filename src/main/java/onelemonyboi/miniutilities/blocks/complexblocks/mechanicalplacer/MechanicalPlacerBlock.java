@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -27,7 +27,6 @@ import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuar
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.MechanicalPlacerTile;
 
 import java.util.UUID;
 
@@ -35,8 +34,6 @@ import static onelemonyboi.miniutilities.misc.KeyBindingsHandler.keyBindingPress
 
 public class MechanicalPlacerBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
-
-    public static Boolean keyPressed = false;
 
     public MechanicalPlacerBlock() {
         super(Properties.create(Material.IRON).hardnessAndResistance(3F)
@@ -59,25 +56,8 @@ public class MechanicalPlacerBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof MechanicalPlacerTile && keyBindingPressed) {
-                MechanicalPlacerTile TE = ((MechanicalPlacerTile) te);
-                switch (TE.redstonemode) {
-                    case 1:
-                        TE.redstonemode = 2;
-                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"), UUID.randomUUID());
-                        break;
-                    case 2:
-                        TE.redstonemode = 3;
-                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"), UUID.randomUUID());
-                        break;
-                    case 3:
-                        TE.redstonemode = 1;
-                        player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"), UUID.randomUUID());
-                        break;
-                }
-                return ActionResultType.CONSUME;
-            }
-            else if (te instanceof MechanicalPlacerTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
+            if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {return ActionResultType.CONSUME;}
+            if (te instanceof MechanicalPlacerTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
                 MechanicalPlacerTile TE = ((MechanicalPlacerTile) te);
                 if (TE.waittime > 5) {
                     TE.waittime = TE.waittime - 5;
@@ -91,11 +71,8 @@ public class MechanicalPlacerBlock extends Block {
                 }
             }
             else if (te instanceof MechanicalPlacerTile) {
-                MechanicalPlacerTile TE = ((MechanicalPlacerTile) te);
-                if (TE.event == false) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, (MechanicalPlacerTile) te, pos);
-                    return ActionResultType.CONSUME;
-                }
+                NetworkHooks.openGui((ServerPlayerEntity) player, (MechanicalPlacerTile) te, pos);
+                return ActionResultType.CONSUME;
             }
         }
         return ActionResultType.CONSUME;
@@ -118,8 +95,6 @@ public class MechanicalPlacerBlock extends Block {
         if (tileEntity instanceof QuantumQuarryTile) {
             ItemStack itemStack = new ItemStack(this);
             CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
-            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemList.SpeedUpgrade.get(), Math.round((20 - compoundNBT.getInt("WaitTime")) / 5.0F)));
-            compoundNBT.putInt("WaitTime", 20);
             itemStack.setTagInfo("BlockEntityTag", compoundNBT);
             InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
         }
@@ -138,22 +113,16 @@ public class MechanicalPlacerBlock extends Block {
         if (!event.getWorld().isRemote()) {
             if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalPlacerTile && Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
                 MechanicalPlacerTile TE = (MechanicalPlacerTile) (event.getWorld().getTileEntity(event.getPos()));
-                PlayerEntity player = event.getPlayer();
-                player.sendMessage(new TranslationTextComponent("text.miniutilities.info"), UUID.randomUUID());
-                if (TE.redstonemode == 1) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtoone"), UUID.randomUUID());
+                if (TE.waittime > 1 && TE.waittime < 20) {
+                    TE.waittime = TE.waittime + 5;
+                    InventoryHelper.spawnItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    TE.timer = 0;
                 }
-                else if (TE.redstonemode == 2) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtotwo"), UUID.randomUUID());
+                else if (TE.waittime == 1){
+                    TE.waittime = 5;
+                    InventoryHelper.spawnItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    TE.timer = 0;
                 }
-                else if (TE.redstonemode == 3) {
-                    player.sendMessage(new TranslationTextComponent("text.miniutilities.redstonemodeswitchedtothree"), UUID.randomUUID());
-                }
-                player.sendMessage(new TranslationTextComponent("text.miniutilities.waittime")
-                        .appendString(TE.waittime.toString() + " ticks(" + String.valueOf(TE.waittime.floatValue() / 20))
-                        .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
-                        .appendString(")"), UUID.randomUUID());
-                TE.event = true;
             }
         }
     }

@@ -4,17 +4,19 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -22,9 +24,9 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
-import onelemonyboi.miniutilities.blocks.complexblocks.MUItemStackHandler;
+import onelemonyboi.lemonlib.MUItemStackHandler;
+import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.lemonlib.*;
 import onelemonyboi.miniutilities.world.Config;
 
 import javax.annotation.Nonnull;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class QuantumQuarryTile extends EnergyTileBase implements INamedContainerProvider {
+public class QuantumQuarryTile extends EnergyTileBase implements INamedContainerProvider, RenderInfoIdentifier {
     public static int slots = 9;
 
     public final MUItemStackHandler itemSH = new MUItemStackHandler(9);
@@ -45,7 +47,6 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     public Integer redstonemode;
     public Integer timer;
     public Integer waittime;
-    public Boolean event;
     public List<Block> oreList;
 
     protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
@@ -55,7 +56,6 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 1200;
-        this.event = false;
         this.oreList = new ArrayList<Block>();
     }
 
@@ -90,40 +90,33 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     }
 
     public static int calcRFCost(int waittime) {
-        return Math.round((float) (Math.pow(1200F / waittime, 1.5F) * 100F));
+        return Math.round(4000000 / (float) Math.pow(waittime, 1.5F));
     }
-
-    /**
-     * Insert the specified stack to the specified inventory and return any leftover items
-     * Includes modified form of HopperTileEntity#insertSlot
-     */
 
     @Override
     public void tick() {
-        this.event = false;
+        if (world.isRemote()) {return;}
         this.timer++;
-        if (calcRFCost(this.waittime) <= energy.getEnergyStored()) {
-            energy.internalConsumeEnergy(calcRFCost(this.waittime));
-        }
-        else {
+        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
+        if (!energy.checkedMachineConsume(calcRFCost(this.waittime))) {
             return;
         }
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
-            if (!world.isRemote && this.redstonemode == 1){
-                oreGen();
-            }
-            else if (!world.isRemote && world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
-                oreGen();
-            }
-            else if (!world.isRemote && !world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
-                oreGen();
-            }
+        if (this.redstonemode == 1){
+            oreGen();
+        }
+        else if (world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
+            oreGen();
+        }
+        else if (!world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
+            oreGen();
+        }
     }
 
     protected void oreGen() {
         if (this.oreList.isEmpty()) {
-            for (String str : Config.ore_chances.get()) {
+            for (String str : Config.oreChances.get()) {
                 String[] chancesSplit = str.split(":");
                 Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(chancesSplit[0], chancesSplit[1]));
                 for (int i = 0; i < Integer.parseInt(chancesSplit[2]); i++) {
@@ -131,7 +124,6 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
                 }
             }
         }
-        QuantumQuarryTile te = ((QuantumQuarryTile) this.getTileEntity());
         ItemStack insertStack = new ItemStack(Item.getItemFromBlock(this.oreList.get(new Random().nextInt(this.oreList.size()))));
         for (int i = 0; i < 9; i++) {
             insertStack = this.itemSH.insertItem(i, insertStack, false);
@@ -159,5 +151,42 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         super.remove();
         lazyEnergy.invalidate();
         lazyItemStorage.invalidate();
+    }
+
+    @Override
+    public List<ITextComponent> getInfo() {
+        List<ITextComponent> output = new ArrayList<>();
+
+        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(new StringTextComponent(""));
+        switch (this.redstonemode) {
+            case 1:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeone"));
+                break;
+            case 2:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodetwo"));
+                break;
+            case 3:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodethree"));
+                break;
+        }
+        output.add(new TranslationTextComponent("text.miniutilities.waittime")
+                .appendString(this.waittime.toString() + " ticks(" + String.valueOf(this.waittime.floatValue() / 20))
+                .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
+                .appendString(")"));
+        output.add(new StringTextComponent("Power: " + this.energy.toString()));
+        output.add(new StringTextComponent("RF/t Consumption: " + calcRFCost(this.waittime)));
+        return output;
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
+    }
+
+    @Override
+    @Nullable
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
     }
 }

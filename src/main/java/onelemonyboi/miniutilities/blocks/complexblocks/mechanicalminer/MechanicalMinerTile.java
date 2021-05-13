@@ -1,47 +1,56 @@
-package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities;
+package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.PickaxeItem;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.IntNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import onelemonyboi.lemonlib.blocks.TileBase;
-import onelemonyboi.miniutilities.blocks.complexblocks.MUItemStackHandler;
+import onelemonyboi.miniutilities.MiniUtilities;
+import onelemonyboi.lemonlib.MUItemStackHandler;
+import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalMinerContainer;
-import onelemonyboi.lemonlib.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
-public class MechanicalMinerTile extends TileBase implements INamedContainerProvider {
-    public static int slots = 9;
+public class MechanicalMinerTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier {
+    public static int slots = 10;
 
-    public final MUItemStackHandler itemSH = new MUItemStackHandler(9);
+    public final MUItemStackHandler itemSH = new MUItemStackHandler(10) {
+        @Override
+        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+            return (slot == 9) == (stack.getItem() instanceof PickaxeItem);
+        }
+    };
     private final LazyOptional<MUItemStackHandler> lazyItemStorage = LazyOptional.of(() -> itemSH);
 
     // 1: Always on
@@ -50,14 +59,12 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
     public Integer redstonemode;
     public Integer timer;
     public Integer waittime;
-    public Boolean event;
 
     public MechanicalMinerTile() {
         super(TEList.MechanicalMinerTile.get());
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 20;
-        this.event = false;
     }
 
     @Override
@@ -87,33 +94,31 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         this.waittime = tag.getInt("WaitTime");
     }
 
-    /**
-     * Insert the specified stack to the specified inventory and return any leftover items
-     * Includes modified form of HopperTileEntity#insertSlot
-     */
-
     @Override
     public void tick() {
+        if (world.isRemote()) {return;}
+        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
         this.timer++;
-        if (this.timer != this.waittime) {return;}
+        if (this.timer < this.waittime) {return;}
         this.timer = 0;
-        if (!world.isRemote && this.redstonemode == 1){
+        if (this.redstonemode == 1){
             blockBreaker();
         }
-        else if (!world.isRemote && world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
+        else if (world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
             blockBreaker();
         }
-        else if (!world.isRemote && !world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
+        else if (!world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
             blockBreaker();
         }
-        this.event = false;
     }
 
     protected void blockBreaker() {
         BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
 
         // Loot Generation
-        LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
+        BlockState state = world.getBlockState(blockPos);
+        if (getPickaxe().getHarvestLevel(ToolType.PICKAXE, null, state) < state.getBlock().getHarvestLevel(state)) {return;}
+        LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, getPickaxe()).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
         List<ItemStack> lists = world.getBlockState(blockPos).getDrops(lootcontext$builder);
 
         for (ItemStack itemStack : lists) {
@@ -128,6 +133,7 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         this.markDirty();
     }
 
+
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
@@ -135,5 +141,44 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
             return lazyItemStorage.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public List<ITextComponent> getInfo() {
+        List<ITextComponent> output = new ArrayList<>();
+
+        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(new StringTextComponent(""));
+        switch (this.redstonemode) {
+            case 1:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeone"));
+                break;
+            case 2:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodetwo"));
+                break;
+            case 3:
+                output.add(new TranslationTextComponent("text.miniutilities.redstonemodethree"));
+                break;
+        }
+        output.add(new TranslationTextComponent("text.miniutilities.waittime")
+                .appendString(this.waittime.toString() + " ticks(" + String.valueOf(this.waittime.floatValue() / 20))
+                .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
+                .appendString(")"));
+        return output;
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
+    }
+
+    @Override
+    @Nullable
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
+    }
+
+    public ItemStack getPickaxe() {
+        return this.itemSH.getStackInSlot(9).getItem() == Items.AIR ? new ItemStack(Items.IRON_PICKAXE) : this.itemSH.getStackInSlot(9);
     }
 }

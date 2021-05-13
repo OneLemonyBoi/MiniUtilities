@@ -13,7 +13,7 @@ import onelemonyboi.miniutilities.world.Config;
 
 public class EarthBlocks {
     public static void convertCursed(PlayerInteractEvent.RightClickBlock event) {
-        if (!Config.enable_cursed_earth.get()) return;
+        if (!Config.enableCursedEarth.get()) return;
         PlayerEntity playerEntity = event.getPlayer();
         World world = playerEntity.world;
         BlockPos pos = event.getPos();
@@ -23,7 +23,7 @@ public class EarthBlocks {
     }
 
     public static void convertBlessed(PlayerInteractEvent.RightClickBlock e) {
-        if (!Config.enable_blessed_earth.get()) return;
+        if (!Config.enableBlessedEarth.get()) return;
         PlayerEntity p = e.getPlayer();
         World w = p.world;
         BlockPos pos = e.getPos();
@@ -33,7 +33,7 @@ public class EarthBlocks {
     }
 
     public static void convertBlursed(PlayerInteractEvent.RightClickBlock e) {
-        if (!Config.enable_blursed_earth.get()) return;
+        if (!Config.enableBlursedEarth.get()) return;
         PlayerEntity p = e.getPlayer();
         World w = p.world;
         BlockPos pos = e.getPos();

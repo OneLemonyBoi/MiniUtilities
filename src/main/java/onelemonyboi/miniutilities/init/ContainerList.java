@@ -5,8 +5,8 @@ import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryContainer;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalMinerContainer;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalblocks.tileentities.containers.MechanicalPlacerContainer;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerContainer;
+import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerContainer;
 
 public class ContainerList {
     public static final RegistryObject<ContainerType<MechanicalMinerContainer>> MinerContainer = ModRegistry.CONTAINERS.register("miner_container", () -> IForgeContainerType.create(MechanicalMinerContainer::new));

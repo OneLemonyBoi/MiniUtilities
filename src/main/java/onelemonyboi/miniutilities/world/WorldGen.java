@@ -17,13 +17,11 @@ import onelemonyboi.miniutilities.blocks.EnderLily;
 import onelemonyboi.miniutilities.blocks.FlameLily;
 import onelemonyboi.miniutilities.init.BlockList;
 
-import java.util.Random;
-
 public class WorldGen {
     public static void generateOres(final BiomeLoadingEvent event) {
-        if (!(event.getCategory().equals(Biome.Category.NETHER) || event.getCategory().equals(Biome.Category.THEEND)) && Config.enable_ender_ore.get()) {
+        if (!(event.getCategory().equals(Biome.Category.NETHER) || event.getCategory().equals(Biome.Category.THEEND)) && Config.enableEnderOre.get()) {
             generateOre(event.getGeneration(), OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-                    BlockList.EnderOre.get().getDefaultState(), Config.vein_size.get(), Config.min_height.get(), Config.max_height.get(), Config.amount.get());
+                    BlockList.EnderOre.get().getDefaultState(), Config.enderOreVeinSize.get(), Config.enderOreMinHeight.get(), Config.enderOreMaxHeight.get(), Config.enderOreAmount.get());
         }
     }
 
@@ -36,11 +34,11 @@ public class WorldGen {
     }
 
     public static void generatePlants(final BiomeLoadingEvent event) {
-        if (event.getCategory().equals(Biome.Category.THEEND) && Config.enable_ender_lily.get()) {
+        if (event.getCategory().equals(Biome.Category.THEEND) && Config.enableEnderLily.get()) {
             generatePlant(event.getGeneration(), "ender_lily_patch_feature", BlockList.EnderLily.get().getDefaultState().with(EnderLily.AGE, 7), 2, 1);
         }
 
-        if (event.getClimate().temperature >= 2 && Config.enable_flame_lily.get()) {
+        if (event.getClimate().temperature >= 2 && Config.enableFlameLily.get()) {
             generatePlant(event.getGeneration(), "flame_lily_patch_feature", BlockList.FlameLily.get().getDefaultState().with(FlameLily.AGE, 7), 1, 1);
         }
     }

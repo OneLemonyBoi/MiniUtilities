@@ -10,7 +10,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
@@ -43,7 +42,7 @@ public class UnstableIngot extends Item {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isRemote){
-            int type = Config.unstable_ingot_type.get();
+            int type = Config.unstableIngotType.get();
             if (entity instanceof PlayerEntity) {
                 PlayerEntity playerEntity = ((PlayerEntity) entity);
                 if (type == 0) {
@@ -113,7 +112,7 @@ public class UnstableIngot extends Item {
         PlayerEntity p = e.getPlayer();
         ItemEntity entityItem = e.getEntityItem();
         ItemStack stack = entityItem.getItem();
-        if (stack.getItem() == ItemList.UnstableIngot.get().getItem() && Config.unstable_ingot_type.get() == 2) {
+        if (stack.getItem() == ItemList.UnstableIngot.get().getItem() && Config.unstableIngotType.get() == 2) {
             p.world.createExplosion(null, p.getPosX(), p.getPosY(), p.getPosZ(), 1, Explosion.Mode.NONE);
             p.attackEntityFrom(DIVIDE_BY_DIAMOND, Float.MAX_VALUE);
             e.setCanceled(true);
@@ -126,7 +125,7 @@ public class UnstableIngot extends Item {
         Container c = e.getContainer();
         for (Slot slot : c.inventorySlots) {
             ItemStack stack = slot.getStack();
-            int type = Config.unstable_ingot_type.get();
+            int type = Config.unstableIngotType.get();
             if (type == 0) {
                 playerEntity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100));
             }

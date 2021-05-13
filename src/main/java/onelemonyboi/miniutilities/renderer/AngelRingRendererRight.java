@@ -23,12 +23,8 @@ public class AngelRingRendererRight extends LayerRenderer<AbstractClientPlayerEn
     public AngelRingRendererRight(IEntityRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> playerModel) {
         super(playerModel);
     }
-
-    // TODO: Add check for armor to make it look better when armor is off
-
     @Override
     public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight, AbstractClientPlayerEntity player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        String name = player.getGameProfile().getName();
         Item item = ItemStack.EMPTY.getItem();
         if (player.hasPlayerInfo() && !player.isInvisible() && player.isWearing(PlayerModelPart.CAPE) && isEquipped(player)) {
             if (isBaseEquipped(player)) {item = ItemStack.EMPTY.getItem();}
@@ -39,7 +35,8 @@ public class AngelRingRendererRight extends LayerRenderer<AbstractClientPlayerEn
             else if (isEnderDragonEquipped(player)) {item = ItemList.EnderDragonWing.get();}
             matrixStack.push();
             getEntityModel().bipedBody.translateRotate(matrixStack);
-            matrixStack.translate(-0.4, 0.2, 0.40);
+            float zTranslate = (float) (player.inventory.armorInventory.get(2) == ItemStack.EMPTY ? 0.3 : 0.4);
+            matrixStack.translate(-0.4, 0.2, zTranslate);
             matrixStack.scale(1f, -1f, -0.25f);
             matrixStack.rotate(Vector3f.YP.rotationDegrees(135));
             Minecraft.getInstance().getItemRenderer().renderItem(player, new ItemStack(item), ItemCameraTransforms.TransformType.NONE, false, matrixStack, buffer, player.world, 0xF000F0, OverlayTexture.NO_OVERLAY);

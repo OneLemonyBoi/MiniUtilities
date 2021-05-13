@@ -1,0 +1,5 @@
+{
+  "variants": {
+	"": { "model": "miniutilities:block/lunar_panel" }
+  }
+}

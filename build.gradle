@@ -1,7 +1,6 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
-        jcenter()
         mavenCentral()
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
     }
@@ -9,10 +8,6 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
-}
-
-plugins {
-    id "com.wynprice.cursemaven" version "2.1.5"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -100,12 +95,16 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
+        name = "CF"
         url = "https://minecraft.curseforge.com/api/maven/"
-        url = "https://maven.theillusivec4.top/"
-        url = "https://www.cursemaven.com"
     }
-    flatDir {
-        dirs 'libs'
+    maven {
+        name = "C4"
+        url = "https://maven.theillusivec4.top/"
+    }
+    maven {
+        name = "Cursemaven"
+        url = "https://www.cursemaven.com/"
     }
 }
 
@@ -115,8 +114,8 @@ dependencies {
     compileOnly fg.deobf("curse.maven:curios-309927:3231111:api")
     runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")
     implementation fg.deobf("curse.maven:ctm-267602:3137659")
-    implementation fg.deobf("curse.maven:the-one-probe-245211:3157997")
-    implementation fg.deobf("curse.maven:lemon-lib-471136:3287802")
+    runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3157997")
+    implementation fg.deobf("curse.maven:lemon-lib-471136:3307656")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
