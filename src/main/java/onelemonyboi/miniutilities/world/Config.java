@@ -36,7 +36,7 @@ public class Config {
     public static ForgeConfigSpec.IntValue enderOreAmount;
 
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> oreChances;
-    private static final List<String> oreDefaults = ImmutableList.of("minecraft:coal_ore:20", "minecraft:iron_ore:8", "minecraft:gold_ore:2", "minecraft:diamond_ore:1", "minecraft:lapis_ore:4");
+    private static final List<String> oreDefaults = ImmutableList.of("minecraft:coal_ore:4", "minecraft:iron_ore:3", "minecraft:gold_ore:1", "minecraft:diamond_ore:1", "minecraft:lapis_ore:2", "minecraft:redstone_ore:4", "minecraft:emerald_ore:1");
 
 
     public static void register() {
