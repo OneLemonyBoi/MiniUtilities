@@ -23,7 +23,7 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
     public static double power = 0;
 
     public SolarPanelControllerTile() {
-        super(TEList.SolarPanelControllerTile.get(), Config.solarPanelGeneration.get() * 4096, 0, Config.solarPanelGeneration.get() * 4096);
+        super(TEList.SolarPanelControllerTile.get(), 65536, 0, 65536);
     }
 
     @Override
