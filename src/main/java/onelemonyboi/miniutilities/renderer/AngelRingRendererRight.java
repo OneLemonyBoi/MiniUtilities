@@ -14,15 +14,20 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import onelemonyboi.miniutilities.init.ItemList;
 
 import static onelemonyboi.miniutilities.renderer.AngelRingCheck.*;
 
+// TODO: REMOVE CRINGE BELOW
+@OnlyIn(Dist.CLIENT)
 public class AngelRingRendererRight extends LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> {
 
     public AngelRingRendererRight(IEntityRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> playerModel) {
         super(playerModel);
     }
+
     @Override
     public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight, AbstractClientPlayerEntity player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         Item item = ItemStack.EMPTY.getItem();
