@@ -126,9 +126,9 @@ public class Kikoku extends SwordItem {
 
     public static void AnvilRepairEvent(AnvilRepairEvent event) {
         if (event.getItemResult().getItem() == ItemList.Kikoku.get() && event.getPlayer() instanceof ClientPlayerEntity) {
-            ClientPlayerEntity clientPlayerEntity = (ClientPlayerEntity) event.getPlayer();
-            clientPlayerEntity.addPotionEffect(new EffectInstance(Effects.LEVITATION, 5));
-            clientPlayerEntity.playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+            if (event.getPlayer().getEntityWorld().isRemote) {
+                event.getPlayer().playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+            }
         }
     }
 }
