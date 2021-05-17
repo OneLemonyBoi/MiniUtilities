@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -52,14 +53,10 @@ public class DrumBlock extends ContainerBlock {
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity instanceof DrumTile) {
-            ItemStack itemStack = new ItemStack(this);
-            double Randomizer = Math.random();
-            CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
-            itemStack.setTagInfo("BlockEntityTag", compoundNBT);
-            ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX() + Randomizer, pos.getY(), pos.getZ() + Randomizer, itemStack);
-            worldIn.addEntity(itemEntity);
-        }
         super.onReplaced(state, worldIn, pos, newState, isMoving);
+        ItemStack itemStack = new ItemStack(this);
+        CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
+        itemStack.setTagInfo("BlockEntityTag", compoundNBT);
+        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
     }
 }
