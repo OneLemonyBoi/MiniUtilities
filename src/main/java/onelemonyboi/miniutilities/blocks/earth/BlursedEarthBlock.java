@@ -27,10 +27,9 @@ import java.util.Random;
 // CREDIT FOR CODE BASE: TFARCENIM
 
 public class BlursedEarthBlock extends GrassBlock {
-    protected int powerLvl;
+
     public BlursedEarthBlock(Properties properties) {
         super(properties);
-        this.powerLvl = 0;
     }
 
     // SPAWN RANGE: 200 - 800 (Similar to Spawner)
@@ -51,32 +50,19 @@ public class BlursedEarthBlock extends GrassBlock {
     }
 
     @Override
-    public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-        return this.powerLvl;
-    }
-
-    @Override
     @Deprecated
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!world.isRemote) {
-            Integer num = world.getRedstonePowerFromNeighbors(pos);
-            if (num != 0 && num > this.powerLvl) {
-                this.powerLvl = world.getRedstonePowerFromNeighbors(pos) - 1;
-            }
-
-            if (this.powerLvl > 0) {
-                return;
-            }
-
             int j = 200;
             if (j == 0) {
                 j = 1;
             }
+
             world.getPendingBlockTicks().scheduleTick(pos, this, world.rand.nextInt(600) + j);
             if (!world.isAreaLoaded(pos, 3))
                 return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
 
-            if (false) {
+            if (world.getLight(pos.up()) >= 7) {
                 world.setBlockState(pos, Blocks.DIRT.getDefaultState());
             } else {
                 if (world.getBlockState(pos.up()).isAir()) {
@@ -133,10 +119,6 @@ public class BlursedEarthBlock extends GrassBlock {
     @Override
     public boolean canUseBonemeal(World world, Random random, BlockPos pos, BlockState state) {
         return false;//no
-    }
-
-    public static boolean isInDaylight(World world, BlockPos pos) {
-        return world.isDaytime() && world.getBrightness(pos.up()) > 0.5F;
     }
 
     private Entity findMonsterToSpawn(ServerWorld world, BlockPos pos, Random rand) {

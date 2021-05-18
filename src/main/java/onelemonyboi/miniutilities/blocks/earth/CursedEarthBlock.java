@@ -57,7 +57,7 @@ public class CursedEarthBlock extends GrassBlock {
             if (world.getLight(pos.up()) >= 7) {
                 world.setBlockState(pos, Blocks.DIRT.getDefaultState());
             } else {
-                if (world.getLight(pos.up()) <= 7 && world.getBlockState(pos.up()).isAir()) {
+                if (world.getBlockState(pos.up()).isAir()) {
                     BlockState blockstate = this.getDefaultState();
                     for (int i = 0; i < 4; ++i) {
                         BlockPos pos1 = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
