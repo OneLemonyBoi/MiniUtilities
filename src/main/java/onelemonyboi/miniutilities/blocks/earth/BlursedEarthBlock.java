@@ -64,7 +64,7 @@ public class BlursedEarthBlock extends GrassBlock {
                 this.powerLvl = world.getRedstonePowerFromNeighbors(pos) - 1;
             }
 
-            if (this.powerLvl == 0) {
+            if (this.powerLvl > 0) {
                 return;
             }
 
