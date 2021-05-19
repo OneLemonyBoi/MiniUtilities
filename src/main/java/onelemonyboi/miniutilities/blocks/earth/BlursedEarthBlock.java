@@ -8,6 +8,7 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -26,6 +27,7 @@ import java.util.Random;
 // CREDIT FOR CODE BASE: TFARCENIM
 
 public class BlursedEarthBlock extends GrassBlock {
+
     public BlursedEarthBlock(Properties properties) {
         super(properties);
     }
@@ -43,6 +45,10 @@ public class BlursedEarthBlock extends GrassBlock {
         world.getPendingBlockTicks().scheduleTick(pos, this, world.rand.nextInt(600) + i);
     }
 
+    public boolean canProvidePower(BlockState state) {
+        return true;
+    }
+
     @Override
     @Deprecated
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
@@ -51,10 +57,12 @@ public class BlursedEarthBlock extends GrassBlock {
             if (j == 0) {
                 j = 1;
             }
+
             world.getPendingBlockTicks().scheduleTick(pos, this, world.rand.nextInt(600) + j);
             if (!world.isAreaLoaded(pos, 3))
                 return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
-            if (false) {
+
+            if (world.getLight(pos.up()) >= 7) {
                 world.setBlockState(pos, Blocks.DIRT.getDefaultState());
             } else {
                 if (world.getBlockState(pos.up()).isAir()) {
@@ -113,10 +121,6 @@ public class BlursedEarthBlock extends GrassBlock {
         return false;//no
     }
 
-    public static boolean isInDaylight(World world, BlockPos pos) {
-        return world.isDaytime() && world.getBrightness(pos.up()) > 0.5F;
-    }
-
     private Entity findMonsterToSpawn(ServerWorld world, BlockPos pos, Random rand) {
         //required to account for structure based mobs such as wither skeletons
         ServerChunkProvider s = world.getChunkProvider();
@@ -143,5 +147,23 @@ public class BlursedEarthBlock extends GrassBlock {
         if (ent instanceof MobEntity)
             ((MobEntity) ent).onInitialSpawn(world, world.getDifficultyForLocation(pos), SpawnReason.NATURAL, null, null);
         return ent;
+    }
+
+    public Tuple<Integer, Direction> modifiedGetRedstonePower(BlockPos pos, World world) {
+        Tuple<Integer, Direction> tuple = new Tuple<>(0, null);
+
+        for(Direction direction : Direction.values()) {
+            int j = world.getRedstonePower(pos.offset(direction), direction);
+            if (j >= 15) {
+                tuple = new Tuple<>(15, direction);
+                return tuple;
+            }
+
+            if (j > tuple.getA()) {
+                tuple = new Tuple<>(j, direction);
+            }
+        }
+
+        return tuple;
     }
 }

@@ -18,8 +18,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import onelemonyboi.miniutilities.init.ItemList;
 
+@OnlyIn(Dist.CLIENT)
 public class KikokuRenderer extends LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> {
     public KikokuRenderer(IEntityRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> playerModel) {
         super(playerModel);

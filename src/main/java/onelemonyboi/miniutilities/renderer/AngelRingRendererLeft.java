@@ -14,10 +14,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import onelemonyboi.miniutilities.init.ItemList;
 
 import static onelemonyboi.miniutilities.renderer.AngelRingCheck.*;
 
+@OnlyIn(Dist.CLIENT)
 public class AngelRingRendererLeft extends LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> {
 
     public AngelRingRendererLeft(IEntityRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> playerModel) {
