@@ -11,6 +11,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -85,7 +86,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(QuantumQuarryBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(MoltenHeadHandler::handleBlockBreak);
         EVENT_BUS.addListener(ExperienceHarvesterHandler::handleEntityKill);
-        EVENT_BUS.addListener(MachineRenderer::blockRenderInfo);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientStuff::machineRender);
         Packet.main();
     }
 
@@ -97,39 +98,7 @@ public class MiniUtilities {
     }
     private void doClientStuff(final FMLClientSetupEvent event) // Render Stuff HERE!!
     {
-        RenderTypeLookup.setRenderLayer(BlockList.CursedEarth.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.BlessedEarth.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.BlursedEarth.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.EnderLily.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.FlameLily.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.WhiteLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.LightGrayLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.GrayLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.BlackLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.RedLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.OrangeLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.YellowLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.LimeLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.GreenLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.LightBlueLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.CyanLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.BlueLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.PurpleLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.MagentaLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.PinkLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.BrownLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.WoodenSpikes.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.IronSpikes.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.GoldSpikes.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.DiamondSpikes.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.NetheriteSpikes.get(), RenderType.getCutout());
-
-        ScreenManager.registerFactory(ContainerList.MinerContainer.get(), MechanicalMinerScreen::new);
-        ScreenManager.registerFactory(ContainerList.PlacerContainer.get(), MechanicalPlacerScreen::new);
-        ScreenManager.registerFactory(ContainerList.QuarryContainer.get(), QuantumQuarryScreen::new);
-
-        RenderingRegistry.registerEntityRenderingHandler(EntityList.SpecialEgg.get(), (manager) -> new SpriteRenderer(manager, Minecraft.getInstance().getItemRenderer()));
-
+        ClientStuff.clientStuff();
 //        KeyBindings.register();
     }
 
