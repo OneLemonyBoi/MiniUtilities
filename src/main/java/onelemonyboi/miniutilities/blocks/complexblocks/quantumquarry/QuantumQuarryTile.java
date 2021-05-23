@@ -166,7 +166,7 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
                 .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
                 .appendString(")"));
         output.add(new StringTextComponent("Power: " + this.energy.toString()));
-        output.add(new StringTextComponent("RF/t Consumption: " + calcRFCost(this.waittime)));
+        output.add(new StringTextComponent("FE/t Consumption: " + calcRFCost(this.waittime)));
         return output;
     }
 
