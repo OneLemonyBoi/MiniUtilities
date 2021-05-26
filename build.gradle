@@ -115,7 +115,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")
     implementation fg.deobf("curse.maven:ctm-267602:3137659")
     runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3157997")
-    implementation fg.deobf("curse.maven:lemon-lib-471136:3319932")
+    implementation fg.deobf("curse.maven:lemon-lib-471136:3307656")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
