@@ -65,8 +65,8 @@ public class Config {
         expGivenFromPearl = COMMON_BUILDER.comment("How much EXP should base experience pearls give?").defineInRange("EXP Given from EXP Pearls", 10, 1, 128);
         enableEnderLily = COMMON_BUILDER.comment("Should Ender Lilies Generate?").define("Ender Lily Generation", true);
         enableFlameLily = COMMON_BUILDER.comment("Should Flame Lilies Generate?").define("Flame Lily Generation", true);
-        solarPanelGeneration = COMMON_BUILDER.comment("How much RF should the Solar Panel Generate?").defineInRange("Solar Panel Generation", 4, 0, 1000000);
-        lunarPanelGeneration = COMMON_BUILDER.comment("How much RF should the Lunar Panel Generate?").defineInRange("Lunar Panel Generation", 4, 0, 1000000);
+        solarPanelGeneration = COMMON_BUILDER.comment("How much FE should the Solar Panel Generate?").defineInRange("Solar Panel Generation", 4, 0, 1000000);
+        lunarPanelGeneration = COMMON_BUILDER.comment("How much FE should the Lunar Panel Generate?").defineInRange("Lunar Panel Generation", 4, 0, 1000000);
         panelMultiplier = COMMON_BUILDER.comment("How many Panels should it take to increase the multiplier by 1?").defineInRange("Panel Multiplier Amount", 50, 1, 1000000);
         oreChances = COMMON_BUILDER.comment("List ores and their weight, in this format: [minecraft:coal_ore:10]").defineList("ore_list", () -> oreDefaults, ore -> ore instanceof String);
 //        CLIENT_BUILDER.pop();

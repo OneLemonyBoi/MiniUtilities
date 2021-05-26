@@ -85,7 +85,7 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
             output.add(new StringTextComponent("Power: " + energy.toString()));
         }
         output.add(new StringTextComponent("Active Panels: " + activeSolarCount));
-        output.add(new StringTextComponent("RF/t Production: " + Math.round(power)));
+        output.add(new StringTextComponent("FE/t Production: " + Math.round(power)));
         return output;
     }
 

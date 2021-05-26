@@ -49,8 +49,6 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     public Integer waittime;
     public List<Block> oreList;
 
-    protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
-
     public QuantumQuarryTile() {
         super(TEList.QuantumQuarryTile.get(), 10000000, 10000000, 0);
         this.redstonemode = 1;
@@ -96,6 +94,10 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     @Override
     public void tick() {
         if (world.isRemote()) {return;}
+        if ((!world.isBlockPowered(this.getPos()) && this.redstonemode == 2) || (world.isBlockPowered(this.getPos()) && this.redstonemode == 3)) {
+            return;
+        }
+
         this.timer++;
         world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
         if (!energy.checkedMachineConsume(calcRFCost(this.waittime))) {
@@ -103,15 +105,7 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         }
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
-        if (this.redstonemode == 1){
-            oreGen();
-        }
-        else if (world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
-            oreGen();
-        }
-        else if (!world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
-            oreGen();
-        }
+        oreGen();
     }
 
     protected void oreGen() {
@@ -127,9 +121,6 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         ItemStack insertStack = new ItemStack(Item.getItemFromBlock(this.oreList.get(new Random().nextInt(this.oreList.size()))));
         for (int i = 0; i < 9; i++) {
             insertStack = this.itemSH.insertItem(i, insertStack, false);
-        }
-        if (!insertStack.isEmpty()) {
-            InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY() + 1, this.getPos().getZ(), insertStack);
         }
         this.markDirty();
     }
@@ -175,7 +166,7 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
                 .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
                 .appendString(")"));
         output.add(new StringTextComponent("Power: " + this.energy.toString()));
-        output.add(new StringTextComponent("RF/t Consumption: " + calcRFCost(this.waittime)));
+        output.add(new StringTextComponent("FE/t Consumption: " + calcRFCost(this.waittime)));
         return output;
     }
 
