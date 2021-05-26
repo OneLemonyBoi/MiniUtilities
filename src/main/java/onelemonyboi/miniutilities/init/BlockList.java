@@ -10,6 +10,8 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
+import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserHubBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserPortBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.LunarPanelBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelController;
@@ -74,6 +76,9 @@ public class BlockList {
     public static final RegistryObject<Block> SolarPanelController = register("solar_panel_controller", () -> new SolarPanelController());
     public static final RegistryObject<Block> EnderTile = register("ender_tile", EnderTileBlock::new);
     public static final RegistryObject<Block> ChorusTile = register("chorus_tile", ChorusTileBlock::new);
+
+    public static final RegistryObject<Block> LaserHub = register("laser_hub", () -> new LaserHubBlock(AbstractBlock.Properties.from(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> LaserPort = register("laser_port", () -> new LaserPortBlock(AbstractBlock.Properties.from(Blocks.IRON_BLOCK)));
 
     public static void register() {}
 
