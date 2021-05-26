@@ -37,7 +37,7 @@ public class LaserHubTile extends EnergyTileBase implements RenderInfoIdentifier
                 this.energy.outputToSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
             }
             else {
-                portTile.energy.outputToSide(world, getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
+                this.energy.inputFromSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
             }
         }
     }

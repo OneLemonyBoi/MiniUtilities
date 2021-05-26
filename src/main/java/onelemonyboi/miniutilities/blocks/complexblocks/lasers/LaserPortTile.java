@@ -50,6 +50,6 @@ public class LaserPortTile extends EnergyTileBase implements RenderInfoIdentifie
         output.add(this.getBlockState().getBlock().getTranslatedName());
         output.add(new StringTextComponent(""));
         output.add(new StringTextComponent("Power: " + this.energy.toString()));
-        output.add(new StringTextComponent("I/O Mode: " + (this.isInput ? "Extract from Machine" : "Insert into Machine")));
+        output.add(new StringTextComponent("I/O Mode: " + (this.isInput ? "Push to Machine" : "Pull from Machine")));
         return output;
     }}
