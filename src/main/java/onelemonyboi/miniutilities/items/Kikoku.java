@@ -88,6 +88,9 @@ public class Kikoku extends SwordItem {
     }
 
     public static void AnvilUpdateEvent(AnvilUpdateEvent event) {
+        if (!event.getPlayer().isServerWorld()) {
+            return;
+        }
         ItemStack sword = event.getLeft();
         ItemStack book = event.getRight();
         if (sword == null || sword.getItem() != ItemList.Kikoku.get() || book == null || book.getItem() != Items.ENCHANTED_BOOK) {
@@ -125,10 +128,11 @@ public class Kikoku extends SwordItem {
     }
 
     public static void AnvilRepairEvent(AnvilRepairEvent event) {
+        if (!event.getPlayer().getEntityWorld().isRemote) {
+            return;
+        }
         if (event.getItemResult().getItem() == ItemList.Kikoku.get() && event.getPlayer() instanceof ClientPlayerEntity) {
-            if (event.getPlayer().getEntityWorld().isRemote) {
-                event.getPlayer().playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
-            }
+            event.getPlayer().playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
         }
     }
 }

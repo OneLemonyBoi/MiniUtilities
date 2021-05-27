@@ -44,6 +44,11 @@ public class QuantumQuarryBlock extends Block {
         return TEList.QuantumQuarryTile.get().create();
     }
 
+    @Override
+    public void onBlockClicked(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+        super.onBlockClicked(state, worldIn, pos, player);
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
