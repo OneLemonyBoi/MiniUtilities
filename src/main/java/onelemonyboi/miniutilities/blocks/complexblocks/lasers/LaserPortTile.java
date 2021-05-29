@@ -29,6 +29,8 @@ public class LaserPortTile extends EnergyTileBase implements RenderInfoIdentifie
         else {
             energy.inputFromSide(world, getPos(), getBlockState().get(LaserPortBlock.FACING), Integer.MAX_VALUE);
         }
+
+        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
     }
 
     public CompoundNBT write(CompoundNBT nbt) {

@@ -86,26 +86,38 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     @Override
     public void tick() {
         if (world.isRemote()) {return;}
+
+        ItemStack insertStack = new ItemStack(JSONLoader.oreList.get(new Random().nextInt(JSONLoader.oreList.size())));
+
+        if (!canInput(insertStack)) {
+            return;
+        }
         if ((!world.isBlockPowered(this.getPos()) && this.redstonemode == 2) || (world.isBlockPowered(this.getPos()) && this.redstonemode == 3)) {
             return;
         }
-
-        this.timer++;
-        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
         if (!energy.checkedMachineConsume(calcRFCost(this.waittime))) {
             return;
         }
+        this.timer++;
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
-        oreGen();
+        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
+        oreGen(insertStack);
     }
 
-    protected void oreGen() {
-        ItemStack insertStack = new ItemStack(JSONLoader.oreList.get(new Random().nextInt(JSONLoader.oreList.size())));
+    private void oreGen(ItemStack insertStack) {
         for (int i = 0; i < 9; i++) {
             insertStack = this.itemSH.insertItem(i, insertStack, false);
         }
         this.markDirty();
+    }
+
+    private boolean canInput(ItemStack insertStack) {
+        for (int i = 0; i < 9; i++) {
+            insertStack = this.itemSH.insertItem(i, insertStack, true);
+        }
+
+        return insertStack.isEmpty();
     }
 
     @Nonnull
