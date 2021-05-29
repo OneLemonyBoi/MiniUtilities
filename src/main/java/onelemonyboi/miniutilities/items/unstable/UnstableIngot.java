@@ -20,7 +20,7 @@ import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import onelemonyboi.miniutilities.init.ItemList;
-import onelemonyboi.miniutilities.world.Config;
+import onelemonyboi.miniutilities.startup.Config;
 
 import java.util.List;
 

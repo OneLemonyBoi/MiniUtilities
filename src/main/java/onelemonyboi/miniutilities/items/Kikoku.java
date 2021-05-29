@@ -12,17 +12,13 @@ import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import onelemonyboi.miniutilities.init.AttributeList;
 import onelemonyboi.miniutilities.init.ItemList;
-import onelemonyboi.miniutilities.world.Config;
+import onelemonyboi.miniutilities.startup.Config;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;

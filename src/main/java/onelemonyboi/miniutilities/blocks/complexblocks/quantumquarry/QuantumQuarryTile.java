@@ -1,20 +1,15 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -22,12 +17,11 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
 import onelemonyboi.lemonlib.MUItemStackHandler;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.world.Config;
+import onelemonyboi.miniutilities.startup.JSONLoader;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,14 +41,12 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     public Integer redstonemode;
     public Integer timer;
     public Integer waittime;
-    public List<Block> oreList;
 
     public QuantumQuarryTile() {
         super(TEList.QuantumQuarryTile.get(), 10000000, 10000000, 0);
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 1200;
-        this.oreList = new ArrayList<Block>();
     }
 
     @Override
@@ -109,16 +101,7 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     }
 
     protected void oreGen() {
-        if (this.oreList.isEmpty()) {
-            for (String str : Config.oreChances.get()) {
-                String[] chancesSplit = str.split(":");
-                Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(chancesSplit[0], chancesSplit[1]));
-                for (int i = 0; i < Integer.parseInt(chancesSplit[2]); i++) {
-                    this.oreList.add(block);
-                }
-            }
-        }
-        ItemStack insertStack = new ItemStack(Item.getItemFromBlock(this.oreList.get(new Random().nextInt(this.oreList.size()))));
+        ItemStack insertStack = new ItemStack(JSONLoader.oreList.get(new Random().nextInt(JSONLoader.oreList.size())));
         for (int i = 0; i < 9; i++) {
             insertStack = this.itemSH.insertItem(i, insertStack, false);
         }

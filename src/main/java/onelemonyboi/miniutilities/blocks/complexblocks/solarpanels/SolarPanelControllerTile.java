@@ -11,7 +11,7 @@ import net.minecraft.util.text.StringTextComponent;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.world.Config;
+import onelemonyboi.miniutilities.startup.Config;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

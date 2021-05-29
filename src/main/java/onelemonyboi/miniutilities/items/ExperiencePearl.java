@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import onelemonyboi.miniutilities.world.Config;
+import onelemonyboi.miniutilities.startup.Config;
 
 public class ExperiencePearl extends Item {
     int compressed = 0;

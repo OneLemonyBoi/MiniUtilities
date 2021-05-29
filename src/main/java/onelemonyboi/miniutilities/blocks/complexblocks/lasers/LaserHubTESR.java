@@ -41,9 +41,6 @@ public class LaserHubTESR extends TileEntityRenderer<LaserHubTile> {
         super(rendererDispatcherIn);
     }
 
-    public static final ResourceLocation BEAM_TEXTURE = new ResourceLocation(MiniUtilities.MOD_ID, "textures/laser/beam.png");
-    private static final RenderType RENDER_TYPE = RenderType.getEntityNoOutline(BEAM_TEXTURE);
-
     @Override
     public void render(LaserHubTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
         List<Vector3d> vectorList = tile.getTargetedTEVectorInRadius(LaserPortTile.class, 16);

@@ -16,6 +16,7 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import onelemonyboi.miniutilities.blocks.EnderLily;
 import onelemonyboi.miniutilities.blocks.FlameLily;
 import onelemonyboi.miniutilities.init.BlockList;
+import onelemonyboi.miniutilities.startup.Config;
 
 public class WorldGen {
     public static void generateOres(final BiomeLoadingEvent event) {
