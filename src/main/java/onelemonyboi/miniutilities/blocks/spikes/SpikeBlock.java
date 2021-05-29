@@ -101,7 +101,7 @@ public class SpikeBlock extends Block {
         if (this.dontKill && ((LivingEntity) entityIn).getHealth() <= this.damage) {return;}
         if (this.playerDamage) {
             entityIn.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer), this.damage);
-            entityIn.setVelocity(0, 0, 0);
+            entityIn.setMotion(entityIn.getMotion().mul(0, 1,0));
         }
         else {entityIn.attackEntityFrom(DamageSource.CACTUS, this.damage);}
         if (this.expDropTrue) {
