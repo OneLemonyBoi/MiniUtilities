@@ -6,6 +6,7 @@ import onelemonyboi.miniutilities.MiniUtilities;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,12 +29,16 @@ public class JSONHelper {
         return null;
     }
 
-    public static File createFile(Path path) {
+    public static File createFile(Path path, String str) {
         if (Files.exists(path)) {
             return path.toFile();
         }
 
         try {
+            File file = Files.createFile(path).toFile();
+            FileWriter reader = new FileWriter(file);
+            reader.write(str);
+            reader.close();
             return Files.createFile(path).toFile();
         }
         catch (IOException e) {
