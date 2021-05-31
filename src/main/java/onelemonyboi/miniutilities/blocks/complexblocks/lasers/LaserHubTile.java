@@ -1,6 +1,9 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -17,6 +20,7 @@ import onelemonyboi.lemonlib.blocks.EnergyTileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -89,5 +93,16 @@ public class LaserHubTile extends EnergyTileBase implements RenderInfoIdentifier
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
         return IForgeTileEntity.INFINITE_EXTENT_AABB;
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
+    }
+
+    @Override
+    @Nullable
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
     }
 }

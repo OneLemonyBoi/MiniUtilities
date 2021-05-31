@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.TEList;
 
 import javax.annotation.Nullable;
@@ -30,10 +31,18 @@ public class LaserPortBlock extends DirectionalBlock {
     }
 
     @Override
+    public boolean isSlimeBlock(BlockState state) {
+        return false;
+    }
+
+    @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         TileEntity te = worldIn.getTileEntity(pos);
         if (!(te instanceof LaserPortTile)) {
             return ActionResultType.PASS;
+        }
+        if (worldIn.isRemote()) {
+            return ActionResultType.SUCCESS;
         }
 
         LaserPortTile laserPortTile = (LaserPortTile) te;
