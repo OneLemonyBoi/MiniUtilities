@@ -105,9 +105,4 @@ public class MiniUtilities {
     private void postInit(FMLCommonSetupEvent event) {
         proxy.postInit(event);
     }
-
-    public static Logger getLogger()
-    {
-        return LOGGER;
-    }
 }

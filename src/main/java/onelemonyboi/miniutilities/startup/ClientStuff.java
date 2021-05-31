@@ -49,6 +49,14 @@ public class ClientStuff {
         RenderTypeLookup.setRenderLayer(BlockList.DiamondSpikes.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.NetheriteSpikes.get(), RenderType.getCutout());
 
+        RenderTypeLookup.setRenderLayer(BlockList.EtherealGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.ReverseEtherealGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.GlowingGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.RedstoneGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DarkGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DarkEtherealGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DarkReverseEtherealGlass.get(), RenderType.getCutout());
+
         ScreenManager.registerFactory(ContainerList.MinerContainer.get(), MechanicalMinerScreen::new);
         ScreenManager.registerFactory(ContainerList.PlacerContainer.get(), MechanicalPlacerScreen::new);
         ScreenManager.registerFactory(ContainerList.QuarryContainer.get(), QuantumQuarryScreen::new);
