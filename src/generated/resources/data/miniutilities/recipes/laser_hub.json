@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ZYZ",
+    "YXY",
+    "AAA"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:beacon"
+    },
+    "Y": {
+      "item": "miniutilities:emerald_opinium_core"
+    },
+    "Z": {
+      "item": "miniutilities:unstable_ingot"
+    },
+    "A": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "result": {
+    "item": "miniutilities:laser_hub"
+  }
+}
