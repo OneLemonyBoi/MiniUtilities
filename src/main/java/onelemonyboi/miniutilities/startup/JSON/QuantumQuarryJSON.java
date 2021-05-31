@@ -1,37 +1,23 @@
-package onelemonyboi.miniutilities.startup;
+package onelemonyboi.miniutilities.startup.JSON;
 
 import com.google.gson.*;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.miniutilities.datastorage.Quadruple;
 import org.apache.commons.lang3.tuple.MutableTriple;
 
-import java.io.File;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-import static onelemonyboi.miniutilities.startup.JSONHelper.*;
-import static onelemonyboi.miniutilities.datastorage.Quadruple.*;
+import static onelemonyboi.miniutilities.datastorage.Quadruple.from;
+import static onelemonyboi.miniutilities.startup.JSON.JSONHelper.createFile;
 
-public class JSONLoader {
+public class QuantumQuarryJSON {
     public static List<MutableTriple<Item, List<ResourceLocation>, List<ResourceLocation>>> oreList;
-
-    public static void loadJSON() {
-        Path JSONBasePath = FMLPaths.CONFIGDIR.get().resolve("miniutilitiescomplex");
-        File JSONBaseFile = createDir(JSONBasePath);
-
-        createQuantumQuarryJSON(JSONBasePath);
-
-        Map<String, JsonObject> JSONFiles = JSONFinder(JSONBaseFile);
-        for (Map.Entry<String, JsonObject> entry : JSONFiles.entrySet()) {
-            switch (entry.getKey()) {
-                case "quantumquarryores.json":
-                    quantumQuarryOreLogic(entry.getValue());
-            }
-        }
-    }
 
     public static void quantumQuarryOreLogic(JsonObject object) {
         oreList = new ArrayList<>();

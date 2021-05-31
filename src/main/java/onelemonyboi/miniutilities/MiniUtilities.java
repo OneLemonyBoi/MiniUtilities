@@ -29,7 +29,7 @@ import onelemonyboi.miniutilities.proxy.ClientProxy;
 import onelemonyboi.miniutilities.proxy.IProxy;
 import onelemonyboi.miniutilities.proxy.ServerProxy;
 import onelemonyboi.miniutilities.startup.ClientStuff;
-import onelemonyboi.miniutilities.startup.JSONLoader;
+import onelemonyboi.miniutilities.startup.JSON.JSONLoader;
 import onelemonyboi.miniutilities.startup.Config;
 import onelemonyboi.miniutilities.world.WorldGen;
 import org.apache.logging.log4j.LogManager;

@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.startup;
+package onelemonyboi.miniutilities.startup.JSON;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -13,7 +13,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: MOVE TO LEMONLIB
 public class JSONHelper {
     public static File createDir(Path path) {
         if (Files.exists(path)) {
