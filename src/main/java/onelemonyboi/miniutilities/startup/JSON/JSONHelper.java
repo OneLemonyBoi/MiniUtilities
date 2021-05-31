@@ -1,17 +1,12 @@
 package onelemonyboi.miniutilities.startup.JSON;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import onelemonyboi.miniutilities.MiniUtilities;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 
 public class JSONHelper {
     public static File createDir(Path path) {
@@ -23,7 +18,6 @@ public class JSONHelper {
         }
         catch (IOException e) {
             MiniUtilities.LOGGER.error("I/O Error! Either that or the config folder is nonexistent!");
-            e.printStackTrace();
         }
         return null;
     }
@@ -42,32 +36,7 @@ public class JSONHelper {
         }
         catch (IOException e) {
             MiniUtilities.LOGGER.error("I/O Error! Either that or the config folder is nonexistent!");
-            e.printStackTrace();
         }
         return null;
-    }
-
-    public static Map<String, JsonObject> JSONFinder(File file) {
-        Map<String, JsonObject> output = new HashMap<>();
-        if (file == null || file.listFiles() == null) {
-            return output;
-        }
-
-        for (File files : file.listFiles()) {
-            if (!files.exists()) {
-                MiniUtilities.LOGGER.error(":thinkies:");
-                continue;
-            }
-            try {
-                FileReader reader = new FileReader(files);
-                JsonObject object = new JsonParser().parse(reader).getAsJsonObject();
-                output.put(files.getName(), object);
-            }
-            catch (Exception e) {
-                MiniUtilities.LOGGER.error("What TF how did this happen? Your computer is clearly cursed and you should burn it ASAP.");
-            }
-        }
-
-        return output;
     }
 }

@@ -19,6 +19,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
 import onelemonyboi.lemonlib.MUItemStackHandler;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
@@ -136,12 +137,15 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
             return ItemStack.EMPTY;
         }
 
-        List<MutableTriple<Item, List<ResourceLocation>, List<ResourceLocation>>> validOreList = QuantumQuarryJSON.oreList.stream()
-                .filter((triples) -> triples.getRight().contains(world.getBiome(getPos()).getRegistryName()) || triples.getMiddle().contains(world.getDimensionKey().getLocation()))
+        String biomeStr = world.getBiome(getPos()).getRegistryName().getNamespace() + ":" + world.getBiome(getPos()).getRegistryName().getPath();
+        String dimensionStr = world.getDimensionKey().getLocation().getNamespace() + ":" + world.getDimensionKey().getLocation().getPath();
+
+        List<QuantumQuarryJSON.OreInfo> validOreList = QuantumQuarryJSON.oreList.stream()
+                .filter((oreInfo) -> oreInfo.biomes.contains(biomeStr) || oreInfo.dimensions.contains(dimensionStr))
                 .collect(Collectors.toList());
 
         if (validOreList.size() > 0) {
-            return new ItemStack(validOreList.get(new Random().nextInt(validOreList.size())).getLeft());
+            return new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryCreate(validOreList.get(new Random().nextInt(validOreList.size())).name)));
         }
 
         return ItemStack.EMPTY;
