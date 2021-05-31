@@ -1,6 +1,5 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
-import com.ibm.icu.util.Output;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,12 +12,9 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -26,17 +22,14 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
 import onelemonyboi.lemonlib.MUItemStackHandler;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
-import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.startup.JSONLoader;
+import onelemonyboi.miniutilities.startup.JSON.JSONLoader;
+import onelemonyboi.miniutilities.startup.JSON.QuantumQuarryJSON;
 import org.apache.commons.lang3.tuple.MutableTriple;
-import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -143,7 +136,7 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
             return ItemStack.EMPTY;
         }
 
-        List<MutableTriple<Item, List<ResourceLocation>, List<ResourceLocation>>> validOreList = JSONLoader.oreList.stream()
+        List<MutableTriple<Item, List<ResourceLocation>, List<ResourceLocation>>> validOreList = QuantumQuarryJSON.oreList.stream()
                 .filter((triples) -> triples.getRight().contains(world.getBiome(getPos()).getRegistryName()) || triples.getMiddle().contains(world.getDimensionKey().getLocation()))
                 .collect(Collectors.toList());
 
