@@ -56,7 +56,7 @@ public class MechanicalMinerBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {return ActionResultType.CONSUME;}
+            if (player.isSneaking()) {return ActionResultType.CONSUME;}
 
             if (!(te instanceof MechanicalMinerTile)) {return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);}
             MechanicalMinerTile TE = ((MechanicalMinerTile) te);
@@ -82,7 +82,7 @@ public class MechanicalMinerBlock extends Block {
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
         if (!event.getWorld().isRemote()) {
-            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalMinerTile && Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
+            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalMinerTile && event.getPlayer().isSneaking()) {
                 MechanicalMinerTile TE = (MechanicalMinerTile) (event.getWorld().getTileEntity(event.getPos()));
                 if (TE.waittime > 1 && TE.waittime < 20) {
                     TE.waittime = TE.waittime + 5;

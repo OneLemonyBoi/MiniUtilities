@@ -17,8 +17,7 @@ public class Packet {
 
     public static void main() {
         int id = 0;
-        INSTANCE.registerMessage(
-                id++,
+        INSTANCE.registerMessage(id++,
                 RedstoneModeUpdate.class,
                 RedstoneModeUpdate::encode,
                 RedstoneModeUpdate::decode,
