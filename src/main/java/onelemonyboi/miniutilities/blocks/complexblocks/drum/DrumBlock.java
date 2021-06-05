@@ -52,6 +52,10 @@ public class DrumBlock extends ContainerBlock {
     @Override
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (worldIn.isRemote()) {
+            return;
+        }
+
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         super.onReplaced(state, worldIn, pos, newState, isMoving);
         ItemStack itemStack = new ItemStack(this);
