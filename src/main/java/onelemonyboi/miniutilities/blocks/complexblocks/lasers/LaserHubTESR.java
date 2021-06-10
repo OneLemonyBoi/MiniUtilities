@@ -53,7 +53,7 @@ public class LaserHubTESR extends TileEntityRenderer<LaserHubTile> {
             matrixStack.push();
 
             // PUSHES TO MIDDLE
-            matrixStack.translate(0.5D, 0.5D, 0.5D);
+            matrixStack.translate(0.5D, 0.75D, 0.5D);
 
             // Gets relative pos?
             Vector3d vec3d2 = pos.subtract(portPos);

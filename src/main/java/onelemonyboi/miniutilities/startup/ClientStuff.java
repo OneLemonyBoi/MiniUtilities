@@ -57,6 +57,8 @@ public class ClientStuff {
         RenderTypeLookup.setRenderLayer(BlockList.DarkEtherealGlass.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.DarkReverseEtherealGlass.get(), RenderType.getCutout());
 
+        RenderTypeLookup.setRenderLayer(BlockList.LaserHub.get(), RenderType.getCutout());
+
         ScreenManager.registerFactory(ContainerList.MinerContainer.get(), MechanicalMinerScreen::new);
         ScreenManager.registerFactory(ContainerList.PlacerContainer.get(), MechanicalPlacerScreen::new);
         ScreenManager.registerFactory(ContainerList.QuarryContainer.get(), QuantumQuarryScreen::new);
