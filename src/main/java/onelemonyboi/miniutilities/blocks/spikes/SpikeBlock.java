@@ -94,6 +94,7 @@ public class SpikeBlock extends Block {
                 return DownShape;
         }
     }
+
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (worldIn.isRemote || !(entityIn instanceof LivingEntity)) return;

@@ -1,5 +1,10 @@
 {
   "variants": {
-	"": { "model": "miniutilities:block/laser_port" }
+	"facing=up": { "model": "miniutilities:block/laser_port", "x": 180 },
+	"facing=down": { "model": "miniutilities:block/laser_port" },
+	"facing=south": { "model": "miniutilities:block/laser_port", "x": 90 },
+	"facing=north": { "model": "miniutilities:block/laser_port", "x": 90, "y": 180 },
+	"facing=east": { "model": "miniutilities:block/laser_port", "x": 90, "y": 270 },
+	"facing=west": { "model": "miniutilities:block/laser_port", "x": 90, "y": 90 }
   }
 }
