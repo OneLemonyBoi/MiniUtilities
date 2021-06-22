@@ -82,7 +82,7 @@ public class MechanicalMinerBlock extends Block {
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
         if (!event.getWorld().isRemote()) {
-            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalMinerTile && event.getPlayer().isSneaking()) {
+            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalMinerTile && event.getPlayer().isSneaking() && event.getPlayer().getHeldItem(event.getHand()).isEmpty()) {
                 MechanicalMinerTile TE = (MechanicalMinerTile) (event.getWorld().getTileEntity(event.getPos()));
                 if (TE.waittime > 1 && TE.waittime < 20) {
                     TE.waittime = TE.waittime + 5;

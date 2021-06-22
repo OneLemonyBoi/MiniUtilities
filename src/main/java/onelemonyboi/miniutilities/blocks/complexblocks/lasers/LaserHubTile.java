@@ -1,10 +1,12 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -24,6 +26,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class LaserHubTile extends EnergyTileBase implements RenderInfoIdentifier {
     public LaserHubTile() {
@@ -82,6 +85,46 @@ public class LaserHubTile extends EnergyTileBase implements RenderInfoIdentifier
                 for (int z = -radius; z < radius; z++) {
                     if (clazz.isInstance(world.getTileEntity(this.getPos().add(x, y, z)))) {
                         output.add(Vector3d.copy(this.getPos().add(x, y, z)));
+                    }
+                }
+            }
+        }
+
+        return output;
+    }
+
+    public List<Vector3d> getTargetedTEVectorInRadius(Class<?> clazz, int radius, double distanceFromCenter) {
+        List<Vector3d> output = new ArrayList<>();
+
+        for (int x = -radius; x < radius; x++) {
+            for (int y = -radius; y < radius; y++) {
+                for (int z = -radius; z < radius; z++) {
+                    BlockPos pos = this.getPos().add(x, y, z);
+                    if (clazz.isInstance(world.getTileEntity(pos))) {
+                        Vector3d v3d = Vector3d.copy(pos);
+                        if (world.getBlockState(pos).hasProperty(LaserPortBlock.FACING)) {
+                            switch (world.getBlockState(pos).get(LaserPortBlock.FACING)) {
+                                case UP:
+                                    v3d = v3d.add(0.5, -distanceFromCenter + 0.5, 0.5);
+                                    break;
+                                case DOWN:
+                                    v3d = v3d.add(0.5, distanceFromCenter + 0.5, 0.5);
+                                    break;
+                                case NORTH:
+                                    v3d = v3d.add(0.5, 0.5, distanceFromCenter + 0.5);
+                                    break;
+                                case SOUTH:
+                                    v3d = v3d.add(0.5, 0.5, -distanceFromCenter + 0.5);
+                                    break;
+                                case WEST:
+                                    v3d = v3d.add(distanceFromCenter + 0.5, 0.5, 0.5);
+                                    break;
+                                case EAST:
+                                    v3d = v3d.add(-distanceFromCenter + 0.5, 0.5, 0.5);
+                                    break;
+                            }
+                        }
+                        output.add(v3d);
                     }
                 }
             }

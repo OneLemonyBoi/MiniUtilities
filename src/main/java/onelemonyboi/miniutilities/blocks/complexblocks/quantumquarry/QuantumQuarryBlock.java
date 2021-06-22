@@ -78,7 +78,7 @@ public class QuantumQuarryBlock extends Block {
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
         if (!event.getWorld().isRemote()) {
-            if (event.getWorld().getTileEntity(event.getPos()) instanceof QuantumQuarryTile && event.getPlayer().isSneaking()) {
+            if (event.getWorld().getTileEntity(event.getPos()) instanceof QuantumQuarryTile && event.getPlayer().isSneaking() && event.getPlayer().getHeldItem(event.getHand()).isEmpty()) {
                 QuantumQuarryTile TE = (QuantumQuarryTile) event.getWorld().getTileEntity(event.getPos());
                 if (TE.waittime > 1 && TE.waittime < 1200) {
                     TE.waittime = TE.waittime + 25;

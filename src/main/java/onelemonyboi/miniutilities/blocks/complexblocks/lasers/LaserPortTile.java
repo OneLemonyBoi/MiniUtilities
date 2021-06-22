@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
@@ -71,5 +72,30 @@ public class LaserPortTile extends EnergyTileBase implements RenderInfoIdentifie
     @Nullable
     public SUpdateTileEntityPacket getUpdatePacket() {
         return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
+    }
+
+    public Vector3d getDisplacement() {
+        Vector3d v3d = Vector3d.ZERO;
+        switch (getBlockState().get(LaserPortBlock.FACING)) {
+            case UP:
+                v3d.add(0, 0.25, 0);
+                break;
+            case DOWN:
+                v3d.add(0, -0.25, 0);
+                break;
+            case NORTH:
+                v3d.add(0, 0, -0.25);
+                break;
+            case SOUTH:
+                v3d.add(0, 0, 0.25);
+                break;
+            case WEST:
+                v3d.add(-0.25, 0, 0);
+                break;
+            case EAST:
+                v3d.add(0.25, 0, 0);
+                break;
+        }
+        return v3d;
     }
 }

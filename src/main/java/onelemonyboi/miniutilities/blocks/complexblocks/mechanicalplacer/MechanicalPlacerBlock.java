@@ -116,7 +116,7 @@ public class MechanicalPlacerBlock extends Block {
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
         if (!event.getWorld().isRemote()) {
-            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalPlacerTile && event.getPlayer().isSneaking()) {
+            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalPlacerTile && event.getPlayer().isSneaking() && event.getPlayer().getHeldItem(event.getHand()).isEmpty()) {
                 MechanicalPlacerTile TE = (MechanicalPlacerTile) (event.getWorld().getTileEntity(event.getPos()));
                 if (TE.waittime > 1 && TE.waittime < 20) {
                     TE.waittime = TE.waittime + 5;
