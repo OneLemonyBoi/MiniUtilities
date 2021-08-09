@@ -1,5 +1,6 @@
 package onelemonyboi.miniutilities.blocks;
 
+import net.minecraft.block.AbstractGlassBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,7 +16,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import onelemonyboi.miniutilities.MiniUtilities;
 
-public class SpecialGlass extends Block {
+public class SpecialGlass extends AbstractGlassBlock {
     private boolean ethereal;
     private boolean reverse;
     private boolean dark;
@@ -24,7 +25,7 @@ public class SpecialGlass extends Block {
 
 
     public SpecialGlass(boolean ethereal, boolean reverse, boolean glowing, boolean dark, boolean redstone) {
-        super(Properties.from(Blocks.GLASS));
+        super(Properties.from(Blocks.GLASS).setLightLevel(state -> glowing ? 15 : 0));
         this.glowing = glowing;
         this.ethereal = ethereal;
         this.reverse = reverse;
@@ -49,10 +50,5 @@ public class SpecialGlass extends Block {
     @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return (context.getEntity() instanceof PlayerEntity && ethereal) || (!(context.getEntity() instanceof PlayerEntity) && reverse) ? VoxelShapes.empty() : state.getShape(worldIn, pos);
-    }
-
-    @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        return glowing ? 15 : 0;
     }
 }

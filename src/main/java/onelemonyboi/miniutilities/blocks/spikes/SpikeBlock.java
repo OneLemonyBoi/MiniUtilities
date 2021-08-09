@@ -115,7 +115,8 @@ public class SpikeBlock extends Block {
         }
         else {entityIn.attackEntityFrom(DamageSource.CACTUS, this.damage);}
         if (this.expDropTrue) {
-            ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, (LivingEntity) entityIn, 100, "field_70718_bc");}
+            ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, (LivingEntity) entityIn, 100, "field_70718_bc");
+        }
         super.onEntityWalk(worldIn, pos, entityIn);
     }
 }
