@@ -57,7 +57,7 @@ public class MiniUtilities {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> JSONLoader::loadJSON);
+        JSONLoader.loadJSON();
         EVENT_BUS.register(this);
         EVENT_BUS.addListener(EarthBlocks::convertCursed);
         EVENT_BUS.addListener(EarthBlocks::convertBlessed);
