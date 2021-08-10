@@ -59,6 +59,7 @@
   "block.miniutilities.chorus_tile": "Chorus Tile",
   "block.miniutilities.solar_panel": "Solar Panel",
   "block.miniutilities.lunar_panel": "Lunar Panel",
+  "block.miniutilities.solar_panel_controller": "Solar Panel Controller",
   "block.miniutilities.laser_hub": "Laser Hub",
   "block.miniutilities.laser_port": "Laser Port",
   "block.miniutilities.ethereal_glass": "Ethereal Glass",
