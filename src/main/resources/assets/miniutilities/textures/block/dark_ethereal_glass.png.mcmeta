@@ -1,0 +1,8 @@
+{
+	"ctm": {
+		"ctm_version": 1,
+		"type": "ctm",
+		"layer": "CUTOUT",
+		"textures": [ "miniutilities:block/dark_ethereal_glass_ctm" ]
+	}
+}

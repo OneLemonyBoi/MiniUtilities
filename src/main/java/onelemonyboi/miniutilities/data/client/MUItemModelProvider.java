@@ -52,6 +52,14 @@ public class MUItemModelProvider extends ItemModelProvider {
         withExistingParent("blessed_earth", new ResourceLocation("block/grass_block"));
         withExistingParent("blursed_earth", new ResourceLocation("block/grass_block"));
 
+        withExistingParent("ethereal_glass", modLoc("block/ethereal_glass"));
+        withExistingParent("reverse_ethereal_glass", modLoc("block/reverse_ethereal_glass"));
+        withExistingParent("redstone_glass", modLoc("block/redstone_glass"));
+        withExistingParent("glowing_glass", modLoc("block/glowing_glass"));
+        withExistingParent("dark_glass", modLoc("block/dark_glass"));
+        withExistingParent("dark_ethereal_glass", modLoc("block/dark_ethereal_glass"));
+        withExistingParent("dark_reverse_ethereal_glass", modLoc("block/dark_reverse_ethereal_glass"));
+
         ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
         ModelFile itemHandheld = getExistingFile(mcLoc("item/handheld"));
 
