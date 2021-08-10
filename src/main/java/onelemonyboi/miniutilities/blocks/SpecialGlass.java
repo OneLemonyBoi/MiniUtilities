@@ -1,9 +1,7 @@
 package onelemonyboi.miniutilities.blocks;
 
-import net.minecraft.block.AbstractGlassBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +23,7 @@ public class SpecialGlass extends AbstractGlassBlock {
 
 
     public SpecialGlass(boolean ethereal, boolean reverse, boolean glowing, boolean dark, boolean redstone) {
-        super(Properties.from(Blocks.GLASS).setLightLevel(state -> glowing ? 15 : 0));
+        super(AbstractBlock.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid().setAllowsSpawn((a, b, c, d) -> false).setOpaque((a, b, c) -> false).setSuffocates((a, b, c) -> false).setBlocksVision((a, b, c) -> false).setLightLevel(state -> glowing ? 15 : 0));
         this.glowing = glowing;
         this.ethereal = ethereal;
         this.reverse = reverse;
