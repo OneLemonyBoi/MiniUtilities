@@ -56,7 +56,7 @@ public class MechanicalPlacerBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {return ActionResultType.CONSUME;}
+            if (player.isSneaking()) {return ActionResultType.CONSUME;}
             if (te instanceof MechanicalPlacerTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
                 MechanicalPlacerTile TE = ((MechanicalPlacerTile) te);
                 if (TE.waittime > 5) {
@@ -91,9 +91,16 @@ public class MechanicalPlacerBlock extends Block {
     @Override
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (worldIn.isRemote()) {
+            return;
+        }
+
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         ItemStack itemStack = new ItemStack(this);
         CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
+        compoundNBT.remove("x");
+        compoundNBT.remove("y");
+        compoundNBT.remove("z");
         itemStack.setTagInfo("BlockEntityTag", compoundNBT);
         InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
         super.onReplaced(state, worldIn, pos, newState, isMoving);
@@ -109,7 +116,7 @@ public class MechanicalPlacerBlock extends Block {
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
         if (!event.getWorld().isRemote()) {
-            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalPlacerTile && Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
+            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalPlacerTile && event.getPlayer().isSneaking() && event.getPlayer().getHeldItem(event.getHand()).isEmpty()) {
                 MechanicalPlacerTile TE = (MechanicalPlacerTile) (event.getWorld().getTileEntity(event.getPos()));
                 if (TE.waittime > 1 && TE.waittime < 20) {
                     TE.waittime = TE.waittime + 5;

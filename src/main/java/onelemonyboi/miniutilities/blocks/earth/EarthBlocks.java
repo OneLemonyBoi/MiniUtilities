@@ -9,7 +9,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ItemList;
-import onelemonyboi.miniutilities.world.Config;
+import onelemonyboi.miniutilities.startup.Config;
 
 public class EarthBlocks {
     public static void convertCursed(PlayerInteractEvent.RightClickBlock event) {

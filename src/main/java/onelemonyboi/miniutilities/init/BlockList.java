@@ -10,6 +10,8 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
+import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserHubBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserPortBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.LunarPanelBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelController;
@@ -20,6 +22,7 @@ import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.Mechanic
 import onelemonyboi.miniutilities.blocks.earth.BlessedEarthBlock;
 import onelemonyboi.miniutilities.blocks.earth.BlursedEarthBlock;
 import onelemonyboi.miniutilities.blocks.earth.CursedEarthBlock;
+import onelemonyboi.miniutilities.blocks.SpecialGlass;
 import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerBlock;
 
@@ -74,6 +77,17 @@ public class BlockList {
     public static final RegistryObject<Block> SolarPanelController = register("solar_panel_controller", () -> new SolarPanelController());
     public static final RegistryObject<Block> EnderTile = register("ender_tile", EnderTileBlock::new);
     public static final RegistryObject<Block> ChorusTile = register("chorus_tile", ChorusTileBlock::new);
+
+    public static final RegistryObject<Block> LaserHub = register("laser_hub", () -> new LaserHubBlock(AbstractBlock.Properties.from(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> LaserPort = register("laser_port", () -> new LaserPortBlock(AbstractBlock.Properties.from(Blocks.IRON_BLOCK)));
+
+    public static final RegistryObject<Block> EtherealGlass = register("ethereal_glass", () -> new SpecialGlass(true, false, false, false, false));
+    public static final RegistryObject<Block> ReverseEtherealGlass = register("reverse_ethereal_glass", () -> new SpecialGlass(false, true, false, false, false));
+    public static final RegistryObject<Block> RedstoneGlass = register("redstone_glass", () -> new SpecialGlass(false, false, false, false, true));
+    public static final RegistryObject<Block> GlowingGlass = register("glowing_glass", () -> new SpecialGlass(false, false, true, false, false));
+    public static final RegistryObject<Block> DarkGlass = register("dark_glass", () -> new SpecialGlass(false, false, false, true, false));
+    public static final RegistryObject<Block> DarkEtherealGlass = register("dark_ethereal_glass", () -> new SpecialGlass(true, false, false, true, false));
+    public static final RegistryObject<Block> DarkReverseEtherealGlass = register("dark_reverse_ethereal_glass", () -> new SpecialGlass(false, true, false, true, false));
 
     public static void register() {}
 

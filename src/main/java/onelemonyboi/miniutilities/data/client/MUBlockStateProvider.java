@@ -34,5 +34,14 @@ public class MUBlockStateProvider extends BlockStateProvider {
         simpleBlock(BlockList.MagentaLapisCaelestis.get());
         simpleBlock(BlockList.PinkLapisCaelestis.get());
         simpleBlock(BlockList.BrownLapisCaelestis.get());
+
+        // Special Glass
+        simpleBlock(BlockList.EtherealGlass.get());
+        simpleBlock(BlockList.ReverseEtherealGlass.get());
+        simpleBlock(BlockList.RedstoneGlass.get());
+        simpleBlock(BlockList.GlowingGlass.get());
+        simpleBlock(BlockList.DarkGlass.get());
+        simpleBlock(BlockList.DarkEtherealGlass.get());
+        simpleBlock(BlockList.DarkReverseEtherealGlass.get());
     }
 }

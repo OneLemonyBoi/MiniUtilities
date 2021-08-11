@@ -1,10 +1,8 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
@@ -13,7 +11,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -27,13 +24,16 @@ import onelemonyboi.lemonlib.blocks.EnergyTileBase;
 import onelemonyboi.lemonlib.MUItemStackHandler;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.world.Config;
+import onelemonyboi.miniutilities.startup.JSON.JSONLoader;
+import onelemonyboi.miniutilities.startup.JSON.QuantumQuarryJSON;
+import org.apache.commons.lang3.tuple.MutableTriple;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class QuantumQuarryTile extends EnergyTileBase implements INamedContainerProvider, RenderInfoIdentifier {
     public static int slots = 9;
@@ -47,16 +47,14 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     public Integer redstonemode;
     public Integer timer;
     public Integer waittime;
-    public List<Block> oreList;
-
-    protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
+    public ItemStack insertStack;
 
     public QuantumQuarryTile() {
         super(TEList.QuantumQuarryTile.get(), 10000000, 10000000, 0);
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 1200;
-        this.oreList = new ArrayList<Block>();
+        this.insertStack = generateItemStack();
     }
 
     @Override
@@ -96,42 +94,61 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     @Override
     public void tick() {
         if (world.isRemote()) {return;}
-        this.timer++;
+
         world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
+
+        if (generateItemStack().isEmpty()) {
+            insertStack = generateItemStack();
+            return;
+        }
+        if (!canInput(insertStack)) {
+            return;
+        }
+        if ((!world.isBlockPowered(this.getPos()) && this.redstonemode == 2) || (world.isBlockPowered(this.getPos()) && this.redstonemode == 3)) {
+            return;
+        }
         if (!energy.checkedMachineConsume(calcRFCost(this.waittime))) {
             return;
         }
+        this.timer++;
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
-        if (this.redstonemode == 1){
-            oreGen();
-        }
-        else if (world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
-            oreGen();
-        }
-        else if (!world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
-            oreGen();
-        }
+        oreGen(insertStack);
+        insertStack = generateItemStack();
     }
 
-    protected void oreGen() {
-        if (this.oreList.isEmpty()) {
-            for (String str : Config.oreChances.get()) {
-                String[] chancesSplit = str.split(":");
-                Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(chancesSplit[0], chancesSplit[1]));
-                for (int i = 0; i < Integer.parseInt(chancesSplit[2]); i++) {
-                    this.oreList.add(block);
-                }
-            }
-        }
-        ItemStack insertStack = new ItemStack(Item.getItemFromBlock(this.oreList.get(new Random().nextInt(this.oreList.size()))));
+    private void oreGen(ItemStack insertStack) {
         for (int i = 0; i < 9; i++) {
             insertStack = this.itemSH.insertItem(i, insertStack, false);
         }
-        if (!insertStack.isEmpty()) {
-            InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY() + 1, this.getPos().getZ(), insertStack);
-        }
         this.markDirty();
+    }
+
+    private boolean canInput(ItemStack insertStack) {
+        for (int i = 0; i < 9; i++) {
+            insertStack = this.itemSH.insertItem(i, insertStack, true);
+        }
+
+        return insertStack.isEmpty();
+    }
+
+    private ItemStack generateItemStack() {
+        if (world == null) {
+            return ItemStack.EMPTY;
+        }
+
+        String biomeStr = world.getBiome(getPos()).getRegistryName().getNamespace() + ":" + world.getBiome(getPos()).getRegistryName().getPath();
+        String dimensionStr = world.getDimensionKey().getLocation().getNamespace() + ":" + world.getDimensionKey().getLocation().getPath();
+
+        List<QuantumQuarryJSON.OreInfo> validOreList = QuantumQuarryJSON.oreList.stream()
+                .filter((oreInfo) -> oreInfo.biomes.contains(biomeStr) || oreInfo.dimensions.contains(dimensionStr))
+                .collect(Collectors.toList());
+
+        if (validOreList.size() > 0) {
+            return new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryCreate(validOreList.get(new Random().nextInt(validOreList.size())).name)));
+        }
+
+        return ItemStack.EMPTY;
     }
 
     @Nonnull
@@ -175,7 +192,7 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
                 .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
                 .appendString(")"));
         output.add(new StringTextComponent("Power: " + this.energy.toString()));
-        output.add(new StringTextComponent("RF/t Consumption: " + calcRFCost(this.waittime)));
+        output.add(new StringTextComponent("FE/t Consumption: " + calcRFCost(this.waittime)));
         return output;
     }
 

@@ -11,7 +11,7 @@ import net.minecraft.util.text.StringTextComponent;
 import onelemonyboi.lemonlib.blocks.EnergyTileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.world.Config;
+import onelemonyboi.miniutilities.startup.Config;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class SolarPanelControllerTile extends EnergyTileBase implements RenderInfoIdentifier {
     public static int activeSolarCount = 0;
-    public static List<BlockPos> posList = new ArrayList<BlockPos>();
+    public static List<BlockPos> posList = new ArrayList<>();
     public static double power = 0;
 
     public SolarPanelControllerTile() {
@@ -30,20 +30,19 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
     public void tick() {
         if (world.isRemote()) {return;}
 
-        posList = new ArrayList<BlockPos>();
-        if (world.getDayTime() % 20 == 0) {
-            activeSolarCount = 0;
-            solarPanelRecursion(this.getPos());
-        }
-        power = Config.solarPanelGeneration.get();
-        if (world.isNightTime()) {
-            power = Config.lunarPanelGeneration.get();
-        }
+        solarPanelRecursion();
+        power = world.isDaytime() ? Config.solarPanelGeneration.get() : Config.lunarPanelGeneration.get();
         power *= activeSolarCount;
         power *= activeSolarCount / (float) Config.panelMultiplier.get() + 1;
         energy.machineProduce((int) power);
         energy.outputToSide(world, pos, Direction.UP, Config.solarPanelGeneration.get() * 4096);
         this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
+    }
+
+    public void solarPanelRecursion() {
+        posList = new ArrayList<>();
+        activeSolarCount = 0;
+        solarPanelRecursion(this.getPos());
     }
 
     public void solarPanelRecursion(BlockPos pos) {
@@ -85,7 +84,7 @@ public class SolarPanelControllerTile extends EnergyTileBase implements RenderIn
             output.add(new StringTextComponent("Power: " + energy.toString()));
         }
         output.add(new StringTextComponent("Active Panels: " + activeSolarCount));
-        output.add(new StringTextComponent("RF/t Production: " + Math.round(power)));
+        output.add(new StringTextComponent("FE/t Production: " + Math.round(power)));
         return output;
     }
 

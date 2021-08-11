@@ -97,6 +97,17 @@ public class MULootTableProvider extends LootTableProvider {
             registerDropSelfLootTable(BlockList.EnderTile.get());
             registerDropSelfLootTable(BlockList.ChorusTile.get());
 
+            registerLootTable(BlockList.LaserHub.get(), blockNoDrop());
+            registerLootTable(BlockList.LaserPort.get(), blockNoDrop());
+
+            registerDropSelfLootTable(BlockList.EtherealGlass.get());
+            registerDropSelfLootTable(BlockList.ReverseEtherealGlass.get());
+            registerDropSelfLootTable(BlockList.RedstoneGlass.get());
+            registerDropSelfLootTable(BlockList.GlowingGlass.get());
+            registerDropSelfLootTable(BlockList.DarkGlass.get());
+            registerDropSelfLootTable(BlockList.DarkEtherealGlass.get());
+            registerDropSelfLootTable(BlockList.DarkReverseEtherealGlass.get());
+
             ILootCondition.IBuilder ilootcondition = BlockStateProperty.builder(BlockList.EnderLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EnderLily.AGE, 7));
             registerLootTable(BlockList.EnderLily.get(), withExplosionDecay(BlockList.EnderLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(Items.ENDER_PEARL))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
             ILootCondition.IBuilder ilootcondition1 = BlockStateProperty.builder(BlockList.FlameLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(FlameLily.AGE, 7));

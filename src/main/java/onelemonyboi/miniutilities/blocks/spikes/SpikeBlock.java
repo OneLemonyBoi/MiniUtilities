@@ -3,17 +3,19 @@ package onelemonyboi.miniutilities.blocks.spikes;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -29,6 +31,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static net.minecraft.block.BarrelBlock.PROPERTY_FACING;
@@ -94,18 +98,25 @@ public class SpikeBlock extends Block {
                 return DownShape;
         }
     }
+
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (worldIn.isRemote || !(entityIn instanceof LivingEntity)) return;
         FakePlayer fakePlayer = new SpikeFakePlayer(FakePlayerFactory.get((ServerWorld) worldIn, PROFILE));
+
+        Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>() {{put(Enchantments.SHARPNESS, damage - 3);}};
+        ItemStack stack = new ItemStack(Items.STICK);
+        EnchantmentHelper.setEnchantments(enchantments, stack);
+        fakePlayer.setHeldItem(Hand.MAIN_HAND, stack);
         if (this.dontKill && ((LivingEntity) entityIn).getHealth() <= this.damage) {return;}
         if (this.playerDamage) {
-            entityIn.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer), this.damage);
-            entityIn.setVelocity(0, 0, 0);
+            fakePlayer.attackTargetEntityWithCurrentItem(entityIn);
+            entityIn.setMotion(entityIn.getMotion().mul(0, 1,0));
         }
         else {entityIn.attackEntityFrom(DamageSource.CACTUS, this.damage);}
         if (this.expDropTrue) {
-            ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, (LivingEntity) entityIn, 100, "field_70718_bc");}
+            ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, (LivingEntity) entityIn, 100, "field_70718_bc");
+        }
         super.onEntityWalk(worldIn, pos, entityIn);
     }
 }

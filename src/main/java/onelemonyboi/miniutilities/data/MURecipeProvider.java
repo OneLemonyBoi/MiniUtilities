@@ -1,5 +1,6 @@
 package onelemonyboi.miniutilities.data;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.*;
 import net.minecraft.item.Item;
@@ -754,6 +755,91 @@ public class MURecipeProvider extends RecipeProvider {
                 .patternLine(" Y ")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(BlockList.LaserHub.get())
+                .key('X', Items.BEACON)
+                .key('Y', ItemList.EmeraldOpiniumCore.get())
+                .key('Z', ItemList.UnstableIngot.get())
+                .key('A', Items.NETHERITE_INGOT)
+                .patternLine("ZYZ")
+                .patternLine("YXY")
+                .patternLine("AAA")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.LaserPort.get())
+                .key('X', Items.GOLD_BLOCK)
+                .key('Y', Items.REDSTONE)
+                .key('Z', ItemList.IronOpiniumCore.get())
+                .patternLine(" Y ")
+                .patternLine("ZXZ")
+                .patternLine("YYY")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(BlockList.EtherealGlass.get(), 8)
+                .key('X', Items.GLASS)
+                .key('Y', ItemList.UnstableIngot.get())
+                .patternLine("XXX")
+                .patternLine("XYX")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(BlockList.EtherealGlass.get())
+                .addIngredient(BlockList.ReverseEtherealGlass.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("reverse_to_regular"));
+        ShapelessRecipeBuilder.shapelessRecipe(BlockList.ReverseEtherealGlass.get())
+                .addIngredient(BlockList.EtherealGlass.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("regular_to_reverse"));
+        ShapedRecipeBuilder.shapedRecipe(BlockList.RedstoneGlass.get(), 8)
+                .key('X', Items.GLASS)
+                .key('Y', Items.REDSTONE_BLOCK)
+                .patternLine("XXX")
+                .patternLine("XYX")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.GlowingGlass.get(), 8)
+                .key('X', Items.GLASS)
+                .key('Y', Items.GLOWSTONE)
+                .patternLine("XXX")
+                .patternLine("XYX")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.DarkGlass.get(), 8)
+                .key('X', Items.GLASS)
+                .key('Y', Items.BLACK_DYE)
+                .patternLine("XXX")
+                .patternLine("XYX")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.DarkEtherealGlass.get(), 8)
+                .key('X', BlockList.EtherealGlass.get())
+                .key('Y', Items.BLACK_DYE)
+                .patternLine("XXX")
+                .patternLine("XYX")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlockList.DarkReverseEtherealGlass.get(), 8)
+                .key('X', BlockList.ReverseEtherealGlass.get())
+                .key('Y', Items.BLACK_DYE)
+                .patternLine("XXX")
+                .patternLine("XYX")
+                .patternLine("XXX")
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(BlockList.DarkEtherealGlass.get())
+                .addIngredient(BlockList.DarkReverseEtherealGlass.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("dark_reverse_to_dark_regular"));
+        ShapelessRecipeBuilder.shapelessRecipe(BlockList.DarkReverseEtherealGlass.get())
+                .addIngredient(BlockList.ReverseEtherealGlass.get())
+                .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+                .build(consumer, modId("dark_regular_to_dark_reverse"));
 
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlockList.EnderOre.get()), ItemList.EnderDust.get(), 0.7f, 200)
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))

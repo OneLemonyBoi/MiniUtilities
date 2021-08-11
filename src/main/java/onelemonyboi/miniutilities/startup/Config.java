@@ -1,11 +1,10 @@
-package onelemonyboi.miniutilities.world;
+package onelemonyboi.miniutilities.startup;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.LunarPanelBlock;
 
 import java.util.List;
 
@@ -35,10 +34,6 @@ public class Config {
     public static ForgeConfigSpec.IntValue enderOreMaxHeight;
     public static ForgeConfigSpec.IntValue enderOreAmount;
 
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> oreChances;
-    private static final List<String> oreDefaults = ImmutableList.of("minecraft:coal_ore:4", "minecraft:iron_ore:3", "minecraft:gold_ore:1", "minecraft:diamond_ore:1", "minecraft:lapis_ore:2", "minecraft:redstone_ore:4", "minecraft:emerald_ore:1");
-
-
     public static void register() {
         ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
         ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
@@ -65,10 +60,9 @@ public class Config {
         expGivenFromPearl = COMMON_BUILDER.comment("How much EXP should base experience pearls give?").defineInRange("EXP Given from EXP Pearls", 10, 1, 128);
         enableEnderLily = COMMON_BUILDER.comment("Should Ender Lilies Generate?").define("Ender Lily Generation", true);
         enableFlameLily = COMMON_BUILDER.comment("Should Flame Lilies Generate?").define("Flame Lily Generation", true);
-        solarPanelGeneration = COMMON_BUILDER.comment("How much RF should the Solar Panel Generate?").defineInRange("Solar Panel Generation", 4, 0, 1000000);
-        lunarPanelGeneration = COMMON_BUILDER.comment("How much RF should the Lunar Panel Generate?").defineInRange("Lunar Panel Generation", 4, 0, 1000000);
+        solarPanelGeneration = COMMON_BUILDER.comment("How much FE should the Solar Panel Generate?").defineInRange("Solar Panel Generation", 4, 0, 1000000);
+        lunarPanelGeneration = COMMON_BUILDER.comment("How much FE should the Lunar Panel Generate?").defineInRange("Lunar Panel Generation", 4, 0, 1000000);
         panelMultiplier = COMMON_BUILDER.comment("How many Panels should it take to increase the multiplier by 1?").defineInRange("Panel Multiplier Amount", 50, 1, 1000000);
-        oreChances = COMMON_BUILDER.comment("List ores and their weight, in this format: [minecraft:coal_ore:10]").defineList("ore_list", () -> oreDefaults, ore -> ore instanceof String);
 //        CLIENT_BUILDER.pop();
         COMMON_BUILDER.pop();
     }

@@ -35,9 +35,16 @@ public class SolarPanelController extends Block {
     @Override
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (worldIn.isRemote()) {
+            return;
+        }
+
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         ItemStack itemStack = new ItemStack(this);
         CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
+        compoundNBT.remove("x");
+        compoundNBT.remove("y");
+        compoundNBT.remove("z");
         itemStack.setTagInfo("BlockEntityTag", compoundNBT);
         InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
         super.onReplaced(state, worldIn, pos, newState, isMoving);

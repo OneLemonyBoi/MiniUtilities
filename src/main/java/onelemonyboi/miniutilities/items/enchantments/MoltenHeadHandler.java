@@ -36,20 +36,21 @@ public class MoltenHeadHandler {
             List<ItemStack> drops = event.getState().getDrops(lootcontext$builder); // Calculates drops
 
             for (ItemStack item : drops) { // Iteration
-                if (fortuneAmount >= 1 && silkTouchAmount <= 0) {
-                    int addedCount = new Random().nextInt(fortuneAmount + 2) - 1;
-                    if (addedCount < 0) {
-                        addedCount = 0;
-                    }
-                    addedCount++;
-                    item.setCount(item.getCount() * addedCount);
-                }
-
                 ItemStack stack = serverWorld.getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(item), serverWorld)
                         .map(FurnaceRecipe::getRecipeOutput)
                         .filter(itemStack -> !itemStack.isEmpty())
                         .map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, item.getCount() * itemStack.getCount()))
                         .orElse(item); // Recipe as var
+
+                if (fortuneAmount >= 1 && silkTouchAmount <= 0 && !stack.isItemEqual(item)) {
+                    int addedCount = new Random().nextInt(fortuneAmount + 2) - 1;
+                    if (addedCount < 0) {
+                        addedCount = 0;
+                    }
+                    addedCount++;
+                    stack.setCount(stack.getCount() * addedCount);
+                }
+
                 InventoryHelper.spawnItemStack(event.getPlayer().world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), stack); // Spawns Itemstack
             }
             event.getPlayer().world.destroyBlock(event.getPos(), false); // Breaks block

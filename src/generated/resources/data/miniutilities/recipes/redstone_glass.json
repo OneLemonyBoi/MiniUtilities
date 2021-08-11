@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:glass"
+    },
+    "Y": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "miniutilities:redstone_glass",
+    "count": 8
+  }
+}

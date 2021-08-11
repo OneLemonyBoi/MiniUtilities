@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities;
+package onelemonyboi.miniutilities.startup;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
@@ -6,13 +6,16 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserHubTESR;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerScreen;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerScreen;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryScreen;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
 import onelemonyboi.miniutilities.init.EntityList;
+import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.renderer.MachineRenderer;
 
 import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
@@ -46,11 +49,23 @@ public class ClientStuff {
         RenderTypeLookup.setRenderLayer(BlockList.DiamondSpikes.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockList.NetheriteSpikes.get(), RenderType.getCutout());
 
+        RenderTypeLookup.setRenderLayer(BlockList.EtherealGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.ReverseEtherealGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.GlowingGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.RedstoneGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DarkGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DarkEtherealGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DarkReverseEtherealGlass.get(), RenderType.getCutout());
+
+        RenderTypeLookup.setRenderLayer(BlockList.LaserHub.get(), RenderType.getCutout());
+
         ScreenManager.registerFactory(ContainerList.MinerContainer.get(), MechanicalMinerScreen::new);
         ScreenManager.registerFactory(ContainerList.PlacerContainer.get(), MechanicalPlacerScreen::new);
         ScreenManager.registerFactory(ContainerList.QuarryContainer.get(), QuantumQuarryScreen::new);
 
         RenderingRegistry.registerEntityRenderingHandler(EntityList.SpecialEgg.get(), (manager) -> new SpriteRenderer(manager, Minecraft.getInstance().getItemRenderer()));
+
+        ClientRegistry.bindTileEntityRenderer(TEList.LaserHubTile.get(), LaserHubTESR::new);
     }
 
     public static void machineRender() {

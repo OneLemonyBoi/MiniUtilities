@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " Y ",
+    "ZXZ",
+    "YYY"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:gold_block"
+    },
+    "Y": {
+      "item": "minecraft:redstone"
+    },
+    "Z": {
+      "item": "miniutilities:iron_opinium_core"
+    }
+  },
+  "result": {
+    "item": "miniutilities:laser_port"
+  }
+}

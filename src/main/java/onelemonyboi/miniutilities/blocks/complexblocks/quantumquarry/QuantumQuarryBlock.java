@@ -54,7 +54,7 @@ public class QuantumQuarryBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {return ActionResultType.CONSUME;}
+            if (player.isSneaking()) {return ActionResultType.CONSUME;}
             if (te instanceof QuantumQuarryTile && ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
                 QuantumQuarryTile TE = ((QuantumQuarryTile) te);
                 if (TE.waittime > 25) {
@@ -78,7 +78,7 @@ public class QuantumQuarryBlock extends Block {
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
         if (!event.getWorld().isRemote()) {
-            if (event.getWorld().getTileEntity(event.getPos()) instanceof QuantumQuarryTile && Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
+            if (event.getWorld().getTileEntity(event.getPos()) instanceof QuantumQuarryTile && event.getPlayer().isSneaking() && event.getPlayer().getHeldItem(event.getHand()).isEmpty()) {
                 QuantumQuarryTile TE = (QuantumQuarryTile) event.getWorld().getTileEntity(event.getPos());
                 if (TE.waittime > 1 && TE.waittime < 1200) {
                     TE.waittime = TE.waittime + 25;
@@ -97,9 +97,16 @@ public class QuantumQuarryBlock extends Block {
     @Override
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (worldIn.isRemote()) {
+            return;
+        }
+
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         ItemStack itemStack = new ItemStack(this);
         CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
+        compoundNBT.remove("x");
+        compoundNBT.remove("y");
+        compoundNBT.remove("z");
         itemStack.setTagInfo("BlockEntityTag", compoundNBT);
         InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
         super.onReplaced(state, worldIn, pos, newState, isMoving);

@@ -12,17 +12,13 @@ import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import onelemonyboi.miniutilities.init.AttributeList;
 import onelemonyboi.miniutilities.init.ItemList;
-import onelemonyboi.miniutilities.world.Config;
+import onelemonyboi.miniutilities.startup.Config;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -88,6 +84,9 @@ public class Kikoku extends SwordItem {
     }
 
     public static void AnvilUpdateEvent(AnvilUpdateEvent event) {
+        if (!event.getPlayer().isServerWorld()) {
+            return;
+        }
         ItemStack sword = event.getLeft();
         ItemStack book = event.getRight();
         if (sword == null || sword.getItem() != ItemList.Kikoku.get() || book == null || book.getItem() != Items.ENCHANTED_BOOK) {
@@ -125,10 +124,11 @@ public class Kikoku extends SwordItem {
     }
 
     public static void AnvilRepairEvent(AnvilRepairEvent event) {
+        if (!event.getPlayer().getEntityWorld().isRemote) {
+            return;
+        }
         if (event.getItemResult().getItem() == ItemList.Kikoku.get() && event.getPlayer() instanceof ClientPlayerEntity) {
-            if (event.getPlayer().getEntityWorld().isRemote) {
-                event.getPlayer().playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
-            }
+            event.getPlayer().playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
         }
     }
 }
