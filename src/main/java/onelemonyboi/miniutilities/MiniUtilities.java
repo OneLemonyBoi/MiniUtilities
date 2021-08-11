@@ -6,7 +6,9 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +20,7 @@ import onelemonyboi.miniutilities.blocks.earth.EarthBlocks;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerBlock;
+import onelemonyboi.miniutilities.init.FeatureList;
 import onelemonyboi.miniutilities.items.Kikoku;
 import onelemonyboi.miniutilities.items.enchantments.ExperienceHarvesterHandler;
 import onelemonyboi.miniutilities.items.enchantments.MoltenHeadHandler;
@@ -64,8 +67,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(EarthBlocks::convertBlursed);
         EVENT_BUS.addListener(UnstableShears::instantShear);
         EVENT_BUS.addListener(UnstableHoe::hoeTransformation);
-        EVENT_BUS.addListener(WorldGen::generateOres);
-        EVENT_BUS.addListener(WorldGen::generatePlants);
+        EVENT_BUS.addListener(WorldGen::generate);
         EVENT_BUS.addListener(Kikoku::AnvilUpdateEvent);
         EVENT_BUS.addListener(Kikoku::AnvilRepairEvent);
         EVENT_BUS.addListener(KeyBindingsHandler::keybinds);
@@ -74,6 +76,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(QuantumQuarryBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(MoltenHeadHandler::handleBlockBreak);
         EVENT_BUS.addListener(ExperienceHarvesterHandler::handleEntityKill);
+        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Feature.class, EventPriority.LOW, FeatureList::addConfigFeatures);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientStuff::machineRender);
         Packet.main();
     }
