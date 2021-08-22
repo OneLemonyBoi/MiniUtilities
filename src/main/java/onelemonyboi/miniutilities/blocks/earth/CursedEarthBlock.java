@@ -4,8 +4,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.entity.*;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -19,6 +17,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import onelemonyboi.miniutilities.MiniUtilities;
+import onelemonyboi.miniutilities.startup.Config;
 
 import java.util.List;
 import java.util.Random;
@@ -26,64 +25,59 @@ import java.util.Random;
 // CREDIT FOR CODE BASE: TFARCENIM
 
 public class CursedEarthBlock extends GrassBlock {
+
     public CursedEarthBlock(Properties properties) {
         super(properties);
     }
 
     // SPAWN RANGE: 200 - 800 (Similar to Spawner)
 
-    @Deprecated
     @Override
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
-        super.onBlockAdded(state, world, pos, oldState, isMoving);
-        int i = 200;
-        if (i == 0) {
-            i = 1;
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        this.tick(state, world, pos, random);
+        if (world.getLight(pos.up()) >= 7) {
+            world.setBlockState(pos, Blocks.DIRT.getDefaultState());
+        } else {
+            if (world.getBlockState(pos.up()).isAir()) {
+                BlockState blockstate = this.getDefaultState();
+                for (int i = 0; i < 4; ++i) {
+                    BlockPos pos1 = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
+                    if (world.getBlockState(pos1).getBlock().isIn(MiniUtilities.cursedspreadable) && world.getBlockState(pos1.up()).isAir(world, pos1.up())) {
+                        world.setBlockState(pos1, blockstate.with(SNOWY, world.getBlockState(pos1.up()).getBlock() == Blocks.SNOW));
+                    }
+                }
+            }
         }
-        world.getPendingBlockTicks().scheduleTick(pos, this, world.rand.nextInt(600) + i);
     }
 
     @Override
     @Deprecated
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (!world.isRemote) {
-            int j = 200;
-            if (j == 0) {
-                j = 1;
-            }
-            world.getPendingBlockTicks().scheduleTick(pos, this, world.rand.nextInt(600) + j);
-            if (!world.isAreaLoaded(pos, 3))
-                return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
-            if (world.getLight(pos.up()) >= 7) {
-                world.setBlockState(pos, Blocks.DIRT.getDefaultState());
-            } else {
-                if (world.getBlockState(pos.up()).isAir()) {
-                    BlockState blockstate = this.getDefaultState();
-                    for (int i = 0; i < 4; ++i) {
-                        BlockPos pos1 = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
-                        if (world.getBlockState(pos1).getBlock().isIn(MiniUtilities.cursedspreadable) && world.getBlockState(pos1.up()).isAir(world, pos1.up())) {
-                            world.setBlockState(pos1, blockstate.with(SNOWY, world.getBlockState(pos1.up()).getBlock() == Blocks.SNOW));
-                        }
-                    }
-                }
-            }
+        if (!world.isAreaLoaded(pos, 3))
+            return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
 
-            world.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), random.nextInt(601));
-            if (!world.getFluidState(pos.up()).isEmpty()) return;
-            if (world.getWorldInfo().getDifficulty() == Difficulty.PEACEFUL) return;
-            long mobcount = world.getEntities().filter(IMob.class::isInstance).count();
-            if (mobcount > 250) return;
-            int r = 1;
-            if (world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(-r, -r, -r, r, r, r)).size() > 0)
-                return;
-            Entity en = findMonsterToSpawn(world, pos.up(), random);
-            if (en != null) {
-                en.setPosition(pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5);
-                if (!world.hasNoCollisions(en) || !world.checkNoEntityCollision(en)) return;
-                world.addEntity(en);
-            }
+        if (!world.getFluidState(pos.up()).isEmpty()) {
+            return;
+        }
+
+        if (world.getWorldInfo().getDifficulty() == Difficulty.PEACEFUL) return;
+
+        int r = Config.cursedEarthCheckAreaSize.get(); // Radius to check around block
+        int livingEntityCount = world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(pos.getX() - r, pos.getY(), pos.getZ() - r, pos.getX() + r, pos.getY() +1, pos.getZ() + r)).size();
+        if (livingEntityCount > Config.cursedEarthCheckAreaMaxEntityCount.get()) {
+            return;
+        }
+
+        world.getPendingBlockTicks().scheduleTick(pos, this, world.rand.nextInt(600) + Config.cursedEarthMinWaitTimer.get());
+
+        Entity en = findMonsterToSpawn(world, pos.up(), random);
+        if (en != null) {
+            en.setPosition(pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5);
+            if (!world.hasNoCollisions(en) || !world.checkNoEntityCollision(en)) return;
+            world.addEntity(en);
         }
     }
+
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
