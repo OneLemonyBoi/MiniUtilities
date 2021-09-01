@@ -118,7 +118,7 @@ public class MechanicalMinerBlock extends Block {
     @Override
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (worldIn.isRemote()) {
+        if (worldIn.isRemote() || state.getBlock() == newState.getBlock()) {
             return;
         }
 
