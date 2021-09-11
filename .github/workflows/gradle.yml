@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 16 & Cache # cache and setup java 16
+      - name: Set up JDK 8 & Cache # cache and setup java 16
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
-          java-version: '16'
+          java-version: '8'
           cache: 'gradle'
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -28,6 +28,8 @@ jobs:
         run: |
           cat $GITHUB_WORKSPACE/gradle.properties | grep ^mod_version= >> $GITHUB_ENV # extract the mod version
           cat $GITHUB_WORKSPACE/gradle.properties | grep ^mc_version= >> $GITHUB_ENV # extract the mc version and put it on the env
+      - name: Set package name
+        run: |
           echo "package_name=MiniUtilities-$mod_version-build.$GITHUB_RUN_NUMBER+mc$mc_version" >> $GITHUB_ENV # define the packagename in the env
       - uses: actions/upload-artifact@v2 # use the built gradle project to create an artifact on the pipeline
         with:
