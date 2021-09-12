@@ -1,13 +1,9 @@
 # This workflow will build a Java project with Gradle
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: Build, Validate, Create Artifact
+name: Create Artifact for Release
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: workflow_dispatch
 
 jobs:
   build:
@@ -30,7 +26,7 @@ jobs:
           cat $GITHUB_WORKSPACE/gradle.properties | grep ^mc_version= >> $GITHUB_ENV # extract the mc version and put it on the env
       - name: Set package name
         run: |
-          echo "package_name=MiniUtilities-$mod_version-build.$GITHUB_RUN_NUMBER+mc$mc_version" >> $GITHUB_ENV # define the packagename in the env
+          echo "package_name=MiniUtilities-$mod_version" >> $GITHUB_ENV # define the packagename in the env
       - uses: actions/upload-artifact@v2 # use the built gradle project to create an artifact on the pipeline
         with:
           name: ${{ env.package_name }}

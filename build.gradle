@@ -111,13 +111,13 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.48'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
     runtimeOnly fg.deobf("curse.maven:curios-309927:3231111")
     compileOnly fg.deobf("curse.maven:curios-309927:3231111:api")
     runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")
     implementation fg.deobf("curse.maven:ctm-267602:3137659")
     runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3157997")
-    implementation fg.deobf("curse.maven:lemon-lib-471136:3319932")
+    implementation fg.deobf("curse.maven:lemon-lib-471136:3335288")
 
     // Testing
     // implementation fg.deobf("curse.maven:mekanism-268560:3206392")

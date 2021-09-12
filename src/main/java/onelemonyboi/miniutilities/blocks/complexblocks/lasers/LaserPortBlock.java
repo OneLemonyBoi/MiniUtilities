@@ -247,7 +247,7 @@ public class LaserPortBlock extends DirectionalBlock {
     @Override
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (worldIn.isRemote()) {
+        if (worldIn.isRemote() || state.getBlock() == newState.getBlock()) {
             return;
         }
 
