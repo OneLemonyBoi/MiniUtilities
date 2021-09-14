@@ -20,6 +20,7 @@ import onelemonyboi.miniutilities.blocks.earth.EarthBlocks;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerBlock;
+import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
 import onelemonyboi.miniutilities.init.FeatureList;
 import onelemonyboi.miniutilities.items.Kikoku;
 import onelemonyboi.miniutilities.items.enchantments.ExperienceHarvesterHandler;
@@ -76,6 +77,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(QuantumQuarryBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(MoltenHeadHandler::handleBlockBreak);
         EVENT_BUS.addListener(ExperienceHarvesterHandler::handleEntityKill);
+        EVENT_BUS.addListener(SpikeBlock::soundEvent);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Feature.class, EventPriority.LOW, FeatureList::addConfigFeatures);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientStuff::machineRender);
         Packet.main();
