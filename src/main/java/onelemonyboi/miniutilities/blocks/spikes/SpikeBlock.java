@@ -25,6 +25,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -43,8 +44,10 @@ public class SpikeBlock extends Block {
     private Boolean expDropTrue;
     private Boolean dontKill;
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    private static boolean cancelSounds = false;
 
-    private static GameProfile PROFILE = new GameProfile(UUID.fromString("5c32fc23-8c26-47fe-91ed-9c204b22f430"), "[Spikes]");
+    private static final GameProfile PROFILE = new GameProfile(UUID.fromString("5c32fc23-8c26-47fe-91ed-9c204b22f430"), "[Spikes]");
+    private static FakePlayer fakePlayer;
 
     public SpikeBlock(Properties properties, int damage, Boolean playerDamage, Boolean expDropTrue, Boolean dontKill) {
         super(properties);
@@ -102,21 +105,42 @@ public class SpikeBlock extends Block {
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (worldIn.isRemote || !(entityIn instanceof LivingEntity)) return;
-        FakePlayer fakePlayer = new SpikeFakePlayer(FakePlayerFactory.get((ServerWorld) worldIn, PROFILE));
 
-        Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>() {{put(Enchantments.SHARPNESS, damage - 3);}};
-        ItemStack stack = new ItemStack(Items.STICK);
-        EnchantmentHelper.setEnchantments(enchantments, stack);
-        fakePlayer.setHeldItem(Hand.MAIN_HAND, stack);
         if (this.dontKill && ((LivingEntity) entityIn).getHealth() <= this.damage) {return;}
         if (this.playerDamage) {
+            if(fakePlayer == null) {
+                fakePlayer = new SpikeFakePlayer(FakePlayerFactory.get((ServerWorld) worldIn, PROFILE));
+                ItemStack stack = new ItemStack(Items.STICK);
+                stack.addEnchantment(Enchantments.SHARPNESS, damage - 3);
+                fakePlayer.setHeldItem(Hand.MAIN_HAND, stack);
+            }
+
+            fakePlayer.setWorld(worldIn);
+            fakePlayer.setPosition(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
+            cancelSounds = true;
             fakePlayer.attackTargetEntityWithCurrentItem(entityIn);
+            cancelSounds = false;
             entityIn.setMotion(entityIn.getMotion().mul(0, 1,0));
         }
         else {entityIn.attackEntityFrom(DamageSource.CACTUS, this.damage);}
         if (this.expDropTrue) {
-            ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, (LivingEntity) entityIn, 100, "field_70718_bc");
+            ((LivingEntity)entityIn).recentlyHit = 100;
         }
         super.onEntityWalk(worldIn, pos, entityIn);
+    }
+
+    public static void soundEvent(PlaySoundAtEntityEvent event) {
+        if(cancelSounds) {
+            SoundEvent e = event.getSound();
+
+            if (e == SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK
+                    || e == SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP
+                    || e == SoundEvents.ENTITY_PLAYER_ATTACK_CRIT
+                    || e == SoundEvents.ENTITY_PLAYER_ATTACK_STRONG
+                    || e == SoundEvents.ENTITY_PLAYER_ATTACK_WEAK
+                    || e == SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE) {
+                event.setCanceled(true);
+            }
+        }
     }
 }
