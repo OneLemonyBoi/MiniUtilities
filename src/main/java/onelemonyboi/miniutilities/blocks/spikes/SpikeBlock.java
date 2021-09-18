@@ -3,37 +3,29 @@ package onelemonyboi.miniutilities.blocks.spikes;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import onelemonyboi.miniutilities.MiniUtilities;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import static net.minecraft.block.BarrelBlock.PROPERTY_FACING;
@@ -47,7 +39,7 @@ public class SpikeBlock extends Block {
     private static boolean cancelSounds = false;
 
     private static final GameProfile PROFILE = new GameProfile(UUID.fromString("5c32fc23-8c26-47fe-91ed-9c204b22f430"), "[Spikes]");
-    private static FakePlayer fakePlayer;
+    private FakePlayer fakePlayer;
 
     public SpikeBlock(Properties properties, int damage, Boolean playerDamage, Boolean expDropTrue, Boolean dontKill) {
         super(properties);
@@ -110,9 +102,8 @@ public class SpikeBlock extends Block {
         if (this.playerDamage) {
             if(fakePlayer == null) {
                 fakePlayer = new SpikeFakePlayer(FakePlayerFactory.get((ServerWorld) worldIn, PROFILE));
-                ItemStack stack = new ItemStack(Items.STICK);
-                stack.addEnchantment(Enchantments.SHARPNESS, damage - 3);
-                fakePlayer.setHeldItem(Hand.MAIN_HAND, stack);
+                fakePlayer.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(damage);
+                fakePlayer.getAttribute(Attributes.ATTACK_SPEED).setBaseValue(1000000D);
             }
 
             fakePlayer.setWorld(worldIn);
@@ -120,7 +111,7 @@ public class SpikeBlock extends Block {
             cancelSounds = true;
             fakePlayer.attackTargetEntityWithCurrentItem(entityIn);
             cancelSounds = false;
-            entityIn.setMotion(entityIn.getMotion().mul(0, 1,0));
+            entityIn.setMotion(entityIn.getMotion().mul(0, 1, 0));
         }
         else {entityIn.attackEntityFrom(DamageSource.CACTUS, this.damage);}
         if (this.expDropTrue) {
