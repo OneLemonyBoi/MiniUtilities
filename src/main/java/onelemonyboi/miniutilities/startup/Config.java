@@ -5,6 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import onelemonyboi.miniutilities.items.unstable.UnstableIngot;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue enableBlessedEarth;
     public static ForgeConfigSpec.BooleanValue enableBlursedEarth;
     public static ForgeConfigSpec.IntValue maxKikokuMultiplier;
-    public static ForgeConfigSpec.IntValue unstableIngotType;
+    public static ForgeConfigSpec.EnumValue<UnstableIngot.ReactionType> unstableIngotType;
     public static ForgeConfigSpec.BooleanValue enableEnderLily;
     public static ForgeConfigSpec.BooleanValue enableFlameLily;
     public static ForgeConfigSpec.IntValue expGivenFromPearl;
@@ -75,7 +76,7 @@ public class Config {
         enableBlessedEarth = COMMON_BUILDER.comment("Should Blessed Earth be Obtainable?").define("Obtain Blessed", true); // Get by right clicking Iron Block on Grass
         enableBlursedEarth = COMMON_BUILDER.comment("Should Blursed Earth be Obtainable?").define("Obtain Blursed", true); // Get by right clicking Unstable Ingot on Grass
         maxKikokuMultiplier = COMMON_BUILDER.comment("What Should the Max Multiplier of Kikoku Enchant be?").defineInRange("Kikoku Max", 2, 1, 5000);
-        unstableIngotType = COMMON_BUILDER.comment("What should the Unstable Ingot do when the time limit is reached?\n0: Slowness while holding\n1: After 10 seconds, slowly ramps up the damage\n2: Explodes after 10 seconds").defineInRange("Reaction Type", 1, 0, 2);
+        unstableIngotType = COMMON_BUILDER.comment("What should the Unstable Ingot do when the time limit is reached?\nNO_DAMAGE: Slowness while holding\nDAMAGE: After 10 seconds, slowly ramps up the damage\nEXPLOSION: Explodes after 10 seconds").defineEnum("Reaction Type", UnstableIngot.ReactionType.DAMAGE);
         expGivenFromPearl = COMMON_BUILDER.comment("How much EXP should base experience pearls give?").defineInRange("EXP Given from EXP Pearls", 10, 1, 128);
         enableEnderLily = COMMON_BUILDER.comment("Should Ender Lilies Generate?").define("Ender Lily Generation", true);
         enableFlameLily = COMMON_BUILDER.comment("Should Flame Lilies Generate?").define("Flame Lily Generation", true);

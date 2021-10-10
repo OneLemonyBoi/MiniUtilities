@@ -119,5 +119,8 @@
 
   "enchantment.miniutilities.shotgun": "Shotgun",
   "enchantment.miniutilities.molten_head": "\u00A74Molten Tool Head\u00A74",
-  "enchantment.miniutilities.experience_harvester": "\u00A7aExperience Harvester\u00A7a"
+  "enchantment.miniutilities.experience_harvester": "\u00A7aExperience Harvester\u00A7a",
+
+  "death.attack.unstable_division": "%1$s played hot-potato and lost",
+  "death.attack.divide_by_diamond": "%1$s divided by diamond"
 }
