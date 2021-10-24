@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.data.client;
+package onelemonyboi.miniutilities.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -6,8 +6,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.BlockList;
 
-public class MUBlockStateProvider extends BlockStateProvider {
-    public MUBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
+public class BlockState extends BlockStateProvider {
+    public BlockState(DataGenerator gen, ExistingFileHelper exFileHelper) {
         super(gen, MiniUtilities.MOD_ID, exFileHelper);
     }
 

@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.data.client;
+package onelemonyboi.miniutilities.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
@@ -8,8 +8,14 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
 
-public class MUItemModelProvider extends ItemModelProvider {
-    public MUItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class ItemModel extends ItemModelProvider {
+    public ItemModel(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, MiniUtilities.MOD_ID, existingFileHelper);
     }
 
@@ -63,67 +69,20 @@ public class MUItemModelProvider extends ItemModelProvider {
         ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
         ModelFile itemHandheld = getExistingFile(mcLoc("item/handheld"));
 
-        builder(itemGenerated, "ender_dust");
-        builder(itemHandheld, "healing_axe");
-        builder(itemHandheld, "reversing_hoe");
-        builder(itemGenerated, "unstable_ingot");
-        builder(itemHandheld, "destruction_pickaxe");
-        builder(itemHandheld, "precision_shears");
-        builder(itemHandheld, "erosion_shovel");
-        builder(itemHandheld, "etheric_sword");
+        String[] generated = new String[]{"ender_dust", "unstable_ingot", "iron_opinium_core", "gold_opinium_core", "diamond_opinium_core", "netherite_opinium_core", "emerald_opinium_core", "chorus_opinium_core", "experience_opinium_core", "nether_star_opinium_core", "the_final_opinium_core", "unstable_helmet", "unstable_chestplate", "unstable_leggings", "unstable_boots", "infused_helmet", "infused_chestplate", "infused_leggings", "infused_boots", "angel_ring", "feather_angel_ring", "ender_dragon_angel_ring", "gold_angel_ring", "bat_angel_ring", "peacock_angel_ring", "feather_wing", "ender_dragon_wing", "gold_wing", "bat_wing", "peacock_wing", "ender_lily_seeds", "flame_lily_seeds", "flame_lily", "speed_upgrade", "experience_pearl", "experience_pearl_1x", "experience_pearl_2x", "experience_pearl_3x", "experience_pearl_4x", "experience_pearl_5x", "experience_pearl_6x", "experience_pearl_7x", "experience_pearl_8x", "magical_egg"};
+        String[] handheld = new String[]{"healing_axe", "reversing_hoe", "destruction_pickaxe", "precision_shears", "erosion_shovel", "etheric_sword"};
 
-        builder(itemGenerated, "iron_opinium_core");
-        builder(itemGenerated, "gold_opinium_core");
-        builder(itemGenerated, "diamond_opinium_core");
-        builder(itemGenerated, "netherite_opinium_core");
-        builder(itemGenerated, "emerald_opinium_core");
-        builder(itemGenerated, "chorus_opinium_core");
-        builder(itemGenerated, "experience_opinium_core");
-        builder(itemGenerated, "nether_star_opinium_core");
-        builder(itemGenerated, "the_final_opinium_core");
-
-        builder(itemGenerated, "unstable_helmet");
-        builder(itemGenerated, "unstable_chestplate");
-        builder(itemGenerated, "unstable_leggings");
-        builder(itemGenerated, "unstable_boots");
-        builder(itemGenerated, "infused_helmet");
-        builder(itemGenerated, "infused_chestplate");
-        builder(itemGenerated, "infused_leggings");
-        builder(itemGenerated, "infused_boots");
-
-        builder(itemGenerated, "angel_ring");
-        builder(itemGenerated, "feather_angel_ring");
-        builder(itemGenerated, "ender_dragon_angel_ring");
-        builder(itemGenerated, "gold_angel_ring");
-        builder(itemGenerated, "bat_angel_ring");
-        builder(itemGenerated, "peacock_angel_ring");
-        builder(itemGenerated, "feather_wing");
-        builder(itemGenerated, "ender_dragon_wing");
-        builder(itemGenerated, "gold_wing");
-        builder(itemGenerated, "bat_wing");
-        builder(itemGenerated, "peacock_wing");
-
-        builder(itemGenerated, "ender_lily_seeds");
-        builder(itemGenerated, "flame_lily_seeds");
-        builder(itemGenerated, "flame_lily");
-
-        builder(itemGenerated, "speed_upgrade");
-
-        builder(itemGenerated, "experience_pearl");
-        builder(itemGenerated, "experience_pearl_1x");
-        builder(itemGenerated, "experience_pearl_2x");
-        builder(itemGenerated, "experience_pearl_3x");
-        builder(itemGenerated, "experience_pearl_4x");
-        builder(itemGenerated, "experience_pearl_5x");
-        builder(itemGenerated, "experience_pearl_6x");
-        builder(itemGenerated, "experience_pearl_7x");
-        builder(itemGenerated, "experience_pearl_8x");
-
-        builder(itemGenerated, "magical_egg");
+        buildAll(itemGenerated, generated);
+        buildAll(itemHandheld, handheld);
     }
 
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {
+        System.out.print("\"" + name + "\"" + ", ");
         return getBuilder(name).parent(itemGenerated).texture("layer0", "item/" + name);
+    }
+
+    private void buildAll(ModelFile itemGenerated, String... name) {
+        Arrays.stream(name).forEach(n -> builder(itemGenerated, n));
     }
 
 }

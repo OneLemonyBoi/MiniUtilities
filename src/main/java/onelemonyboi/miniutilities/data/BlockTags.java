@@ -7,8 +7,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.BlockList;
 
-public class MUBlockTagsProvider extends BlockTagsProvider {
-    public MUBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
+public class BlockTags extends BlockTagsProvider {
+    public BlockTags(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
         super(generatorIn, MiniUtilities.MOD_ID, existingFileHelper);
     }
 

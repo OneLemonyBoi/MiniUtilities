@@ -57,7 +57,7 @@ public class MagicalEggEntity extends ProjectileItemEntity {
         }
         LivingEntity entity = (LivingEntity) result.getEntity();
         try {
-            InventoryHelper.spawnItemStack(this.getEntityWorld(), this.getPosX(), this.getPosY(), this.getPosZ(), new ItemStack(SpawnEggItem.getEgg(entity.getType())));
+            InventoryHelper.spawnItemStack(this.getEntityWorld(), this.getPosX(), this.getPosY(), this.getPosZ(), new ItemStack(SpawnEggItem.EGGS.get(entity.getType())));
             entity.remove();
         }
         catch (Exception e) {

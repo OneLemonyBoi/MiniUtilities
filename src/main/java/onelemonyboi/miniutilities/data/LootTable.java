@@ -30,20 +30,20 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class MULootTableProvider extends LootTableProvider {
-    public MULootTableProvider(DataGenerator generator) {
+public class LootTable extends LootTableProvider {
+    public LootTable(DataGenerator generator) {
         super(generator);
     }
 
     @Override
-    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables() {
+    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, net.minecraft.loot.LootTable.Builder>>>, LootParameterSet>> getTables() {
         return ImmutableList.of(
                 Pair.of(ModBlockLootTables::new, LootParameterSets.BLOCK)
         );
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationtracker) {
+    protected void validate(Map<ResourceLocation, net.minecraft.loot.LootTable> map, ValidationTracker validationtracker) {
         map.forEach((p_218436_2_, p_218436_3_) -> LootTableManager.validateLootTable(validationtracker, p_218436_2_, p_218436_3_));
     }
 
@@ -109,9 +109,9 @@ public class MULootTableProvider extends LootTableProvider {
             registerDropSelfLootTable(BlockList.DarkReverseEtherealGlass.get());
 
             ILootCondition.IBuilder ilootcondition = BlockStateProperty.builder(BlockList.EnderLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EnderLily.AGE, 7));
-            registerLootTable(BlockList.EnderLily.get(), withExplosionDecay(BlockList.EnderLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(Items.ENDER_PEARL))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
+            registerLootTable(BlockList.EnderLily.get(), withExplosionDecay(BlockList.EnderLily.get(), net.minecraft.loot.LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(Items.ENDER_PEARL))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
             ILootCondition.IBuilder ilootcondition1 = BlockStateProperty.builder(BlockList.FlameLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(FlameLily.AGE, 7));
-            registerLootTable(BlockList.FlameLily.get(), withExplosionDecay(BlockList.FlameLily.get(), LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.FlameLily.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
+            registerLootTable(BlockList.FlameLily.get(), withExplosionDecay(BlockList.FlameLily.get(), net.minecraft.loot.LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.FlameLily.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
         }
 
         @Override

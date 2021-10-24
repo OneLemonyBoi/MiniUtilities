@@ -6,8 +6,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.data.client.MUBlockStateProvider;
-import onelemonyboi.miniutilities.data.client.MUItemModelProvider;
 
 @Mod.EventBusSubscriber(modid = MiniUtilities.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class DataGenerators {
@@ -18,14 +16,14 @@ public final class DataGenerators {
         DataGenerator gen = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
-        gen.addProvider(new MUBlockStateProvider(gen, existingFileHelper));
-        gen.addProvider(new MUItemModelProvider(gen, existingFileHelper));
+        gen.addProvider(new BlockState(gen, existingFileHelper));
+        gen.addProvider(new ItemModel(gen, existingFileHelper));
 
-        MUBlockTagsProvider blockTags = new MUBlockTagsProvider(gen, existingFileHelper);
+        BlockTags blockTags = new BlockTags(gen, existingFileHelper);
         gen.addProvider(blockTags);
-        gen.addProvider(new MUItemTagsProvider(gen, blockTags, existingFileHelper));
+        gen.addProvider(new ItemTags(gen, blockTags, existingFileHelper));
 
-        gen.addProvider(new MULootTableProvider(gen));
-        gen.addProvider(new MURecipeProvider(gen));
+        gen.addProvider(new LootTable(gen));
+        gen.addProvider(new Recipe(gen));
     }
 }

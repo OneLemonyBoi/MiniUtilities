@@ -9,8 +9,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.ItemList;
 
-public class MUItemTagsProvider extends ItemTagsProvider {
-    public MUItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper) {
+public class ItemTags extends ItemTagsProvider {
+    public ItemTags(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper) {
         super(dataGenerator, blockTagProvider, MiniUtilities.MOD_ID, existingFileHelper);
     }
 

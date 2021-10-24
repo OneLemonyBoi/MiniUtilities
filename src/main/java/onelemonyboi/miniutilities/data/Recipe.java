@@ -22,8 +22,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class MURecipeProvider extends RecipeProvider {
-    public MURecipeProvider(DataGenerator generatorIn) {
+public class Recipe extends RecipeProvider {
+    public Recipe(DataGenerator generatorIn) {
         super(generatorIn);
     }
 
@@ -809,7 +809,7 @@ public class MURecipeProvider extends RecipeProvider {
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockList.DarkGlass.get(), 8)
-                .key('X', Items.GLASS)
+                .key('X', Items.BLACK_STAINED_GLASS)
                 .key('Y', Items.BLACK_DYE)
                 .patternLine("XXX")
                 .patternLine("XYX")
