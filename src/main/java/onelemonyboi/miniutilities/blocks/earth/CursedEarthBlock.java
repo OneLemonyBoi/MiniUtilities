@@ -35,7 +35,7 @@ public class CursedEarthBlock extends GrassBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         this.tick(state, world, pos, random);
-        if (world.getLight(pos.up()) >= 7) {
+        if (world.getLight(pos.up()) >= 7 && world.canBlockSeeSky(pos)) {
             world.setBlockState(pos, Blocks.DIRT.getDefaultState());
         } else {
             if (world.getBlockState(pos.up()).isAir()) {
