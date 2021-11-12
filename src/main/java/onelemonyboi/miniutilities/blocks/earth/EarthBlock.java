@@ -5,8 +5,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.Direction;
@@ -21,15 +19,11 @@ import net.minecraft.world.server.ServerChunkProvider;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.miniutilities.init.BlockList;
-import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.startup.Config;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -93,7 +87,8 @@ public class EarthBlock extends GrassBlock {
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    @SuppressWarnings("deprecation")
+    public void randomTick(@Nonnull BlockState state, @Nonnull ServerWorld world, @Nonnull BlockPos pos, @Nonnull Random random) {
         this.tick(state, world, pos, random);
 
         if (lightDecay && world.getLight(pos.up()) >= 7 && world.canBlockSeeSky(pos)) {
@@ -114,7 +109,8 @@ public class EarthBlock extends GrassBlock {
 
     @Override
     @Deprecated
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    @SuppressWarnings({"deprecation", "DeprecatedIsStillUsed"})
+    public void tick(@Nonnull BlockState state, @Nonnull ServerWorld world, @Nonnull BlockPos pos, @Nonnull Random random) {
         // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
         if (!world.isAreaLoaded(pos, 3)) return;
         if (!world.getFluidState(pos.up()).isEmpty()) return;
@@ -137,7 +133,7 @@ public class EarthBlock extends GrassBlock {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+    public void animateTick(@Nonnull BlockState stateIn, World worldIn, BlockPos pos, @Nonnull Random rand) {
         Random random = worldIn.rand;
         Direction.Axis direction$axis = Direction.UP.getAxis();
         double d1 = direction$axis == Direction.Axis.X ? 0.5D + 0.5625D * (double)Direction.UP.getXOffset() : (double)random.nextFloat();
@@ -147,17 +143,17 @@ public class EarthBlock extends GrassBlock {
     }
 
     @Override
-    public boolean canGrow(IBlockReader world, BlockPos pos, BlockState state, boolean p_176473_4_) {
+    public boolean canGrow(@Nonnull IBlockReader world, @Nonnull BlockPos pos, @Nonnull BlockState state, boolean p_176473_4_) {
         return false;//no
     }
 
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+    public void grow(@Nonnull ServerWorld world, @Nonnull Random random, @Nonnull BlockPos pos, @Nonnull BlockState state) {
         //no
     }
 
     @Override
-    public boolean canUseBonemeal(World world, Random random, BlockPos pos, BlockState state) {
+    public boolean canUseBonemeal(@Nonnull World world, @Nonnull Random random, @Nonnull BlockPos pos, @Nonnull BlockState state) {
         return false;//no
     }
 
