@@ -13,6 +13,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.MobSpawnInfo;
@@ -118,6 +119,7 @@ public class EarthBlock extends GrassBlock {
         if (!world.isAreaLoaded(pos, 3)) return;
         if (!world.getFluidState(pos.up()).isEmpty()) return;
         if (!spawnInPeaceful && world.getWorldInfo().getDifficulty() == Difficulty.PEACEFUL) return;
+        if (!world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) || (!spawnInPeaceful && world.getWorldInfo().getDifficulty() == Difficulty.PEACEFUL)) return;
 
         int r = spawnRadius.get(); // Radius to check around block
         int livingEntityCount = world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(pos.getX() - r, pos.getY(), pos.getZ() - r, pos.getX() + r, pos.getY() +1, pos.getZ() + r)).size();
