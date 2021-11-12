@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class EarthBlock extends GrassBlock {
     public static final Function<Properties, EarthBlock> CURSED_EARTH = properties -> new EarthBlock(
@@ -38,7 +37,6 @@ public class EarthBlock extends GrassBlock {
         Config.cursedEarthCheckAreaSize,
         Config.cursedEarthCheckAreaMaxEntityCount,
         Config.cursedEarthMinWaitTimer,
-        () -> new RedstoneParticleData(0.0F, 0.0F, 0.0F, 1.0F),
         EarthBlock::getCursedEntities
     );
 
@@ -49,7 +47,6 @@ public class EarthBlock extends GrassBlock {
         Config.blursedEarthCheckAreaSize,
         Config.blursedEarthCheckAreaMaxEntityCount,
         Config.blursedEarthMinWaitTimer,
-        () -> new RedstoneParticleData(29.0F / 51, 29.0F / 51, 29.0F / 51, 1.0F),
         EarthBlock::getBlursedEntities
     );
 
@@ -60,7 +57,6 @@ public class EarthBlock extends GrassBlock {
         Config.blessedEarthCheckAreaSize,
         Config.blessedEarthCheckAreaMaxEntityCount,
         Config.blessedEarthMinWaitTimer,
-        () -> new RedstoneParticleData(1.0F, 1.0F, 1.0F, 1.0F),
         EarthBlock::getBlessedEntities
     );
 
@@ -70,10 +66,9 @@ public class EarthBlock extends GrassBlock {
     private final IntValue spawnRadius;
     private final IntValue maxEntities;
     private final IntValue minWaitTimer;
-    private final Supplier<RedstoneParticleData> particleFactory;
     private final EntitySupplier entitySupplier;
 
-    EarthBlock(Properties properties, boolean lightDecay, ITag<Block> spreadableBlocks, boolean spawnInPeaceful, IntValue spawnRadius, IntValue maxEntities, IntValue minWaitTimer, Supplier<RedstoneParticleData> particleFactory, EntitySupplier entitySupplier) {
+    EarthBlock(Properties properties, boolean lightDecay, ITag<Block> spreadableBlocks, boolean spawnInPeaceful, IntValue spawnRadius, IntValue maxEntities, IntValue minWaitTimer, EntitySupplier entitySupplier) {
         super(properties);
 
         this.lightDecay = lightDecay;
@@ -82,7 +77,6 @@ public class EarthBlock extends GrassBlock {
         this.spawnRadius = spawnRadius;
         this.maxEntities = maxEntities;
         this.minWaitTimer = minWaitTimer;
-        this.particleFactory = particleFactory;
         this.entitySupplier = entitySupplier;
     }
 
@@ -139,7 +133,7 @@ public class EarthBlock extends GrassBlock {
         double d1 = direction$axis == Direction.Axis.X ? 0.5D + 0.5625D * (double)Direction.UP.getXOffset() : (double)random.nextFloat();
         double d2 = direction$axis == Direction.Axis.Y ? 0.5D + 0.5625D * (double)Direction.UP.getYOffset() : (double)random.nextFloat();
         double d3 = direction$axis == Direction.Axis.Z ? 0.5D + 0.5625D * (double)Direction.UP.getZOffset() : (double)random.nextFloat();
-        worldIn.addParticle(particleFactory.get(), (double)pos.getX() + d1, (double)pos.getY() + d2, (double)pos.getZ() + d3, 0.0D, 0.0D, 0.0D);
+        worldIn.addParticle(new RedstoneParticleData(1.0F, 1.0F, 1.0F, 1.0F), (double)pos.getX() + d1, (double)pos.getY() + d2, (double)pos.getZ() + d3, 0.0D, 0.0D, 0.0D);
     }
 
     @Override
