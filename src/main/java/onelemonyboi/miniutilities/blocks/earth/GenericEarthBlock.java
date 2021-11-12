@@ -5,6 +5,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.Direction;
@@ -20,7 +23,11 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import onelemonyboi.miniutilities.MiniUtilities;
+import onelemonyboi.miniutilities.init.BlockList;
+import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.startup.Config;
 
 import javax.annotation.Nonnull;
@@ -29,35 +36,35 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
-public class EarthBlock extends GrassBlock {
-    public static final Function<Properties, EarthBlock> CURSED_EARTH = properties -> new EarthBlock(
+public class GenericEarthBlock extends GrassBlock {
+    public static final Function<Properties, GenericEarthBlock> CURSED_EARTH = properties -> new GenericEarthBlock(
         properties, true,
         MiniUtilities.cursedspreadable,
         false,
         Config.cursedEarthCheckAreaSize,
         Config.cursedEarthCheckAreaMaxEntityCount,
         Config.cursedEarthMinWaitTimer,
-        EarthBlock::getCursedEntities
+        GenericEarthBlock::getCursedEntities
     );
 
-    public static final Function<Properties, EarthBlock> BLURSED_EARTH = properties -> new EarthBlock(
+    public static final Function<Properties, GenericEarthBlock> BLURSED_EARTH = properties -> new GenericEarthBlock(
         properties, true,
         MiniUtilities.cursedspreadable,
         true,
         Config.blursedEarthCheckAreaSize,
         Config.blursedEarthCheckAreaMaxEntityCount,
         Config.blursedEarthMinWaitTimer,
-        EarthBlock::getBlursedEntities
+        GenericEarthBlock::getBlursedEntities
     );
 
-    public static final Function<Properties, EarthBlock> BLESSED_EARTH = properties -> new EarthBlock(
+    public static final Function<Properties, GenericEarthBlock> BLESSED_EARTH = properties -> new GenericEarthBlock(
         properties, false,
         MiniUtilities.blessedspreadable,
         true,
         Config.blessedEarthCheckAreaSize,
         Config.blessedEarthCheckAreaMaxEntityCount,
         Config.blessedEarthMinWaitTimer,
-        EarthBlock::getBlessedEntities
+        GenericEarthBlock::getBlessedEntities
     );
 
     private final boolean lightDecay;
@@ -68,7 +75,7 @@ public class EarthBlock extends GrassBlock {
     private final IntValue minWaitTimer;
     private final EntitySupplier entitySupplier;
 
-    EarthBlock(Properties properties, boolean lightDecay, ITag<Block> spreadableBlocks, boolean spawnInPeaceful, IntValue spawnRadius, IntValue maxEntities, IntValue minWaitTimer, EntitySupplier entitySupplier) {
+    GenericEarthBlock(Properties properties, boolean lightDecay, ITag<Block> spreadableBlocks, boolean spawnInPeaceful, IntValue spawnRadius, IntValue maxEntities, IntValue minWaitTimer, EntitySupplier entitySupplier) {
         super(properties);
 
         this.lightDecay = lightDecay;
@@ -173,6 +180,31 @@ public class EarthBlock extends GrassBlock {
         return ent;
     }
 
+    public static void convertCursed(PlayerInteractEvent.RightClickBlock event) {
+        if (!Config.enableCursedEarth.get()) return;
+        handleConvertEarth(event, Items.WITHER_ROSE::equals, BlockList.CursedEarth.get());
+    }
+
+    public static void convertBlessed(PlayerInteractEvent.RightClickBlock event) {
+        if (!Config.enableBlessedEarth.get()) return;
+        handleConvertEarth(event, Tags.Items.STORAGE_BLOCKS_IRON::contains, BlockList.BlessedEarth.get());
+    }
+
+    public static void convertBlursed(PlayerInteractEvent.RightClickBlock event) {
+        if (!Config.enableBlursedEarth.get()) return;
+        handleConvertEarth(event, (item) -> ItemList.UnstableIngot.get().equals(item), BlockList.BlursedEarth.get());
+    }
+
+    private static void handleConvertEarth(PlayerInteractEvent.RightClickBlock event, ItemChecker itemChecker, Block defaultState) {
+        PlayerEntity playerEntity = event.getPlayer();
+        World world = playerEntity.world;
+        BlockPos pos = event.getPos();
+
+        if (playerEntity.isSneaking() && !world.isRemote && itemChecker.isItemValid(event.getItemStack().getItem()) && world.getBlockState(pos).getBlock() == Blocks.DIRT) {
+            world.setBlockState(pos, defaultState.getDefaultState());
+        }
+    }
+
     static List<MobSpawnInfo.Spawners> getCursedEntities(ServerChunkProvider chunkProvider, ServerWorld world, BlockPos pos) {
         //required to account for structure based mobs such as wither skeletons
         return chunkProvider.getChunkGenerator().func_230353_a_(world.getBiome(pos), world.getStructureManager(), EntityClassification.MONSTER, pos);
@@ -197,5 +229,9 @@ public class EarthBlock extends GrassBlock {
     @FunctionalInterface
     private interface EntitySupplier {
         List<MobSpawnInfo.Spawners> getEntities(ServerChunkProvider chunkProvider, ServerWorld world, BlockPos pos);
+    }
+    @FunctionalInterface
+    private interface ItemChecker {
+        boolean isItemValid(Item item);
     }
 }
