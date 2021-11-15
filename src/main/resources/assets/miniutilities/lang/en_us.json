@@ -16,6 +16,9 @@
   "text.miniutilities.drumamount": "Amount",
   "text.miniutilities.drumcapacity": "Capacity",
 
+  "text.miniutilities.tooltip.drum_fluid":  "Fluid: %s",
+  "text.miniutilities.tooltip.drum_amount":  "Amount: %s/%s",
+
   "container.miniutilities.mechanical_miner": "Mechanical Miner",
   "container.miniutilities.mechanical_placer": "Mechanical Placer",
 
