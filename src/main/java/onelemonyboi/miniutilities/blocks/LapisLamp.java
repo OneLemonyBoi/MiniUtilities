@@ -21,9 +21,8 @@ public class LapisLamp extends Block {
 
     @Override
     public void animateTick(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos blockPos, @Nonnull Random random) {
-        if (world.isRemote && world.getLight(blockPos) == 0)
-        {
-            world.getLightFor(LightType.BLOCK, blockPos);
+        if (world.isRemote && world.getLight(blockPos) == 0) {
+            world.getLightManager().checkBlock(blockPos);
         }
     }
 
