@@ -66,6 +66,8 @@ public class ItemModel extends ItemModelProvider {
         withExistingParent("dark_ethereal_glass", modLoc("block/dark_ethereal_glass"));
         withExistingParent("dark_reverse_ethereal_glass", modLoc("block/dark_reverse_ethereal_glass"));
 
+        withExistingParent("lapis_lamp", modLoc("block/lapis_lamp"));
+
         ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
         ModelFile itemHandheld = getExistingFile(mcLoc("item/handheld"));
 

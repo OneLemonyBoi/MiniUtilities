@@ -87,6 +87,8 @@ public class BlockList {
     public static final RegistryObject<Block> DarkEtherealGlass = register("dark_ethereal_glass", () -> new SpecialGlass(true, false, false, true, false));
     public static final RegistryObject<Block> DarkReverseEtherealGlass = register("dark_reverse_ethereal_glass", () -> new SpecialGlass(false, true, false, true, false));
 
+    public static final RegistryObject<Block> LapisLamp = register("lapis_lamp", LapisLamp::new);
+
     public static void register() {}
 
     private static <T extends Block> RegistryObject<T> registerNoItem(String name, Supplier<T> block) {
