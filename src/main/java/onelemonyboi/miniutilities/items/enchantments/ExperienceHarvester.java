@@ -6,7 +6,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 
 public class ExperienceHarvester extends Enchantment {
     public ExperienceHarvester(Rarity rarityIn, EquipmentSlotType... slots) {
-        super(rarityIn, EnchantmentType.DIGGER, slots);
+        super(rarityIn, EnchantmentType.WEAPON, slots);
     }
 
     public int getMinEnchantability(int enchantmentLevel) {
