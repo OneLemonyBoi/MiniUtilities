@@ -841,6 +841,15 @@ public class Recipe extends RecipeProvider {
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer, modId("dark_regular_to_dark_reverse"));
 
+        ShapedRecipeBuilder.shapedRecipe(BlockList.LapisLamp.get())
+            .key('X', Items.LAPIS_LAZULI)
+            .key('Y', Items.REDSTONE_LAMP)
+            .patternLine(" X ")
+            .patternLine("XYX")
+            .patternLine(" X ")
+            .addCriterion("has_item", hasItem(Items.COBBLESTONE))
+            .build(consumer);
+
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlockList.EnderOre.get()), ItemList.EnderDust.get(), 0.7f, 200)
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer, modId("smelting/ender_ore"));

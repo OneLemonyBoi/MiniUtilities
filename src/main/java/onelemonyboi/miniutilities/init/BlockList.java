@@ -19,19 +19,17 @@ import onelemonyboi.miniutilities.blocks.complexblocks.drum.DrumBlock;
 import onelemonyboi.miniutilities.blocks.*;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerBlock;
-import onelemonyboi.miniutilities.blocks.earth.BlessedEarthBlock;
-import onelemonyboi.miniutilities.blocks.earth.BlursedEarthBlock;
-import onelemonyboi.miniutilities.blocks.earth.CursedEarthBlock;
 import onelemonyboi.miniutilities.blocks.SpecialGlass;
+import onelemonyboi.miniutilities.blocks.earth.GenericEarthBlock;
 import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerBlock;
 
 import java.util.function.Supplier;
 
 public class BlockList {
-    public static final RegistryObject<Block> CursedEarth = register("cursed_earth", () -> new CursedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
-    public static final RegistryObject<Block> BlessedEarth = register("blessed_earth", () -> new BlessedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
-    public static final RegistryObject<Block> BlursedEarth = register("blursed_earth", () -> new BlursedEarthBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
+    public static final RegistryObject<Block> CursedEarth = register("cursed_earth", () -> GenericEarthBlock.CURSED_EARTH.apply(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
+    public static final RegistryObject<Block> BlessedEarth = register("blessed_earth", () -> GenericEarthBlock.BLESSED_EARTH.apply(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
+    public static final RegistryObject<Block> BlursedEarth = register("blursed_earth", () -> GenericEarthBlock.BLURSED_EARTH.apply(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK)));
     public static final RegistryObject<Block> EnderOre = register("ender_ore", () -> new Block(Block.Properties.create(Material.ROCK).harvestLevel(2).hardnessAndResistance(3).harvestTool(ToolType.PICKAXE)));
     public static final RegistryObject<Block> UnstableBlock = register("unstable_block", () -> new Block(Block.Properties.create(Material.ROCK).harvestLevel(3).hardnessAndResistance(12).harvestTool(ToolType.PICKAXE)));
     public static final RegistryObject<Block> EnderPearlBlock = register("ender_pearl_block", () -> new Block(Block.Properties.create(Material.ROCK).harvestLevel(1).hardnessAndResistance(3).harvestTool(ToolType.PICKAXE)));
@@ -88,6 +86,8 @@ public class BlockList {
     public static final RegistryObject<Block> DarkGlass = register("dark_glass", () -> new SpecialGlass(false, false, false, true, false));
     public static final RegistryObject<Block> DarkEtherealGlass = register("dark_ethereal_glass", () -> new SpecialGlass(true, false, false, true, false));
     public static final RegistryObject<Block> DarkReverseEtherealGlass = register("dark_reverse_ethereal_glass", () -> new SpecialGlass(false, true, false, true, false));
+
+    public static final RegistryObject<Block> LapisLamp = register("lapis_lamp", LapisLamp::new);
 
     public static void register() {}
 
