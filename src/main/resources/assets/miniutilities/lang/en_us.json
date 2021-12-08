@@ -16,6 +16,9 @@
   "text.miniutilities.drumamount": "Amount",
   "text.miniutilities.drumcapacity": "Capacity",
 
+  "text.miniutilities.tooltip.drum_fluid":  "Fluid: %s",
+  "text.miniutilities.tooltip.drum_amount":  "Amount: %s/%s",
+
   "container.miniutilities.mechanical_miner": "Mechanical Miner",
   "container.miniutilities.mechanical_placer": "Mechanical Placer",
 
@@ -69,6 +72,8 @@
   "block.miniutilities.dark_glass": "Dark Glass",
   "block.miniutilities.dark_ethereal_glass": "Dark Ethereal Glass",
   "block.miniutilities.dark_reverse_ethereal_glass": "Dark Reverse Ethereal Glass",
+
+  "block.miniutilities.lapis_lamp": "Lapis Lamp",
 
   "item.miniutilities.angel_ring": "Angel Ring",
   "item.miniutilities.flame_lily_seeds": "Flame Lily Seeds",

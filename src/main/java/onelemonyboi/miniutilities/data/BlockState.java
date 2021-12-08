@@ -43,5 +43,7 @@ public class BlockState extends BlockStateProvider {
         simpleBlock(BlockList.DarkGlass.get());
         simpleBlock(BlockList.DarkEtherealGlass.get());
         simpleBlock(BlockList.DarkReverseEtherealGlass.get());
+
+        simpleBlock(BlockList.LapisLamp.get());
     }
 }
