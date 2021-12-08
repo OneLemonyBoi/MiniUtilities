@@ -108,6 +108,7 @@ repositories {
         name = "Cursemaven"
         url = "https://www.cursemaven.com/"
     }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -117,7 +118,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")
     implementation fg.deobf("curse.maven:ctm-267602:3137659")
     runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3157997")
-    implementation fg.deobf("curse.maven:lemon-lib-471136:3335288")
+    implementation fg.deobf('com.github.OneLemonyBoi:LemonLib:12-6-21-v0')
 
     // Testing
     // implementation fg.deobf("curse.maven:mekanism-268560:3206392")
