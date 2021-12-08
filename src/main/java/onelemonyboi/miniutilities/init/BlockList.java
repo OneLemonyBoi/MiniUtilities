@@ -10,6 +10,7 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
+import onelemonyboi.miniutilities.blocks.LapisLamp;
 import onelemonyboi.miniutilities.blocks.basic.*;
 import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserHubBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserPortBlock;
