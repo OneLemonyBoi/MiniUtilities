@@ -9,6 +9,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraftforge.items.SlotItemHandler;
+import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ContainerList;
 
@@ -29,20 +30,20 @@ public class MechanicalMinerContainer extends Container {
             for (int col = 0; col < 3; col++) {
                 switch (row) {
                     case 0:
-                        this.addSlot(new SlotItemHandler(te.itemSH, col + row * 3, 62 + col * 18, 17));
+                        this.addSlot(new SlotItemHandler(te.getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler(), col + row * 3, 62 + col * 18, 17));
                         break;
                     case 1:
-                        this.addSlot(new SlotItemHandler(te.itemSH, col + row * 3, 62 + col * 18, 35));
+                        this.addSlot(new SlotItemHandler(te.getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler(), col + row * 3, 62 + col * 18, 35));
                         break;
                     case 2:
-                        this.addSlot(new SlotItemHandler(te.itemSH, col + row * 3, 62 + col * 18, 53));
+                        this.addSlot(new SlotItemHandler(te.getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler(), col + row * 3, 62 + col * 18, 53));
                         break;
                 }
             }
         }
 
         // Pickaxe Slot
-        this.addSlot(new SlotItemHandler(te.itemSH, 9, 62 + 4 * 18, 17));
+        this.addSlot(new SlotItemHandler(te.getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler(), 9, 62 + 4 * 18, 17));
 
         // Main Player Inventory
         for (int row = 0; row < 3; row++) {

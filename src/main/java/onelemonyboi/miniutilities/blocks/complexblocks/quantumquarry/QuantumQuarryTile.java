@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -20,12 +21,13 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
-import onelemonyboi.lemonlib.blocks.EnergyTileBase;
-import onelemonyboi.lemonlib.MUItemStackHandler;
+import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
+import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.startup.JSON.JSONLoader;
 import onelemonyboi.miniutilities.startup.JSON.QuantumQuarryJSON;
+import onelemonyboi.miniutilities.trait.TileBehaviors;
 import org.apache.commons.lang3.tuple.MutableTriple;
 
 import javax.annotation.Nonnull;
@@ -35,11 +37,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class QuantumQuarryTile extends EnergyTileBase implements INamedContainerProvider, RenderInfoIdentifier {
+public class QuantumQuarryTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier, ITickableTileEntity {
     public static int slots = 9;
-
-    public final MUItemStackHandler itemSH = new MUItemStackHandler(9);
-    private final LazyOptional<MUItemStackHandler> lazyItemStorage = LazyOptional.of(() -> itemSH);
 
     // 1: Always on
     // 2: Redstone to Enable
@@ -50,7 +49,7 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
     public ItemStack insertStack;
 
     public QuantumQuarryTile() {
-        super(TEList.QuantumQuarryTile.get(), 10000000, 10000000, 0);
+        super(TEList.QuantumQuarryTile.get(), TileBehaviors.quantumQuarry);
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 1200;
@@ -73,18 +72,14 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         super.write(tag);
         tag.putInt("RedstoneMode", this.redstonemode);
         tag.putInt("WaitTime", this.waittime);
-        tag.put("itemSH", itemSH.serializeNBT());
-        energy.write(tag);
         return tag;
     }
 
     @Override
     public void read(BlockState state, CompoundNBT tag) {
         super.read(state, tag);
-        itemSH.deserializeNBT(tag.getCompound("itemSH"));
         this.redstonemode = tag.getInt("RedstoneMode");
         this.waittime = tag.getInt("WaitTime");
-        energy.read(tag);
     }
 
     public static int calcRFCost(int waittime) {
@@ -107,7 +102,7 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         if ((!world.isBlockPowered(this.getPos()) && this.redstonemode == 2) || (world.isBlockPowered(this.getPos()) && this.redstonemode == 3)) {
             return;
         }
-        if (!energy.checkedMachineConsume(calcRFCost(this.waittime))) {
+        if (!getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().checkedMachineConsume(calcRFCost(this.waittime))) {
             return;
         }
         this.timer++;
@@ -119,14 +114,14 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
 
     private void oreGen(ItemStack insertStack) {
         for (int i = 0; i < 9; i++) {
-            insertStack = this.itemSH.insertItem(i, insertStack, false);
+            insertStack = getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().insertItem(i, insertStack, false);
         }
         this.markDirty();
     }
 
     private boolean canInput(ItemStack insertStack) {
         for (int i = 0; i < 9; i++) {
-            insertStack = this.itemSH.insertItem(i, insertStack, true);
+            insertStack = getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().insertItem(i, insertStack, true);
         }
 
         return insertStack.isEmpty();
@@ -151,23 +146,9 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
         return ItemStack.EMPTY;
     }
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return lazyItemStorage.cast();
-        }
-        if (cap == CapabilityEnergy.ENERGY && !world.isRemote) {
-            return lazyEnergy.cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
     @Override
     public void remove() {
         super.remove();
-        lazyEnergy.invalidate();
-        lazyItemStorage.invalidate();
     }
 
     @Override
@@ -191,19 +172,8 @@ public class QuantumQuarryTile extends EnergyTileBase implements INamedContainer
                 .appendString(this.waittime.toString() + " ticks(" + String.valueOf(this.waittime.floatValue() / 20))
                 .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
                 .appendString(")"));
-        output.add(new StringTextComponent("Power: " + this.energy.toString()));
+        output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
         output.add(new StringTextComponent("FE/t Consumption: " + calcRFCost(this.waittime)));
         return output;
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
-    }
-
-    @Override
-    @Nullable
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
     }
 }

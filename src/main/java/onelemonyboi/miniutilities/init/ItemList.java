@@ -2,17 +2,15 @@ package onelemonyboi.miniutilities.init;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.lemonlib.items.*;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
-import onelemonyboi.miniutilities.blocks.AngelBlockItem;
+import onelemonyboi.miniutilities.blocks.basic.AngelBlockItem;
 import onelemonyboi.miniutilities.items.*;
 import onelemonyboi.miniutilities.items.ItemTier;
 import onelemonyboi.miniutilities.items.unstable.*;
 
-import static onelemonyboi.miniutilities.MiniUtilities.MOD_ID;
 import static onelemonyboi.miniutilities.items.ItemTier.UNSTABLE;
 
 public class ItemList {

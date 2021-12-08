@@ -1,4 +1,4 @@
-package onelemonyboi.miniutilities.blocks;
+package onelemonyboi.miniutilities.blocks.basic;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;

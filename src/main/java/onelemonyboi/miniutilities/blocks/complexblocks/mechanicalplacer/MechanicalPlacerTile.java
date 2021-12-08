@@ -12,29 +12,25 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import onelemonyboi.lemonlib.blocks.TileBase;
-import onelemonyboi.lemonlib.MUItemStackHandler;
+import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
+import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.trait.TileBehaviors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MechanicalPlacerTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier {
+public class MechanicalPlacerTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier, ITickableTileEntity {
     public static int slots = 9;
-
-    public final MUItemStackHandler itemSH = new MUItemStackHandler(9);
-    private final LazyOptional<MUItemStackHandler> lazyItemStorage = LazyOptional.of(() -> itemSH);
 
     // 1: Always on
     // 2: Redstone to Enable
@@ -44,7 +40,7 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
     public Integer waittime;
 
     public MechanicalPlacerTile() {
-        super(TEList.MechanicalPlacerTile.get());
+        super(TEList.MechanicalPlacerTile.get(), TileBehaviors.mechanicalPlacer);
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 20;
@@ -65,14 +61,12 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
         super.write(tag);
         tag.putInt("RedstoneMode", this.redstonemode);
         tag.putInt("WaitTime", this.waittime);
-        tag.put("itemSH", itemSH.serializeNBT());
         return tag;
     }
 
     @Override
     public void read(BlockState state, CompoundNBT tag) {
         super.read(state, tag);
-        itemSH.deserializeNBT(tag.getCompound("itemSH"));
         this.redstonemode = tag.getInt("RedstoneMode");
         this.waittime = tag.getInt("WaitTime");
     }
@@ -99,7 +93,7 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
         BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
         Boolean flag = false;
         for (int j = 0; j < slots && !flag; ++j) {
-            ItemStack itemStack1 = itemSH.getStackInSlot(j);
+            ItemStack itemStack1 = getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().getStackInSlot(j);
             Item item1 = itemStack1.getItem();
             if (!itemStack1.isEmpty() && item1 instanceof BlockItem && world.isAirBlock(blockPos)) {
                 world.setBlockState(blockPos, ((BlockItem) item1).getBlock().getDefaultState());
@@ -108,15 +102,6 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
             }
         }
         this.markDirty();
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return lazyItemStorage.cast();
-        }
-        return super.getCapability(cap, side);
     }
 
     @Override
@@ -141,16 +126,5 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
                 .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
                 .appendString(")"));
         return output;
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
-    }
-
-    @Override
-    @Nullable
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
     }
 }

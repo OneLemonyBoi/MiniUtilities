@@ -2,52 +2,46 @@ package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import onelemonyboi.lemonlib.blocks.EnergyTileBase;
+import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
-import onelemonyboi.miniutilities.MiniUtilities;
+import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.trait.TileBehaviors;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LaserPortTile extends EnergyTileBase implements RenderInfoIdentifier {
+public class LaserPortTile extends TileBase implements RenderInfoIdentifier, ITickableTileEntity {
     public boolean isInput;
 
     public LaserPortTile() {
-        super(TEList.LaserPortTile.get(), 1048576, 1048576, 1048576);
+        super(TEList.LaserPortTile.get(), TileBehaviors.laserPort);
         this.isInput = true;
     }
 
     @Override
     public void tick() {
-        if (world.isRemote) {
-            return;
-        }
+        if (world.isRemote) return;
 
-        if (isInput) {
-            energy.outputToSide(world, getPos(), getBlockState().get(LaserPortBlock.FACING), Integer.MAX_VALUE);
-        }
-        else {
-            energy.inputFromSide(world, getPos(), getBlockState().get(LaserPortBlock.FACING), Integer.MAX_VALUE);
-        }
+        if (isInput)
+            getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().outputToSide(world, getPos(), getBlockState().get(LaserPortBlock.FACING), Integer.MAX_VALUE);
+        else
+            getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().inputFromSide(world, getPos(), getBlockState().get(LaserPortBlock.FACING), Integer.MAX_VALUE);
+
 
         world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
     }
 
     public CompoundNBT write(CompoundNBT nbt) {
-        this.energy.write(nbt);
         nbt.putBoolean("IsInput", this.isInput);
         return super.write(nbt);
     }
 
     public void read(BlockState state, CompoundNBT nbt) {
-        this.energy.read(nbt);
         this.isInput = nbt.getBoolean("IsInput");
         super.read(state, nbt);
     }
@@ -58,44 +52,8 @@ public class LaserPortTile extends EnergyTileBase implements RenderInfoIdentifie
 
         output.add(this.getBlockState().getBlock().getTranslatedName());
         output.add(new StringTextComponent(""));
-        output.add(new StringTextComponent("Power: " + this.energy.toString()));
+        output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
         output.add(new StringTextComponent("I/O Mode: " + (this.isInput ? "Pull from Machine" : "Push to Machine")));
         return output;
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
-    }
-
-    @Override
-    @Nullable
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
-    }
-
-    public Vector3d getDisplacement() {
-        Vector3d v3d = Vector3d.ZERO;
-        switch (getBlockState().get(LaserPortBlock.FACING)) {
-            case UP:
-                v3d.add(0, 0.25, 0);
-                break;
-            case DOWN:
-                v3d.add(0, -0.25, 0);
-                break;
-            case NORTH:
-                v3d.add(0, 0, -0.25);
-                break;
-            case SOUTH:
-                v3d.add(0, 0, 0.25);
-                break;
-            case WEST:
-                v3d.add(-0.25, 0, 0);
-                break;
-            case EAST:
-                v3d.add(0.25, 0, 0);
-                break;
-        }
-        return v3d;
     }
 }

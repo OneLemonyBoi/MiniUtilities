@@ -1,36 +1,29 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.extensions.IForgeTileEntity;
-import onelemonyboi.lemonlib.blocks.EnergyTileBase;
+import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
+import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.trait.TileBehaviors;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
-public class LaserHubTile extends EnergyTileBase implements RenderInfoIdentifier {
+public class LaserHubTile extends TileBase implements RenderInfoIdentifier, ITickableTileEntity {
     public LaserHubTile() {
-        super(TEList.LaserHubTile.get(), 1048576, 1048576, 1048576);
+        super(TEList.LaserHubTile.get(), TileBehaviors.laserHub);
     }
 
     @Override
@@ -41,10 +34,10 @@ public class LaserHubTile extends EnergyTileBase implements RenderInfoIdentifier
         for (BlockPos pos : blocks) {
             LaserPortTile portTile = (LaserPortTile) world.getTileEntity(pos);
             if (portTile.isInput) {
-                this.energy.outputToSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
+                getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().outputToSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
             }
             else {
-                this.energy.inputFromSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
+                getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().inputFromSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
             }
         }
 
@@ -57,7 +50,7 @@ public class LaserHubTile extends EnergyTileBase implements RenderInfoIdentifier
 
         output.add(this.getBlockState().getBlock().getTranslatedName());
         output.add(new StringTextComponent(""));
-        output.add(new StringTextComponent("Power: " + this.energy.toString()));
+        output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
         return output;
     }
 
@@ -69,22 +62,6 @@ public class LaserHubTile extends EnergyTileBase implements RenderInfoIdentifier
                 for (int z = -radius; z < radius; z++) {
                     if (clazz.isInstance(world.getTileEntity(this.getPos().add(x, y, z)))) {
                         output.add(this.getPos().add(x, y, z));
-                    }
-                }
-            }
-        }
-
-        return output;
-    }
-
-    public List<Vector3d> getTargetedTEVectorInRadius(Class<?> clazz, int radius) {
-        List<Vector3d> output = new ArrayList<>();
-
-        for (int x = -radius; x < radius; x++) {
-            for (int y = -radius; y < radius; y++) {
-                for (int z = -radius; z < radius; z++) {
-                    if (clazz.isInstance(world.getTileEntity(this.getPos().add(x, y, z)))) {
-                        output.add(Vector3d.copy(this.getPos().add(x, y, z)));
                     }
                 }
             }
@@ -136,16 +113,5 @@ public class LaserHubTile extends EnergyTileBase implements RenderInfoIdentifier
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
         return IForgeTileEntity.INFINITE_EXTENT_AABB;
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
-    }
-
-    @Override
-    @Nullable
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
     }
 }

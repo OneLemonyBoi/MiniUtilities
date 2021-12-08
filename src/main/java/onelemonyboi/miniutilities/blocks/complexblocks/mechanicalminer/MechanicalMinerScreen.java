@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import onelemonyboi.lemonlib.blocks.ItemStackButton;
+import onelemonyboi.lemonlib.gui.ItemStackButton;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.packets.Packet;
 import onelemonyboi.miniutilities.packets.RedstoneModeUpdate;

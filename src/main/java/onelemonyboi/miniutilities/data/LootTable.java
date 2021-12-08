@@ -18,8 +18,8 @@ import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.ModRegistry;
-import onelemonyboi.miniutilities.blocks.EnderLily;
-import onelemonyboi.miniutilities.blocks.FlameLily;
+import onelemonyboi.miniutilities.blocks.basic.EnderLily;
+import onelemonyboi.miniutilities.blocks.basic.FlameLily;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ItemList;
 

@@ -1,5 +1,6 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.drum;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
@@ -17,8 +18,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import onelemonyboi.miniutilities.init.TEList;
 
-public class DrumBlock extends ContainerBlock {
+public class DrumBlock extends Block {
     public final int mb;
 
     public DrumBlock(int mb, Properties properties) {
@@ -45,8 +47,8 @@ public class DrumBlock extends ContainerBlock {
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new DrumTile(this.mb);
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return new DrumTile(mb);
     }
 
     @Override

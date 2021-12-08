@@ -18,6 +18,7 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -30,11 +31,11 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
-import onelemonyboi.lemonlib.blocks.TileBase;
-import onelemonyboi.miniutilities.MiniUtilities;
-import onelemonyboi.lemonlib.MUItemStackHandler;
+import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
+import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.trait.TileBehaviors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,16 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class MechanicalMinerTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier {
+public class MechanicalMinerTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier, ITickableTileEntity {
     public static int slots = 10;
-
-    public final MUItemStackHandler itemSH = new MUItemStackHandler(10) {
-        @Override
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-            return (slot == 9) == (stack.getItem() instanceof PickaxeItem);
-        }
-    };
-    private final LazyOptional<MUItemStackHandler> lazyItemStorage = LazyOptional.of(() -> itemSH);
 
     // 1: Always on
     // 2: Redstone to Enable
@@ -61,7 +54,7 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
     public Integer waittime;
 
     public MechanicalMinerTile() {
-        super(TEList.MechanicalMinerTile.get());
+        super(TEList.MechanicalMinerTile.get(), TileBehaviors.mechanicalMiner);
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 20;
@@ -82,14 +75,12 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         super.write(tag);
         tag.putInt("RedstoneMode", this.redstonemode);
         tag.putInt("WaitTime", this.waittime);
-        tag.put("itemSH", itemSH.serializeNBT());
         return tag;
     }
 
     @Override
     public void read(BlockState state, CompoundNBT tag) {
         super.read(state, tag);
-        itemSH.deserializeNBT(tag.getCompound("itemSH"));
         this.redstonemode = tag.getInt("RedstoneMode");
         this.waittime = tag.getInt("WaitTime");
     }
@@ -123,7 +114,7 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
 
         for (ItemStack itemStack : lists) {
             for (int i = 0; i < 9; i++) {
-                itemStack = this.itemSH.insertItem(i, itemStack, false);
+                itemStack = getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().insertItem(i, itemStack, false);
             }
             if (!itemStack.isEmpty()) {
                 InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY() + 1, this.getPos().getZ(), itemStack);
@@ -131,16 +122,6 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         }
         world.destroyBlock(blockPos, false); // Very kool break animations!
         this.markDirty();
-    }
-
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return lazyItemStorage.cast();
-        }
-        return super.getCapability(cap, side);
     }
 
     @Override
@@ -167,18 +148,9 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
         return output;
     }
 
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-        this.read(this.world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
-    }
-
-    @Override
-    @Nullable
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.getPos(), 514, this.write(new CompoundNBT()));
-    }
-
     public ItemStack getPickaxe() {
-        return this.itemSH.getStackInSlot(9).getItem() == Items.AIR ? new ItemStack(Items.IRON_PICKAXE) : this.itemSH.getStackInSlot(9);
+        return getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().getStackInSlot(9).getItem() == Items.AIR ?
+                new ItemStack(Items.IRON_PICKAXE) :
+                getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().getStackInSlot(9);
     }
 }

@@ -1,5 +1,9 @@
 package onelemonyboi.miniutilities.init;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.tileentity.BannerTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.ModRegistry;
@@ -11,12 +15,27 @@ import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.Mechanica
 import onelemonyboi.miniutilities.blocks.complexblocks.drum.DrumTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerTile;
 
+import java.util.function.Supplier;
+
 public class TEList {
-    public static final RegistryObject<TileEntityType<DrumTile>> DrumTile = ModRegistry.TE.register("drum", () -> TileEntityType.Builder.create(DrumTile::new, BlockList.StoneDrum.get(), BlockList.IronDrum.get(), BlockList.ReinforcedLargeDrum.get(), BlockList.NetheriteReinforcedDrum.get(), BlockList.UnstableDrum.get()).build(null));
-    public static final RegistryObject<TileEntityType<MechanicalMinerTile>> MechanicalMinerTile = ModRegistry.TE.register("mechanical_miner", () -> TileEntityType.Builder.create(() -> new MechanicalMinerTile(), BlockList.MechanicalMiner.get()).build(null));
-    public static final RegistryObject<TileEntityType<MechanicalPlacerTile>> MechanicalPlacerTile = ModRegistry.TE.register("mechanical_placer", () -> TileEntityType.Builder.create(() -> new MechanicalPlacerTile(), BlockList.MechanicalPlacer.get()).build(null));
-    public static final RegistryObject<TileEntityType<QuantumQuarryTile>> QuantumQuarryTile = ModRegistry.TE.register("quantum_quarry", () -> TileEntityType.Builder.create(() -> new QuantumQuarryTile(), BlockList.QuantumQuarry.get()).build(null));
-    public static final RegistryObject<TileEntityType<SolarPanelControllerTile>> SolarPanelControllerTile = ModRegistry.TE.register("solar_panel_controller", () -> TileEntityType.Builder.create(() -> new SolarPanelControllerTile(), BlockList.SolarPanelController.get()).build(null));
-    public static final RegistryObject<TileEntityType<LaserHubTile>> LaserHubTile = ModRegistry.TE.register("laser_hub", () -> TileEntityType.Builder.create(() -> new LaserHubTile(), BlockList.LaserHub.get()).build(null));
-    public static final RegistryObject<TileEntityType<LaserPortTile>> LaserPortTile = ModRegistry.TE.register("laser_port", () -> TileEntityType.Builder.create(() -> new LaserPortTile(), BlockList.LaserPort.get()).build(null));    public static void register() {}
+    public static final RegistryObject<TileEntityType<DrumTile>> DrumTile =
+            register("drum", DrumTile::new, BlockList.StoneDrum.get(), BlockList.IronDrum.get(), BlockList.ReinforcedLargeDrum.get(), BlockList.NetheriteReinforcedDrum.get(), BlockList.UnstableDrum.get());
+    public static final RegistryObject<TileEntityType<MechanicalMinerTile>> MechanicalMinerTile =
+            register("mechanical_miner", MechanicalMinerTile::new, BlockList.MechanicalMiner.get());
+    public static final RegistryObject<TileEntityType<MechanicalPlacerTile>> MechanicalPlacerTile =
+            register("mechanical_placer", MechanicalPlacerTile::new, BlockList.MechanicalPlacer.get());
+    public static final RegistryObject<TileEntityType<QuantumQuarryTile>> QuantumQuarryTile =
+            register("quantum_quarry", QuantumQuarryTile::new, BlockList.QuantumQuarry.get());
+    public static final RegistryObject<TileEntityType<SolarPanelControllerTile>> SolarPanelControllerTile =
+            register("solar_panel_controller", SolarPanelControllerTile::new, BlockList.SolarPanelController.get());
+    public static final RegistryObject<TileEntityType<LaserHubTile>> LaserHubTile =
+            register("laser_hub", LaserHubTile::new, BlockList.LaserHub.get());
+    public static final RegistryObject<TileEntityType<LaserPortTile>> LaserPortTile =
+            register("laser_port", LaserPortTile::new, BlockList.LaserPort.get());
+
+    public static void register() { }
+
+    public static <T extends TileEntity> RegistryObject<TileEntityType<T>> register(String name, Supplier<T> factoryIn, Block... validBlocks) {
+        return ModRegistry.TE.register(name, () -> TileEntityType.Builder.create(factoryIn, validBlocks).build(null));
+    }
 }
