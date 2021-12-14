@@ -117,6 +117,7 @@ public class GenericEarthBlock extends GrassBlock {
         if (!world.getFluidState(pos.up()).isEmpty()) return;
         if (!spawnInPeaceful && world.getWorldInfo().getDifficulty() == Difficulty.PEACEFUL) return;
         if (!world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) || (!spawnInPeaceful && world.getWorldInfo().getDifficulty() == Difficulty.PEACEFUL)) return;
+        if (lightDecay && world.getLight(pos.up()) > 6) return; //Prevents Spawn on light level higher than 6 in cursed Earth
 
         int r = spawnRadius.get(); // Radius to check around block
         int livingEntityCount = world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(pos.getX() - r, pos.getY(), pos.getZ() - r, pos.getX() + r, pos.getY() +1, pos.getZ() + r)).size();
