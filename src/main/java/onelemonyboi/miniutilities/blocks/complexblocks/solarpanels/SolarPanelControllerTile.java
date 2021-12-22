@@ -49,8 +49,7 @@ public class SolarPanelControllerTile extends TileBase implements RenderInfoIden
     }
 
     public void solarPanelRecursion(BlockPos pos) {
-        for (Direction d : Direction.values()) {
-            if (d == Direction.UP || d == Direction.DOWN) {continue;}
+        for (Direction d : Direction.Plane.HORIZONTAL) {
             BlockState blockState = world.getBlockState(pos.offset(d));
             if (posList.contains(pos.offset(d)) || !world.canSeeSky(pos.offset(d)) || !world.isAreaLoaded(pos.offset(d), 1)) {continue;}
             if (blockState.getBlock() instanceof SolarPanelBlock) {
@@ -66,10 +65,6 @@ public class SolarPanelControllerTile extends TileBase implements RenderInfoIden
                 }
                 posList.add(pos.offset(d));
                 solarPanelRecursion(pos.offset(d));
-            }
-            else if (blockState.getBlock() instanceof SolarPanelController && pos.offset(d) != getPos()) {
-                world.destroyBlock(pos.offset(d), true);
-                activeSolarCount = 0;
             }
         }
     }
