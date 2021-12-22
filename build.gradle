@@ -109,6 +109,7 @@ repositories {
         url = "https://www.cursemaven.com/"
     }
     maven { url 'https://jitpack.io' }
+    maven { url 'https://mymavenrepo.com/repo/uK1UvUXckF2eaAWSNDBc/' }
 }
 
 dependencies {
@@ -118,7 +119,13 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")
     implementation fg.deobf("curse.maven:ctm-267602:3137659")
     runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3157997")
-    implementation fg.deobf('com.github.OneLemonyBoi:LemonLib:12-6-21-v0')
+    implementation fg.deobf('onelemonyboi.lemonlib:lemonlib:2021-12-21d')
+
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 
     // Testing
     // implementation fg.deobf("curse.maven:mekanism-268560:3206392")
@@ -148,3 +155,8 @@ mixin {
 }
 
 jar.finalizedBy('reobfJar')
+
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
+

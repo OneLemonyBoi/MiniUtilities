@@ -29,13 +29,15 @@ import net.minecraftforge.registries.ForgeRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import onelemonyboi.miniutilities.init.TEList;
 
-public class DrumBlock extends Block {
+import onelemonyboi.lemonlib.blocks.block.BlockBase;
+import onelemonyboi.miniutilities.trait.BlockBehaviors;
+
+public class DrumBlock extends BlockBase {
     public final int mb;
 
     public DrumBlock(int mb, Properties properties) {
-        super(properties);
+        super(properties, BlockBehaviors.drum);
         this.mb = mb;
     }
 
@@ -68,30 +70,5 @@ public class DrumBlock extends Block {
         }
 
         return ActionResultType.FAIL;
-    }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
-    }
-
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new DrumTile(mb);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (worldIn.isRemote()) {
-            return;
-        }
-
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
-        ItemStack itemStack = new ItemStack(this);
-        CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
-        itemStack.setTagInfo("BlockEntityTag", compoundNBT);
-        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
     }
 }

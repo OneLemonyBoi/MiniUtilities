@@ -234,4 +234,9 @@ public class GenericEarthBlock extends GrassBlock {
     private interface ItemChecker {
         boolean isItemValid(Item item);
     }
+
+    @Override
+    public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
+        super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
+    }
 }

@@ -55,11 +55,11 @@ public class BlockList {
     public static final RegistryObject<Block> PinkLapisCaelestis = register("pink_lapis_caelestis", LapisCaelestis::new);
     public static final RegistryObject<Block> BrownLapisCaelestis = register("brown_lapis_caelestis", LapisCaelestis::new);
 
-    public static final RegistryObject<Block> StoneDrum = register("stone_drum", () -> new DrumBlock(16000, Block.Properties.create(Material.ROCK).harvestTool(ToolType.PICKAXE).hardnessAndResistance(2.0F)));
-    public static final RegistryObject<Block> IronDrum = register("iron_drum", () -> new DrumBlock(256000, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(4.0F)));
-    public static final RegistryObject<Block> ReinforcedLargeDrum = register("reinforced_large_drum", () -> new DrumBlock(4096000, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(6.0F)));
-    public static final RegistryObject<Block> NetheriteReinforcedDrum = register("netherite_reinforced_drum", () -> new DrumBlock(65536000, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(8.0F)));
-    public static final RegistryObject<Block> UnstableDrum = register("unstable_drum", () -> new DrumBlock(2147483647, Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(12.0F)));
+    public static final RegistryObject<Block> StoneDrum = register("stone_drum", () -> new DrumBlock(16000, Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> IronDrum = register("iron_drum", () -> new DrumBlock(256000, Block.Properties.create(Material.IRON)));
+    public static final RegistryObject<Block> ReinforcedLargeDrum = register("reinforced_large_drum", () -> new DrumBlock(4096000, Block.Properties.create(Material.IRON)));
+    public static final RegistryObject<Block> NetheriteReinforcedDrum = register("netherite_reinforced_drum", () -> new DrumBlock(65536000, Block.Properties.create(Material.IRON)));
+    public static final RegistryObject<Block> UnstableDrum = register("unstable_drum", () -> new DrumBlock(2147483647, Block.Properties.create(Material.IRON)));
 
     public static final RegistryObject<Block> WoodenSpikes = register("wooden_spikes", () -> new SpikeBlock(Block.Properties.create(Material.WOOD).harvestTool(ToolType.AXE).hardnessAndResistance(2.0F).harvestLevel(0), 1, false, false, true));
     public static final RegistryObject<Block> IronSpikes = register("iron_spikes", () -> new SpikeBlock(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(4.0F).harvestLevel(1), 2, false, false, false));
