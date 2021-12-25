@@ -128,19 +128,17 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
     }
 
     private ItemStack generateItemStack() {
-        if (world == null) {
-            return ItemStack.EMPTY;
-        }
+        if (world == null) return ItemStack.EMPTY;
 
-        String biomeStr = world.getBiome(getPos()).getRegistryName().getNamespace() + ":" + world.getBiome(getPos()).getRegistryName().getPath();
-        String dimensionStr = world.getDimensionKey().getLocation().getNamespace() + ":" + world.getDimensionKey().getLocation().getPath();
+        String biomeStr = world.getBiome(getPos()).getRegistryName().toString();
+        String dimensionStr = world.getDimensionKey().getLocation().toString();
 
         List<QuantumQuarryJSON.OreInfo> validOreList = QuantumQuarryJSON.oreList.stream()
                 .filter((oreInfo) -> oreInfo.biomes.contains(biomeStr) || oreInfo.dimensions.contains(dimensionStr))
                 .collect(Collectors.toList());
 
         if (validOreList.size() > 0) {
-            return new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryCreate(validOreList.get(new Random().nextInt(validOreList.size())).name)));
+            return new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryCreate(validOreList.get(world.rand.nextInt(validOreList.size())).name)));
         }
 
         return ItemStack.EMPTY;
@@ -169,7 +167,7 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
                 break;
         }
         output.add(new TranslationTextComponent("text.miniutilities.waittime")
-                .appendString(this.waittime.toString() + " ticks(" + String.valueOf(this.waittime.floatValue() / 20))
+                .appendString(this.waittime.toString() + " ticks(" + this.waittime.floatValue() / 20)
                 .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
                 .appendString(")"));
         output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));

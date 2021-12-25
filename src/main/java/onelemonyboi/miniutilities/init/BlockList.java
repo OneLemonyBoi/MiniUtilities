@@ -73,7 +73,7 @@ public class BlockList {
 
     public static final RegistryObject<Block> SolarPanel = register("solar_panel", () -> new SolarPanelBlock(AbstractBlock.Properties.from(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> LunarPanel = register("lunar_panel", () -> new LunarPanelBlock(AbstractBlock.Properties.from(Blocks.IRON_BLOCK)));
-    public static final RegistryObject<Block> SolarPanelController = register("solar_panel_controller", () -> new SolarPanelController());
+    public static final RegistryObject<Block> SolarPanelController = register("solar_panel_controller", SolarPanelController::new);
     public static final RegistryObject<Block> EnderTile = register("ender_tile", EnderTileBlock::new);
     public static final RegistryObject<Block> ChorusTile = register("chorus_tile", ChorusTileBlock::new);
 

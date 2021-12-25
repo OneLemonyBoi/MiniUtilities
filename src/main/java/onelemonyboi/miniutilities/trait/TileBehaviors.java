@@ -11,6 +11,10 @@ import onelemonyboi.lemonlib.trait.tile.TilePartialBehaviours;
 import javax.annotation.Nonnull;
 
 public class TileBehaviors {
+    public static TileBehaviour drum = new TileBehaviour.Builder()
+            .composeFrom(TilePartialBehaviours.partialBaseTile)
+            .build();
+
     public static TileBehaviour laserPort = new TileBehaviour.Builder()
             .composeFrom(TilePartialBehaviours.partialEnergyTile)
             .powerTrait(1048576, 1048576, 1048576)
@@ -38,6 +42,7 @@ public class TileBehaviors {
 
     public static TileBehaviour quantumQuarry = new TileBehaviour.Builder()
             .composeFrom(TilePartialBehaviours.partialEnergyTile)
+            .itemTrait(9)
             .powerTrait(10000000, 10000000, 0)
             .build();
 

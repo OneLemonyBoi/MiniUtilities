@@ -1,5 +1,6 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.drum;
 
+import lombok.Getter;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -18,8 +19,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.trait.TileBehaviors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,7 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class DrumTile extends TileEntity implements RenderInfoIdentifier {
+public class DrumTile extends TileBase implements RenderInfoIdentifier {
+    @Getter
     private FluidTank drum;
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> drum);
 
@@ -36,7 +40,7 @@ public class DrumTile extends TileEntity implements RenderInfoIdentifier {
     }
 
     public DrumTile(int mb) {
-        super(TEList.DrumTile.get());
+        super(TEList.DrumTile.get(), TileBehaviors.drum);
         this.drum = new FluidTank(mb) {
             @Override
             public int fill(FluidStack resource, FluidAction action) {
@@ -46,46 +50,9 @@ public class DrumTile extends TileEntity implements RenderInfoIdentifier {
 
             @Override
             protected void onContentsChanged() {
-                DrumTile.this.sendToClients();
+                sendToClients();
             }
     };
-    }
-
-    public FluidStack getFluid() {
-        return this.drum.getFluid();
-    }
-
-    public FluidTank getDrum() {
-        return this.drum;
-    }
-
-    @Override
-    public CompoundNBT getUpdateTag() {
-        return this.write(new CompoundNBT());
-    }
-
-    @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
-    }
-
-    @Override
-    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-        this.read(state, tag);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
-    }
-
-    public void sendToClients() {
-        if (!world.isRemote) {
-            ServerWorld world = (ServerWorld) this.getWorld();
-            Stream<ServerPlayerEntity> entities = world.getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(this.getPos()), false);
-            SUpdateTileEntityPacket packet = this.getUpdatePacket();
-            entities.forEach(e -> e.connection.sendPacket(packet));
-        }
     }
 
     @Override
@@ -118,7 +85,7 @@ public class DrumTile extends TileEntity implements RenderInfoIdentifier {
 
         output.add(this.getBlockState().getBlock().getTranslatedName());
         output.add(new StringTextComponent(""));
-        output.add(new TranslationTextComponent("text.miniutilities.fluidname").appendString(": " + getFluid().getDisplayName().getString()));
+        output.add(new TranslationTextComponent("text.miniutilities.fluidname").appendString(": " + getDrum().getFluid().getDisplayName().getString()));
         output.add(new TranslationTextComponent("text.miniutilities.drumamount").appendString(": " + this.drum.getFluidAmount()));
         output.add(new TranslationTextComponent("text.miniutilities.drumcapacity").appendString(": " + this.drum.getCapacity()));
         return output;
