@@ -13,10 +13,12 @@ public class BlockTraits {
         final Integer resistance;
         final ToolType toolType;
         final Integer harvestLevel;
+        final boolean requiresTool;
 
         @Override
         protected void tweakProperties(AbstractBlock.Properties properties) {
             properties.hardnessAndResistance(hardness, resistance).harvestTool(toolType);
+            if (requiresTool) properties.setRequiresTool();
         }
     }
 }

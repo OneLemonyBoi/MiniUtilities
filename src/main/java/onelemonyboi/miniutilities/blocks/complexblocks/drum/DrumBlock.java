@@ -1,43 +1,34 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.drum;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.registries.ForgeRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 import onelemonyboi.lemonlib.blocks.block.BlockBase;
-import onelemonyboi.miniutilities.trait.BlockBehaviors;
+import onelemonyboi.miniutilities.trait.BlockBehaviours;
 
 public class DrumBlock extends BlockBase {
     public final int mb;
 
     public DrumBlock(int mb, Properties properties) {
-        super(properties, BlockBehaviors.drum);
+        super(properties, BlockBehaviours.drum);
         this.mb = mb;
     }
 

@@ -31,6 +31,7 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
+import onelemonyboi.lemonlib.annotations.SaveInNBT;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.lemonlib.trait.tile.TileTraits;
@@ -49,8 +50,10 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
     // 1: Always on
     // 2: Redstone to Enable
     // 3: Redstone to Disable
+    @SaveInNBT(key = "RedstoneMode")
     public Integer redstonemode;
     public Integer timer;
+    @SaveInNBT(key = "WaitTime")
     public Integer waittime;
 
     public MechanicalMinerTile() {
@@ -68,21 +71,6 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
     @Override
     public Container createMenu(int id, PlayerInventory player, PlayerEntity entity) {
         return new MechanicalMinerContainer(id, player, this);
-    }
-
-    @Override
-    public CompoundNBT write(CompoundNBT tag) {
-        super.write(tag);
-        tag.putInt("RedstoneMode", this.redstonemode);
-        tag.putInt("WaitTime", this.waittime);
-        return tag;
-    }
-
-    @Override
-    public void read(BlockState state, CompoundNBT tag) {
-        super.read(state, tag);
-        this.redstonemode = tag.getInt("RedstoneMode");
-        this.waittime = tag.getInt("WaitTime");
     }
 
     @Override
@@ -141,10 +129,7 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
                 output.add(new TranslationTextComponent("text.miniutilities.redstonemodethree"));
                 break;
         }
-        output.add(new TranslationTextComponent("text.miniutilities.waittime")
-                .appendString(this.waittime.toString() + " ticks(" + String.valueOf(this.waittime.floatValue() / 20))
-                .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
-                .appendString(")"));
+        output.add(new TranslationTextComponent("text.miniutilities.waittime").appendString(this.waittime.toString() + " ticks"));
         return output;
     }
 

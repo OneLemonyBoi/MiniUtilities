@@ -20,33 +20,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
+import onelemonyboi.lemonlib.blocks.block.BlockBase;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.trait.BlockBehaviours;
 
 import java.util.UUID;
 
 import static onelemonyboi.miniutilities.misc.KeyBindingsHandler.keyBindingPressed;
 
-public class QuantumQuarryBlock extends Block {
+public class QuantumQuarryBlock extends BlockBase {
     public QuantumQuarryBlock() {
-        super(Properties.create(Material.IRON).hardnessAndResistance(3F)
-                .sound(SoundType.METAL));
-    }
-
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return TEList.QuantumQuarryTile.get().create();
-    }
-
-    @Override
-    public void onBlockClicked(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
-        super.onBlockClicked(state, worldIn, pos, player);
+        super(Properties.create(Material.IRON).sound(SoundType.METAL), BlockBehaviours.quantumQuarry);
     }
 
     @SuppressWarnings("deprecation")
@@ -92,23 +78,5 @@ public class QuantumQuarryBlock extends Block {
                 }
             }
         }
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (worldIn.isRemote()) {
-            return;
-        }
-
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        ItemStack itemStack = new ItemStack(this);
-        CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
-        compoundNBT.remove("x");
-        compoundNBT.remove("y");
-        compoundNBT.remove("z");
-        itemStack.setTagInfo("BlockEntityTag", compoundNBT);
-        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 }

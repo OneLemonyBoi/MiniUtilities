@@ -119,7 +119,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")
     implementation fg.deobf("curse.maven:ctm-267602:3137659")
     runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3157997")
-    implementation fg.deobf('onelemonyboi.lemonlib:lemonlib:2021-12-25b')
+    implementation fg.deobf('onelemonyboi.lemonlib:lemonlib:2021-12-27b')
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'

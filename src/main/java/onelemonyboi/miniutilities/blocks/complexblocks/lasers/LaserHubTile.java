@@ -1,9 +1,7 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +15,6 @@ import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.trait.TileBehaviors;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,15 +27,18 @@ public class LaserHubTile extends TileBase implements RenderInfoIdentifier, ITic
     public void tick() {
         if (world.isRemote) {return;}
 
-        List<BlockPos> blocks = getTargetedTEPosInRadius(LaserPortTile.class, 16);
-        for (BlockPos pos : blocks) {
-            LaserPortTile portTile = (LaserPortTile) world.getTileEntity(pos);
-            if (portTile.isInput) {
-                getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().outputToSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
-            }
-            else {
-                getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().inputFromSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
-            }
+        List<LaserPortTile> blocks = getTEsInRadius(LaserPortTile.class, 16);
+        for (LaserPortTile portTile : blocks) {
+            if (portTile.isInput) getBehaviour()
+                        .getRequired(TileTraits.PowerTrait.class)
+                        .getEnergyStorage()
+                        .outputToSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
+
+            else getBehaviour()
+                    .getRequired(TileTraits.PowerTrait.class)
+                    .getEnergyStorage()
+                    .inputFromSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
+
         }
 
         world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
@@ -54,14 +54,14 @@ public class LaserHubTile extends TileBase implements RenderInfoIdentifier, ITic
         return output;
     }
 
-    public List<BlockPos> getTargetedTEPosInRadius(Class<?> clazz, int radius) {
-        List<BlockPos> output = new ArrayList<>();
+    public <T extends TileEntity> List<T> getTEsInRadius(Class<T> clazz, int radius) {
+        List<T> output = new ArrayList<>();
 
         for (int x = -radius; x < radius; x++) {
             for (int y = -radius; y < radius; y++) {
                 for (int z = -radius; z < radius; z++) {
-                    if (clazz.isInstance(world.getTileEntity(this.getPos().add(x, y, z)))) {
-                        output.add(this.getPos().add(x, y, z));
+                    if (clazz.isInstance(world.getTileEntity(getPos().add(x, y, z)))) {
+                        output.add((T) world.getTileEntity(getPos().add(x, y, z)));
                     }
                 }
             }
@@ -70,34 +70,35 @@ public class LaserHubTile extends TileBase implements RenderInfoIdentifier, ITic
         return output;
     }
 
-    public List<Vector3d> getTargetedTEVectorInRadius(Class<?> clazz, int radius, double distanceFromCenter) {
+    public List<Vector3d> getTEVectorsInRadius(Class<?> clazz, int radius, double distanceFromCenter) {
         List<Vector3d> output = new ArrayList<>();
 
         for (int x = -radius; x < radius; x++) {
             for (int y = -radius; y < radius; y++) {
                 for (int z = -radius; z < radius; z++) {
-                    BlockPos pos = this.getPos().add(x, y, z);
+                    BlockPos pos = getPos().add(x, y, z);
                     if (clazz.isInstance(world.getTileEntity(pos))) {
                         Vector3d v3d = Vector3d.copy(pos);
+                        v3d.add(0.5, 0.5, 0.5);
                         if (world.getBlockState(pos).hasProperty(LaserPortBlock.FACING)) {
                             switch (world.getBlockState(pos).get(LaserPortBlock.FACING)) {
                                 case UP:
-                                    v3d = v3d.add(0.5, -distanceFromCenter + 0.5, 0.5);
+                                    v3d = v3d.add(0, -distanceFromCenter, 0);
                                     break;
                                 case DOWN:
-                                    v3d = v3d.add(0.5, distanceFromCenter + 0.5, 0.5);
+                                    v3d = v3d.add(0, distanceFromCenter, 0);
                                     break;
                                 case NORTH:
-                                    v3d = v3d.add(0.5, 0.5, distanceFromCenter + 0.5);
+                                    v3d = v3d.add(0, 0, distanceFromCenter);
                                     break;
                                 case SOUTH:
-                                    v3d = v3d.add(0.5, 0.5, -distanceFromCenter + 0.5);
+                                    v3d = v3d.add(0, 0, -distanceFromCenter);
                                     break;
                                 case WEST:
-                                    v3d = v3d.add(distanceFromCenter + 0.5, 0.5, 0.5);
+                                    v3d = v3d.add(distanceFromCenter, 0, 0);
                                     break;
                                 case EAST:
-                                    v3d = v3d.add(-distanceFromCenter + 0.5, 0.5, 0.5);
+                                    v3d = v3d.add(-distanceFromCenter, 0.5, 0.5);
                                     break;
                             }
                         }

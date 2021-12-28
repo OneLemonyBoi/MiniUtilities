@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import onelemonyboi.lemonlib.annotations.SaveInNBT;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.lemonlib.trait.tile.TileTraits;
@@ -35,8 +36,10 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
     // 1: Always on
     // 2: Redstone to Enable
     // 3: Redstone to Disable
+    @SaveInNBT(key = "RedstoneMode")
     public Integer redstonemode;
     public Integer timer;
+    @SaveInNBT(key = "WaitTime")
     public Integer waittime;
 
     public MechanicalPlacerTile() {
@@ -54,21 +57,6 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
     @Override
     public Container createMenu(int id, PlayerInventory player, PlayerEntity entity) {
         return new MechanicalPlacerContainer(id, player, this);
-    }
-
-    @Override
-    public CompoundNBT write(CompoundNBT tag) {
-        super.write(tag);
-        tag.putInt("RedstoneMode", this.redstonemode);
-        tag.putInt("WaitTime", this.waittime);
-        return tag;
-    }
-
-    @Override
-    public void read(BlockState state, CompoundNBT tag) {
-        super.read(state, tag);
-        this.redstonemode = tag.getInt("RedstoneMode");
-        this.waittime = tag.getInt("WaitTime");
     }
 
     @Override

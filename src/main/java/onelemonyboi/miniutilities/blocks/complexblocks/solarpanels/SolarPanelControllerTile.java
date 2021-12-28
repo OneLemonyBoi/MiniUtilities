@@ -1,5 +1,6 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.solarpanels;
 
+import lombok.SneakyThrows;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -9,6 +10,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import onelemonyboi.lemonlib.annotations.SaveInNBT;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.lemonlib.trait.tile.TileTraits;
@@ -17,13 +19,17 @@ import onelemonyboi.miniutilities.startup.Config;
 import onelemonyboi.miniutilities.trait.TileBehaviors;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SolarPanelControllerTile extends TileBase implements RenderInfoIdentifier, ITickableTileEntity {
-    public static int activeSolarCount = 0;
-    public static List<BlockPos> posList = new ArrayList<>();
-    public static double power = 0;
+    @SaveInNBT(key = "panelsActive")
+    public int activeSolarCount = 0;
+    public List<BlockPos> posList = new ArrayList<>();
+    @SaveInNBT(key = "power")
+    public double power = 0;
 
     public SolarPanelControllerTile() {
         super(TEList.SolarPanelControllerTile.get(), TileBehaviors.solarPanelController);
@@ -51,15 +57,16 @@ public class SolarPanelControllerTile extends TileBase implements RenderInfoIden
     public void solarPanelRecursion(BlockPos pos) {
         for (Direction d : Direction.Plane.HORIZONTAL) {
             BlockState blockState = world.getBlockState(pos.offset(d));
-            if (posList.contains(pos.offset(d)) || !world.canSeeSky(pos.offset(d)) || !world.isAreaLoaded(pos.offset(d), 1)) {continue;}
+            if (posList.contains(pos.offset(d)) || !world.canSeeSky(pos.offset(d)) || !world.isAreaLoaded(pos.offset(d), 1)) {
+                continue;
+            }
             if (blockState.getBlock() instanceof SolarPanelBlock) {
                 if (world.isDaytime()) {
                     activeSolarCount++;
                 }
                 posList.add(pos.offset(d));
                 solarPanelRecursion(pos.offset(d));
-            }
-            else if (blockState.getBlock() instanceof LunarPanelBlock) {
+            } else if (blockState.getBlock() instanceof LunarPanelBlock) {
                 if (world.isNightTime()) {
                     activeSolarCount++;
                 }

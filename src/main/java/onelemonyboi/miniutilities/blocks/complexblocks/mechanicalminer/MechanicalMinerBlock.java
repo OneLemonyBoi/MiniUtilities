@@ -23,32 +23,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
+import onelemonyboi.lemonlib.blocks.block.BlockBase;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryTile;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.trait.BlockBehaviours;
 
 import java.util.UUID;
 
 import static onelemonyboi.miniutilities.misc.KeyBindingsHandler.keyBindingPressed;
 
-public class MechanicalMinerBlock extends Block {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
-
+public class MechanicalMinerBlock extends BlockBase {
     public MechanicalMinerBlock() {
-        super(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(3F)
-                .sound(SoundType.METAL));
-        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
-    }
-
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return TEList.MechanicalMinerTile.get().create();
+        super(AbstractBlock.Properties.create(Material.IRON).sound(SoundType.METAL), BlockBehaviours.mechanicalMiner);
     }
 
     @SuppressWarnings("deprecation")
@@ -95,41 +83,5 @@ public class MechanicalMinerBlock extends Block {
                 }
             }
         }
-    }
-
-    @Deprecated
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.with(FACING, rotation.rotate(state.get(FACING)));
-    }
-
-    @Deprecated
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
-    }
-
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (worldIn.isRemote() || state.getBlock() == newState.getBlock()) {
-            return;
-        }
-
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        ItemStack itemStack = new ItemStack(this);
-        CompoundNBT compoundNBT = tileEntity.write(new CompoundNBT());
-        compoundNBT.remove("x");
-        compoundNBT.remove("y");
-        compoundNBT.remove("z");
-        itemStack.setTagInfo("BlockEntityTag", compoundNBT);
-        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 }

@@ -1,32 +1,22 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.solarpanels;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import onelemonyboi.lemonlib.blocks.block.BlockBase;
-import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.trait.BlockBehaviors;
+import onelemonyboi.miniutilities.trait.BlockBehaviours;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SolarPanelController extends BlockBase {
     public SolarPanelController() {
-        super(Properties.create(Material.IRON), BlockBehaviors.solarPanelController);
+        super(Properties.create(Material.IRON), BlockBehaviours.solarPanelController);
     }
 
     public boolean controllerPresent(World world, BlockPos pos, List<BlockPos> blockPosList) {

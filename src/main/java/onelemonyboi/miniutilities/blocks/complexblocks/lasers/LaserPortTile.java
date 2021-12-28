@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import onelemonyboi.lemonlib.annotations.SaveInNBT;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.lemonlib.trait.tile.TileTraits;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LaserPortTile extends TileBase implements RenderInfoIdentifier, ITickableTileEntity {
+    @SaveInNBT(key = "IsInput")
     public boolean isInput;
 
     public LaserPortTile() {
@@ -34,16 +36,6 @@ public class LaserPortTile extends TileBase implements RenderInfoIdentifier, ITi
 
 
         world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
-    }
-
-    public CompoundNBT write(CompoundNBT nbt) {
-        nbt.putBoolean("IsInput", this.isInput);
-        return super.write(nbt);
-    }
-
-    public void read(BlockState state, CompoundNBT nbt) {
-        this.isInput = nbt.getBoolean("IsInput");
-        super.read(state, nbt);
     }
 
     @Override

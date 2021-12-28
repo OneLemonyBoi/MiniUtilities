@@ -15,6 +15,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import java.awt.*;
 import java.util.List;
 
+// I have no idea how this code works.
 public class LaserHubTESR extends TileEntityRenderer<LaserHubTile> {
     public LaserHubTESR(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
@@ -22,15 +23,11 @@ public class LaserHubTESR extends TileEntityRenderer<LaserHubTile> {
 
     @Override
     public void render(LaserHubTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
-        List<Vector3d> vectorList = tile.getTargetedTEVectorInRadius(LaserPortTile.class, 16, 0.25);
+        List<Vector3d> vectorList = tile.getTEVectorsInRadius(LaserPortTile.class, 16, 0.25);
         drawLinesFromPoint(matrixStack, Vector3d.copy(tile.getPos()), vectorList, new Color(255, 0, 0, 255), buffer, new Vector3d(0.5, 0.75, 0.5));
     }
 
     public static void drawLinesFromPoint(MatrixStack matrixStack, Vector3d pos, List<Vector3d> endPoints, Color color, IRenderTypeBuffer buffer, Vector3d startingPosOffset) {
-        // Modified code from Owmii because I don't know how to use Blaze3D
-        // Not anymore, completely changed up the code because it didn't my needs. That's what I get for taking the easy way
-        // BTW, fuck rendering, it can go fuck itself in 4K UHD
-
         for (Vector3d portPos : endPoints) {
             matrixStack.push();
             Vector3d endPoint = pos.subtract(portPos);
