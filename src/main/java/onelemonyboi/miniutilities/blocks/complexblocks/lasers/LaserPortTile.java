@@ -45,7 +45,7 @@ public class LaserPortTile extends TileBase implements RenderInfoIdentifier, ITi
         output.add(this.getBlockState().getBlock().getTranslatedName());
         output.add(new StringTextComponent(""));
         output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
-        output.add(new StringTextComponent("I/O Mode: " + (this.isInput ? "Pull from Machine" : "Push to Machine")));
+        output.add(new StringTextComponent("I/O Mode: " + (this.isInput ? "Push to Machine" : "Pull from Machine")));
         return output;
     }
 }
