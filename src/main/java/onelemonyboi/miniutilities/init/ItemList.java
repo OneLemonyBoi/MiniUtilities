@@ -101,5 +101,7 @@ public class ItemList {
 
     public static final RegistryObject<Item> MagicalEgg = ModRegistry.ITEMS.register("magical_egg", () -> new MagicalEgg(new Item.Properties().group(CreativeTab.getInstance())));
 
+    public static final RegistryObject<Item> GoldenLasso = ModRegistry.ITEMS.register("golden_lasso", () -> new GoldenLasso(new Item.Properties().group(CreativeTab.getInstance())));
+
     public static void register() {}
 }

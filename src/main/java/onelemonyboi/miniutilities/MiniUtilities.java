@@ -22,6 +22,7 @@ import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.Mechanica
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerBlock;
 import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
 import onelemonyboi.miniutilities.init.FeatureList;
+import onelemonyboi.miniutilities.items.GoldenLasso;
 import onelemonyboi.miniutilities.items.Kikoku;
 import onelemonyboi.miniutilities.items.enchantments.ExperienceHarvesterHandler;
 import onelemonyboi.miniutilities.items.enchantments.MoltenHeadHandler;
@@ -72,6 +73,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(Kikoku::AnvilUpdateEvent);
         EVENT_BUS.addListener(Kikoku::AnvilRepairEvent);
         EVENT_BUS.addListener(KeyBindingsHandler::keybinds);
+        EVENT_BUS.addListener(GoldenLasso::onRightClick);
         EVENT_BUS.addListener(MechanicalMinerBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(MechanicalPlacerBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(QuantumQuarryBlock::PlayerInteractEvent);

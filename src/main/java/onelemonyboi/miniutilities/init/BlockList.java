@@ -96,15 +96,15 @@ public class BlockList {
         return ModRegistry.BLOCKS.register(name, block);
     }
 
-    private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> block) {
-        RegistryObject<T> ret = registerNoItem(name, block);
-        ModRegistry.ITEMS.register(name, () -> new BlockItem(ret.get(), new Item.Properties().group(CreativeTab.getInstance())));
-        return ret;
-    }
-
     private static <T extends Block> RegistryObject<T> registerNoTab(String name, Supplier<T> block) {
         RegistryObject<T> ret = registerNoItem(name, block);
         ModRegistry.ITEMS.register(name, () -> new BlockItem(ret.get(), new Item.Properties()));
+        return ret;
+    }
+
+    private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> block) {
+        RegistryObject<T> ret = registerNoItem(name, block);
+        ModRegistry.ITEMS.register(name, () -> new BlockItem(ret.get(), new Item.Properties().group(CreativeTab.getInstance())));
         return ret;
     }
 }
