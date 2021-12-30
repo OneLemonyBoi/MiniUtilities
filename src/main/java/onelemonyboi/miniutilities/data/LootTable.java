@@ -109,6 +109,7 @@ public class LootTable extends LootTableProvider {
             registerDropSelfLootTable(BlockList.DarkReverseEtherealGlass.get());
 
             registerDropSelfLootTable(BlockList.LapisLamp.get());
+            registerDropSelfLootTable(BlockList.RedstoneClockBlock.get());
 
             ILootCondition.IBuilder ilootcondition = BlockStateProperty.builder(BlockList.EnderLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EnderLily.AGE, 7));
             registerLootTable(BlockList.EnderLily.get(), withExplosionDecay(BlockList.EnderLily.get(), net.minecraft.loot.LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(Items.ENDER_PEARL))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));

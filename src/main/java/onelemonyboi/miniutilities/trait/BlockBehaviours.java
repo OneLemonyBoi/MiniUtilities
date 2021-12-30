@@ -1,16 +1,9 @@
 package onelemonyboi.miniutilities.trait;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
 import net.minecraftforge.common.ToolType;
-import onelemonyboi.lemonlib.handlers.MUItemStackHandler;
 import onelemonyboi.lemonlib.trait.block.BlockBehaviour;
 import onelemonyboi.lemonlib.trait.block.BlockPartialBehaviours;
 import onelemonyboi.lemonlib.trait.block.BlockTraits;
-import onelemonyboi.lemonlib.trait.tile.TilePartialBehaviours;
 import onelemonyboi.miniutilities.blocks.complexblocks.drum.DrumBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.drum.DrumTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserHubTile;
@@ -18,10 +11,10 @@ import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserPortTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryTile;
+import onelemonyboi.miniutilities.blocks.complexblocks.redstoneclock.RedstoneClockTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelControllerTile;
-import onelemonyboi.miniutilities.trait.traits.BlockTraits.*;
-
-import javax.annotation.Nonnull;
+import onelemonyboi.miniutilities.trait.traits.MUBlockTraits;
+import onelemonyboi.miniutilities.trait.traits.MUBlockTraits.*;
 
 public class BlockBehaviours {
     public static BlockBehaviour drum = new BlockBehaviour.Builder()
@@ -74,5 +67,12 @@ public class BlockBehaviours {
             .tileEntity(t -> new QuantumQuarryTile())
             .keepNBTOnBreak()
             .with(ModularMaterialTrait.builder().hardness(6).resistance(6).harvestLevel(3).toolType(ToolType.PICKAXE).requiresTool(true).build())
+            .build();
+
+    public static BlockBehaviour redstoneClock = new BlockBehaviour.Builder()
+            .composeFrom(BlockPartialBehaviours.partialBaseBlock)
+            .tileEntity(b -> new RedstoneClockTile())
+            .with(new MUBlockTraits.RedstoneTrait())
+            .with(ModularMaterialTrait.builder().hardness(3).resistance(3).harvestLevel(1).toolType(ToolType.PICKAXE).requiresTool(true).isOpaque(false).build())
             .build();
 }

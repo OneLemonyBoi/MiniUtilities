@@ -11,7 +11,7 @@ import onelemonyboi.lemonlib.trait.tile.TilePartialBehaviours;
 import javax.annotation.Nonnull;
 
 public class TileBehaviors {
-    public static TileBehaviour drum = new TileBehaviour.Builder()
+    public static TileBehaviour base = new TileBehaviour.Builder()
             .composeFrom(TilePartialBehaviours.partialBaseTile)
             .build();
 

@@ -5,6 +5,7 @@ import net.minecraftforge.fml.RegistryObject;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserHubTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserPortTile;
+import onelemonyboi.miniutilities.blocks.complexblocks.redstoneclock.RedstoneClockTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelControllerTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerTile;
@@ -19,4 +20,6 @@ public class TEList {
     public static final RegistryObject<TileEntityType<SolarPanelControllerTile>> SolarPanelControllerTile = ModRegistry.TE.register("solar_panel_controller", () -> TileEntityType.Builder.create(() -> new SolarPanelControllerTile(), BlockList.SolarPanelController.get()).build(null));
     public static final RegistryObject<TileEntityType<LaserHubTile>> LaserHubTile = ModRegistry.TE.register("laser_hub", () -> TileEntityType.Builder.create(() -> new LaserHubTile(), BlockList.LaserHub.get()).build(null));
     public static final RegistryObject<TileEntityType<LaserPortTile>> LaserPortTile = ModRegistry.TE.register("laser_port", () -> TileEntityType.Builder.create(() -> new LaserPortTile(), BlockList.LaserPort.get()).build(null));    public static void register() {}
+
+    public static final RegistryObject<TileEntityType<RedstoneClockTile>> RedstoneClockTile = ModRegistry.TE.register("redstone_clock", () -> TileEntityType.Builder.create(() -> new RedstoneClockTile(), BlockList.RedstoneClockBlock.get()).build(null));
 }

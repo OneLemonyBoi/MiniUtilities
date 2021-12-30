@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "miniutilities:block/redstone_clock_off"
+  }
+}

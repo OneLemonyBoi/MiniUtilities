@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "miniutilities:block/redstone_clock_active"
+    },
+    "powered=true": {
+      "model": "miniutilities:block/redstone_clock_off"
+    }
+  }
+}

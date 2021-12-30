@@ -3,6 +3,7 @@ package onelemonyboi.miniutilities.init;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.RedstoneBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -14,6 +15,7 @@ import onelemonyboi.miniutilities.blocks.LapisLamp;
 import onelemonyboi.miniutilities.blocks.basic.*;
 import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserHubBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserPortBlock;
+import onelemonyboi.miniutilities.blocks.complexblocks.redstoneclock.RedstoneClockBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.LunarPanelBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelController;
@@ -89,6 +91,8 @@ public class BlockList {
     public static final RegistryObject<Block> DarkReverseEtherealGlass = register("dark_reverse_ethereal_glass", () -> new SpecialGlass(false, true, false, true, false));
 
     public static final RegistryObject<Block> LapisLamp = register("lapis_lamp", LapisLamp::new);
+
+    public static final RegistryObject<Block> RedstoneClockBlock = register("redstone_clock", RedstoneClockBlock::new);
 
     public static void register() {}
 

@@ -1,14 +1,21 @@
 package onelemonyboi.miniutilities.data;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.BlockList;
 
 public class BlockState extends BlockStateProvider {
+    private ExistingFileHelper exFileHelper;
+
     public BlockState(DataGenerator gen, ExistingFileHelper exFileHelper) {
         super(gen, MiniUtilities.MOD_ID, exFileHelper);
+
+        this.exFileHelper = exFileHelper;
     }
 
     @Override
@@ -45,5 +52,14 @@ public class BlockState extends BlockStateProvider {
         simpleBlock(BlockList.DarkReverseEtherealGlass.get());
 
         simpleBlock(BlockList.LapisLamp.get());
+
+        ModelFile modelOne = models().cubeAll("redstone_clock_off", modLoc("block/redstone_clock_off"));
+        ModelFile modelTwo = models().cubeAll("redstone_clock_active", modLoc("block/redstone_clock_active"));
+
+        getVariantBuilder(BlockList.RedstoneClockBlock.get())
+                .partialState().with(BlockStateProperties.POWERED, true)
+                .modelForState().modelFile(modelOne).addModel()
+                .partialState().with(BlockStateProperties.POWERED, false)
+                .modelForState().modelFile(modelTwo).addModel();
     }
 }

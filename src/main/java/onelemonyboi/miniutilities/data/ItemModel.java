@@ -21,6 +21,8 @@ public class ItemModel extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        System.out.print("String[] withExistingParent = new String[]{");
+
         withExistingParent("ender_ore", modLoc("block/ender_ore"));
         withExistingParent("ender_pearl_block", modLoc("block/ender_pearl_block"));
         withExistingParent("angel_block", modLoc("block/angel_block"));
@@ -65,8 +67,12 @@ public class ItemModel extends ItemModelProvider {
         withExistingParent("dark_glass", modLoc("block/dark_glass"));
         withExistingParent("dark_ethereal_glass", modLoc("block/dark_ethereal_glass"));
         withExistingParent("dark_reverse_ethereal_glass", modLoc("block/dark_reverse_ethereal_glass"));
-
         withExistingParent("lapis_lamp", modLoc("block/lapis_lamp"));
+        withExistingParent("solar_panel_controller", modLoc("block/solar_panel_controller"));
+        withExistingParent("redstone_clock", modLoc("block/redstone_clock_active"));
+
+
+        System.out.print("}");
 
         ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
         ModelFile itemHandheld = getExistingFile(mcLoc("item/handheld"));
@@ -87,4 +93,9 @@ public class ItemModel extends ItemModelProvider {
         Arrays.stream(name).forEach(n -> builder(itemGenerated, n));
     }
 
+    @Override
+    public ItemModelBuilder withExistingParent(String name, String parent) {
+        System.out.print("\"" + name + "\"" + ", ");
+        return super.withExistingParent(name, parent);
+    }
 }
