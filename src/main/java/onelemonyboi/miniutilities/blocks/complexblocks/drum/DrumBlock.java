@@ -62,4 +62,19 @@ public class DrumBlock extends BlockBase {
 
         return ActionResultType.FAIL;
     }
+
+    @Override
+    public boolean hasComparatorInputOverride(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+        DrumTile tile = (DrumTile) worldIn.getTileEntity(pos);
+        double percent = (double) tile.getDrum().getFluidAmount() / (double) tile.getDrum().getCapacity();
+        // Multiplying by 15 allows for 0 and 15 to be exclusively for empty and full
+        int out = (int) Math.ceil(percent * 15);
+        if (percent >= 1) out = 16;
+        return out;
+    }
 }
