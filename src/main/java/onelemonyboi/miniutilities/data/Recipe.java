@@ -812,8 +812,8 @@ public class Recipe extends RecipeProvider {
                 .key('X', Items.BLACK_STAINED_GLASS)
                 .key('Y', Items.BLACK_DYE)
                 .patternLine("XXX")
-                .patternLine("XYX")
                 .patternLine("XXX")
+                .patternLine("XXY")
                 .addCriterion("has_item", hasItem(Items.COBBLESTONE))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockList.DarkEtherealGlass.get(), 8)
