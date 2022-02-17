@@ -45,7 +45,7 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
             protected void onContentsChanged() {
                 sendToClients();
             }
-    };
+        };
     }
 
     @Override
@@ -70,6 +70,12 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return holder.cast();
         return super.getCapability(capability, facing);
+    }
+
+    @Override
+    protected void invalidateCaps() {
+        super.invalidateCaps();
+        holder.invalidate();
     }
 
     @Override
