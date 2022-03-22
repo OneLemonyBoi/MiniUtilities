@@ -1,42 +1,30 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.lemonlib.annotations.SaveInNBT;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.startup.JSON.JSONLoader;
 import onelemonyboi.miniutilities.startup.JSON.QuantumQuarryJSON;
 import onelemonyboi.miniutilities.trait.TileBehaviors;
-import org.apache.commons.lang3.tuple.MutableTriple;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.function.Predicate;
 
 public class QuantumQuarryTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier, ITickableTileEntity {
     public static int slots = 9;
@@ -49,14 +37,14 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
     public Integer timer;
     @SaveInNBT(key = "WaitTime")
     public Integer waittime;
-    public ItemStack insertStack;
+    public ArrayList<ItemStack> insertStacks;
 
     public QuantumQuarryTile() {
         super(TEList.QuantumQuarryTile.get(), TileBehaviors.quantumQuarry);
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 1200;
-        this.insertStack = generateItemStack();
+        this.insertStacks = generateItemStacks();
     }
 
     @Override
@@ -80,56 +68,67 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
 
         world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
 
-        if (generateItemStack().isEmpty()) {
-            insertStack = generateItemStack();
+        if(this.timer == 0 && !insertStacks.isEmpty()){
+            tryInsert(insertStacks);
             return;
         }
-        if (!canInput(insertStack)) {
-            return;
-        }
+
         if ((!world.isBlockPowered(this.getPos()) && this.redstonemode == 2) || (world.isBlockPowered(this.getPos()) && this.redstonemode == 3)) {
             return;
         }
         if (!getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().checkedMachineConsume(calcRFCost(this.waittime))) {
             return;
         }
+        if (insertStacks.isEmpty()) {
+            insertStacks = generateItemStacks();
+        }
         this.timer++;
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
-        oreGen(insertStack);
-        insertStack = generateItemStack();
+        tryInsert(insertStacks);
     }
 
-    private void oreGen(ItemStack insertStack) {
-        for (int i = 0; i < 9; i++) {
-            insertStack = getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().insertItem(i, insertStack, false);
+    private void tryInsert(ArrayList<ItemStack> insertStacks) {
+        for (int j = 0; j < insertStacks.size(); j++) {
+            ItemStack insertStack = insertStacks.get(j);
+            for (int i = 0; i < 9; i++) {
+                insertStack = getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().insertItem(i, insertStack, false);
+            }
+            if(insertStack.isEmpty()){
+                insertStacks.remove(j);
+                j--;
+            }
         }
         this.markDirty();
     }
 
-    private boolean canInput(ItemStack insertStack) {
-        for (int i = 0; i < 9; i++) {
-            insertStack = getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().insertItem(i, insertStack, true);
-        }
-
-        return insertStack.isEmpty();
-    }
-
-    private ItemStack generateItemStack() {
-        if (world == null) return ItemStack.EMPTY;
+    private ArrayList<ItemStack> generateItemStacks() {
+        if (world == null) return new ArrayList<>();
 
         String biomeStr = world.getBiome(getPos()).getRegistryName().toString();
         String dimensionStr = world.getDimensionKey().getLocation().toString();
 
-        List<QuantumQuarryJSON.OreInfo> validOreList = QuantumQuarryJSON.oreList.stream()
-                .filter((oreInfo) -> oreInfo.biomes.contains(biomeStr) || oreInfo.dimensions.contains(dimensionStr))
-                .collect(Collectors.toList());
 
-        if (validOreList.size() > 0) {
-            return new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryCreate(validOreList.get(world.rand.nextInt(validOreList.size())).name)));
+        RandomChooser<QuantumQuarryJSON.OreInfo> randomOreChooser = QuantumQuarryJSON.randomOreChooser;
+        Predicate<QuantumQuarryJSON.OreInfo> blacklist = (oreInfo) -> !oreInfo.biomes.isEmpty() && !oreInfo.biomes.contains(biomeStr);
+        blacklist = blacklist.or((oreInfo) -> !oreInfo.dimensions.isEmpty() && !oreInfo.dimensions.contains(dimensionStr));
+
+        Map<QuantumQuarryJSON.OreInfo, Integer> itemsOfHighestWorth = randomOreChooser.getItemsOfHighestWorth(blacklist);
+
+        ArrayList<ItemStack> res = new ArrayList<>();
+        if (itemsOfHighestWorth.size() > 0) {
+            for (Map.Entry<QuantumQuarryJSON.OreInfo, Integer> entry : itemsOfHighestWorth.entrySet()) {
+                ResourceLocation id = ResourceLocation.tryCreate(entry.getKey().name);
+                Item item = ForgeRegistries.ITEMS.getValue(id);
+                int count = entry.getValue();
+                while (count > item.getMaxStackSize()){
+                    count -= item.getMaxStackSize();
+                    res.add(new ItemStack(item, item.getMaxStackSize()));
+                }
+                res.add(new ItemStack(item, count));
+            }
         }
-
-        return ItemStack.EMPTY;
+        return res;
     }
 
     @Override
