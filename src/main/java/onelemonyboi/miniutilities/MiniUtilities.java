@@ -26,6 +26,7 @@ import onelemonyboi.miniutilities.items.GoldenLasso;
 import onelemonyboi.miniutilities.items.Kikoku;
 import onelemonyboi.miniutilities.items.enchantments.ExperienceHarvesterHandler;
 import onelemonyboi.miniutilities.items.enchantments.MoltenHeadHandler;
+import onelemonyboi.miniutilities.items.enchantments.ShotgunHandler;
 import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
 import onelemonyboi.miniutilities.misc.KeyBindingsHandler;
@@ -78,6 +79,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(MechanicalPlacerBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(QuantumQuarryBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(MoltenHeadHandler::handleBlockBreak);
+        EVENT_BUS.addListener(ShotgunHandler::handleBowShot);
         EVENT_BUS.addListener(ExperienceHarvesterHandler::handleEntityKill);
         EVENT_BUS.addListener(SpikeBlock::soundEvent);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Feature.class, EventPriority.LOW, FeatureList::addConfigFeatures);
