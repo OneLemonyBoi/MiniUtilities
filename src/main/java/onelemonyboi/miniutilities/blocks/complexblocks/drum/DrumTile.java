@@ -36,12 +36,6 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
         super(TEList.DrumTile.get(), TileBehaviors.base);
         this.drum = new FluidTank(mb) {
             @Override
-            public int fill(FluidStack resource, FluidAction action) {
-                int filled = super.fill(resource, action);
-                return resource.isFluidEqual(this.getFluid()) ? resource.getAmount() : filled;
-            }
-
-            @Override
             protected void onContentsChanged() {
                 sendToClients();
             }
@@ -65,8 +59,7 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
 
     @Override
     @Nonnull
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
-    {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return holder.cast();
         return super.getCapability(capability, facing);
