@@ -2,6 +2,9 @@ package onelemonyboi.miniutilities.startup.JSON;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
+import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.RandomChooser;
+import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.WeightProvider;
+
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,13 +13,15 @@ import java.util.*;
 import static onelemonyboi.miniutilities.startup.JSON.JSONHelper.createFile;
 
 public class QuantumQuarryJSON {
-    public static List<OreInfo> oreList;
+    public static RandomChooser<OreInfo> randomOreChooser;
 
     public static void readQuantumQuarryJSON(Path JSONBasePath) {
         try {
             Gson gson = new Gson();
             Reader reader = Files.newBufferedReader(JSONBasePath.resolve("quantumquarryores.json"));
-            oreList = gson.fromJson(reader, new TypeToken<List<OreInfo>>(){}.getType());
+            List<OreInfo> oreList = gson.fromJson(reader, new TypeToken<List<OreInfo>>() {
+            }.getType());
+            randomOreChooser = new RandomChooser<>(oreList);
         }
         catch (Exception e) {
 
@@ -25,7 +30,7 @@ public class QuantumQuarryJSON {
 
     public static void createQuantumQuarryJSON(Path JSONBasePath) {
         List<OreInfo> oreMap = new LinkedList<>();
-        ArrayList overworld = new ArrayList<String>();
+        ArrayList<String> overworld = new ArrayList<>();
         overworld.add("minecraft:overworld");
 
         oreMap.add(new OreInfo("minecraft:coal_ore", 4, overworld, new ArrayList<>()));
@@ -40,7 +45,7 @@ public class QuantumQuarryJSON {
         createFile(JSONBasePath.resolve("quantumquarryores.json"), gson.toJson(oreMap));
     }
 
-    public static class OreInfo {
+    public static class OreInfo implements WeightProvider {
         public String name;
         public int weight;
         public List<String> dimensions;
@@ -51,6 +56,11 @@ public class QuantumQuarryJSON {
             this.weight = weight;
             this.dimensions = dimensions;
             this.biomes = biomes;
+        }
+
+        @Override
+        public int getWeight() {
+            return weight;
         }
     }
 }

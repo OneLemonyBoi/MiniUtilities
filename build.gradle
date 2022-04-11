@@ -96,6 +96,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    maven { url = 'https://maven.minecraftforge.net' }
     maven {
         name = "CF"
         url = "https://minecraft.curseforge.com/api/maven/"
