@@ -1,6 +1,7 @@
 package onelemonyboi.miniutilities.items.unstable;
 
 import com.google.common.collect.Sets;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
@@ -19,12 +20,14 @@ public class UnstableHoe extends HoeItem {
     }
 
     public static void hoeTransformation(PlayerInteractEvent.RightClickBlock event) {
-        ItemStack stack = event.getItemStack();
-        PlayerEntity player = event.getPlayer();
-        World world = player.world;
-        BlockPos pos = event.getPos();
-        if (!player.isSneaking() && stack.getItem() == ItemList.UnstableHoe.get()){
-            if (world.getBlockState(pos).getBlock() == Blocks.COBBLESTONE && !world.isRemote){ world.setBlockState(pos, Blocks.STONE.getDefaultState()); }
+        if (!event.getPlayer().isSneaking() && event.getItemStack().getItem() == ItemList.UnstableHoe.get()) {
+            Block block = event.getWorld().getBlockState(event.getPos()).getBlock();
+            if (block.equals(Blocks.STONE)) block = Blocks.COBBLESTONE;
+            else if (block.equals(Blocks.COBBLESTONE)) block = Blocks.GRAVEL;
+            else if (block.equals(Blocks.GRAVEL)) block = Blocks.COARSE_DIRT;
+            else if (block.equals(Blocks.COARSE_DIRT)) block = Blocks.CLAY;
+            else if (block.equals(Blocks.CLAY)) block = Blocks.SAND;
+            event.getWorld().setBlockState(event.getPos(), block.getDefaultState());
         }
     }
 

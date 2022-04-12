@@ -29,6 +29,7 @@ import onelemonyboi.miniutilities.items.enchantments.MoltenHeadHandler;
 import onelemonyboi.miniutilities.items.enchantments.ShotgunHandler;
 import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
+import onelemonyboi.miniutilities.items.unstable.UnstableShovel;
 import onelemonyboi.miniutilities.misc.KeyBindingsHandler;
 import onelemonyboi.miniutilities.packets.Packet;
 import onelemonyboi.miniutilities.proxy.ClientProxy;
@@ -70,6 +71,7 @@ public class MiniUtilities {
         EVENT_BUS.addListener(GenericEarthBlock::convertBlursed);
         EVENT_BUS.addListener(UnstableShears::instantShear);
         EVENT_BUS.addListener(UnstableHoe::hoeTransformation);
+        EVENT_BUS.addListener(UnstableShovel::shovelTransformation);
         EVENT_BUS.addListener(WorldGen::generate);
         EVENT_BUS.addListener(Kikoku::AnvilUpdateEvent);
         EVENT_BUS.addListener(Kikoku::AnvilRepairEvent);
