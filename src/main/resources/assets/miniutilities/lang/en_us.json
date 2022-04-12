@@ -123,8 +123,11 @@
   "item.miniutilities.golden_lasso": "Golden Lasso",
 
   "enchantment.miniutilities.shotgun": "Shotgun",
+  "enchantment.miniutilities.shotgun.desc": "Shoots an extra arrow for every enchantment level",
   "enchantment.miniutilities.molten_head": "\u00A74Molten Tool Head\u00A74",
-  "enchantment.miniutilities.experience_harvester": "\u00A7aExperience Harvester\u00A7a",
+  "enchantment.miniutilities.molten_head.desc": "\u00A7cMelts all blocks it comes in contact with\u00A7c",
+  "enchantment.miniutilities.experience_harvester": "\u00A72Experience Harvester\u00A72",
+  "enchantment.miniutilities.experience_harvester.desc": "\u00A7aDrops extra experience when killing a mob\u00A7a",
 
   "death.attack.unstable_division": "%1$s played hot-potato and lost",
   "death.attack.divide_by_diamond": "%1$s divided by diamond"
