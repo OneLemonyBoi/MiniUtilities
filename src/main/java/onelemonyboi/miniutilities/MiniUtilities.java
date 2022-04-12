@@ -71,8 +71,6 @@ public class MiniUtilities {
         EVENT_BUS.addListener(GenericEarthBlock::convertBlessed);
         EVENT_BUS.addListener(GenericEarthBlock::convertBlursed);
         EVENT_BUS.addListener(UnstableShears::instantShear);
-        EVENT_BUS.addListener(UnstableHoe::hoeTransformation);
-        EVENT_BUS.addListener(UnstableShovel::shovelTransformation);
         EVENT_BUS.addListener(WorldGen::generate);
         EVENT_BUS.addListener(Kikoku::AnvilUpdateEvent);
         EVENT_BUS.addListener(Kikoku::AnvilRepairEvent);

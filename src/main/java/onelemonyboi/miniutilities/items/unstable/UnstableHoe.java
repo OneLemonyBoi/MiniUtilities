@@ -5,6 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
@@ -19,16 +21,19 @@ public class UnstableHoe extends HoeItem {
         super(materialIn, damage, attackSpeed, properties);
     }
 
-    public static void hoeTransformation(PlayerInteractEvent.RightClickBlock event) {
-        if (!event.getPlayer().isSneaking() && event.getItemStack().getItem() == ItemList.UnstableHoe.get()) {
-            Block block = event.getWorld().getBlockState(event.getPos()).getBlock();
+    @Override
+    public ActionResultType onItemUse(ItemUseContext context) {
+        if (context.getPlayer() != null && context.getPlayer().isSneaking() && context.getHand().equals(Hand.MAIN_HAND)) {
+            Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
             if (block.equals(Blocks.STONE)) block = Blocks.COBBLESTONE;
             else if (block.equals(Blocks.COBBLESTONE)) block = Blocks.GRAVEL;
             else if (block.equals(Blocks.GRAVEL)) block = Blocks.COARSE_DIRT;
             else if (block.equals(Blocks.COARSE_DIRT)) block = Blocks.CLAY;
             else if (block.equals(Blocks.CLAY)) block = Blocks.SAND;
-            event.getWorld().setBlockState(event.getPos(), block.getDefaultState());
+            context.getWorld().setBlockState(context.getPos(), block.getDefaultState());
+            return ActionResultType.CONSUME;
         }
+        return super.onItemUse(context);
     }
 
     private static final Set<ToolType> hoe = Sets.newHashSet(ToolType.HOE);
