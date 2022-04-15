@@ -4,10 +4,18 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import onelemonyboi.miniutilities.init.EnchantmentList;
 
+import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
+
 public class EnchantmentTooltipHandler {
+    public static void register() {
+        EVENT_BUS.addListener(EnchantmentTooltipHandler::onTooltipDisplay);
+    }
+
     public static void onTooltipDisplay(ItemTooltipEvent event) {
         if (!(event.getItemStack().getItem() instanceof EnchantedBookItem)) return;
         for (Enchantment e : EnchantmentHelper.getEnchantments(event.getItemStack()).keySet()) {

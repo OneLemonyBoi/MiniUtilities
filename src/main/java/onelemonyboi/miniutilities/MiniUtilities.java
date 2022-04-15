@@ -83,9 +83,9 @@ public class MiniUtilities {
         EVENT_BUS.addListener(ShotgunHandler::handleBowShot);
         EVENT_BUS.addListener(ExperienceHarvesterHandler::handleEntityKill);
         EVENT_BUS.addListener(SpikeBlock::soundEvent);
-        EVENT_BUS.addListener(EnchantmentTooltipHandler::onTooltipDisplay);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Feature.class, EventPriority.LOW, FeatureList::addConfigFeatures);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientStuff::machineRender);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> EnchantmentTooltipHandler::register);
         Packet.main();
     }
 
