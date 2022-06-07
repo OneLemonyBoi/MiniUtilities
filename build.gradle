@@ -98,11 +98,6 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     maven { url = 'https://maven.minecraftforge.net' }
     maven {
-        name = "CF"
-        url = "https://minecraft.curseforge.com/api/maven/"
-    }
-    maven {
-        name = "C4"
         url = "https://maven.theillusivec4.top/"
     }
     maven {
@@ -110,17 +105,17 @@ repositories {
         url = "https://www.cursemaven.com/"
     }
     maven { url 'https://jitpack.io' }
-    maven { url 'https://maven.explodingcreeper.me' }
+    maven { url 'https://maven.explodingcreeper.me/releases' }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
-    runtimeOnly fg.deobf("curse.maven:curios-309927:3231111")
-    compileOnly fg.deobf("curse.maven:curios-309927:3231111:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0:api")
     runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")
     implementation fg.deobf("curse.maven:ctm-267602:3137659")
     runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3157997")
-    implementation fg.deobf('onelemonyboi.lemonlib:lemonlib:1.4.0')
+    implementation fg.deobf('onelemonyboi.lemonlib:lemonlib:1.4.2')
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
