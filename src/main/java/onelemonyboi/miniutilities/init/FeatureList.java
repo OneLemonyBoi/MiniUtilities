@@ -17,9 +17,9 @@ public class FeatureList {
 
     public static void addConfigFeatures(RegistryEvent.Register<Feature<?>> event) {
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
-        ENDER_ORE = Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockList.EnderOre.get().getDefaultState(), Config.enderOreVeinSize.get()))
-                .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(Config.enderOreMinHeight.get(), 0, Config.enderOreMaxHeight.get())))
-                .square().count(Config.enderOreAmount.get());
+        ENDER_ORE = Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockList.EnderOre.get().getDefaultState(), 12))
+                .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 55)))
+                .square().count(12);
 
         BlockClusterFeatureConfig ENDER_LILY_CONFIG = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockList.EnderLily.get().getDefaultState()), SimpleBlockPlacer.PLACER).tries(2).build();
         ENDER_LILY = Feature.RANDOM_PATCH.withConfiguration(ENDER_LILY_CONFIG).withPlacement(Features.Placements.PATCH_PLACEMENT).count(1);

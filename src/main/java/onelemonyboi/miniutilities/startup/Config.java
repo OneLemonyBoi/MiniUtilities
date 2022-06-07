@@ -33,12 +33,6 @@ public class Config {
     public static ForgeConfigSpec.IntValue panelMultiplier;
 
     public static ForgeConfigSpec.BooleanValue enableEnderOre;
-    public static ForgeConfigSpec.IntValue enderOreVeinSize;
-    public static ForgeConfigSpec.IntValue enderOreMinHeight;
-    public static ForgeConfigSpec.IntValue enderOreMaxHeight;
-    public static ForgeConfigSpec.IntValue enderOreAmount;
-
-
 
     public static ForgeConfigSpec.IntValue blessedEarthMinWaitTimer;
     public static ForgeConfigSpec.IntValue blessedEarthCheckAreaSize;
@@ -91,10 +85,6 @@ public class Config {
         COMMON_BUILDER.push(CATEGORY_ORE);
 
         enableEnderOre = COMMON_BUILDER.comment("Should Ender Ore Generate?").define("Ender Ore Generation", true);
-        enderOreVeinSize = COMMON_BUILDER.comment("What should the Vein Size of Ender Ore be?").defineInRange("Ender Ore Vein", 12, 0, 256);
-        enderOreMinHeight = COMMON_BUILDER.comment("What should the minimum generation height be for Ender Ore?").defineInRange("Ender Ore Min", 0, 0, 256);
-        enderOreMaxHeight = COMMON_BUILDER.comment("What should the maximum generation height be for Ender Ore?").defineInRange("Ender Ore Max", 55, 0, 256);
-        enderOreAmount = COMMON_BUILDER.comment("How many times should Ender Ore try to generate?").defineInRange("Ender Ore Gen Attempts", 12, 0, 255);
 
         COMMON_BUILDER.pop();
     }
