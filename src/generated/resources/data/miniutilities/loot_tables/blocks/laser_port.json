@@ -1,3 +1,36 @@
 {
-  "type": "minecraft:block"
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_name",
+              "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "IsInput",
+                  "target": "BlockEntityTag.IsInput",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
+          "name": "miniutilities:laser_port"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
 }

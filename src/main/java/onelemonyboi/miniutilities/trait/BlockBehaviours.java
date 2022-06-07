@@ -20,28 +20,24 @@ public class BlockBehaviours {
     public static BlockBehaviour drum = new BlockBehaviour.Builder()
             .composeFrom(BlockPartialBehaviours.partialBaseBlock)
             .tileEntity(b -> new DrumTile(((DrumBlock) b).mb))
-            .keepNBTOnBreak()
             .with(ModularMaterialTrait.builder().hardness(6).resistance(6).toolType(ToolType.PICKAXE).requiresTool(true).build())
             .build();
 
     public static BlockBehaviour solarPanelController = new BlockBehaviour.Builder()
             .composeFrom(BlockPartialBehaviours.partialBaseBlock)
             .tileEntity(b -> new SolarPanelControllerTile())
-            .keepNBTOnBreak()
             .with(ModularMaterialTrait.builder().hardness(4).resistance(4).harvestLevel(1).toolType(ToolType.PICKAXE).requiresTool(true).build())
             .build();
 
     public static BlockBehaviour laserHub = new BlockBehaviour.Builder()
             .composeFrom(BlockPartialBehaviours.partialBaseBlock)
             .tileEntity(b -> new LaserHubTile())
-            .keepNBTOnBreak()
             .with(ModularMaterialTrait.builder().hardness(4).resistance(4).harvestLevel(1).toolType(ToolType.PICKAXE).requiresTool(true).build())
             .build();
 
     public static BlockBehaviour laserPort = new BlockBehaviour.Builder()
             .composeFrom(BlockPartialBehaviours.partialBaseBlock)
             .tileEntity(b -> new LaserPortTile())
-            .keepNBTOnBreak()
             .rotation(BlockTraits.RotationType.XYZ)
             .with(ModularMaterialTrait.builder().hardness(4).resistance(4).harvestLevel(1).toolType(ToolType.PICKAXE).requiresTool(true).build())
             .build();
@@ -49,7 +45,6 @@ public class BlockBehaviours {
     public static BlockBehaviour mechanicalMiner = new BlockBehaviour.Builder()
             .composeFrom(BlockPartialBehaviours.partialMaterial)
             .tileEntity(t -> new MechanicalMinerTile())
-            .keepNBTOnBreak()
             .rotation(BlockTraits.RotationType.XYZ)
             .with(ModularMaterialTrait.builder().hardness(3).resistance(3).harvestLevel(1).toolType(ToolType.PICKAXE).requiresTool(true).build())
             .build();
@@ -57,7 +52,6 @@ public class BlockBehaviours {
     public static BlockBehaviour mechanicalPlacer = new BlockBehaviour.Builder()
             .composeFrom(BlockPartialBehaviours.partialBaseBlock)
             .tileEntity(t -> new MechanicalPlacerTile())
-            .keepNBTOnBreak()
             .rotation(BlockTraits.RotationType.XYZ)
             .with(ModularMaterialTrait.builder().hardness(3).resistance(3).harvestLevel(1).toolType(ToolType.PICKAXE).requiresTool(true).build())
             .build();
@@ -65,7 +59,6 @@ public class BlockBehaviours {
     public static BlockBehaviour quantumQuarry = new BlockBehaviour.Builder()
             .composeFrom(BlockPartialBehaviours.partialBaseBlock)
             .tileEntity(t -> new QuantumQuarryTile())
-            .keepNBTOnBreak()
             .with(ModularMaterialTrait.builder().hardness(6).resistance(6).harvestLevel(3).toolType(ToolType.PICKAXE).requiresTool(true).build())
             .build();
 

@@ -14,6 +14,8 @@ import net.minecraft.loot.conditions.BlockStateProperty;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.loot.conditions.RandomChance;
 import net.minecraft.loot.functions.ApplyBonus;
+import net.minecraft.loot.functions.CopyName;
+import net.minecraft.loot.functions.CopyNbt;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
@@ -78,27 +80,27 @@ public class LootTable extends LootTableProvider {
             registerDropSelfLootTable(BlockList.MagentaLapisCaelestis.get());
             registerDropSelfLootTable(BlockList.PinkLapisCaelestis.get());
             registerDropSelfLootTable(BlockList.BrownLapisCaelestis.get());
-            registerLootTable(BlockList.StoneDrum.get(), blockNoDrop());
-            registerLootTable(BlockList.IronDrum.get(), blockNoDrop());
-            registerLootTable(BlockList.ReinforcedLargeDrum.get(), blockNoDrop());
-            registerLootTable(BlockList.NetheriteReinforcedDrum.get(), blockNoDrop());
-            registerLootTable(BlockList.UnstableDrum.get(), blockNoDrop());
+            registerLootTable(BlockList.StoneDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
+            registerLootTable(BlockList.IronDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
+            registerLootTable(BlockList.ReinforcedLargeDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
+            registerLootTable(BlockList.NetheriteReinforcedDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
+            registerLootTable(BlockList.UnstableDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
             registerDropSelfLootTable(BlockList.WoodenSpikes.get());
             registerDropSelfLootTable(BlockList.IronSpikes.get());
             registerDropSelfLootTable(BlockList.GoldSpikes.get());
             registerDropSelfLootTable(BlockList.DiamondSpikes.get());
             registerDropSelfLootTable(BlockList.NetheriteSpikes.get());
-            registerLootTable(BlockList.MechanicalMiner.get(), blockNoDrop());
-            registerLootTable(BlockList.MechanicalPlacer.get(), blockNoDrop());
-            registerLootTable(BlockList.QuantumQuarry.get(), blockNoDrop());
-            registerLootTable(BlockList.SolarPanelController.get(), blockNoDrop());
+            registerLootTable(BlockList.MechanicalMiner.get(), (block) -> dropWithTags(block, "RedstoneMode", "WaitTime"));
+            registerLootTable(BlockList.MechanicalPlacer.get(), (block) -> dropWithTags(block, "RedstoneMode", "WaitTime"));
+            registerLootTable(BlockList.QuantumQuarry.get(), (block) -> dropWithTags(block, "RedstoneMode", "WaitTime"));
+            registerLootTable(BlockList.SolarPanelController.get(), (block) -> dropWithTags(block, "panelsActive", "power"));
             registerDropSelfLootTable(BlockList.SolarPanel.get());
             registerDropSelfLootTable(BlockList.LunarPanel.get());
             registerDropSelfLootTable(BlockList.EnderTile.get());
             registerDropSelfLootTable(BlockList.ChorusTile.get());
 
-            registerLootTable(BlockList.LaserHub.get(), blockNoDrop());
-            registerLootTable(BlockList.LaserPort.get(), blockNoDrop());
+            registerLootTable(BlockList.LaserHub.get(), (block) -> dropWithTags(block, "IsInput"));
+            registerLootTable(BlockList.LaserPort.get(), (block) -> dropWithTags(block, "IsInput"));
 
             registerDropSelfLootTable(BlockList.EtherealGlass.get());
             registerDropSelfLootTable(BlockList.ReverseEtherealGlass.get());
@@ -122,6 +124,14 @@ public class LootTable extends LootTableProvider {
             return ModRegistry.BLOCKS.getEntries().stream()
                     .map(RegistryObject::get)
                     .collect(Collectors.toList());
+        }
+
+        public static net.minecraft.loot.LootTable.Builder dropWithTags(Block block, String... tags) {
+            CopyNbt.Builder tagNbtBuilder = CopyNbt.builder(CopyNbt.Source.BLOCK_ENTITY);
+            for (String tag : tags) {
+                tagNbtBuilder = tagNbtBuilder.replaceOperation(tag, "BlockEntityTag." + tag);
+            }
+            return net.minecraft.loot.LootTable.builder().addLootPool(withSurvivesExplosion(block, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block).acceptFunction(CopyName.builder(CopyName.Source.BLOCK_ENTITY)).acceptFunction(tagNbtBuilder))));
         }
     }
 }
