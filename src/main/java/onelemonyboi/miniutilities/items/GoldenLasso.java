@@ -25,6 +25,8 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class GoldenLasso extends Item {
     public GoldenLasso(Properties properties) {
         super(properties);
@@ -32,8 +34,8 @@ public class GoldenLasso extends Item {
 
     @Override
     public ITextComponent getHighlightTip(ItemStack item, ITextComponent displayName) {
-        String text = displayName.getUnformattedComponentText();
-        text = text.equals("") ? new TranslationTextComponent("item.miniutilities.golden_lasso").getUnformattedComponentText() : text;
+        String text = displayName.getContents();
+        text = text.equals("") ? new TranslationTextComponent("item.miniutilities.golden_lasso").getContents() : text;
         return new StringTextComponent(text);
         //if (item.getTag() == null || !item.getTag().contains("EntityTag")) return displayName;
 //        return new StringTextComponent(displayName.getUnformattedComponentText() + " - " + EntityType.byKey(item.getChildTag("EntityTag").getString("id")).get().getName());
@@ -41,11 +43,11 @@ public class GoldenLasso extends Item {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (stack.getTag() != null && stack.getTag().contains("EntityTag")) {
-            tooltip.add(new StringTextComponent("Contains: ").appendSibling(EntityType.byKey(stack.getChildTag("EntityTag").getString("id")).get().getName()));
+            tooltip.add(new StringTextComponent("Contains: ").append(EntityType.byString(stack.getTagElement("EntityTag").getString("id")).get().getDescription()));
         }
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 
     public static void onRightClick(PlayerInteractEvent.EntityInteract event) {
@@ -57,17 +59,17 @@ public class GoldenLasso extends Item {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        if (!context.getWorld().isRemote && context.getItem().getTag() != null && context.getItem().getTag().contains("EntityTag")) {
-            BlockPos newPos = context.getPos().offset(context.getFace());
-            context.getItem().getChildTag("EntityTag").remove("Pos");
-            context.getItem().getChildTag("EntityTag").put("Pos", newDoubleNBTList(newPos.getX(), newPos.getY(), newPos.getZ()));
-            Entity entity = EntityType.byKey(context.getItem().getChildTag("EntityTag").getString("id")).get().spawn((ServerWorld) context.getWorld(), context.getItem().getTag(), null, null, newPos, SpawnReason.MOB_SUMMONED, false, false);
-            entity.read(context.getItem().getChildTag("EntityTag"));
-            context.getItem().setTag(new CompoundNBT());
+    public ActionResultType useOn(ItemUseContext context) {
+        if (!context.getLevel().isClientSide && context.getItemInHand().getTag() != null && context.getItemInHand().getTag().contains("EntityTag")) {
+            BlockPos newPos = context.getClickedPos().relative(context.getClickedFace());
+            context.getItemInHand().getTagElement("EntityTag").remove("Pos");
+            context.getItemInHand().getTagElement("EntityTag").put("Pos", newDoubleNBTList(newPos.getX(), newPos.getY(), newPos.getZ()));
+            Entity entity = EntityType.byString(context.getItemInHand().getTagElement("EntityTag").getString("id")).get().spawn((ServerWorld) context.getLevel(), context.getItemInHand().getTag(), null, null, newPos, SpawnReason.MOB_SUMMONED, false, false);
+            entity.load(context.getItemInHand().getTagElement("EntityTag"));
+            context.getItemInHand().setTag(new CompoundNBT());
             return ActionResultType.CONSUME;
         }
-        return super.onItemUse(context);
+        return super.useOn(context);
     }
 
     protected ListNBT newDoubleNBTList(double... numbers) {

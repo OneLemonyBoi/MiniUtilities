@@ -46,77 +46,77 @@ public class LootTable extends LootTableProvider {
 
     @Override
     protected void validate(Map<ResourceLocation, net.minecraft.loot.LootTable> map, ValidationTracker validationtracker) {
-        map.forEach((p_218436_2_, p_218436_3_) -> LootTableManager.validateLootTable(validationtracker, p_218436_2_, p_218436_3_));
+        map.forEach((p_218436_2_, p_218436_3_) -> LootTableManager.validate(validationtracker, p_218436_2_, p_218436_3_));
     }
 
     public static class ModBlockLootTables extends BlockLootTables {
         @Override
         protected void addTables() {
             // registerDropSelfLootTable(name);
-            this.registerLootTable(BlockList.EnderOre.get(), (ender) -> { return droppingWithSilkTouch(ender, withExplosionDecay(ender, ItemLootEntry.builder(ItemList.EnderDust.get())
-                    .acceptFunction(SetCount.builder(RandomValueRange.of(2.0F, 5.0F)))
-                    .acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE))));
+            this.add(BlockList.EnderOre.get(), (ender) -> { return createSilkTouchDispatchTable(ender, applyExplosionDecay(ender, ItemLootEntry.lootTableItem(ItemList.EnderDust.get())
+                    .apply(SetCount.setCount(RandomValueRange.between(2.0F, 5.0F)))
+                    .apply(ApplyBonus.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
             });
 
-            registerDropSelfLootTable(BlockList.CursedEarth.get());
-            registerDropSelfLootTable(BlockList.BlessedEarth.get());
-            registerDropSelfLootTable(BlockList.BlursedEarth.get());
-            registerDropSelfLootTable(BlockList.EnderPearlBlock.get());
-            registerDropSelfLootTable(BlockList.UnstableBlock.get());
-            registerLootTable(BlockList.AngelBlock.get(), blockNoDrop());
-            registerDropSelfLootTable(BlockList.WhiteLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.LightGrayLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.GrayLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.BlackLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.RedLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.OrangeLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.YellowLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.LimeLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.GreenLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.LightBlueLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.CyanLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.BlueLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.PurpleLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.MagentaLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.PinkLapisCaelestis.get());
-            registerDropSelfLootTable(BlockList.BrownLapisCaelestis.get());
-            registerLootTable(BlockList.StoneDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
-            registerLootTable(BlockList.IronDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
-            registerLootTable(BlockList.ReinforcedLargeDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
-            registerLootTable(BlockList.NetheriteReinforcedDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
-            registerLootTable(BlockList.UnstableDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
-            registerDropSelfLootTable(BlockList.WoodenSpikes.get());
-            registerDropSelfLootTable(BlockList.IronSpikes.get());
-            registerDropSelfLootTable(BlockList.GoldSpikes.get());
-            registerDropSelfLootTable(BlockList.DiamondSpikes.get());
-            registerDropSelfLootTable(BlockList.NetheriteSpikes.get());
-            registerLootTable(BlockList.MechanicalMiner.get(), (block) -> dropWithTags(block, "RedstoneMode", "WaitTime"));
-            registerLootTable(BlockList.MechanicalPlacer.get(), (block) -> dropWithTags(block, "RedstoneMode", "WaitTime"));
-            registerLootTable(BlockList.QuantumQuarry.get(), (block) -> dropWithTags(block, "RedstoneMode", "WaitTime"));
-            registerLootTable(BlockList.SolarPanelController.get(), (block) -> dropWithTags(block, "panelsActive", "power"));
-            registerDropSelfLootTable(BlockList.SolarPanel.get());
-            registerDropSelfLootTable(BlockList.LunarPanel.get());
-            registerDropSelfLootTable(BlockList.EnderTile.get());
-            registerDropSelfLootTable(BlockList.ChorusTile.get());
+            dropSelf(BlockList.CursedEarth.get());
+            dropSelf(BlockList.BlessedEarth.get());
+            dropSelf(BlockList.BlursedEarth.get());
+            dropSelf(BlockList.EnderPearlBlock.get());
+            dropSelf(BlockList.UnstableBlock.get());
+            add(BlockList.AngelBlock.get(), noDrop());
+            dropSelf(BlockList.WhiteLapisCaelestis.get());
+            dropSelf(BlockList.LightGrayLapisCaelestis.get());
+            dropSelf(BlockList.GrayLapisCaelestis.get());
+            dropSelf(BlockList.BlackLapisCaelestis.get());
+            dropSelf(BlockList.RedLapisCaelestis.get());
+            dropSelf(BlockList.OrangeLapisCaelestis.get());
+            dropSelf(BlockList.YellowLapisCaelestis.get());
+            dropSelf(BlockList.LimeLapisCaelestis.get());
+            dropSelf(BlockList.GreenLapisCaelestis.get());
+            dropSelf(BlockList.LightBlueLapisCaelestis.get());
+            dropSelf(BlockList.CyanLapisCaelestis.get());
+            dropSelf(BlockList.BlueLapisCaelestis.get());
+            dropSelf(BlockList.PurpleLapisCaelestis.get());
+            dropSelf(BlockList.MagentaLapisCaelestis.get());
+            dropSelf(BlockList.PinkLapisCaelestis.get());
+            dropSelf(BlockList.BrownLapisCaelestis.get());
+            add(BlockList.StoneDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
+            add(BlockList.IronDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
+            add(BlockList.ReinforcedLargeDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
+            add(BlockList.NetheriteReinforcedDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
+            add(BlockList.UnstableDrum.get(), (block) -> dropWithTags(block, "FluidName", "Amount", "Tag", "Capacity"));
+            dropSelf(BlockList.WoodenSpikes.get());
+            dropSelf(BlockList.IronSpikes.get());
+            dropSelf(BlockList.GoldSpikes.get());
+            dropSelf(BlockList.DiamondSpikes.get());
+            dropSelf(BlockList.NetheriteSpikes.get());
+            add(BlockList.MechanicalMiner.get(), (block) -> dropWithTags(block, "RedstoneMode", "WaitTime"));
+            add(BlockList.MechanicalPlacer.get(), (block) -> dropWithTags(block, "RedstoneMode", "WaitTime"));
+            add(BlockList.QuantumQuarry.get(), (block) -> dropWithTags(block, "RedstoneMode", "WaitTime"));
+            add(BlockList.SolarPanelController.get(), (block) -> dropWithTags(block, "panelsActive", "power"));
+            dropSelf(BlockList.SolarPanel.get());
+            dropSelf(BlockList.LunarPanel.get());
+            dropSelf(BlockList.EnderTile.get());
+            dropSelf(BlockList.ChorusTile.get());
 
-            registerLootTable(BlockList.LaserHub.get(), (block) -> dropWithTags(block, "IsInput"));
-            registerLootTable(BlockList.LaserPort.get(), (block) -> dropWithTags(block, "IsInput"));
+            add(BlockList.LaserHub.get(), (block) -> dropWithTags(block, "IsInput"));
+            add(BlockList.LaserPort.get(), (block) -> dropWithTags(block, "IsInput"));
 
-            registerDropSelfLootTable(BlockList.EtherealGlass.get());
-            registerDropSelfLootTable(BlockList.ReverseEtherealGlass.get());
-            registerDropSelfLootTable(BlockList.RedstoneGlass.get());
-            registerDropSelfLootTable(BlockList.GlowingGlass.get());
-            registerDropSelfLootTable(BlockList.DarkGlass.get());
-            registerDropSelfLootTable(BlockList.DarkEtherealGlass.get());
-            registerDropSelfLootTable(BlockList.DarkReverseEtherealGlass.get());
+            dropSelf(BlockList.EtherealGlass.get());
+            dropSelf(BlockList.ReverseEtherealGlass.get());
+            dropSelf(BlockList.RedstoneGlass.get());
+            dropSelf(BlockList.GlowingGlass.get());
+            dropSelf(BlockList.DarkGlass.get());
+            dropSelf(BlockList.DarkEtherealGlass.get());
+            dropSelf(BlockList.DarkReverseEtherealGlass.get());
 
-            registerDropSelfLootTable(BlockList.LapisLamp.get());
-            registerDropSelfLootTable(BlockList.RedstoneClockBlock.get());
+            dropSelf(BlockList.LapisLamp.get());
+            dropSelf(BlockList.RedstoneClockBlock.get());
 
-            ILootCondition.IBuilder ilootcondition = BlockStateProperty.builder(BlockList.EnderLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EnderLily.AGE, 7));
-            registerLootTable(BlockList.EnderLily.get(), withExplosionDecay(BlockList.EnderLily.get(), net.minecraft.loot.LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(Items.ENDER_PEARL))).addLootPool(LootPool.builder().acceptCondition(ilootcondition).addEntry(ItemLootEntry.builder(ItemList.EnderLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
-            ILootCondition.IBuilder ilootcondition1 = BlockStateProperty.builder(BlockList.FlameLily.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(FlameLily.AGE, 7));
-            registerLootTable(BlockList.FlameLily.get(), withExplosionDecay(BlockList.FlameLily.get(), net.minecraft.loot.LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.FlameLily.get()))).addLootPool(LootPool.builder().acceptCondition(ilootcondition1).addEntry(ItemLootEntry.builder(ItemList.FlameLilySeeds.get()).acceptCondition(RandomChance.builder(0.01F))))));
+            ILootCondition.IBuilder ilootcondition = BlockStateProperty.hasBlockStateProperties(BlockList.EnderLily.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(EnderLily.AGE, 7));
+            add(BlockList.EnderLily.get(), applyExplosionDecay(BlockList.EnderLily.get(), net.minecraft.loot.LootTable.lootTable().withPool(LootPool.lootPool().add(ItemLootEntry.lootTableItem(ItemList.EnderLilySeeds.get()))).withPool(LootPool.lootPool().when(ilootcondition).add(ItemLootEntry.lootTableItem(Items.ENDER_PEARL))).withPool(LootPool.lootPool().when(ilootcondition).add(ItemLootEntry.lootTableItem(ItemList.EnderLilySeeds.get()).when(RandomChance.randomChance(0.01F))))));
+            ILootCondition.IBuilder ilootcondition1 = BlockStateProperty.hasBlockStateProperties(BlockList.FlameLily.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlameLily.AGE, 7));
+            add(BlockList.FlameLily.get(), applyExplosionDecay(BlockList.FlameLily.get(), net.minecraft.loot.LootTable.lootTable().withPool(LootPool.lootPool().add(ItemLootEntry.lootTableItem(ItemList.FlameLilySeeds.get()))).withPool(LootPool.lootPool().when(ilootcondition1).add(ItemLootEntry.lootTableItem(ItemList.FlameLily.get()))).withPool(LootPool.lootPool().when(ilootcondition1).add(ItemLootEntry.lootTableItem(ItemList.FlameLilySeeds.get()).when(RandomChance.randomChance(0.01F))))));
         }
 
         @Override
@@ -127,11 +127,11 @@ public class LootTable extends LootTableProvider {
         }
 
         public static net.minecraft.loot.LootTable.Builder dropWithTags(Block block, String... tags) {
-            CopyNbt.Builder tagNbtBuilder = CopyNbt.builder(CopyNbt.Source.BLOCK_ENTITY);
+            CopyNbt.Builder tagNbtBuilder = CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY);
             for (String tag : tags) {
-                tagNbtBuilder = tagNbtBuilder.replaceOperation(tag, "BlockEntityTag." + tag);
+                tagNbtBuilder = tagNbtBuilder.copy(tag, "BlockEntityTag." + tag);
             }
-            return net.minecraft.loot.LootTable.builder().addLootPool(withSurvivesExplosion(block, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block).acceptFunction(CopyName.builder(CopyName.Source.BLOCK_ENTITY)).acceptFunction(tagNbtBuilder))));
+            return net.minecraft.loot.LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(block).apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(tagNbtBuilder))));
         }
     }
 }

@@ -13,15 +13,15 @@ import onelemonyboi.miniutilities.init.FeatureList;
 public class WorldGen {
     public static void generate(final BiomeLoadingEvent event) {
         if (!(event.getCategory().equals(Biome.Category.NETHER) || event.getCategory().equals(Biome.Category.THEEND)) && Config.enableEnderOre.get()) {
-            event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, FeatureList.ENDER_ORE);
+            event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, FeatureList.ENDER_ORE);
         }
 
         if (event.getCategory().equals(Biome.Category.THEEND) && Config.enableEnderLily.get()) {
-            event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeatureList.ENDER_LILY);
+            event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeatureList.ENDER_LILY);
         }
 
         if (event.getClimate().temperature >= 2 && Config.enableFlameLily.get()) {
-            event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeatureList.FLAME_LILY);
+            event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeatureList.FLAME_LILY);
         }
     }
 

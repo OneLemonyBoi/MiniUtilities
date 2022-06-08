@@ -8,19 +8,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class AngelBlock extends Block {
     public AngelBlock(Material material, Float hardness, Float resistance, Integer harvestLevel) {
         super(Properties
-                .create(material)
-                .hardnessAndResistance(hardness, resistance)
+                .of(material)
+                .strength(hardness, resistance)
                 .harvestLevel(harvestLevel));
     }
 
     @Override
-    public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        super.onBlockHarvested(world, pos, state, player);
-        if (!world.isRemote && !player.abilities.isCreativeMode) {
-            player.addItemStackToInventory(new ItemStack(this));
+    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        super.playerWillDestroy(world, pos, state, player);
+        if (!world.isClientSide && !player.abilities.instabuild) {
+            player.addItem(new ItemStack(this));
         }
     }
 }

@@ -5,16 +5,18 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.text.ITextComponent;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class Shotgun extends Enchantment {
     public Shotgun(Rarity rarityIn, EquipmentSlotType... slots) {
         super(rarityIn, EnchantmentType.BOW, slots);
     }
 
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 2 * enchantmentLevel;
     }
 
-    public int getMaxEnchantability(int enchantmentLevel) {
+    public int getMaxCost(int enchantmentLevel) {
         return 50 * enchantmentLevel;
     }
     /**
@@ -25,7 +27,7 @@ public class Shotgun extends Enchantment {
     }
 
     @Override
-    public ITextComponent getDisplayName(int level) {
-        return super.getDisplayName(level);
+    public ITextComponent getFullname(int level) {
+        return super.getFullname(level);
     }
 }

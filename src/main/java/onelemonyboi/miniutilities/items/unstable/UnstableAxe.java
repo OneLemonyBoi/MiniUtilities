@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 import java.util.Set;
 import java.util.UUID;
 
+import net.minecraft.item.Item.Properties;
+
 public class UnstableAxe extends AxeItem {
 
     public UnstableAxe(IItemTier materialIn, float damage, float attackSpeed, Properties properties) {
@@ -36,19 +38,19 @@ public class UnstableAxe extends AxeItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entity, int itemSlot, boolean isSelected) {
-        if (!isSelected || !(entity instanceof PlayerEntity) || worldIn.isRemote) return;
-        ((PlayerEntity) entity).getFoodStats().addStats(1, 0.2F);  }
+        if (!isSelected || !(entity instanceof PlayerEntity) || worldIn.isClientSide) return;
+        ((PlayerEntity) entity).getFoodData().eat(1, 0.2F);  }
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
         if (entity instanceof LivingEntity) {
-            if (((LivingEntity) entity).getCreatureAttribute() == CreatureAttribute.UNDEAD)
-                entity.attackEntityFrom(DamageSource.causePlayerDamage(player), 4);
+            if (((LivingEntity) entity).getMobType() == CreatureAttribute.UNDEAD)
+                entity.hurt(DamageSource.playerAttack(player), 4);
             else {
                 ((LivingEntity) entity).heal(8);
                 return true;
             }
-            player.attackEntityFrom(DamageSource.MAGIC, 2);
+            player.hurt(DamageSource.MAGIC, 2);
         }
         return false;
     }

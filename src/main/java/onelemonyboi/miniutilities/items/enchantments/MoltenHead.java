@@ -5,16 +5,18 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.text.ITextComponent;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class MoltenHead extends Enchantment {
     public MoltenHead(Rarity rarityIn, EquipmentSlotType... slots) {
         super(rarityIn, EnchantmentType.DIGGER, slots);
     }
 
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 2 * enchantmentLevel;
     }
 
-    public int getMaxEnchantability(int enchantmentLevel) {
+    public int getMaxCost(int enchantmentLevel) {
         return 50 * enchantmentLevel;
     }
     /**

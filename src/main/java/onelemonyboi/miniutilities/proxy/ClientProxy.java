@@ -22,15 +22,15 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void init(FMLCommonSetupEvent event) {
-        Map<String, PlayerRenderer> skinMapAngelWingLeft = Minecraft.getInstance().getRenderManager().getSkinMap();
+        Map<String, PlayerRenderer> skinMapAngelWingLeft = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
         for (PlayerRenderer render : new PlayerRenderer[]{skinMapAngelWingLeft.get("default"), skinMapAngelWingLeft.get("slim")})
             render.addLayer(new AngelRingRendererLeft(render));
 
-        Map<String, PlayerRenderer> skinMapAngelWingRight = Minecraft.getInstance().getRenderManager().getSkinMap();
+        Map<String, PlayerRenderer> skinMapAngelWingRight = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
         for (PlayerRenderer render : new PlayerRenderer[]{skinMapAngelWingRight.get("default"), skinMapAngelWingRight.get("slim")})
             render.addLayer(new AngelRingRendererRight(render));
 
-        Map<String, PlayerRenderer> skinMapKikoku = Minecraft.getInstance().getRenderManager().getSkinMap();
+        Map<String, PlayerRenderer> skinMapKikoku = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
         for (PlayerRenderer render : new PlayerRenderer[]{skinMapKikoku.get("default"), skinMapKikoku.get("slim")})
             render.addLayer(new KikokuRenderer(render));
     }

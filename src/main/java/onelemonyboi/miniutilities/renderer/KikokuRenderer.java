@@ -33,24 +33,24 @@ public class KikokuRenderer extends LayerRenderer<AbstractClientPlayerEntity, Pl
         String name = player.getGameProfile().getName();
         Boolean inInvAndNotUsing = false;
         PlayerInventory inv = player.inventory;
-        for (ItemStack itemStack : inv.mainInventory) {
+        for (ItemStack itemStack : inv.items) {
             Item item = itemStack.getItem();
             if (item == ItemList.Kikoku.get()) {inInvAndNotUsing = true;}
         }
-        for (ItemStack itemStack : inv.offHandInventory) {
+        for (ItemStack itemStack : inv.offhand) {
             Item item = itemStack.getItem();
             if (item == ItemList.Kikoku.get()) {inInvAndNotUsing = false;}
         }
-        if (inv.getCurrentItem().getItem() == ItemList.Kikoku.get()) {inInvAndNotUsing = false;}
+        if (inv.getSelected().getItem() == ItemList.Kikoku.get()) {inInvAndNotUsing = false;}
 
-        if (player.hasPlayerInfo() && !player.isInvisible() && player.isWearing(PlayerModelPart.CAPE) && inInvAndNotUsing) {
-            matrixStack.push();
-            getEntityModel().bipedBody.translateRotate(matrixStack);
+        if (player.isCapeLoaded() && !player.isInvisible() && player.isModelPartShown(PlayerModelPart.CAPE) && inInvAndNotUsing) {
+            matrixStack.pushPose();
+            getParentModel().body.translateAndRotate(matrixStack);
             matrixStack.translate(0, 0.25, 0.2);
             matrixStack.scale(1f, -1f, -0.25f);
-            matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
-            Minecraft.getInstance().getItemRenderer().renderItem(player, ItemList.Kikoku.get().getDefaultInstance(), ItemCameraTransforms.TransformType.NONE, false, matrixStack, buffer, player.world, 0xF000F0, OverlayTexture.NO_OVERLAY);
-            matrixStack.pop();
+            matrixStack.mulPose(Vector3f.XP.rotationDegrees(180));
+            Minecraft.getInstance().getItemRenderer().renderStatic(player, ItemList.Kikoku.get().getDefaultInstance(), ItemCameraTransforms.TransformType.NONE, false, matrixStack, buffer, player.level, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            matrixStack.popPose();
         }
     }
 }

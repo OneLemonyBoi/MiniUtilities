@@ -12,16 +12,18 @@ import net.minecraftforge.fml.common.thread.EffectiveSide;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class LapisLamp extends Block {
 
     public LapisLamp() {
-        super(Properties.create(Material.EARTH).sound(SoundType.GLASS).hardnessAndResistance(0.3F));
+        super(Properties.of(Material.DIRT).sound(SoundType.GLASS).strength(0.3F));
     }
 
     @Override
     public void animateTick(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos blockPos, @Nonnull Random random) {
-        if (world.isRemote && world.getLight(blockPos) == 0) {
-            world.getLightManager().checkBlock(blockPos);
+        if (world.isClientSide && world.getMaxLocalRawBrightness(blockPos) == 0) {
+            world.getLightEngine().checkBlock(blockPos);
         }
     }
 

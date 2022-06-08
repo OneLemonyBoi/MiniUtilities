@@ -4,16 +4,18 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class ExperienceHarvester extends Enchantment {
     public ExperienceHarvester(Rarity rarityIn, EquipmentSlotType... slots) {
         super(rarityIn, EnchantmentType.WEAPON, slots);
     }
 
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 2 * enchantmentLevel;
     }
 
-    public int getMaxEnchantability(int enchantmentLevel) {
+    public int getMaxCost(int enchantmentLevel) {
         return 50 * enchantmentLevel;
     }
     /**

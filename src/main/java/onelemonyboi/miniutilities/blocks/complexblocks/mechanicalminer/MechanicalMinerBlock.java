@@ -36,27 +36,27 @@ import static onelemonyboi.miniutilities.misc.KeyBindingsHandler.keyBindingPress
 
 public class MechanicalMinerBlock extends BlockBase {
     public MechanicalMinerBlock() {
-        super(AbstractBlock.Properties.create(Material.IRON).sound(SoundType.METAL), BlockBehaviours.mechanicalMiner);
+        super(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL), BlockBehaviours.mechanicalMiner);
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote()) {
-            TileEntity te = worldIn.getTileEntity(pos);
-            if (player.isSneaking()) {return ActionResultType.CONSUME;}
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (!worldIn.isClientSide()) {
+            TileEntity te = worldIn.getBlockEntity(pos);
+            if (player.isShiftKeyDown()) {return ActionResultType.CONSUME;}
 
-            if (!(te instanceof MechanicalMinerTile)) {return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);}
+            if (!(te instanceof MechanicalMinerTile)) {return super.use(state, worldIn, pos, player, handIn, hit);}
             MechanicalMinerTile TE = ((MechanicalMinerTile) te);
-            if (ModTags.Items.UPGRADES_SPEED.contains(player.getHeldItem(handIn).getItem())) {
+            if (ModTags.Items.UPGRADES_SPEED.contains(player.getItemInHand(handIn).getItem())) {
                 if (TE.waittime > 5) {
                     TE.waittime = TE.waittime - 5;
-                    player.getHeldItem(handIn).shrink(1);
+                    player.getItemInHand(handIn).shrink(1);
                     TE.timer = 0;
                 }
                 else if (TE.waittime == 5){
                     TE.waittime = 1;
-                    player.getHeldItem(handIn).shrink(1);
+                    player.getItemInHand(handIn).shrink(1);
                     TE.timer = 0;
                 }
             }
@@ -69,16 +69,16 @@ public class MechanicalMinerBlock extends BlockBase {
     }
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
-        if (!event.getWorld().isRemote()) {
-            if (event.getWorld().getTileEntity(event.getPos()) instanceof MechanicalMinerTile && event.getPlayer().isSneaking() && event.getPlayer().getHeldItem(event.getHand()).isEmpty()) {
-                MechanicalMinerTile TE = (MechanicalMinerTile) (event.getWorld().getTileEntity(event.getPos()));
+        if (!event.getWorld().isClientSide()) {
+            if (event.getWorld().getBlockEntity(event.getPos()) instanceof MechanicalMinerTile && event.getPlayer().isShiftKeyDown() && event.getPlayer().getItemInHand(event.getHand()).isEmpty()) {
+                MechanicalMinerTile TE = (MechanicalMinerTile) (event.getWorld().getBlockEntity(event.getPos()));
                 if (TE.waittime > 1 && TE.waittime < 20) {
                     TE.waittime = TE.waittime + 5;
-                    InventoryHelper.spawnItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    InventoryHelper.dropItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
                     TE.timer = 0;
                 } else if (TE.waittime == 1) {
                     TE.waittime = 5;
-                    InventoryHelper.spawnItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    InventoryHelper.dropItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
                     TE.timer = 0;
                 }
             }

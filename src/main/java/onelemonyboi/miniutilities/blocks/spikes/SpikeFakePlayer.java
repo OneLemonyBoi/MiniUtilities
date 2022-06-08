@@ -10,6 +10,6 @@ public class SpikeFakePlayer extends FakePlayer {
     }
 
     public SpikeFakePlayer(FakePlayer fakePlayer){
-        this((ServerWorld) fakePlayer.world, fakePlayer.getGameProfile());
+        this((ServerWorld) fakePlayer.level, fakePlayer.getGameProfile());
     }
 }

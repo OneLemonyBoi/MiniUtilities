@@ -64,16 +64,16 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
 
     @Override
     public void tick() {
-        if (world.isRemote()) {return;}
+        if (level.isClientSide()) {return;}
 
-        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
+        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
 
         if(this.timer == 0 && !insertStacks.isEmpty()){
             tryInsert(insertStacks);
             return;
         }
 
-        if ((!world.isBlockPowered(this.getPos()) && this.redstonemode == 2) || (world.isBlockPowered(this.getPos()) && this.redstonemode == 3)) {
+        if ((!level.hasNeighborSignal(this.getBlockPos()) && this.redstonemode == 2) || (level.hasNeighborSignal(this.getBlockPos()) && this.redstonemode == 3)) {
             return;
         }
         if (!getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().checkedMachineConsume(calcRFCost(this.waittime))) {
@@ -99,14 +99,14 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
                 j--;
             }
         }
-        this.markDirty();
+        this.setChanged();
     }
 
     private ArrayList<ItemStack> generateItemStacks() {
-        if (world == null) return new ArrayList<>();
+        if (level == null) return new ArrayList<>();
 
-        String biomeStr = world.getBiome(getPos()).getRegistryName().toString();
-        String dimensionStr = world.getDimensionKey().getLocation().toString();
+        String biomeStr = level.getBiome(getBlockPos()).getRegistryName().toString();
+        String dimensionStr = level.dimension().location().toString();
 
 
         RandomChooser<QuantumQuarryJSON.OreInfo> randomOreChooser = QuantumQuarryJSON.randomOreChooser;
@@ -118,7 +118,7 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
         ArrayList<ItemStack> res = new ArrayList<>();
         if (itemsOfHighestWorth.size() > 0) {
             for (Map.Entry<QuantumQuarryJSON.OreInfo, Integer> entry : itemsOfHighestWorth.entrySet()) {
-                ResourceLocation id = ResourceLocation.tryCreate(entry.getKey().name);
+                ResourceLocation id = ResourceLocation.tryParse(entry.getKey().name);
                 Item item = ForgeRegistries.ITEMS.getValue(id);
                 int count = entry.getValue();
                 while (count > item.getMaxStackSize()){
@@ -132,15 +132,15 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
     }
 
     @Override
     public List<ITextComponent> getInfo() {
         List<ITextComponent> output = new ArrayList<>();
 
-        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(this.getBlockState().getBlock().getName());
         output.add(new StringTextComponent(""));
         switch (this.redstonemode) {
             case 1:
@@ -154,9 +154,9 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
                 break;
         }
         output.add(new TranslationTextComponent("text.miniutilities.waittime")
-                .appendString(this.waittime.toString() + " ticks(" + this.waittime.floatValue() / 20)
-                .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
-                .appendString(")"));
+                .append(this.waittime.toString() + " ticks(" + this.waittime.floatValue() / 20)
+                .append(new TranslationTextComponent("text.miniutilities.seconds"))
+                .append(")"));
         output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
         output.add(new StringTextComponent("FE/t Consumption: " + calcRFCost(this.waittime)));
         return output;

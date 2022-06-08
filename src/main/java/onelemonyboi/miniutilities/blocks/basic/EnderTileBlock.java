@@ -24,29 +24,31 @@ import onelemonyboi.miniutilities.init.BlockList;
 
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EnderTileBlock extends Block {
     public EnderTileBlock() {
-        super(Properties.create(Material.GLASS).hardnessAndResistance(4f).sound(SoundType.GLASS));
+        super(Properties.of(Material.GLASS).strength(4f).sound(SoundType.GLASS));
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return VoxelShapes.combineAndSimplify(Block.makeCuboidShape(1, 1, 1, 15, 2, 15), Block.makeCuboidShape(0, 0, 0, 16, 1, 16), IBooleanFunction.OR);
+        return VoxelShapes.join(Block.box(1, 1, 1, 15, 2, 15), Block.box(0, 0, 0, 16, 1, 16), IBooleanFunction.OR);
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        int yPos = entityIn.getPosition().getY();
+    public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+        int yPos = entityIn.blockPosition().getY();
         for (int x = 1; x <= (256 - yPos); x++) {
-            Boolean blockCheck = !worldIn.isAirBlock(entityIn.getPosition().up(x)) &&
-                    worldIn.getBlockState(entityIn.getPosition().up(x)).getBlock() != Blocks.BEDROCK &&
-                    worldIn.getBlockState(entityIn.getPosition().up(x)).getBlock() != BlockList.ChorusTile.get() &&
-                    worldIn.isAirBlock(entityIn.getPosition().up(x+1)) &&
-                    worldIn.isAirBlock(entityIn.getPosition().up(x+2));
+            Boolean blockCheck = !worldIn.isEmptyBlock(entityIn.blockPosition().above(x)) &&
+                    worldIn.getBlockState(entityIn.blockPosition().above(x)).getBlock() != Blocks.BEDROCK &&
+                    worldIn.getBlockState(entityIn.blockPosition().above(x)).getBlock() != BlockList.ChorusTile.get() &&
+                    worldIn.isEmptyBlock(entityIn.blockPosition().above(x+1)) &&
+                    worldIn.isEmptyBlock(entityIn.blockPosition().above(x+2));
 
             if (blockCheck){
-                entityIn.teleportKeepLoaded(entityIn.getPosX(), yPos + x + 1, entityIn.getPosZ());
-                entityIn.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                entityIn.teleportToWithTicket(entityIn.getX(), yPos + x + 1, entityIn.getZ());
+                entityIn.playSound(SoundEvents.ENDERMAN_TELEPORT, 1, 1);
                 return;
             }
         }
@@ -58,7 +60,7 @@ public class EnderTileBlock extends Block {
     }
 
     private static void spawnParticles(World world, BlockPos pos) {
-        Random random = world.rand;
+        Random random = world.random;
         Direction.Axis direction$axis = Direction.NORTH.getAxis();
         double d1 = direction$axis == Direction.Axis.X ? 0.5D: (double)random.nextFloat();
         double d2 = direction$axis == Direction.Axis.Y ? 0.5D : (double)random.nextFloat();

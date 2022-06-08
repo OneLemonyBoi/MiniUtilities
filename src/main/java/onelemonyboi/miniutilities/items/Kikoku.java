@@ -28,8 +28,8 @@ import java.util.UUID;
 public class Kikoku extends SwordItem {
     public static UUID SOUL_DAMAGE_MODIFIER = UUID.fromString("d2928c01-5d7d-41c5-bd3a-9ca8f43c8ff8");
 
-    public static final DamageSource DIVINE_DAMAGE_SOURCE = (new DamageSource("divineDamage")).setDamageBypassesArmor().setDamageAllowedInCreativeMode().setDamageIsAbsolute();
-    public static final DamageSource ARMOR_PIERCING_DAMAGE_SOURCE = (new DamageSource("armourPiercingDamage")).setDamageBypassesArmor().setDamageIsAbsolute();
+    public static final DamageSource DIVINE_DAMAGE_SOURCE = (new DamageSource("divineDamage")).bypassArmor().bypassInvul().bypassMagic();
+    public static final DamageSource ARMOR_PIERCING_DAMAGE_SOURCE = (new DamageSource("armourPiercingDamage")).bypassArmor().bypassMagic();
 
     public Kikoku(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties builderIn) {
         super(tier, attackDamageIn, attackSpeedIn, builderIn);
@@ -37,12 +37,12 @@ public class Kikoku extends SwordItem {
 
     @Nonnull
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        Multimap<Attribute, AttributeModifier> multimap = super.getDefaultAttributeModifiers(equipmentSlot);
         ListMultimap<Attribute, AttributeModifier> multimaps = ArrayListMultimap.create();
         if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimaps.put(AttributeList.ArmorPiercingDamage.get(), new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Armor Piercing Damage Modifier", 3, AttributeModifier.Operation.ADDITION));
-            multimaps.put(AttributeList.DivineDamage.get(), new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Divine Damage Modifier", 1, AttributeModifier.Operation.ADDITION));
+            multimaps.put(AttributeList.ArmorPiercingDamage.get(), new AttributeModifier(Item.BASE_ATTACK_DAMAGE_UUID, "Armor Piercing Damage Modifier", 3, AttributeModifier.Operation.ADDITION));
+            multimaps.put(AttributeList.DivineDamage.get(), new AttributeModifier(Item.BASE_ATTACK_DAMAGE_UUID, "Divine Damage Modifier", 1, AttributeModifier.Operation.ADDITION));
             multimaps.put(AttributeList.SoulDamage.get(), new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage Modifier", 0.25, AttributeModifier.Operation.ADDITION));
         }
         for (Attribute attribute : multimap.keySet()) {
@@ -52,8 +52,8 @@ public class Kikoku extends SwordItem {
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (target == null || !target.canBeAttackedWithItem() || attacker.world.isRemote) {
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (target == null || !target.isAttackable() || attacker.level.isClientSide) {
             return false;
         }
         Map<Enchantment, Integer> stackEnchantments = EnchantmentHelper.getEnchantments(stack);
@@ -61,12 +61,12 @@ public class Kikoku extends SwordItem {
         if (target instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) target;
             if (player.isCreative()) {
-                target.hurtResistantTime = 0;
-                target.attackEntityFrom(DIVINE_DAMAGE_SOURCE, (sharpnessLevel * 0.5F) + 2.5F);
+                target.invulnerableTime = 0;
+                target.hurt(DIVINE_DAMAGE_SOURCE, (sharpnessLevel * 0.5F) + 2.5F);
             }
         }
-        target.hurtResistantTime = 0;
-        target.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, ((sharpnessLevel * 0.5F) + 4.5F));
+        target.invulnerableTime = 0;
+        target.hurt(ARMOR_PIERCING_DAMAGE_SOURCE, ((sharpnessLevel * 0.5F) + 4.5F));
         drainHealth(target);
         return true;
     }
@@ -74,17 +74,17 @@ public class Kikoku extends SwordItem {
     private void drainHealth(LivingEntity target) {
         if (target.getAttribute(Attributes.MAX_HEALTH).getModifier(SOUL_DAMAGE_MODIFIER) == null) {
             AttributeModifier attributeModifier = new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage", -0.25, AttributeModifier.Operation.ADDITION);
-            target.getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(attributeModifier);
+            target.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(attributeModifier);
         }
         else {
             AttributeModifier attributeModifier = new AttributeModifier(SOUL_DAMAGE_MODIFIER, "Soul Damage", -0.25 + target.getAttribute(Attributes.MAX_HEALTH).getModifier(SOUL_DAMAGE_MODIFIER).getAmount(), AttributeModifier.Operation.ADDITION);
-            target.getAttribute(Attributes.MAX_HEALTH).removePersistentModifier(SOUL_DAMAGE_MODIFIER);
-            target.getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(attributeModifier);
+            target.getAttribute(Attributes.MAX_HEALTH).removePermanentModifier(SOUL_DAMAGE_MODIFIER);
+            target.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(attributeModifier);
         }
     }
 
     public static void AnvilUpdateEvent(AnvilUpdateEvent event) {
-        if (!event.getPlayer().isServerWorld()) {
+        if (!event.getPlayer().isEffectiveAi()) {
             return;
         }
         ItemStack sword = event.getLeft();
@@ -124,7 +124,7 @@ public class Kikoku extends SwordItem {
     }
 
     public static void AnvilRepairEvent(AnvilRepairEvent event) {
-        if (!event.getPlayer().getEntityWorld().isRemote) {
+        if (!event.getPlayer().getCommandSenderWorld().isClientSide) {
             return;
         }
         if (event.getItemResult().getItem() == ItemList.Kikoku.get() && event.getPlayer() instanceof ClientPlayerEntity) {

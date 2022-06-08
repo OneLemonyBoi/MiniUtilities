@@ -61,42 +61,42 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
 
     @Override
     public void tick() {
-        if (world.isRemote()) {return;}
-        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
+        if (level.isClientSide()) {return;}
+        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
         this.timer++;
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
         if (this.redstonemode == 1){
             blockPlacer();
         }
-        else if (world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
+        else if (level.hasNeighborSignal(this.getBlockPos()) && this.redstonemode == 2){
             blockPlacer();
         }
-        else if (!world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
+        else if (!level.hasNeighborSignal(this.getBlockPos()) && this.redstonemode == 3){
             blockPlacer();
         }
     }
 
     protected void blockPlacer() {
-        BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
+        BlockPos blockPos = this.getBlockPos().relative(this.getBlockState().getValue(BlockStateProperties.FACING));
         Boolean flag = false;
         for (int j = 0; j < slots && !flag; ++j) {
             ItemStack itemStack1 = getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().getStackInSlot(j);
             Item item1 = itemStack1.getItem();
-            if (!itemStack1.isEmpty() && item1 instanceof BlockItem && world.isAirBlock(blockPos)) {
-                world.setBlockState(blockPos, ((BlockItem) item1).getBlock().getDefaultState());
+            if (!itemStack1.isEmpty() && item1 instanceof BlockItem && level.isEmptyBlock(blockPos)) {
+                level.setBlockAndUpdate(blockPos, ((BlockItem) item1).getBlock().defaultBlockState());
                 itemStack1.shrink(1);
                 flag = true;
             }
         }
-        this.markDirty();
+        this.setChanged();
     }
 
     @Override
     public List<ITextComponent> getInfo() {
         List<ITextComponent> output = new ArrayList<>();
 
-        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(this.getBlockState().getBlock().getName());
         output.add(new StringTextComponent(""));
         switch (this.redstonemode) {
             case 1:
@@ -110,9 +110,9 @@ public class MechanicalPlacerTile extends TileBase implements INamedContainerPro
                 break;
         }
         output.add(new TranslationTextComponent("text.miniutilities.waittime")
-                .appendString(this.waittime.toString() + " ticks(" + String.valueOf(this.waittime.floatValue() / 20))
-                .appendSibling(new TranslationTextComponent("text.miniutilities.seconds"))
-                .appendString(")"));
+                .append(this.waittime.toString() + " ticks(" + String.valueOf(this.waittime.floatValue() / 20))
+                .append(new TranslationTextComponent("text.miniutilities.seconds"))
+                .append(")"));
         return output;
     }
 }

@@ -26,6 +26,8 @@ import java.util.List;
 import onelemonyboi.lemonlib.blocks.block.BlockBase;
 import onelemonyboi.miniutilities.trait.BlockBehaviours;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class DrumBlock extends BlockBase {
     public final int mb;
 
@@ -37,10 +39,10 @@ public class DrumBlock extends BlockBase {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable IBlockReader blockReader, @Nonnull List<ITextComponent> textComponents, @Nonnull ITooltipFlag tooltipFlag) {
-        CompoundNBT nbt = stack.getChildTag("BlockEntityTag");
+    public void appendHoverText(@Nonnull ItemStack stack, @Nullable IBlockReader blockReader, @Nonnull List<ITextComponent> textComponents, @Nonnull ITooltipFlag tooltipFlag) {
+        CompoundNBT nbt = stack.getTagElement("BlockEntityTag");
 
-        ITextComponent fluidName = ITextComponent.getTextComponentOrEmpty("Empty");
+        ITextComponent fluidName = ITextComponent.nullToEmpty("Empty");
         int fluidAmount = 0;
 
         if (nbt != null) {
@@ -52,14 +54,14 @@ public class DrumBlock extends BlockBase {
         textComponents.add(new TranslationTextComponent("text.miniutilities.tooltip.drum_fluid", fluidName));
         textComponents.add(new TranslationTextComponent("text.miniutilities.tooltip.drum_amount", fluidAmount, mb));
 
-        super.addInformation(stack, blockReader, textComponents, tooltipFlag);
+        super.appendHoverText(stack, blockReader, textComponents, tooltipFlag);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ItemStack held = player.getHeldItem(hand);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ItemStack held = player.getItemInHand(hand);
 
-        if (FluidUtil.interactWithFluidHandler(player, hand, world, pos, hit.getFace()) ||
+        if (FluidUtil.interactWithFluidHandler(player, hand, world, pos, hit.getDirection()) ||
                 held.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()) {
             return ActionResultType.SUCCESS;
         }
@@ -68,13 +70,13 @@ public class DrumBlock extends BlockBase {
     }
 
     @Override
-    public boolean hasComparatorInputOverride(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-        DrumTile tile = (DrumTile) worldIn.getTileEntity(pos);
+    public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos) {
+        DrumTile tile = (DrumTile) worldIn.getBlockEntity(pos);
         double percent = (double) tile.getDrum().getFluidAmount() / (double) tile.getDrum().getCapacity();
         // Multiplying by 15 allows for 0 and 15 to be exclusively for empty and full
         int out = (int) Math.ceil(percent * 15);

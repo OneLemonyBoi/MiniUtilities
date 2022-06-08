@@ -19,11 +19,13 @@ import net.minecraftforge.fml.common.Mod;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.startup.Config;
 
+import net.minecraft.item.Item.Properties;
+
 @Mod.EventBusSubscriber
 public class UnstableIngot extends Item {
 
-    public static final DamageSource DIVIDE_BY_DIAMOND = (new DamageSource("divide_by_diamond").setDamageBypassesArmor().setDamageAllowedInCreativeMode());
-    public static final DamageSource UNSTABLE_DIVISION = (new DamageSource("unstable_division").setDamageBypassesArmor().setDamageAllowedInCreativeMode());
+    public static final DamageSource DIVIDE_BY_DIAMOND = (new DamageSource("divide_by_diamond").bypassArmor().bypassInvul());
+    public static final DamageSource UNSTABLE_DIVISION = (new DamageSource("unstable_division").bypassArmor().bypassInvul());
 
     public UnstableIngot(Properties properties) {
         super(properties);
@@ -33,7 +35,7 @@ public class UnstableIngot extends Item {
         if (playerEntity.getHealth() < damage) {
             stack.shrink(1);
         }
-        playerEntity.attackEntityFrom(UNSTABLE_DIVISION, damage);
+        playerEntity.hurt(UNSTABLE_DIVISION, damage);
     }
 
     @Override
@@ -43,24 +45,24 @@ public class UnstableIngot extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (world.isRemote || !(entity instanceof PlayerEntity)) {
+        if (world.isClientSide || !(entity instanceof PlayerEntity)) {
             return;
         }
         PlayerEntity playerEntity = (PlayerEntity) entity;
         switch (Config.unstableIngotType.get()) {
             case NO_DAMAGE:
-                playerEntity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100));
+                playerEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100));
                 break;
             case DAMAGE:
                 // TODO: LOW PRIORITY Dont damage after hits 200
-                setDamage(stack, stack.getDamage() + 1);
+                setDamage(stack, stack.getDamageValue() + 1);
                 CompoundNBT compoundNBT = stack.getOrCreateTag();
-                if (stack.getDamage() == 200) {
-                    playerEntity.sendStatusMessage((new TranslationTextComponent("text.miniutilities.ingotisunstable").mergeStyle(TextFormatting.RED)), true);
-                    stack.setDisplayName(new TranslationTextComponent("text.miniutilities.unstableingot"));
+                if (stack.getDamageValue() == 200) {
+                    playerEntity.displayClientMessage((new TranslationTextComponent("text.miniutilities.ingotisunstable").withStyle(TextFormatting.RED)), true);
+                    stack.setHoverName(new TranslationTextComponent("text.miniutilities.unstableingot"));
                     compoundNBT.putInt("timeunstable", 0);
                 }
-                else if (stack.getDamage() > 200) {
+                else if (stack.getDamageValue() > 200) {
                     int unstable = compoundNBT.getInt("timeunstable") + 1;
                     compoundNBT.putInt("timeunstable", unstable);
                     if (unstable < 400 && unstable % 40 == 20) {
@@ -72,11 +74,11 @@ public class UnstableIngot extends Item {
                 }
                 break;
             case EXPLOSION:
-                setDamage(stack, stack.getDamage() + 1);
-                if (stack.getDamage() == 200) {
+                setDamage(stack, stack.getDamageValue() + 1);
+                if (stack.getDamageValue() == 200) {
                     stack.shrink(1);
-                    world.createExplosion(null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), 1, Explosion.Mode.NONE);
-                    playerEntity.attackEntityFrom(DIVIDE_BY_DIAMOND, Float.MAX_VALUE);
+                    world.explode(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), 1, Explosion.Mode.NONE);
+                    playerEntity.hurt(DIVIDE_BY_DIAMOND, Float.MAX_VALUE);
                 }
                 break;
         }
@@ -88,8 +90,8 @@ public class UnstableIngot extends Item {
         ItemEntity entityItem = e.getEntityItem();
         ItemStack stack = entityItem.getItem();
         if (stack.getItem() == ItemList.UnstableIngot.get().getItem() && Config.unstableIngotType.get() != ReactionType.NO_DAMAGE) {
-            p.world.createExplosion(null, p.getPosX(), p.getPosY(), p.getPosZ(), 1, Explosion.Mode.NONE);
-            p.attackEntityFrom(DIVIDE_BY_DIAMOND, Float.MAX_VALUE);
+            p.level.explode(null, p.getX(), p.getY(), p.getZ(), 1, Explosion.Mode.NONE);
+            p.hurt(DIVIDE_BY_DIAMOND, Float.MAX_VALUE);
             e.setCanceled(true);
         }
     }

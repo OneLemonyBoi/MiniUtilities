@@ -23,26 +23,26 @@ import java.util.Random;
 
 public class MoltenHeadHandler {
     public static void handleBlockBreak(BreakEvent event) {
-        if (!event.getWorld().isRemote() && EnchantmentHelper.getEnchantmentLevel(EnchantmentList.MoltenHead.get(), event.getPlayer().getHeldItem(Hand.MAIN_HAND)) > 0) { // Checks if running on server and enchant is on tool
+        if (!event.getWorld().isClientSide() && EnchantmentHelper.getItemEnchantmentLevel(EnchantmentList.MoltenHead.get(), event.getPlayer().getItemInHand(Hand.MAIN_HAND)) > 0) { // Checks if running on server and enchant is on tool
             ServerWorld serverWorld = ((ServerWorld) event.getWorld()); // Casts IWorld to ServerWorld
-            ItemStack pick = event.getPlayer().getHeldItem(Hand.MAIN_HAND);
-            int fortuneAmount = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, pick);
-            int silkTouchAmount = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, pick);
+            ItemStack pick = event.getPlayer().getItemInHand(Hand.MAIN_HAND);
+            int fortuneAmount = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, pick);
+            int silkTouchAmount = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, pick);
 
             LootContext.Builder lootcontext$builder = (new LootContext.Builder(serverWorld)
-                    .withRandom(serverWorld.rand)
-                    .withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(event.getPos()))
+                    .withRandom(serverWorld.random)
+                    .withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(event.getPos()))
                     .withParameter(LootParameters.TOOL, pick)); // Makes lootcontext to calculate drops
             List<ItemStack> drops = event.getState().getDrops(lootcontext$builder); // Calculates drops
 
             for (ItemStack item : drops) { // Iteration
-                ItemStack stack = serverWorld.getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(item), serverWorld)
-                        .map(FurnaceRecipe::getRecipeOutput)
+                ItemStack stack = serverWorld.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(item), serverWorld)
+                        .map(FurnaceRecipe::getResultItem)
                         .filter(itemStack -> !itemStack.isEmpty())
                         .map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, item.getCount() * itemStack.getCount()))
                         .orElse(item); // Recipe as var
 
-                if (fortuneAmount >= 1 && silkTouchAmount <= 0 && !stack.isItemEqual(item)) {
+                if (fortuneAmount >= 1 && silkTouchAmount <= 0 && !stack.sameItem(item)) {
                     int addedCount = new Random().nextInt(fortuneAmount + 2) - 1;
                     if (addedCount < 0) {
                         addedCount = 0;
@@ -51,9 +51,9 @@ public class MoltenHeadHandler {
                     stack.setCount(stack.getCount() * addedCount);
                 }
 
-                InventoryHelper.spawnItemStack(event.getPlayer().world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), stack); // Spawns Itemstack
+                InventoryHelper.dropItemStack(event.getPlayer().level, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), stack); // Spawns Itemstack
             }
-            event.getPlayer().world.destroyBlock(event.getPos(), false); // Breaks block
+            event.getPlayer().level.destroyBlock(event.getPos(), false); // Breaks block
             event.setResult(Event.Result.DENY);
         }
     }

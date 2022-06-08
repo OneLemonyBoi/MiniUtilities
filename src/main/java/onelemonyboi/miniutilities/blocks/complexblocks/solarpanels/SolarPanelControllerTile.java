@@ -37,41 +37,41 @@ public class SolarPanelControllerTile extends TileBase implements RenderInfoIden
 
     @Override
     public void tick() {
-        if (world.isRemote()) {return;}
+        if (level.isClientSide()) {return;}
 
         solarPanelRecursion();
-        power = world.isDaytime() ? Config.solarPanelGeneration.get() : Config.lunarPanelGeneration.get();
+        power = level.isDay() ? Config.solarPanelGeneration.get() : Config.lunarPanelGeneration.get();
         power *= activeSolarCount;
         power *= activeSolarCount / (float) Config.panelMultiplier.get() + 1;
         getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().machineProduce((int) power);
-        getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().outputToSide(world, pos, Direction.UP, Config.solarPanelGeneration.get() * 4096);
-        this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
+        getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().outputToSide(level, worldPosition, Direction.UP, Config.solarPanelGeneration.get() * 4096);
+        this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
     }
 
     public void solarPanelRecursion() {
         posList = new ArrayList<>();
         activeSolarCount = 0;
-        solarPanelRecursion(this.getPos());
+        solarPanelRecursion(this.getBlockPos());
     }
 
     public void solarPanelRecursion(BlockPos pos) {
         for (Direction d : Direction.Plane.HORIZONTAL) {
-            BlockState blockState = world.getBlockState(pos.offset(d));
-            if (posList.contains(pos.offset(d)) || !world.canSeeSky(pos.offset(d)) || !world.isAreaLoaded(pos.offset(d), 1)) {
+            BlockState blockState = level.getBlockState(pos.relative(d));
+            if (posList.contains(pos.relative(d)) || !level.canSeeSky(pos.relative(d)) || !level.isAreaLoaded(pos.relative(d), 1)) {
                 continue;
             }
             if (blockState.getBlock() instanceof SolarPanelBlock) {
-                if (world.isDaytime()) {
+                if (level.isDay()) {
                     activeSolarCount++;
                 }
-                posList.add(pos.offset(d));
-                solarPanelRecursion(pos.offset(d));
+                posList.add(pos.relative(d));
+                solarPanelRecursion(pos.relative(d));
             } else if (blockState.getBlock() instanceof LunarPanelBlock) {
-                if (world.isNightTime()) {
+                if (level.isNight()) {
                     activeSolarCount++;
                 }
-                posList.add(pos.offset(d));
-                solarPanelRecursion(pos.offset(d));
+                posList.add(pos.relative(d));
+                solarPanelRecursion(pos.relative(d));
             }
         }
     }
@@ -80,7 +80,7 @@ public class SolarPanelControllerTile extends TileBase implements RenderInfoIden
     public List<ITextComponent> getInfo() {
         List<ITextComponent> output = new ArrayList<>();
 
-        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(this.getBlockState().getBlock().getName());
         output.add(new StringTextComponent(""));
         output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
         output.add(new StringTextComponent("Active Panels: " + activeSolarCount));

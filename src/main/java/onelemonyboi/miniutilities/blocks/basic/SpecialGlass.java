@@ -23,7 +23,7 @@ public class SpecialGlass extends AbstractGlassBlock {
 
 
     public SpecialGlass(boolean ethereal, boolean reverse, boolean glowing, boolean dark, boolean redstone) {
-        super(AbstractBlock.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid().setAllowsSpawn((a, b, c, d) -> false).setOpaque((a, b, c) -> false).setSuffocates((a, b, c) -> false).setBlocksVision((a, b, c) -> false).setLightLevel(state -> glowing ? 15 : 0));
+        super(AbstractBlock.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion().isValidSpawn((a, b, c, d) -> false).isRedstoneConductor((a, b, c) -> false).isSuffocating((a, b, c) -> false).isViewBlocking((a, b, c) -> false).lightLevel(state -> glowing ? 15 : 0));
         this.glowing = glowing;
         this.ethereal = ethereal;
         this.reverse = reverse;
@@ -31,17 +31,17 @@ public class SpecialGlass extends AbstractGlassBlock {
         this.redstone = redstone;
     }
     @Override
-    public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    public int getLightBlock(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return dark ? worldIn.getMaxLightLevel() : 0;
     }
 
     @Override
-    public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
+    public int getSignal(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
         return redstone ? 15 : 0;
     }
 
     @Override
-    public int getStrongPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
+    public int getDirectSignal(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
         return redstone ? 15 : 0;
     }
 

@@ -13,37 +13,37 @@ import onelemonyboi.miniutilities.init.EnchantmentList;
 
 public class ShotgunHandler {
     public static void handleBowShot(ArrowLooseEvent event) {
-        int level = EnchantmentHelper.getEnchantmentLevel(EnchantmentList.Shotgun.get(), event.getBow());
+        int level = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentList.Shotgun.get(), event.getBow());
         if (event.hasAmmo()) {
-            float charge = BowItem.getArrowVelocity(event.getCharge());
+            float charge = BowItem.getPowerForTime(event.getCharge());
             for (int x = 0; x < level; x++) {
                 AbstractArrowEntity arrowEntity = new ArrowEntity(event.getWorld(), event.getPlayer());
-                arrowEntity.setDirectionAndMovement(event.getPlayer(), event.getPlayer().rotationPitch, event.getPlayer().rotationYaw, 0, charge * 3.0F, (float) Math.pow(x, 1.5));
-                arrowEntity.setMotion(arrowEntity.getMotion().x, arrowEntity.getMotion().y + 0.1, arrowEntity.getMotion().z);
+                arrowEntity.shootFromRotation(event.getPlayer(), event.getPlayer().xRot, event.getPlayer().yRot, 0, charge * 3.0F, (float) Math.pow(x, 1.5));
+                arrowEntity.setDeltaMovement(arrowEntity.getDeltaMovement().x, arrowEntity.getDeltaMovement().y + 0.1, arrowEntity.getDeltaMovement().z);
                 if (charge == 1.0F) {
-                    arrowEntity.setIsCritical(true);
+                    arrowEntity.setCritArrow(true);
                 }
 
-                int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, event.getBow());
+                int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, event.getBow());
                 if (j > 0) {
-                    arrowEntity.setDamage(arrowEntity.getDamage() + (double) j * 0.5D + 0.5D);
+                    arrowEntity.setBaseDamage(arrowEntity.getBaseDamage() + (double) j * 0.5D + 0.5D);
                 }
 
-                int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, event.getBow());
+                int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, event.getBow());
                 if (k > 0) {
-                    arrowEntity.setKnockbackStrength(k);
+                    arrowEntity.setKnockback(k);
                 }
 
-                if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, event.getBow()) > 0) {
-                    arrowEntity.setFire(100);
+                if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, event.getBow()) > 0) {
+                    arrowEntity.setSecondsOnFire(100);
                 }
 
-                event.getBow().damageItem(1, event.getPlayer(), (player) -> {
-                    player.sendBreakAnimation(event.getPlayer().getActiveHand());
+                event.getBow().hurtAndBreak(1, event.getPlayer(), (player) -> {
+                    player.broadcastBreakEvent(event.getPlayer().getUsedItemHand());
                 });
-                arrowEntity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+                arrowEntity.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
 
-                event.getWorld().addEntity(arrowEntity);
+                event.getWorld().addFreshEntity(arrowEntity);
             }
         }
     }

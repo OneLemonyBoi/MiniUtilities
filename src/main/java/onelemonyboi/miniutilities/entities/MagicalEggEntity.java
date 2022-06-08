@@ -42,22 +42,22 @@ public class MagicalEggEntity extends ProjectileItemEntity {
      * Handler for {@link World#setEntityState}
      */
     @OnlyIn(Dist.CLIENT)
-    public void handleStatusUpdate(byte id) {
+    public void handleEntityEvent(byte id) {
         if (id == 3) {
             for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, this.getItem()), this.getPosX(), this.getPosY(), this.getPosZ(), ((double) this.rand.nextFloat() - 0.5D) * 0.08D, ((double) this.rand.nextFloat() - 0.5D) * 0.08D, ((double) this.rand.nextFloat() - 0.5D) * 0.08D);
+                this.level.addParticle(new ItemParticleData(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), ((double) this.random.nextFloat() - 0.5D) * 0.08D, ((double) this.random.nextFloat() - 0.5D) * 0.08D, ((double) this.random.nextFloat() - 0.5D) * 0.08D);
             }
         }
     }
 
-    protected void onEntityHit(EntityRayTraceResult result) {
-        super.onEntityHit(result);
+    protected void onHitEntity(EntityRayTraceResult result) {
+        super.onHitEntity(result);
         if (!(result.getEntity() instanceof LivingEntity) || result.getEntity() instanceof PlayerEntity) {
             return;
         }
         LivingEntity entity = (LivingEntity) result.getEntity();
         try {
-            InventoryHelper.spawnItemStack(this.getEntityWorld(), this.getPosX(), this.getPosY(), this.getPosZ(), new ItemStack(SpawnEggItem.EGGS.get(entity.getType())));
+            InventoryHelper.dropItemStack(this.getCommandSenderWorld(), this.getX(), this.getY(), this.getZ(), new ItemStack(SpawnEggItem.BY_ID.get(entity.getType())));
             entity.remove();
         }
         catch (Exception e) {
@@ -68,10 +68,10 @@ public class MagicalEggEntity extends ProjectileItemEntity {
     /**
      * Called when this EntityFireball hits a block or entity.
      */
-    protected void onImpact(RayTraceResult result) {
-        super.onImpact(result);
-        if (!this.world.isRemote) {
-            this.world.setEntityState(this, (byte)3);
+    protected void onHit(RayTraceResult result) {
+        super.onHit(result);
+        if (!this.level.isClientSide) {
+            this.level.broadcastEntityEvent(this, (byte)3);
             this.remove();
         }
     }
@@ -81,7 +81,7 @@ public class MagicalEggEntity extends ProjectileItemEntity {
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

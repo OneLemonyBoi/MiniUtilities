@@ -31,7 +31,7 @@ public class UnstablePickaxe extends PickaxeItem {
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
-        return material == Material.ROCK ? this.efficiency * 5 : this.efficiency;
+        return material == Material.STONE ? this.speed * 5 : this.speed;
     }
 
     @Nonnull

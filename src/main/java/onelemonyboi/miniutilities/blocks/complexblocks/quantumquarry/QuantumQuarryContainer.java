@@ -24,7 +24,7 @@ public class QuantumQuarryContainer extends Container {
     public QuantumQuarryContainer(final int windowId, final PlayerInventory playerInv, final QuantumQuarryTile te) {
         super(ContainerList.QuarryContainer.get(), windowId);
         this.te = te;
-        this.canInteractWithCallable = IWorldPosCallable.of(te.getWorld(), te.getPos());
+        this.canInteractWithCallable = IWorldPosCallable.create(te.getLevel(), te.getBlockPos());
 
         // Tile Entity
         for (int row = 0; row < 3; row++) {
@@ -63,7 +63,7 @@ public class QuantumQuarryContainer extends Container {
     private static QuantumQuarryTile getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(data, "Packet Buffer cannot be null.");
-        final TileEntity te = playerInv.player.world.getTileEntity(data.readBlockPos());
+        final TileEntity te = playerInv.player.level.getBlockEntity(data.readBlockPos());
         if (te instanceof QuantumQuarryTile) {
             return (QuantumQuarryTile) te;
         }
@@ -71,28 +71,28 @@ public class QuantumQuarryContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.QuantumQuarry.get());
+    public boolean stillValid(PlayerEntity playerIn) {
+        return stillValid(canInteractWithCallable, playerIn, BlockList.QuantumQuarry.get());
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack stack1 = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack stack1 = slot.getItem();
             stack = stack1.copy();
-            if (index < QuantumQuarryTile.slots && !this.mergeItemStack(stack1, QuantumQuarryTile.slots, this.inventorySlots.size(), true)) {
+            if (index < QuantumQuarryTile.slots && !this.moveItemStackTo(stack1, QuantumQuarryTile.slots, this.slots.size(), true)) {
                 return ItemStack.EMPTY;
             }
-            if (!this.mergeItemStack(stack1, 0, QuantumQuarryTile.slots, false)) {
+            if (!this.moveItemStackTo(stack1, 0, QuantumQuarryTile.slots, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (stack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
         }
         return stack;

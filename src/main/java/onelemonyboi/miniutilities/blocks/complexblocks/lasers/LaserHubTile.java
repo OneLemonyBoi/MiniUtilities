@@ -25,30 +25,30 @@ public class LaserHubTile extends TileBase implements RenderInfoIdentifier, ITic
 
     @Override
     public void tick() {
-        if (world.isRemote) {return;}
+        if (level.isClientSide) {return;}
 
         List<LaserPortTile> blocks = getTEsInRadius(LaserPortTile.class, 16);
         for (LaserPortTile portTile : blocks) {
             if (portTile.isInput) getBehaviour()
                         .getRequired(TileTraits.PowerTrait.class)
                         .getEnergyStorage()
-                        .outputToSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
+                        .outputToSide(level, portTile.getBlockPos().relative(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
 
             else getBehaviour()
                     .getRequired(TileTraits.PowerTrait.class)
                     .getEnergyStorage()
-                    .inputFromSide(world, portTile.getPos().offset(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
+                    .inputFromSide(level, portTile.getBlockPos().relative(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
 
         }
 
-        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
+        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
     }
 
     @Override
     public List<ITextComponent> getInfo() {
         List<ITextComponent> output = new ArrayList<>();
 
-        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(this.getBlockState().getBlock().getName());
         output.add(new StringTextComponent(""));
         output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
         return output;
@@ -60,8 +60,8 @@ public class LaserHubTile extends TileBase implements RenderInfoIdentifier, ITic
         for (int x = -radius; x < radius; x++) {
             for (int y = -radius; y < radius; y++) {
                 for (int z = -radius; z < radius; z++) {
-                    if (clazz.isInstance(world.getTileEntity(getPos().add(x, y, z)))) {
-                        output.add((T) world.getTileEntity(getPos().add(x, y, z)));
+                    if (clazz.isInstance(level.getBlockEntity(getBlockPos().offset(x, y, z)))) {
+                        output.add((T) level.getBlockEntity(getBlockPos().offset(x, y, z)));
                     }
                 }
             }
@@ -76,12 +76,12 @@ public class LaserHubTile extends TileBase implements RenderInfoIdentifier, ITic
         for (int x = -radius; x < radius; x++) {
             for (int y = -radius; y < radius; y++) {
                 for (int z = -radius; z < radius; z++) {
-                    BlockPos pos = getPos().add(x, y, z);
-                    if (clazz.isInstance(world.getTileEntity(pos))) {
-                        Vector3d v3d = Vector3d.copy(pos);
+                    BlockPos pos = getBlockPos().offset(x, y, z);
+                    if (clazz.isInstance(level.getBlockEntity(pos))) {
+                        Vector3d v3d = Vector3d.atLowerCornerOf(pos);
                         v3d.add(0.5, 0.5, 0.5);
-                        if (world.getBlockState(pos).hasProperty(LaserPortBlock.FACING)) {
-                            switch (world.getBlockState(pos).get(LaserPortBlock.FACING)) {
+                        if (level.getBlockState(pos).hasProperty(LaserPortBlock.FACING)) {
+                            switch (level.getBlockState(pos).getValue(LaserPortBlock.FACING)) {
                                 case UP:
                                     v3d = v3d.add(0, -distanceFromCenter, 0);
                                     break;

@@ -28,7 +28,7 @@ import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 
 import java.util.UUID;
 
-import static net.minecraft.block.BarrelBlock.PROPERTY_FACING;
+import net.minecraft.block.AbstractBlock.Properties;
 
 public class SpikeBlock extends Block {
     private int damage;
@@ -47,37 +47,37 @@ public class SpikeBlock extends Block {
         this.playerDamage = playerDamage;
         this.expDropTrue = expDropTrue;
         this.dontKill = dontKill;
-        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     @Deprecated
     public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.with(FACING, rotation.rotate(state.get(FACING)));
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Deprecated
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+        return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
 
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
+        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
-    public static final VoxelShape NorthShape = Block.makeCuboidShape(0, 0, 9, 16, 16, 16);
-    public static final VoxelShape SouthShape = Block.makeCuboidShape(0, 0, 0, 16, 16, 7);
-    public static final VoxelShape WestShape = Block.makeCuboidShape(9, 0, 0, 16, 16, 16);
-    public static final VoxelShape EastShape = Block.makeCuboidShape(0, 0, 0, 7, 16, 16);
-    public static final VoxelShape UpShape = Block.makeCuboidShape(0, 0, 0, 16, 7, 16);
-    public static final VoxelShape DownShape = Block.makeCuboidShape(0, 9, 0, 16, 16, 16);
+    public static final VoxelShape NorthShape = Block.box(0, 0, 9, 16, 16, 16);
+    public static final VoxelShape SouthShape = Block.box(0, 0, 0, 16, 16, 7);
+    public static final VoxelShape WestShape = Block.box(9, 0, 0, 16, 16, 16);
+    public static final VoxelShape EastShape = Block.box(0, 0, 0, 7, 16, 16);
+    public static final VoxelShape UpShape = Block.box(0, 0, 0, 16, 7, 16);
+    public static final VoxelShape DownShape = Block.box(0, 9, 0, 16, 16, 16);
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Direction dir = state.get(PROPERTY_FACING);
+        Direction dir = state.getValue(FACING);
         switch (dir) {
             case NORTH:
                 return NorthShape;
@@ -95,8 +95,8 @@ public class SpikeBlock extends Block {
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (worldIn.isRemote || !(entityIn instanceof LivingEntity)) return;
+    public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+        if (worldIn.isClientSide || !(entityIn instanceof LivingEntity)) return;
 
         if (this.dontKill && ((LivingEntity) entityIn).getHealth() <= this.damage) {return;}
         if (this.playerDamage) {
@@ -106,30 +106,30 @@ public class SpikeBlock extends Block {
                 fakePlayer.getAttribute(Attributes.ATTACK_SPEED).setBaseValue(1000000D);
             }
 
-            fakePlayer.setWorld(worldIn);
-            fakePlayer.setPosition(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
+            fakePlayer.setLevel(worldIn);
+            fakePlayer.setPos(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
             cancelSounds = true;
-            fakePlayer.attackTargetEntityWithCurrentItem(entityIn);
+            fakePlayer.attack(entityIn);
             cancelSounds = false;
-            entityIn.setMotion(entityIn.getMotion().mul(0, 1, 0));
+            entityIn.setDeltaMovement(entityIn.getDeltaMovement().multiply(0, 1, 0));
         }
-        else {entityIn.attackEntityFrom(DamageSource.CACTUS, this.damage);}
+        else {entityIn.hurt(DamageSource.CACTUS, this.damage);}
         if (this.expDropTrue) {
-            ((LivingEntity)entityIn).recentlyHit = 100;
+            ((LivingEntity)entityIn).lastHurtByPlayerTime = 100;
         }
-        super.onEntityWalk(worldIn, pos, entityIn);
+        super.stepOn(worldIn, pos, entityIn);
     }
 
     public static void soundEvent(PlaySoundAtEntityEvent event) {
         if(cancelSounds) {
             SoundEvent e = event.getSound();
 
-            if (e == SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK
-                    || e == SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP
-                    || e == SoundEvents.ENTITY_PLAYER_ATTACK_CRIT
-                    || e == SoundEvents.ENTITY_PLAYER_ATTACK_STRONG
-                    || e == SoundEvents.ENTITY_PLAYER_ATTACK_WEAK
-                    || e == SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE) {
+            if (e == SoundEvents.PLAYER_ATTACK_KNOCKBACK
+                    || e == SoundEvents.PLAYER_ATTACK_SWEEP
+                    || e == SoundEvents.PLAYER_ATTACK_CRIT
+                    || e == SoundEvents.PLAYER_ATTACK_STRONG
+                    || e == SoundEvents.PLAYER_ATTACK_WEAK
+                    || e == SoundEvents.PLAYER_ATTACK_NODAMAGE) {
                 event.setCanceled(true);
             }
         }

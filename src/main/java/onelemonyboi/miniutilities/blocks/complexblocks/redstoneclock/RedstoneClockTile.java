@@ -25,26 +25,26 @@ public class RedstoneClockTile extends TileBase implements ITickableTileEntity {
 
     @Override
     public void tick() {
-        if (world.isRemote()) return;
+        if (level.isClientSide()) return;
         if (isPowered()) {
-            world.setBlockState(getPos(), world.getBlockState(getPos()).with(BlockStateProperties.POWERED, true));
+            level.setBlockAndUpdate(getBlockPos(), level.getBlockState(getBlockPos()).setValue(BlockStateProperties.POWERED, true));
             power = 0;
             return;
         }
         else {
-            world.setBlockState(getPos(), world.getBlockState(getPos()).with(BlockStateProperties.POWERED, false));
+            level.setBlockAndUpdate(getBlockPos(), level.getBlockState(getBlockPos()).setValue(BlockStateProperties.POWERED, false));
         }
 
-        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
-        world.notifyNeighborsOfStateChange(pos, this.getBlockState().getBlock());
+        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+        level.updateNeighborsAt(worldPosition, this.getBlockState().getBlock());
 
-        boolean enablePower = Util.milliTime() / 50 % 20 == 0;
+        boolean enablePower = Util.getMillis() / 50 % 20 == 0;
         power = enablePower ? 15 : 0;
     }
 
     public boolean isPowered() {
         return Arrays.stream(Direction.values())
-                .map(d -> world.getBlockState(pos.offset(d)))
-                .anyMatch(b -> b.getBlock() instanceof LeverBlock && b.hasProperty(LeverBlock.POWERED) && b.get(LeverBlock.POWERED));
+                .map(d -> level.getBlockState(worldPosition.relative(d)))
+                .anyMatch(b -> b.getBlock() instanceof LeverBlock && b.hasProperty(LeverBlock.POWERED) && b.getValue(LeverBlock.POWERED));
     }
 }

@@ -23,7 +23,7 @@ public class MechanicalMinerContainer extends Container {
     public MechanicalMinerContainer(final int windowId, final PlayerInventory playerInv, final MechanicalMinerTile te) {
         super(ContainerList.MinerContainer.get(), windowId);
         this.te = te;
-        this.canInteractWithCallable = IWorldPosCallable.of(te.getWorld(), te.getPos());
+        this.canInteractWithCallable = IWorldPosCallable.create(te.getLevel(), te.getBlockPos());
 
         // Tile Entity
         for (int row = 0; row < 3; row++) {
@@ -65,7 +65,7 @@ public class MechanicalMinerContainer extends Container {
     private static MechanicalMinerTile getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(data, "Packet Buffer cannot be null.");
-        final TileEntity te = playerInv.player.world.getTileEntity(data.readBlockPos());
+        final TileEntity te = playerInv.player.level.getBlockEntity(data.readBlockPos());
         if (te instanceof MechanicalMinerTile) {
             return (MechanicalMinerTile) te;
         }
@@ -73,28 +73,28 @@ public class MechanicalMinerContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.MechanicalMiner.get());
+    public boolean stillValid(PlayerEntity playerIn) {
+        return stillValid(canInteractWithCallable, playerIn, BlockList.MechanicalMiner.get());
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack stack1 = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack stack1 = slot.getItem();
             stack = stack1.copy();
-            if (index < MechanicalMinerTile.slots && !this.mergeItemStack(stack1, MechanicalMinerTile.slots, this.inventorySlots.size(), true)) {
+            if (index < MechanicalMinerTile.slots && !this.moveItemStackTo(stack1, MechanicalMinerTile.slots, this.slots.size(), true)) {
                 return ItemStack.EMPTY;
             }
-            if (!this.mergeItemStack(stack1, 0, MechanicalMinerTile.slots, false)) {
+            if (!this.moveItemStackTo(stack1, 0, MechanicalMinerTile.slots, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (stack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
         }
         return stack;

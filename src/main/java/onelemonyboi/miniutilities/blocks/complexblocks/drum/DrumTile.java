@@ -43,15 +43,15 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT tag) {
-        super.read(state, tag);
+    public void load(BlockState state, CompoundNBT tag) {
+        super.load(state, tag);
         drum.readFromNBT(tag);
         drum.setCapacity(tag.getInt("Capacity"));
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT tag) {
-        tag = super.write(tag);
+    public CompoundNBT save(CompoundNBT tag) {
+        tag = super.save(tag);
         drum.writeToNBT(tag);
         tag.putInt("Capacity", drum.getCapacity());
         return tag;
@@ -75,11 +75,11 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
     public List<ITextComponent> getInfo() {
         List<ITextComponent> output = new ArrayList<>();
 
-        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(this.getBlockState().getBlock().getName());
         output.add(new StringTextComponent(""));
-        output.add(new TranslationTextComponent("text.miniutilities.fluidname").appendString(": " + getDrum().getFluid().getDisplayName().getString()));
-        output.add(new TranslationTextComponent("text.miniutilities.drumamount").appendString(": " + this.drum.getFluidAmount()));
-        output.add(new TranslationTextComponent("text.miniutilities.drumcapacity").appendString(": " + this.drum.getCapacity()));
+        output.add(new TranslationTextComponent("text.miniutilities.fluidname").append(": " + getDrum().getFluid().getDisplayName().getString()));
+        output.add(new TranslationTextComponent("text.miniutilities.drumamount").append(": " + this.drum.getFluidAmount()));
+        output.add(new TranslationTextComponent("text.miniutilities.drumcapacity").append(": " + this.drum.getCapacity()));
         return output;
     }
 }

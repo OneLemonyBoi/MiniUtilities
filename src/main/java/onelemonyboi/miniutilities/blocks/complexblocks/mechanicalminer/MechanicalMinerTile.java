@@ -75,48 +75,48 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
 
     @Override
     public void tick() {
-        if (world.isRemote()) {return;}
-        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
+        if (level.isClientSide()) {return;}
+        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
         this.timer++;
         if (this.timer < this.waittime) {return;}
         this.timer = 0;
         if (this.redstonemode == 1){
             blockBreaker();
         }
-        else if (world.isBlockPowered(this.getPos()) && this.redstonemode == 2){
+        else if (level.hasNeighborSignal(this.getBlockPos()) && this.redstonemode == 2){
             blockBreaker();
         }
-        else if (!world.isBlockPowered(this.getPos()) && this.redstonemode == 3){
+        else if (!level.hasNeighborSignal(this.getBlockPos()) && this.redstonemode == 3){
             blockBreaker();
         }
     }
 
     protected void blockBreaker() {
-        BlockPos blockPos = this.getPos().offset(this.getBlockState().get(BlockStateProperties.FACING));
+        BlockPos blockPos = this.getBlockPos().relative(this.getBlockState().getValue(BlockStateProperties.FACING));
 
         // Loot Generation
-        BlockState state = world.getBlockState(blockPos);
+        BlockState state = level.getBlockState(blockPos);
         if (getPickaxe().getHarvestLevel(ToolType.PICKAXE, null, state) < state.getBlock().getHarvestLevel(state)) {return;}
-        LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) world)).withRandom(this.world.rand).withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, getPickaxe()).withNullableParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
-        List<ItemStack> lists = world.getBlockState(blockPos).getDrops(lootcontext$builder);
+        LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) level)).withRandom(this.level.random).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(blockPos)).withParameter(LootParameters.TOOL, getPickaxe()).withOptionalParameter(LootParameters.BLOCK_ENTITY, this.getTileEntity());
+        List<ItemStack> lists = level.getBlockState(blockPos).getDrops(lootcontext$builder);
 
         for (ItemStack itemStack : lists) {
             for (int i = 0; i < 9; i++) {
                 itemStack = getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler().insertItem(i, itemStack, false);
             }
             if (!itemStack.isEmpty()) {
-                InventoryHelper.spawnItemStack(world, this.getPos().getX(), this.getPos().getY() + 1, this.getPos().getZ(), itemStack);
+                InventoryHelper.dropItemStack(level, this.getBlockPos().getX(), this.getBlockPos().getY() + 1, this.getBlockPos().getZ(), itemStack);
             }
         }
-        world.destroyBlock(blockPos, false); // Very kool break animations!
-        this.markDirty();
+        level.destroyBlock(blockPos, false); // Very kool break animations!
+        this.setChanged();
     }
 
     @Override
     public List<ITextComponent> getInfo() {
         List<ITextComponent> output = new ArrayList<>();
 
-        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(this.getBlockState().getBlock().getName());
         output.add(new StringTextComponent(""));
         switch (this.redstonemode) {
             case 1:
@@ -129,7 +129,7 @@ public class MechanicalMinerTile extends TileBase implements INamedContainerProv
                 output.add(new TranslationTextComponent("text.miniutilities.redstonemodethree"));
                 break;
         }
-        output.add(new TranslationTextComponent("text.miniutilities.waittime").appendString(this.waittime.toString() + " ticks"));
+        output.add(new TranslationTextComponent("text.miniutilities.waittime").append(this.waittime.toString() + " ticks"));
         return output;
     }
 

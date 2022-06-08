@@ -22,7 +22,7 @@ public class MechanicalPlacerContainer extends Container {
     public MechanicalPlacerContainer(final int windowId, final PlayerInventory playerInv, final MechanicalPlacerTile te) {
         super(ContainerList.PlacerContainer.get(), windowId);
         this.te = te;
-        this.canInteractWithCallable = IWorldPosCallable.of(te.getWorld(), te.getPos());
+        this.canInteractWithCallable = IWorldPosCallable.create(te.getLevel(), te.getBlockPos());
 
         // Tile Entity
         for (int row = 0; row < 3; row++) {
@@ -61,7 +61,7 @@ public class MechanicalPlacerContainer extends Container {
     private static MechanicalPlacerTile getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(data, "Packet Buffer cannot be null.");
-        final TileEntity te = playerInv.player.world.getTileEntity(data.readBlockPos());
+        final TileEntity te = playerInv.player.level.getBlockEntity(data.readBlockPos());
         if (te instanceof MechanicalPlacerTile) {
             return (MechanicalPlacerTile) te;
         }
@@ -69,29 +69,29 @@ public class MechanicalPlacerContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.MechanicalPlacer.get());
+    public boolean stillValid(PlayerEntity playerIn) {
+        return stillValid(canInteractWithCallable, playerIn, BlockList.MechanicalPlacer.get());
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack stack1 = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack stack1 = slot.getItem();
             stack = stack1.copy();
             if (index < MechanicalPlacerTile.slots
-                    && !this.mergeItemStack(stack1, MechanicalPlacerTile.slots, this.inventorySlots.size(), true)) {
+                    && !this.moveItemStackTo(stack1, MechanicalPlacerTile.slots, this.slots.size(), true)) {
                 return ItemStack.EMPTY;
             }
-            if (!this.mergeItemStack(stack1, 0, MechanicalPlacerTile.slots, false)) {
+            if (!this.moveItemStackTo(stack1, 0, MechanicalPlacerTile.slots, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (stack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
         }
         return stack;

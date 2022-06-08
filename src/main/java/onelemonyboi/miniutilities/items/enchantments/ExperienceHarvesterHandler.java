@@ -15,12 +15,12 @@ public class ExperienceHarvesterHandler {
         if (event.getAttackingPlayer() == null) {
             return;
         }
-        int enchantLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentList.ExperienceHarvester.get(), event.getAttackingPlayer().getHeldItem(Hand.MAIN_HAND));
-        if (!event.getEntity().getEntityWorld().isRemote() &&  enchantLevel > 0) { // Checks if running on server and enchant is on tool
+        int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentList.ExperienceHarvester.get(), event.getAttackingPlayer().getItemInHand(Hand.MAIN_HAND));
+        if (!event.getEntity().getCommandSenderWorld().isClientSide() &&  enchantLevel > 0) { // Checks if running on server and enchant is on tool
             float chanceModifier = (float) (1.0 / enchantLevel);
             int randInt = new Random().nextInt(Math.round(chanceModifier * 20));
             if (randInt == 0) {
-                InventoryHelper.spawnItemStack(event.getAttackingPlayer().getEntityWorld(), event.getEntity().getPosX(), event.getEntity().getPosY(), event.getEntity().getPosZ(), new ItemStack(ItemList.ExperiencePearl.get()));
+                InventoryHelper.dropItemStack(event.getAttackingPlayer().getCommandSenderWorld(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), new ItemStack(ItemList.ExperiencePearl.get()));
             }
         }
     }

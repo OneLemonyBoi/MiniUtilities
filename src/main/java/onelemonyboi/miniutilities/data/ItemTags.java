@@ -15,7 +15,7 @@ public class ItemTags extends ItemTagsProvider {
     }
 
     @Override
-    protected void registerTags() {
+    protected void addTags() {
         copy(ModTags.Blocks.ORES_ENDER, ModTags.Items.ORES_ENDER);
         copy(Tags.Blocks.ORES, Tags.Items.ORES);
         copy(ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL, ModTags.Items.STORAGE_BLOCKS_ENDER_PEARL);
@@ -40,20 +40,20 @@ public class ItemTags extends ItemTagsProvider {
         copy(ModTags.Blocks.PINK_LAPIS_CAELESTIS, ModTags.Items.PINK_LAPIS_CAELESTIS);
         copy(ModTags.Blocks.BROWN_LAPIS_CAELESTIS, ModTags.Items.BROWN_LAPIS_CAELESTIS);
 
-        getOrCreateBuilder(ModTags.Items.DUSTS_ENDER).add(ItemList.EnderDust.get());
-        getOrCreateBuilder(Tags.Items.DUSTS).addTag(ModTags.Items.DUSTS_ENDER);
-        getOrCreateBuilder(Tags.Items.RODS_BLAZE).add(ItemList.FlameLily.get());
-        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.BaseAngelRing.get());
-        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.BatAngelRing.get());
-        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.PeacockAngelRing.get());
-        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.EnderDragonAngelRing.get());
-        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.FeatherAngelRing.get());
-        getOrCreateBuilder(ModTags.Items.ANGELRING).add(ItemList.GoldAngelRing.get());
+        tag(ModTags.Items.DUSTS_ENDER).add(ItemList.EnderDust.get());
+        tag(Tags.Items.DUSTS).addTag(ModTags.Items.DUSTS_ENDER);
+        tag(Tags.Items.RODS_BLAZE).add(ItemList.FlameLily.get());
+        tag(ModTags.Items.ANGELRING).add(ItemList.BaseAngelRing.get());
+        tag(ModTags.Items.ANGELRING).add(ItemList.BatAngelRing.get());
+        tag(ModTags.Items.ANGELRING).add(ItemList.PeacockAngelRing.get());
+        tag(ModTags.Items.ANGELRING).add(ItemList.EnderDragonAngelRing.get());
+        tag(ModTags.Items.ANGELRING).add(ItemList.FeatherAngelRing.get());
+        tag(ModTags.Items.ANGELRING).add(ItemList.GoldAngelRing.get());
 
-        getOrCreateBuilder(ModTags.Items.UPGRADES).addTag(ModTags.Items.UPGRADES_SPEED);
-        getOrCreateBuilder(ModTags.Items.UPGRADES_SPEED).add(ItemList.SpeedUpgrade.get());
+        tag(ModTags.Items.UPGRADES).addTag(ModTags.Items.UPGRADES_SPEED);
+        tag(ModTags.Items.UPGRADES_SPEED).add(ItemList.SpeedUpgrade.get());
 
-        getOrCreateBuilder(ModTags.Items.EXPERIENCE_CONTAINERS).add(ItemList.ExperiencePearl.get());
-        getOrCreateBuilder(ModTags.Items.EXPERIENCE_CONTAINERS).add(Items.EXPERIENCE_BOTTLE);
+        tag(ModTags.Items.EXPERIENCE_CONTAINERS).add(ItemList.ExperiencePearl.get());
+        tag(ModTags.Items.EXPERIENCE_CONTAINERS).add(Items.EXPERIENCE_BOTTLE);
     }
 }

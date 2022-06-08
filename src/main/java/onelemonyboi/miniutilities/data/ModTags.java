@@ -35,11 +35,11 @@ public class ModTags {
         public static final ITag.INamedTag<Block> BROWN_LAPIS_CAELESTIS = forge("lapis_caelestis/brown");
 
         private static ITag.INamedTag<Block> forge(String path) {
-            return BlockTags.makeWrapperTag(new ResourceLocation("forge", path).toString());
+            return BlockTags.bind(new ResourceLocation("forge", path).toString());
         }
 
         private static ITag.INamedTag<Block> mod(String path) {
-            return BlockTags.makeWrapperTag(new ResourceLocation(MiniUtilities.MOD_ID, path).toString());
+            return BlockTags.bind(new ResourceLocation(MiniUtilities.MOD_ID, path).toString());
         }
     }
 
@@ -75,11 +75,11 @@ public class ModTags {
         public static final ITag.INamedTag<Item> EXPERIENCE_CONTAINERS = forge("experience_containers");
 
         private static ITag.INamedTag<Item> forge(String path) {
-            return ItemTags.makeWrapperTag(new ResourceLocation("forge", path).toString());
+            return ItemTags.bind(new ResourceLocation("forge", path).toString());
         }
 
         private static ITag.INamedTag<Item> mod(String path) {
-            return ItemTags.makeWrapperTag(new ResourceLocation(MiniUtilities.MOD_ID, path).toString());
+            return ItemTags.bind(new ResourceLocation(MiniUtilities.MOD_ID, path).toString());
         }
     }
 }

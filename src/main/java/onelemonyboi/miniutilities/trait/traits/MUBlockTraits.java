@@ -27,8 +27,8 @@ public class MUBlockTraits {
 
         @Override
         protected void tweakProperties(AbstractBlock.Properties properties) {
-            properties.hardnessAndResistance(hardness, resistance).harvestTool(toolType).setOpaque((a, b, c) -> isOpaque);
-            if (requiresTool) properties.setRequiresTool();
+            properties.strength(hardness, resistance).harvestTool(toolType).isRedstoneConductor((a, b, c) -> isOpaque);
+            if (requiresTool) properties.requiresCorrectToolForDrops();
         }
     }
 
@@ -40,7 +40,7 @@ public class MUBlockTraits {
 
         @Override
         public BlockState modifyDefaultState(BlockState blockState) {
-            return blockState.with(BlockStateProperties.POWERED, false);
+            return blockState.setValue(BlockStateProperties.POWERED, false);
         }
     }
 }

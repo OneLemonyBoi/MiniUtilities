@@ -27,7 +27,7 @@ public class BlockColorManager {
         blockColors.register(iBlockColorBlursed, BlockList.BlursedEarth.get());
         IItemColor itemBlockColourHandler = (stack, tintIndex) ->
         {
-            BlockState state = ((BlockItem) stack.getItem()).getBlock().getDefaultState();
+            BlockState state = ((BlockItem) stack.getItem()).getBlock().defaultBlockState();
             return blockColors.getColor(state, null, null, tintIndex);
         };
         if (itemBlockColourHandler != null) {

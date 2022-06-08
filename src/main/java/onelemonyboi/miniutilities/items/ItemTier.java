@@ -9,10 +9,10 @@ import java.util.function.Supplier;
 
 public enum ItemTier implements IItemTier {
     KIKOKU(5, 0, 16.0F, 0.0F, 250, () -> {
-        return Ingredient.fromItems(ItemList.UnstableIngot.get());
+        return Ingredient.of(ItemList.UnstableIngot.get());
     }),
     UNSTABLE(4, 0, 8.0F, 8.0F, 20, () -> {
-        return Ingredient.fromItems(ItemList.UnstableIngot.get());
+        return Ingredient.of(ItemList.UnstableIngot.get());
     });
 
     private final int harvestLevel;
@@ -31,27 +31,27 @@ public enum ItemTier implements IItemTier {
         this.repairMaterial = new LazyValue<>(repairMaterialIn);
     }
 
-    public int getMaxUses() {
+    public int getUses() {
         return this.maxUses;
     }
 
-    public float getEfficiency() {
+    public float getSpeed() {
         return this.efficiency;
     }
 
-    public float getAttackDamage() {
+    public float getAttackDamageBonus() {
         return this.attackDamage;
     }
 
-    public int getHarvestLevel() {
+    public int getLevel() {
         return this.harvestLevel;
     }
 
-    public int getEnchantability() {
+    public int getEnchantmentValue() {
         return this.enchantability;
     }
 
-    public Ingredient getRepairMaterial() {
-        return this.repairMaterial.getValue();
+    public Ingredient getRepairIngredient() {
+        return this.repairMaterial.get();
     }
 }

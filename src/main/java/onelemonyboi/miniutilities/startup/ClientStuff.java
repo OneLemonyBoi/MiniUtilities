@@ -22,46 +22,46 @@ import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
 
 public class ClientStuff {
     public static void clientStuff() {
-        RenderTypeLookup.setRenderLayer(BlockList.CursedEarth.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.BlessedEarth.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.BlursedEarth.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.EnderLily.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.FlameLily.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.WhiteLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.LightGrayLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.GrayLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.BlackLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.RedLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.OrangeLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.YellowLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.LimeLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.GreenLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.LightBlueLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.CyanLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.BlueLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.PurpleLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.MagentaLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.PinkLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.BrownLapisCaelestis.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.WoodenSpikes.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.IronSpikes.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.GoldSpikes.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.DiamondSpikes.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.NetheriteSpikes.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.CursedEarth.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.BlessedEarth.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.BlursedEarth.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.EnderLily.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.FlameLily.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.WhiteLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.LightGrayLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.GrayLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.BlackLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.RedLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.OrangeLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.YellowLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.LimeLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.GreenLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.LightBlueLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.CyanLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.BlueLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.PurpleLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.MagentaLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.PinkLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.BrownLapisCaelestis.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.WoodenSpikes.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.IronSpikes.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.GoldSpikes.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DiamondSpikes.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.NetheriteSpikes.get(), RenderType.cutout());
 
-        RenderTypeLookup.setRenderLayer(BlockList.EtherealGlass.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.ReverseEtherealGlass.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.GlowingGlass.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.RedstoneGlass.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.DarkGlass.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.DarkEtherealGlass.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BlockList.DarkReverseEtherealGlass.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.EtherealGlass.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.ReverseEtherealGlass.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.GlowingGlass.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.RedstoneGlass.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DarkGlass.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DarkEtherealGlass.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlockList.DarkReverseEtherealGlass.get(), RenderType.cutout());
 
-        RenderTypeLookup.setRenderLayer(BlockList.LaserHub.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockList.LaserHub.get(), RenderType.cutout());
 
-        ScreenManager.registerFactory(ContainerList.MinerContainer.get(), MechanicalMinerScreen::new);
-        ScreenManager.registerFactory(ContainerList.PlacerContainer.get(), MechanicalPlacerScreen::new);
-        ScreenManager.registerFactory(ContainerList.QuarryContainer.get(), QuantumQuarryScreen::new);
+        ScreenManager.register(ContainerList.MinerContainer.get(), MechanicalMinerScreen::new);
+        ScreenManager.register(ContainerList.PlacerContainer.get(), MechanicalPlacerScreen::new);
+        ScreenManager.register(ContainerList.QuarryContainer.get(), QuantumQuarryScreen::new);
 
         RenderingRegistry.registerEntityRenderingHandler(EntityList.SpecialEgg.get(), (manager) -> new SpriteRenderer(manager, Minecraft.getInstance().getItemRenderer()));
 

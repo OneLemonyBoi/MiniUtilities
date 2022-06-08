@@ -44,10 +44,10 @@ public class UnstableShears extends ShearsItem {
     public static void instantShear(PlayerInteractEvent.RightClickBlock event) {
         ItemStack stack = event.getItemStack();
         PlayerEntity player = event.getPlayer();
-        World world = player.world;
+        World world = player.level;
         BlockPos pos = event.getPos();
-        if (player.isSneaking() && !world.isRemote && stack.getItem() == ItemList.UnstableShears.get() && world.getBlockState(pos).getHarvestLevel() <= 2 && world.getBlockState(pos).getHarvestLevel() >= 0) {
-            player.addItemStackToInventory(new ItemStack(world.getBlockState(pos).getBlock()));
+        if (player.isShiftKeyDown() && !world.isClientSide && stack.getItem() == ItemList.UnstableShears.get() && world.getBlockState(pos).getHarvestLevel() <= 2 && world.getBlockState(pos).getHarvestLevel() >= 0) {
+            player.addItem(new ItemStack(world.getBlockState(pos).getBlock()));
             world.destroyBlock(pos, false);
         }
     }

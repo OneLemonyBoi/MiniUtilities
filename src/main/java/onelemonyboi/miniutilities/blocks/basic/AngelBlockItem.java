@@ -15,59 +15,59 @@ import onelemonyboi.miniutilities.init.BlockList;
 public class AngelBlockItem extends BlockItem {
     public AngelBlockItem(Block block)
     {
-        super(block, new Item.Properties().maxStackSize(64).group(CreativeTab.getInstance()));
+        super(block, new Item.Properties().stacksTo(64).tab(CreativeTab.getInstance()));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
     {
-        if (!world.isRemote){
+        if (!world.isClientSide){
             double x, y, z;
-            switch(Direction.getFacingFromVector(player.getLookVec().x, player.getLookVec().y, player.getLookVec().z))
+            switch(Direction.getNearest(player.getLookAngle().x, player.getLookAngle().y, player.getLookAngle().z))
             {
                 case DOWN:
-                    x = player.getPosX() + 3 * player.getLookVec().x;
-                    y = player.getEyeHeight() + player.getPosY() + 3 * player.getLookVec().y + 1;
-                    z = player.getPosZ() + 3 * player.getLookVec().z;
+                    x = player.getX() + 3 * player.getLookAngle().x;
+                    y = player.getEyeHeight() + player.getY() + 3 * player.getLookAngle().y + 1;
+                    z = player.getZ() + 3 * player.getLookAngle().z;
                     break;
                 case UP:
-                    x = player.getPosX() + 3 * player.getLookVec().x;
-                    y = player.getEyeHeight() + player.getPosY() + 3 * player.getLookVec().y - 1;
-                    z = player.getPosZ() + 3 * player.getLookVec().z;
+                    x = player.getX() + 3 * player.getLookAngle().x;
+                    y = player.getEyeHeight() + player.getY() + 3 * player.getLookAngle().y - 1;
+                    z = player.getZ() + 3 * player.getLookAngle().z;
                     break;
                 case NORTH:
-                    x = player.getPosX() + 3 * player.getLookVec().x;
-                    y = player.getEyeHeight() + player.getPosY() + 3 * player.getLookVec().y;
-                    z = player.getPosZ() + 3 * player.getLookVec().z + 1;
+                    x = player.getX() + 3 * player.getLookAngle().x;
+                    y = player.getEyeHeight() + player.getY() + 3 * player.getLookAngle().y;
+                    z = player.getZ() + 3 * player.getLookAngle().z + 1;
                     break;
                 case SOUTH:
-                    x = player.getPosX() + 3 * player.getLookVec().x;
-                    y = player.getEyeHeight() + player.getPosY() + 3 * player.getLookVec().y;
-                    z = player.getPosZ() + 3 * player.getLookVec().z - 1;
+                    x = player.getX() + 3 * player.getLookAngle().x;
+                    y = player.getEyeHeight() + player.getY() + 3 * player.getLookAngle().y;
+                    z = player.getZ() + 3 * player.getLookAngle().z - 1;
                     break;
                 case WEST:
-                    x = player.getPosX() + 3 * player.getLookVec().x + 1;
-                    y = player.getEyeHeight() + player.getPosY() + 3 * player.getLookVec().y;
-                    z = player.getPosZ() + 3 * player.getLookVec().z;
+                    x = player.getX() + 3 * player.getLookAngle().x + 1;
+                    y = player.getEyeHeight() + player.getY() + 3 * player.getLookAngle().y;
+                    z = player.getZ() + 3 * player.getLookAngle().z;
                     break;
                 case EAST:
-                    x = player.getPosX() + 3 * player.getLookVec().x - 1;
-                    y = player.getEyeHeight() + player.getPosY() + 3 * player.getLookVec().y;
-                    z = player.getPosZ() + 3 * player.getLookVec().z;
+                    x = player.getX() + 3 * player.getLookAngle().x - 1;
+                    y = player.getEyeHeight() + player.getY() + 3 * player.getLookAngle().y;
+                    z = player.getZ() + 3 * player.getLookAngle().z;
                     break;
                 default:
-                    x = player.getPosX() + 3 * player.getLookVec().x;
-                    y = player.getEyeHeight() + player.getPosY() + 3 * player.getLookVec().y;
-                    z = player.getPosZ() + 3 * player.getLookVec().z;
+                    x = player.getX() + 3 * player.getLookAngle().x;
+                    y = player.getEyeHeight() + player.getY() + 3 * player.getLookAngle().y;
+                    z = player.getZ() + 3 * player.getLookAngle().z;
             }
             BlockPos pos = new BlockPos(x,y,z);
 
-            if (world.isAirBlock(pos) || !world.getFluidState(pos).isEmpty()) {
-                world.setBlockState(pos, BlockList.AngelBlock.get().getDefaultState());
-                if (!player.abilities.isCreativeMode)
-                    player.getHeldItem(hand).shrink(1);
+            if (world.isEmptyBlock(pos) || !world.getFluidState(pos).isEmpty()) {
+                world.setBlockAndUpdate(pos, BlockList.AngelBlock.get().defaultBlockState());
+                if (!player.abilities.instabuild)
+                    player.getItemInHand(hand).shrink(1);
             }
         }
-        return new ActionResult<ItemStack>(ActionResultType.SUCCESS, player.getHeldItem(hand));
+        return new ActionResult<ItemStack>(ActionResultType.SUCCESS, player.getItemInHand(hand));
     }
 }

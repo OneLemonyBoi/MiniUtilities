@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class AngelRing extends Item {
     public AngelRing() {
-        super(new Item.Properties().maxStackSize(1).group(CreativeTab.getInstance()));
+        super(new Item.Properties().stacksTo(1).tab(CreativeTab.getInstance()));
     }
 
     @Override
@@ -48,16 +48,16 @@ public class AngelRing extends Item {
 
             private void startFlying(PlayerEntity player) {
                 if (!player.isCreative() && !player.isSpectator()) {
-                    player.abilities.allowFlying = true;
-                    player.sendPlayerAbilities();
+                    player.abilities.mayfly = true;
+                    player.onUpdateAbilities();
                 }
             }
 
             private void stopFlying(PlayerEntity player) {
                 if (!player.isCreative() && !player.isSpectator()) {
-                    player.abilities.isFlying = false;
-                    player.abilities.allowFlying = false;
-                    player.sendPlayerAbilities();
+                    player.abilities.flying = false;
+                    player.abilities.mayfly = false;
+                    player.onUpdateAbilities();
                 }
             }
 
@@ -65,7 +65,7 @@ public class AngelRing extends Item {
             public void curioTick(String identifier, int index, LivingEntity livingEntity) {
                 if (livingEntity instanceof PlayerEntity) {
                     PlayerEntity player = ((PlayerEntity) livingEntity);
-                    if (!player.abilities.allowFlying) {
+                    if (!player.abilities.mayfly) {
                         startFlying(player);
                     }
                 }

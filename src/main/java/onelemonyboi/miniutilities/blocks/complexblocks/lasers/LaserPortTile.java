@@ -27,22 +27,22 @@ public class LaserPortTile extends TileBase implements RenderInfoIdentifier, ITi
 
     @Override
     public void tick() {
-        if (world.isRemote) return;
+        if (level.isClientSide) return;
 
         if (isInput)
-            getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().outputToSide(world, getPos(), getBlockState().get(LaserPortBlock.FACING), Integer.MAX_VALUE);
+            getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().outputToSide(level, getBlockPos(), getBlockState().getValue(LaserPortBlock.FACING), Integer.MAX_VALUE);
         else
-            getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().inputFromSide(world, getPos(), getBlockState().get(LaserPortBlock.FACING), Integer.MAX_VALUE);
+            getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().inputFromSide(level, getBlockPos(), getBlockState().getValue(LaserPortBlock.FACING), Integer.MAX_VALUE);
 
 
-        world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 2);
+        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
     }
 
     @Override
     public List<ITextComponent> getInfo() {
         List<ITextComponent> output = new ArrayList<>();
 
-        output.add(this.getBlockState().getBlock().getTranslatedName());
+        output.add(this.getBlockState().getBlock().getName());
         output.add(new StringTextComponent(""));
         output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
         output.add(new StringTextComponent("I/O Mode: " + (this.isInput ? "Push to Machine" : "Pull from Machine")));

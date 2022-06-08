@@ -25,17 +25,17 @@ public class MechanicalMinerScreen extends ContainerScreen<MechanicalMinerContai
     public MechanicalMinerScreen(MechanicalMinerContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
 
-        this.guiLeft = 0;
-        this.guiTop = 0;
-        this.xSize = 175;
-        this.ySize = 201;
+        this.leftPos = 0;
+        this.topPos = 0;
+        this.imageWidth = 175;
+        this.imageHeight = 201;
     }
 
     @Override
     protected void init() {
         super.init();
         Item baseItem = Items.REDSTONE;
-        switch (container.te.redstonemode) {
+        switch (menu.te.redstonemode) {
             case 1:
                 baseItem = Items.REDSTONE;
                 break;
@@ -47,7 +47,7 @@ public class MechanicalMinerScreen extends ContainerScreen<MechanicalMinerContai
                 break;
         }
 
-        redstoneButton = new ItemStackButton(this.guiLeft + 156, this.guiTop + 4, 16, 16, new StringTextComponent(""), this::changeRedstone, baseItem, this::displayMode);
+        redstoneButton = new ItemStackButton(this.leftPos + 156, this.topPos + 4, 16, 16, new StringTextComponent(""), this::changeRedstone, baseItem, this::displayMode);
         addButton(redstoneButton);
     }
 
@@ -60,39 +60,39 @@ public class MechanicalMinerScreen extends ContainerScreen<MechanicalMinerContai
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
-        this.font.drawText(matrixStack, this.playerInventory.getDisplayName(), (float) this.playerInventoryTitleX,
-                (float) this.playerInventoryTitleY, 4210752);
-        this.font.drawText(matrixStack, this.getTitle(), (float) this.playerInventoryTitleX,
+    protected void renderLabels(MatrixStack matrixStack, int x, int y) {
+        this.font.draw(matrixStack, this.inventory.getDisplayName(), (float) this.inventoryLabelX,
+                (float) this.inventoryLabelY, 4210752);
+        this.font.draw(matrixStack, this.getTitle(), (float) this.inventoryLabelX,
                 6, 4210752);
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.color4f(1f, 1f, 1f, 1f);
-        this.minecraft.textureManager.bindTexture(TestDisplay);
-        int x = (this.width - this.xSize) / 2;
-        int y = (this.height - this.ySize) / 2;
-        this.blit(matrixStack, x, y, 0, 0, this.xSize, this.ySize);
+        this.minecraft.textureManager.bind(TestDisplay);
+        int x = (this.width - this.imageWidth) / 2;
+        int y = (this.height - this.imageHeight) / 2;
+        this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
     }
 
     public void changeRedstone(Button x) {
         if (redstoneButton.item == Items.REDSTONE) {
             redstoneButton.item = Items.GLOWSTONE_DUST;
-            Packet.INSTANCE.sendToServer(new RedstoneModeUpdate(2, this.container.te.getPos()));
+            Packet.INSTANCE.sendToServer(new RedstoneModeUpdate(2, this.menu.te.getBlockPos()));
         }
         else if (redstoneButton.item == Items.GLOWSTONE_DUST) {
             redstoneButton.item = Items.GUNPOWDER;
-            Packet.INSTANCE.sendToServer(new RedstoneModeUpdate(3, this.container.te.getPos()));
+            Packet.INSTANCE.sendToServer(new RedstoneModeUpdate(3, this.menu.te.getBlockPos()));
         }
         else if (redstoneButton.item == Items.GUNPOWDER) {
             redstoneButton.item = Items.REDSTONE;
-            Packet.INSTANCE.sendToServer(new RedstoneModeUpdate(1, this.container.te.getPos()));
+            Packet.INSTANCE.sendToServer(new RedstoneModeUpdate(1, this.menu.te.getBlockPos()));
         }
     }
 

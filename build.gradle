@@ -24,7 +24,7 @@ minecraft {
     // stable_#            Stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'snapshot', version: "${mapping}-${mcp_version}"
+    mappings channel: "official", version: "1.16.5"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     // Default run configurations.
@@ -109,7 +109,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.35'
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0:api")
     runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")

@@ -38,7 +38,7 @@ public class UnstableSword extends SwordItem {
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
-        entity.attackEntityFrom(ARMOR_PIERCING_DAMAGE_SOURCE, 1);
+        entity.hurt(ARMOR_PIERCING_DAMAGE_SOURCE, 1);
         return false;
     }
 }

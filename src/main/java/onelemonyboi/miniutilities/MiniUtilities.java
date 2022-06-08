@@ -50,10 +50,10 @@ import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
 @Mod(MiniUtilities.MOD_ID)
 public class MiniUtilities {
     public static final String MOD_ID = "miniutilities";
-    public static final ITag<Block> cursedspreadable = BlockTags.makeWrapperTag(new ResourceLocation(MOD_ID, "cursedspreadable").toString());
-    public static final ITag<Block> blessedspreadable = BlockTags.makeWrapperTag(new ResourceLocation(MOD_ID, "blessedspreadable").toString());
-    public static final ITag<Block> blursedspreadable = BlockTags.makeWrapperTag(new ResourceLocation(MOD_ID, "blursedspreadable").toString());
-    public static final ITag<EntityType<?>> blacklisted_entities = EntityTypeTags.getTagById(new ResourceLocation(MOD_ID, "blacklisted").toString());
+    public static final ITag<Block> cursedspreadable = BlockTags.bind(new ResourceLocation(MOD_ID, "cursedspreadable").toString());
+    public static final ITag<Block> blessedspreadable = BlockTags.bind(new ResourceLocation(MOD_ID, "blessedspreadable").toString());
+    public static final ITag<Block> blursedspreadable = BlockTags.bind(new ResourceLocation(MOD_ID, "blursedspreadable").toString());
+    public static final ITag<EntityType<?>> blacklisted_entities = EntityTypeTags.bind(new ResourceLocation(MOD_ID, "blacklisted").toString());
     public static final Logger LOGGER = LogManager.getLogger();
     public static IProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 

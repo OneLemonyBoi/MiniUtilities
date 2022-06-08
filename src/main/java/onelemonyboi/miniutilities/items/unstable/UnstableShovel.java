@@ -19,18 +19,18 @@ public class UnstableShovel extends ShovelItem {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        if (context.getPlayer() != null && context.getPlayer().isSneaking() && context.getHand().equals(Hand.MAIN_HAND)) {
-            Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
+    public ActionResultType useOn(ItemUseContext context) {
+        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown() && context.getHand().equals(Hand.MAIN_HAND)) {
+            Block block = context.getLevel().getBlockState(context.getClickedPos()).getBlock();
             if (block.equals(Blocks.COBBLESTONE)) block = Blocks.STONE;
             else if (block.equals(Blocks.GRAVEL)) block = Blocks.COBBLESTONE;
             else if (block.equals(Blocks.COARSE_DIRT)) block = Blocks.GRAVEL;
             else if (block.equals(Blocks.CLAY)) block = Blocks.COARSE_DIRT;
             else if (block.equals(Blocks.SAND)) block = Blocks.CLAY;
-            context.getWorld().setBlockState(context.getPos(), block.getDefaultState());
+            context.getLevel().setBlockAndUpdate(context.getClickedPos(), block.defaultBlockState());
             return ActionResultType.CONSUME;
         }
-        return super.onItemUse(context);
+        return super.useOn(context);
     }
 
     private static final Set<ToolType> shovel = Sets.newHashSet(ToolType.SHOVEL);

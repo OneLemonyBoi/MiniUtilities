@@ -26,39 +26,41 @@ import onelemonyboi.miniutilities.init.ItemList;
 import java.util.Random;
 
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EnderLily extends CropsBlock {
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
     public EnderLily()
     {
-        super(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().sound(SoundType.CROP));
+        super(Properties.of(Material.PLANT).noCollission().randomTicks().sound(SoundType.CROP));
     }
 
     @Override
-    protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos)
+    protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos)
     {
-        return Tags.Blocks.END_STONES.contains(state.getBlock()) || state.getBlock() instanceof SpreadableSnowyDirtBlock || ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL.contains(state.getBlock()) || Tags.Blocks.DIRT.contains(state.getBlock()) || state.matchesBlock(Blocks.END_STONE);
+        return Tags.Blocks.END_STONES.contains(state.getBlock()) || state.getBlock() instanceof SpreadableSnowyDirtBlock || ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL.contains(state.getBlock()) || Tags.Blocks.DIRT.contains(state.getBlock()) || state.is(Blocks.END_STONE);
     }
 
     @OnlyIn(Dist.CLIENT)
-    protected IItemProvider getSeedsItem()
+    protected IItemProvider getBaseSeedId()
     {
         return ItemList.EnderLilySeeds.get();
     }
 
     @OnlyIn(Dist.CLIENT)
-    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state)
+    public ItemStack getCloneItemStack(IBlockReader worldIn, BlockPos pos, BlockState state)
     {
-        return new ItemStack(this.getSeedsItem());
+        return new ItemStack(this.getBaseSeedId());
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+    public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.ENDERMAN) {
-            if (!worldIn.isRemote && state.get(AGE) > 0 && (entityIn.lastTickPosX != entityIn.getPosX() || entityIn.lastTickPosZ != entityIn.getPosZ())) {
-                double d0 = Math.abs(entityIn.getPosX() - entityIn.lastTickPosX);
-                double d1 = Math.abs(entityIn.getPosZ() - entityIn.lastTickPosZ);
+            if (!worldIn.isClientSide && state.getValue(AGE) > 0 && (entityIn.xOld != entityIn.getX() || entityIn.zOld != entityIn.getZ())) {
+                double d0 = Math.abs(entityIn.getX() - entityIn.xOld);
+                double d1 = Math.abs(entityIn.getZ() - entityIn.zOld);
                 if (d0 >= (double)0.003F || d1 >= (double)0.003F) {
-                    entityIn.attackEntityFrom(DamageSource.CACTUS, 1.0F);
+                    entityIn.hurt(DamageSource.CACTUS, 1.0F);
                 }
             }
         }
@@ -66,21 +68,21 @@ public class EnderLily extends CropsBlock {
 
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (state.get(AGE) != 7) {
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (state.getValue(AGE) != 7) {
             return ActionResultType.PASS;
-        } else if (state.get(AGE) == 7) {
-            spawnAsEntity(worldIn, pos, new ItemStack(Items.ENDER_PEARL, 1));
-            worldIn.playSound((PlayerEntity)null, pos, SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-            worldIn.setBlockState(pos, state.with(AGE, 4), 2);
-            return ActionResultType.func_233537_a_(worldIn.isRemote);
+        } else if (state.getValue(AGE) == 7) {
+            popResource(worldIn, pos, new ItemStack(Items.ENDER_PEARL, 1));
+            worldIn.playSound((PlayerEntity)null, pos, SoundEvents.ENDER_PEARL_THROW, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+            worldIn.setBlock(pos, state.setValue(AGE, 4), 2);
+            return ActionResultType.sidedSuccess(worldIn.isClientSide);
         } else {
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+            return super.use(state, worldIn, pos, player, handIn, hit);
         }
     }
 
     @Override
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
         return false;
     }
 
@@ -93,7 +95,7 @@ public class EnderLily extends CropsBlock {
         if (i < this.getMaxAge()) {
             float f = getLilyGrowthChance(this, worldIn, pos);
             if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)((25.0F / f) * 4) + 1) == 0)) {
-                worldIn.setBlockState(pos, this.withAge(i + 1), 2);
+                worldIn.setBlock(pos, this.getStateForAge(i + 1), 2);
                 net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
             }
         }
@@ -102,12 +104,12 @@ public class EnderLily extends CropsBlock {
     protected static float getLilyGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
         // This is only a thing so that lilies grow faster on End Stone
         float f = 1.0F;
-        BlockPos blockpos = pos.down();
+        BlockPos blockpos = pos.below();
         for(int i = -1; i <= 1; ++i) {
             for(int j = -1; j <= 1; ++j) {
                 float f1 = 0.0F;
-                BlockState blockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
-                if (blockstate.canSustainPlant(worldIn, blockpos.add(i, 0, j), net.minecraft.util.Direction.UP, (net.minecraftforge.common.IPlantable) blockIn)) {
+                BlockState blockstate = worldIn.getBlockState(blockpos.offset(i, 0, j));
+                if (blockstate.canSustainPlant(worldIn, blockpos.offset(i, 0, j), net.minecraft.util.Direction.UP, (net.minecraftforge.common.IPlantable) blockIn)) {
                     f1 = 1.0F;
                     if (Tags.Blocks.END_STONES.contains(blockIn)) {
                         f1 = 3.0F;
@@ -144,10 +146,10 @@ public class EnderLily extends CropsBlock {
     }
 
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        BlockPos blockpos = pos.down();
+    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        BlockPos blockpos = pos.below();
         if (state.getBlock() == this)
             return worldIn.getBlockState(blockpos).canSustainPlant(worldIn, blockpos, Direction.UP, this);
-        return this.isValidGround(worldIn.getBlockState(blockpos), worldIn, blockpos);
+        return this.mayPlaceOn(worldIn.getBlockState(blockpos), worldIn, blockpos);
     }
 }

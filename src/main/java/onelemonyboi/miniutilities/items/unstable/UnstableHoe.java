@@ -22,18 +22,18 @@ public class UnstableHoe extends HoeItem {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        if (context.getPlayer() != null && context.getPlayer().isSneaking() && context.getHand().equals(Hand.MAIN_HAND)) {
-            Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
+    public ActionResultType useOn(ItemUseContext context) {
+        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown() && context.getHand().equals(Hand.MAIN_HAND)) {
+            Block block = context.getLevel().getBlockState(context.getClickedPos()).getBlock();
             if (block.equals(Blocks.STONE)) block = Blocks.COBBLESTONE;
             else if (block.equals(Blocks.COBBLESTONE)) block = Blocks.GRAVEL;
             else if (block.equals(Blocks.GRAVEL)) block = Blocks.COARSE_DIRT;
             else if (block.equals(Blocks.COARSE_DIRT)) block = Blocks.CLAY;
             else if (block.equals(Blocks.CLAY)) block = Blocks.SAND;
-            context.getWorld().setBlockState(context.getPos(), block.getDefaultState());
+            context.getLevel().setBlockAndUpdate(context.getClickedPos(), block.defaultBlockState());
             return ActionResultType.CONSUME;
         }
-        return super.onItemUse(context);
+        return super.useOn(context);
     }
 
     private static final Set<ToolType> hoe = Sets.newHashSet(ToolType.HOE);

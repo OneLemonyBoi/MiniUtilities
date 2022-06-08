@@ -32,7 +32,7 @@ public class RedstoneModeUpdate {
 
     public static void handle(RedstoneModeUpdate msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(()-> {
-            TileEntity te = ctx.get().getSender().getEntityWorld().getTileEntity(msg.pos);
+            TileEntity te = ctx.get().getSender().getCommandSenderWorld().getBlockEntity(msg.pos);
             if (te == null) {
                 return;
             }

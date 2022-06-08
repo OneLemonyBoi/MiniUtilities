@@ -33,26 +33,26 @@ public class MachineRenderer {
     public static void blockRenderInfo(RenderGameOverlayEvent.Text event) {
         MatrixStack ms = event.getMatrixStack();
 
-        RayTraceResult mouseOver = Minecraft.getInstance().objectMouseOver;
+        RayTraceResult mouseOver = Minecraft.getInstance().hitResult;
         if (!(mouseOver instanceof BlockRayTraceResult)) {
             return;
         }
 
         BlockRayTraceResult result = (BlockRayTraceResult) mouseOver;
         Minecraft mc = Minecraft.getInstance();
-        ClientWorld world = mc.world;
-        BlockPos pos = result.getPos();
-        TileEntity te = world.getTileEntity(pos);
+        ClientWorld world = mc.level;
+        BlockPos pos = result.getBlockPos();
+        TileEntity te = world.getBlockEntity(pos);
 
         if (!(te instanceof RenderInfoIdentifier)) {
             return;
         }
 
-        ms.push();
+        ms.pushPose();
         List<ITextComponent> tooltip = ((RenderInfoIdentifier) te).getInfo();
 
-        int width = mc.getMainWindow().getScaledWidth();
-        int height = mc.getMainWindow().getScaledHeight();
+        int width = mc.getWindow().getGuiScaledWidth();
+        int height = mc.getWindow().getGuiScaledHeight();
         float posX = width / 2F ;
         float posY = height / 2F + 10;
 
@@ -62,13 +62,13 @@ public class MachineRenderer {
         int count = 0;
         int maxLen = 0;
         for (ITextComponent component : tooltip) {
-            int len = mc.fontRenderer.getStringWidth(component.getString());
-            mc.fontRenderer.drawTextWithShadow(ms, component, posX - (len / 2F), posY + count, 16777215);
+            int len = mc.font.width(component.getString());
+            mc.font.drawShadow(ms, component, posX - (len / 2F), posY + count, 16777215);
             if (len > maxLen) {
-                maxLen = mc.fontRenderer.getStringWidth(component.getString());
+                maxLen = mc.font.width(component.getString());
             }
             count += 12;
         }
-        ms.pop();
+        ms.popPose();
     }
 }
