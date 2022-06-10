@@ -1,8 +1,8 @@
 package onelemonyboi.miniutilities.data;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -57,7 +57,7 @@ public class BlockState extends BlockStateProvider {
         ModelFile modelTwo = models().cubeAll("redstone_clock_active", modLoc("block/redstone_clock_active"));
 
         getVariantBuilder(BlockList.RedstoneClockBlock.get())
-                .partialState().with(BlockStateProperties.POWERED, true)
+                .partialState().with(net.minecraft.world.level.block.state.properties.BlockStateProperties.POWERED, true)
                 .modelForState().modelFile(modelOne).addModel()
                 .partialState().with(BlockStateProperties.POWERED, false)
                 .modelForState().modelFile(modelTwo).addModel();

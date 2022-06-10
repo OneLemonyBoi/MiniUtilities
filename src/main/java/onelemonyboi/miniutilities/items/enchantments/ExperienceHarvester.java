@@ -1,14 +1,12 @@
 package onelemonyboi.miniutilities.items.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class ExperienceHarvester extends Enchantment {
-    public ExperienceHarvester(Rarity rarityIn, EquipmentSlotType... slots) {
-        super(rarityIn, EnchantmentType.WEAPON, slots);
+    public ExperienceHarvester(Rarity rarityIn, EquipmentSlot... slots) {
+        super(rarityIn, EnchantmentCategory.WEAPON, slots);
     }
 
     public int getMinCost(int enchantmentLevel) {

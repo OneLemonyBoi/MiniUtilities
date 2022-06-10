@@ -1,15 +1,11 @@
 package onelemonyboi.miniutilities.items.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
-
-public class MoltenHead extends Enchantment {
-    public MoltenHead(Rarity rarityIn, EquipmentSlotType... slots) {
-        super(rarityIn, EnchantmentType.DIGGER, slots);
+public class MoltenHead extends net.minecraft.world.item.enchantment.Enchantment {
+    public MoltenHead(Rarity rarityIn, EquipmentSlot... slots) {
+        super(rarityIn, EnchantmentCategory.DIGGER, slots);
     }
 
     public int getMinCost(int enchantmentLevel) {

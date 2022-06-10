@@ -1,27 +1,35 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.block.state.BlockState;
 import onelemonyboi.lemonlib.blocks.block.BlockBase;
-import onelemonyboi.miniutilities.trait.BlockBehaviours;
+import onelemonyboi.miniutilities.init.TEList;
+import onelemonyboi.miniutilities.trait.BlockBehaviors;
 
 import javax.annotation.Nullable;
 import java.util.stream.Stream;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class LaserHubBlock extends BlockBase {
     public LaserHubBlock(Properties properties) {
-        super(properties, BlockBehaviours.laserHub);
+        super(properties, BlockBehaviors.laserHub);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(level, type, TEList.LaserHubTile.get(), LaserHubTile::serverTick, null);
     }
 
     public static final VoxelShape shape = Stream.of(
@@ -46,15 +54,15 @@ public class LaserHubBlock extends BlockBase {
             Block.box(5, 10, 5, 11, 16, 5),
             Block.box(5, 10, 11, 11, 16, 11),
             Block.box(5, 10, 5, 5, 16, 11)
-    ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return shape;
     }
 
     @Override
-    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         if (world.getBlockEntity(pos) instanceof LaserHubTile) {
             LaserHubTile tileEntity = (LaserHubTile) world.getBlockEntity(pos);
             if (tileEntity.getTEsInRadius(LaserHubTile.class, 16).size() > 0) world.destroyBlock(pos, true);

@@ -1,43 +1,40 @@
 package onelemonyboi.miniutilities.blocks.basic;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import com.mojang.math.Vector3f;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.BlockList;
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class EnderTileBlock extends Block {
     public EnderTileBlock() {
-        super(Properties.of(Material.GLASS).strength(4f).sound(SoundType.GLASS));
+        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(Material.GLASS).strength(4f).sound(SoundType.GLASS));
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return VoxelShapes.join(Block.box(1, 1, 1, 15, 2, 15), Block.box(0, 0, 0, 16, 1, 16), IBooleanFunction.OR);
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return Shapes.join(Block.box(1, 1, 1, 15, 2, 15), Block.box(0, 0, 0, 16, 1, 16), BooleanOp.OR);
     }
 
     @Override
-    public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+    public void entityInside(BlockState state, Level worldIn, net.minecraft.core.BlockPos pos, Entity entityIn) {
         int yPos = entityIn.blockPosition().getY();
         for (int x = 1; x <= (256 - yPos); x++) {
             Boolean blockCheck = !worldIn.isEmptyBlock(entityIn.blockPosition().above(x)) &&
@@ -55,16 +52,16 @@ public class EnderTileBlock extends Block {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, net.minecraft.core.BlockPos pos, Random rand) {
         spawnParticles(worldIn, pos);
     }
 
-    private static void spawnParticles(World world, BlockPos pos) {
+    private static void spawnParticles(Level world, net.minecraft.core.BlockPos pos) {
         Random random = world.random;
         Direction.Axis direction$axis = Direction.NORTH.getAxis();
         double d1 = direction$axis == Direction.Axis.X ? 0.5D: (double)random.nextFloat();
         double d2 = direction$axis == Direction.Axis.Y ? 0.5D : (double)random.nextFloat();
         double d3 = direction$axis == Direction.Axis.Z ? 0.5D : (double)random.nextFloat();
-        world.addParticle(new RedstoneParticleData(0.25F, 0.25F, 1, 1), (double)pos.getX() + d1, (double)pos.getY() + d2, (double)pos.getZ() + d3, 0.0D, 0.0D, 0.0D);
+        world.addParticle(new DustParticleOptions(new Vector3f(0.25F, 0.25F, 1), 1), (double)pos.getX() + d1, (double)pos.getY() + d2, (double)pos.getZ() + d3, 0.0D, 0.0D, 0.0D);
     }
 }

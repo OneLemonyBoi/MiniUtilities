@@ -1,14 +1,15 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.common.extensions.IForgeTileEntity;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.extensions.IForgeBlockEntity;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.lemonlib.trait.tile.TileTraits;
@@ -18,43 +19,40 @@ import onelemonyboi.miniutilities.trait.TileBehaviors;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LaserHubTile extends TileBase implements RenderInfoIdentifier, ITickableTileEntity {
-    public LaserHubTile() {
-        super(TEList.LaserHubTile.get(), TileBehaviors.laserHub);
+public class LaserHubTile extends TileBase implements RenderInfoIdentifier {
+    public LaserHubTile(BlockPos pos, BlockState state) {
+        super(TEList.LaserHubTile.get(), pos, state, TileBehaviors.laserHub);
     }
 
-    @Override
-    public void tick() {
-        if (level.isClientSide) {return;}
-
-        List<LaserPortTile> blocks = getTEsInRadius(LaserPortTile.class, 16);
+    public static void serverTick(Level level, BlockPos pos, BlockState state, LaserHubTile tile) {
+        List<LaserPortTile> blocks = tile.getTEsInRadius(LaserPortTile.class, 16);
         for (LaserPortTile portTile : blocks) {
-            if (portTile.isInput) getBehaviour()
+            if (portTile.isInput) tile.getBehaviour()
                         .getRequired(TileTraits.PowerTrait.class)
                         .getEnergyStorage()
-                        .outputToSide(level, portTile.getBlockPos().relative(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
+                        .outputToSide(level, portTile.getBlockPos().relative(net.minecraft.core.Direction.UP), net.minecraft.core.Direction.DOWN, Integer.MAX_VALUE);
 
-            else getBehaviour()
+            else tile.getBehaviour()
                     .getRequired(TileTraits.PowerTrait.class)
                     .getEnergyStorage()
-                    .inputFromSide(level, portTile.getBlockPos().relative(Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
+                    .inputFromSide(level, portTile.getBlockPos().relative(net.minecraft.core.Direction.UP), Direction.DOWN, Integer.MAX_VALUE);
 
         }
 
-        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
+        level.sendBlockUpdated(pos, state, state, 2);
     }
 
     @Override
-    public List<ITextComponent> getInfo() {
-        List<ITextComponent> output = new ArrayList<>();
+    public List<MutableComponent> getInfo() {
+        List<MutableComponent> output = new ArrayList<>();
 
         output.add(this.getBlockState().getBlock().getName());
-        output.add(new StringTextComponent(""));
-        output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
+        output.add(new TextComponent(""));
+        output.add(new TextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
         return output;
     }
 
-    public <T extends TileEntity> List<T> getTEsInRadius(Class<T> clazz, int radius) {
+    public <T extends BlockEntity> List<T> getTEsInRadius(Class<T> clazz, int radius) {
         List<T> output = new ArrayList<>();
 
         for (int x = -radius; x < radius; x++) {
@@ -70,15 +68,15 @@ public class LaserHubTile extends TileBase implements RenderInfoIdentifier, ITic
         return output;
     }
 
-    public List<Vector3d> getTEVectorsInRadius(Class<?> clazz, int radius, double distanceFromCenter) {
-        List<Vector3d> output = new ArrayList<>();
+    public List<Vec3> getTEVectorsInRadius(Class<?> clazz, int radius, double distanceFromCenter) {
+        List<Vec3> output = new ArrayList<>();
 
         for (int x = -radius; x < radius; x++) {
             for (int y = -radius; y < radius; y++) {
                 for (int z = -radius; z < radius; z++) {
                     BlockPos pos = getBlockPos().offset(x, y, z);
                     if (clazz.isInstance(level.getBlockEntity(pos))) {
-                        Vector3d v3d = Vector3d.atLowerCornerOf(pos);
+                        Vec3 v3d = Vec3.atLowerCornerOf(pos);
                         v3d.add(0.5, 0.5, 0.5);
                         if (level.getBlockState(pos).hasProperty(LaserPortBlock.FACING)) {
                             switch (level.getBlockState(pos).getValue(LaserPortBlock.FACING)) {
@@ -112,7 +110,7 @@ public class LaserHubTile extends TileBase implements RenderInfoIdentifier, ITic
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return IForgeTileEntity.INFINITE_EXTENT_AABB;
+    public AABB getRenderBoundingBox() {
+        return IForgeBlockEntity.INFINITE_EXTENT_AABB;
     }
 }

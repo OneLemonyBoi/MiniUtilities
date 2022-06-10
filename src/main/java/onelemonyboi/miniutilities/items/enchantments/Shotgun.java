@@ -1,15 +1,12 @@
 package onelemonyboi.miniutilities.items.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.text.ITextComponent;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class Shotgun extends Enchantment {
-    public Shotgun(Rarity rarityIn, EquipmentSlotType... slots) {
-        super(rarityIn, EnchantmentType.BOW, slots);
+    public Shotgun(Rarity rarityIn, EquipmentSlot... slots) {
+        super(rarityIn, EnchantmentCategory.BOW, slots);
     }
 
     public int getMinCost(int enchantmentLevel) {
@@ -24,10 +21,5 @@ public class Shotgun extends Enchantment {
      */
     public int getMaxLevel() {
         return 4;
-    }
-
-    @Override
-    public ITextComponent getFullname(int level) {
-        return super.getFullname(level);
     }
 }

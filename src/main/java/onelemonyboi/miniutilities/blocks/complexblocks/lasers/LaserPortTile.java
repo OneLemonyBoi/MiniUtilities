@@ -1,10 +1,10 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import onelemonyboi.lemonlib.annotations.SaveInNBT;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
@@ -12,40 +12,36 @@ import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.trait.TileBehaviors;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LaserPortTile extends TileBase implements RenderInfoIdentifier, ITickableTileEntity {
+public class LaserPortTile extends TileBase implements RenderInfoIdentifier {
     @SaveInNBT(key = "IsInput")
     public boolean isInput;
 
-    public LaserPortTile() {
-        super(TEList.LaserPortTile.get(), TileBehaviors.laserPort);
+    public LaserPortTile(BlockPos pos, BlockState state) {
+        super(TEList.LaserPortTile.get(), pos, state, TileBehaviors.laserPort);
         this.isInput = true;
     }
 
-    @Override
-    public void tick() {
-        if (level.isClientSide) return;
-
-        if (isInput)
-            getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().outputToSide(level, getBlockPos(), getBlockState().getValue(LaserPortBlock.FACING), Integer.MAX_VALUE);
+    public static void serverTick(Level level, BlockPos pos, BlockState state, LaserPortTile tile) {
+        if (tile.isInput)
+            tile.getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().outputToSide(level, pos, state.getValue(LaserPortBlock.FACING), Integer.MAX_VALUE);
         else
-            getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().inputFromSide(level, getBlockPos(), getBlockState().getValue(LaserPortBlock.FACING), Integer.MAX_VALUE);
+            tile.getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().inputFromSide(level, pos, state.getValue(LaserPortBlock.FACING), Integer.MAX_VALUE);
 
 
-        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
+        level.sendBlockUpdated(pos, state, state, 2);
     }
 
     @Override
-    public List<ITextComponent> getInfo() {
-        List<ITextComponent> output = new ArrayList<>();
+    public List<MutableComponent> getInfo() {
+        List<MutableComponent> output = new ArrayList<>();
 
         output.add(this.getBlockState().getBlock().getName());
-        output.add(new StringTextComponent(""));
-        output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
-        output.add(new StringTextComponent("I/O Mode: " + (this.isInput ? "Push to Machine" : "Pull from Machine")));
+        output.add(new TextComponent(""));
+        output.add(new TextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
+        output.add(new TextComponent("I/O Mode: " + (this.isInput ? "Push to Machine" : "Pull from Machine")));
         return output;
     }
 }

@@ -1,11 +1,7 @@
 package onelemonyboi.miniutilities.proxy;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-
-import java.util.function.Supplier;
 
 public class ServerProxy implements IProxy {
     @Override
@@ -24,7 +20,12 @@ public class ServerProxy implements IProxy {
     }
 
     @Override
-    public <T extends Entity> void registerEntityRenderer(EntityType<T> entityClass, Supplier<IRenderFactory<T>> renderFactory) {
+    public void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+
+    }
+
+    @Override
+    public void registerEntityLayers(EntityRenderersEvent.AddLayers event) {
 
     }
 }

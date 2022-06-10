@@ -1,18 +1,14 @@
 package onelemonyboi.miniutilities.data;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ItemModel extends ItemModelProvider {
     public ItemModel(DataGenerator generator, ExistingFileHelper existingFileHelper) {
@@ -57,8 +53,8 @@ public class ItemModel extends ItemModelProvider {
         withExistingParent("netherite_spikes", modLoc("block/netherite_spikes"));
         withExistingParent("unstable_block", modLoc("block/unstable_block"));
         withExistingParent("cursed_earth", new ResourceLocation("block/grass_block"));
-        withExistingParent("blessed_earth", new ResourceLocation("block/grass_block"));
-        withExistingParent("blursed_earth", new ResourceLocation("block/grass_block"));
+        withExistingParent("blessed_earth", new net.minecraft.resources.ResourceLocation("block/grass_block"));
+        withExistingParent("blursed_earth", new net.minecraft.resources.ResourceLocation("block/grass_block"));
 
         withExistingParent("ethereal_glass", modLoc("block/ethereal_glass"));
         withExistingParent("reverse_ethereal_glass", modLoc("block/reverse_ethereal_glass"));

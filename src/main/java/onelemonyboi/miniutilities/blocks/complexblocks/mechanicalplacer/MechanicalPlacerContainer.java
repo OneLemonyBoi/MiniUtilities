@@ -1,13 +1,14 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.BlockList;
@@ -15,14 +16,18 @@ import onelemonyboi.miniutilities.init.ContainerList;
 
 import java.util.Objects;
 
-public class MechanicalPlacerContainer extends Container {
+public class MechanicalPlacerContainer extends AbstractContainerMenu {
     public final MechanicalPlacerTile te;
-    private final IWorldPosCallable canInteractWithCallable;
+    private final ContainerLevelAccess access;
 
-    public MechanicalPlacerContainer(final int windowId, final PlayerInventory playerInv, final MechanicalPlacerTile te) {
+    public MechanicalPlacerContainer(final int windowId, final Inventory playerInv, FriendlyByteBuf buf) {
+        this(windowId, playerInv, ContainerLevelAccess.create(playerInv.player.level, buf.readBlockPos()));
+    }
+
+    public MechanicalPlacerContainer(final int windowId, final Inventory playerInv, ContainerLevelAccess access) {
         super(ContainerList.PlacerContainer.get(), windowId);
-        this.te = te;
-        this.canInteractWithCallable = IWorldPosCallable.create(te.getLevel(), te.getBlockPos());
+        this.access = access;
+        this.te = (MechanicalPlacerTile) access.evaluate(Level::getBlockEntity).get();
 
         // Tile Entity
         for (int row = 0; row < 3; row++) {
@@ -54,14 +59,10 @@ public class MechanicalPlacerContainer extends Container {
         }
     }
 
-    public MechanicalPlacerContainer(final int windowId, final PlayerInventory playerInv, final PacketBuffer data) {
-        this(windowId, playerInv, getTileEntity(playerInv, data));
-    }
-
-    private static MechanicalPlacerTile getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
+    private static MechanicalPlacerTile getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(data, "Packet Buffer cannot be null.");
-        final TileEntity te = playerInv.player.level.getBlockEntity(data.readBlockPos());
+        final BlockEntity te = playerInv.player.level.getBlockEntity(data.readBlockPos());
         if (te instanceof MechanicalPlacerTile) {
             return (MechanicalPlacerTile) te;
         }
@@ -69,23 +70,23 @@ public class MechanicalPlacerContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(canInteractWithCallable, playerIn, BlockList.MechanicalPlacer.get());
+    public boolean stillValid(Player playerIn) {
+        return stillValid(access, playerIn, BlockList.MechanicalPlacer.get());
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
-        ItemStack stack = ItemStack.EMPTY;
+    public net.minecraft.world.item.ItemStack quickMoveStack(Player playerIn, int index) {
+        net.minecraft.world.item.ItemStack stack = net.minecraft.world.item.ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
             ItemStack stack1 = slot.getItem();
             stack = stack1.copy();
             if (index < MechanicalPlacerTile.slots
                     && !this.moveItemStackTo(stack1, MechanicalPlacerTile.slots, this.slots.size(), true)) {
-                return ItemStack.EMPTY;
+                return net.minecraft.world.item.ItemStack.EMPTY;
             }
             if (!this.moveItemStackTo(stack1, 0, MechanicalPlacerTile.slots, false)) {
-                return ItemStack.EMPTY;
+                return net.minecraft.world.item.ItemStack.EMPTY;
             }
 
             if (stack1.isEmpty()) {

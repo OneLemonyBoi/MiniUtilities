@@ -1,13 +1,15 @@
 package onelemonyboi.miniutilities;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityType;
+import net.minecraft.core.Registry;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
@@ -28,9 +30,7 @@ import onelemonyboi.miniutilities.items.enchantments.EnchantmentTooltipHandler;
 import onelemonyboi.miniutilities.items.enchantments.ExperienceHarvesterHandler;
 import onelemonyboi.miniutilities.items.enchantments.MoltenHeadHandler;
 import onelemonyboi.miniutilities.items.enchantments.ShotgunHandler;
-import onelemonyboi.miniutilities.items.unstable.UnstableHoe;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
-import onelemonyboi.miniutilities.items.unstable.UnstableShovel;
 import onelemonyboi.miniutilities.misc.KeyBindingsHandler;
 import onelemonyboi.miniutilities.packets.Packet;
 import onelemonyboi.miniutilities.proxy.ClientProxy;
@@ -39,7 +39,6 @@ import onelemonyboi.miniutilities.proxy.ServerProxy;
 import onelemonyboi.miniutilities.startup.ClientStuff;
 import onelemonyboi.miniutilities.startup.JSON.JSONLoader;
 import onelemonyboi.miniutilities.startup.Config;
-import onelemonyboi.miniutilities.world.WorldGen;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -50,10 +49,10 @@ import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
 @Mod(MiniUtilities.MOD_ID)
 public class MiniUtilities {
     public static final String MOD_ID = "miniutilities";
-    public static final ITag<Block> cursedspreadable = BlockTags.bind(new ResourceLocation(MOD_ID, "cursedspreadable").toString());
-    public static final ITag<Block> blessedspreadable = BlockTags.bind(new ResourceLocation(MOD_ID, "blessedspreadable").toString());
-    public static final ITag<Block> blursedspreadable = BlockTags.bind(new ResourceLocation(MOD_ID, "blursedspreadable").toString());
-    public static final ITag<EntityType<?>> blacklisted_entities = EntityTypeTags.bind(new ResourceLocation(MOD_ID, "blacklisted").toString());
+    public static final TagKey<Block> cursedspreadable = BlockTags.create(new ResourceLocation(MOD_ID, "cursedspreadable"));
+    public static final TagKey<Block> blessedspreadable = BlockTags.create(new ResourceLocation(MOD_ID, "blessedspreadable"));
+    public static final TagKey<Block> blursedspreadable = BlockTags.create(new ResourceLocation(MOD_ID, "blursedspreadable"));
+    public static final TagKey<EntityType<?>> blacklisted_entities = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(MOD_ID, "blacklisted"));
     public static final Logger LOGGER = LogManager.getLogger();
     public static IProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
@@ -65,13 +64,14 @@ public class MiniUtilities {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerEntityRenderers);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerEntityLayers);
         JSONLoader.loadJSON();
         EVENT_BUS.register(this);
         EVENT_BUS.addListener(GenericEarthBlock::convertCursed);
         EVENT_BUS.addListener(GenericEarthBlock::convertBlessed);
         EVENT_BUS.addListener(GenericEarthBlock::convertBlursed);
         EVENT_BUS.addListener(UnstableShears::instantShear);
-        EVENT_BUS.addListener(WorldGen::generate);
         EVENT_BUS.addListener(Kikoku::AnvilUpdateEvent);
         EVENT_BUS.addListener(Kikoku::AnvilRepairEvent);
         EVENT_BUS.addListener(KeyBindingsHandler::keybinds);
@@ -83,7 +83,6 @@ public class MiniUtilities {
         EVENT_BUS.addListener(ShotgunHandler::handleBowShot);
         EVENT_BUS.addListener(ExperienceHarvesterHandler::handleEntityKill);
         EVENT_BUS.addListener(SpikeBlock::soundEvent);
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Feature.class, EventPriority.LOW, FeatureList::addConfigFeatures);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientStuff::machineRender);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> EnchantmentTooltipHandler::register);
         Packet.main();
@@ -111,9 +110,18 @@ public class MiniUtilities {
 
     private void init(FMLCommonSetupEvent event) {
         proxy.init(event);
+        event.enqueueWork(FeatureList::register);
     }
 
     private void postInit(FMLCommonSetupEvent event) {
         proxy.postInit(event);
+    }
+
+    public void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        proxy.registerEntityRenderers(event);
+    }
+
+    public void registerEntityLayers(EntityRenderersEvent.AddLayers event) {
+        proxy.registerEntityLayers(event);
     }
 }

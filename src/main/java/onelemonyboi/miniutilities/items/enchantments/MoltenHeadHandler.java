@@ -1,21 +1,20 @@
 package onelemonyboi.miniutilities.items.enchantments;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.Containers;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.items.ItemHandlerHelper;
-import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.EnchantmentList;
 
 import java.util.List;
@@ -23,21 +22,21 @@ import java.util.Random;
 
 public class MoltenHeadHandler {
     public static void handleBlockBreak(BreakEvent event) {
-        if (!event.getWorld().isClientSide() && EnchantmentHelper.getItemEnchantmentLevel(EnchantmentList.MoltenHead.get(), event.getPlayer().getItemInHand(Hand.MAIN_HAND)) > 0) { // Checks if running on server and enchant is on tool
-            ServerWorld serverWorld = ((ServerWorld) event.getWorld()); // Casts IWorld to ServerWorld
-            ItemStack pick = event.getPlayer().getItemInHand(Hand.MAIN_HAND);
-            int fortuneAmount = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, pick);
+        if (!event.getWorld().isClientSide() && net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(EnchantmentList.MoltenHead.get(), event.getPlayer().getItemInHand(InteractionHand.MAIN_HAND)) > 0) { // Checks if running on server and enchant is on tool
+            ServerLevel serverWorld = ((ServerLevel) event.getWorld()); // Casts IWorld to ServerWorld
+            net.minecraft.world.item.ItemStack pick = event.getPlayer().getItemInHand(InteractionHand.MAIN_HAND);
+            int fortuneAmount = net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, pick);
             int silkTouchAmount = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, pick);
 
-            LootContext.Builder lootcontext$builder = (new LootContext.Builder(serverWorld)
+            LootContext.Builder lootcontext$builder = new LootContext.Builder(serverWorld)
                     .withRandom(serverWorld.random)
-                    .withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(event.getPos()))
-                    .withParameter(LootParameters.TOOL, pick)); // Makes lootcontext to calculate drops
-            List<ItemStack> drops = event.getState().getDrops(lootcontext$builder); // Calculates drops
+                    .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(event.getPos()))
+                    .withParameter(LootContextParams.TOOL, pick); // Makes lootcontext to calculate drops
+            List<net.minecraft.world.item.ItemStack> drops = event.getState().getDrops(lootcontext$builder); // Calculates drops
 
             for (ItemStack item : drops) { // Iteration
-                ItemStack stack = serverWorld.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(item), serverWorld)
-                        .map(FurnaceRecipe::getResultItem)
+                net.minecraft.world.item.ItemStack stack = serverWorld.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(item), serverWorld)
+                        .map(SmeltingRecipe::getResultItem)
                         .filter(itemStack -> !itemStack.isEmpty())
                         .map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, item.getCount() * itemStack.getCount()))
                         .orElse(item); // Recipe as var
@@ -51,7 +50,7 @@ public class MoltenHeadHandler {
                     stack.setCount(stack.getCount() * addedCount);
                 }
 
-                InventoryHelper.dropItemStack(event.getPlayer().level, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), stack); // Spawns Itemstack
+                Containers.dropItemStack(event.getPlayer().level, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), stack); // Spawns Itemstack
             }
             event.getPlayer().level.destroyBlock(event.getPos(), false); // Breaks block
             event.setResult(Event.Result.DENY);

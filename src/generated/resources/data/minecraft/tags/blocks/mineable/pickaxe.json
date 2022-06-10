@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "miniutilities:ender_ore",
+    "miniutilities:unstable_block",
+    "miniutilities:ender_pearl_block",
+    "miniutilities:gold_spikes",
+    "miniutilities:iron_spikes",
+    "miniutilities:diamond_spikes",
+    "miniutilities:netherite_spikes",
+    "miniutilities:stone_drum",
+    "miniutilities:iron_drum",
+    "miniutilities:reinforced_large_drum",
+    "miniutilities:netherite_reinforced_drum",
+    "miniutilities:unstable_drum",
+    "miniutilities:solar_panel_controller",
+    "miniutilities:laser_hub",
+    "miniutilities:laser_port",
+    "miniutilities:mechanical_miner",
+    "miniutilities:mechanical_placer",
+    "miniutilities:quantum_quarry",
+    "miniutilities:redstone_clock"
+  ]
+}

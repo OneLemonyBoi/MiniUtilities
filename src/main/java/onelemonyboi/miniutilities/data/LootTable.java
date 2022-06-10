@@ -2,23 +2,30 @@ package onelemonyboi.miniutilities.data;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
-import net.minecraft.block.*;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.LootTableProvider;
-import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.Items;
-import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.BlockStateProperty;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.conditions.RandomChance;
-import net.minecraft.loot.functions.ApplyBonus;
-import net.minecraft.loot.functions.CopyName;
-import net.minecraft.loot.functions.CopyNbt;
-import net.minecraft.loot.functions.SetCount;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTables;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.ValidationContext;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
+import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraftforge.registries.RegistryObject;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.basic.EnderLily;
 import onelemonyboi.miniutilities.blocks.basic.FlameLily;
@@ -38,24 +45,24 @@ public class LootTable extends LootTableProvider {
     }
 
     @Override
-    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, net.minecraft.loot.LootTable.Builder>>>, LootParameterSet>> getTables() {
+    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, net.minecraft.world.level.storage.loot.LootTable.Builder>>>, LootContextParamSet>> getTables() {
         return ImmutableList.of(
-                Pair.of(ModBlockLootTables::new, LootParameterSets.BLOCK)
+                Pair.of(ModBlockLootTables::new, LootContextParamSets.BLOCK)
         );
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, net.minecraft.loot.LootTable> map, ValidationTracker validationtracker) {
-        map.forEach((p_218436_2_, p_218436_3_) -> LootTableManager.validate(validationtracker, p_218436_2_, p_218436_3_));
+    protected void validate(Map<ResourceLocation, net.minecraft.world.level.storage.loot.LootTable> map, ValidationContext validationtracker) {
+        map.forEach((p_218436_2_, p_218436_3_) -> LootTables.validate(validationtracker, p_218436_2_, p_218436_3_));
     }
 
-    public static class ModBlockLootTables extends BlockLootTables {
+    public static class ModBlockLootTables extends BlockLoot {
         @Override
         protected void addTables() {
             // registerDropSelfLootTable(name);
-            this.add(BlockList.EnderOre.get(), (ender) -> { return createSilkTouchDispatchTable(ender, applyExplosionDecay(ender, ItemLootEntry.lootTableItem(ItemList.EnderDust.get())
-                    .apply(SetCount.setCount(RandomValueRange.between(2.0F, 5.0F)))
-                    .apply(ApplyBonus.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+            this.add(BlockList.EnderOre.get(), (ender) -> { return createSilkTouchDispatchTable(ender, applyExplosionDecay(ender, LootItem.lootTableItem(ItemList.EnderDust.get())
+                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 5.0F)))
+                    .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
             });
 
             dropSelf(BlockList.CursedEarth.get());
@@ -113,10 +120,14 @@ public class LootTable extends LootTableProvider {
             dropSelf(BlockList.LapisLamp.get());
             dropSelf(BlockList.RedstoneClockBlock.get());
 
-            ILootCondition.IBuilder ilootcondition = BlockStateProperty.hasBlockStateProperties(BlockList.EnderLily.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(EnderLily.AGE, 7));
-            add(BlockList.EnderLily.get(), applyExplosionDecay(BlockList.EnderLily.get(), net.minecraft.loot.LootTable.lootTable().withPool(LootPool.lootPool().add(ItemLootEntry.lootTableItem(ItemList.EnderLilySeeds.get()))).withPool(LootPool.lootPool().when(ilootcondition).add(ItemLootEntry.lootTableItem(Items.ENDER_PEARL))).withPool(LootPool.lootPool().when(ilootcondition).add(ItemLootEntry.lootTableItem(ItemList.EnderLilySeeds.get()).when(RandomChance.randomChance(0.01F))))));
-            ILootCondition.IBuilder ilootcondition1 = BlockStateProperty.hasBlockStateProperties(BlockList.FlameLily.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlameLily.AGE, 7));
-            add(BlockList.FlameLily.get(), applyExplosionDecay(BlockList.FlameLily.get(), net.minecraft.loot.LootTable.lootTable().withPool(LootPool.lootPool().add(ItemLootEntry.lootTableItem(ItemList.FlameLilySeeds.get()))).withPool(LootPool.lootPool().when(ilootcondition1).add(ItemLootEntry.lootTableItem(ItemList.FlameLily.get()))).withPool(LootPool.lootPool().when(ilootcondition1).add(ItemLootEntry.lootTableItem(ItemList.FlameLilySeeds.get()).when(RandomChance.randomChance(0.01F))))));
+            LootItemBlockStatePropertyCondition.Builder ilootcondition = LootItemBlockStatePropertyCondition
+                    .hasBlockStateProperties(BlockList.EnderLily.get())
+                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(EnderLily.AGE, 7));
+            add(BlockList.EnderLily.get(), applyExplosionDecay(BlockList.EnderLily.get(), net.minecraft.world.level.storage.loot.LootTable.lootTable().withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool().add(LootItem.lootTableItem(ItemList.EnderLilySeeds.get()))).withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool().when(ilootcondition).add(LootItem.lootTableItem(Items.ENDER_PEARL))).withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool().when(ilootcondition).add(LootItem.lootTableItem(ItemList.EnderLilySeeds.get()).when(LootItemRandomChanceCondition.randomChance(0.01F))))));
+            LootItemBlockStatePropertyCondition.Builder ilootcondition1 = LootItemBlockStatePropertyCondition
+                    .hasBlockStateProperties(BlockList.FlameLily.get())
+                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlameLily.AGE, 7));
+            add(BlockList.FlameLily.get(), applyExplosionDecay(BlockList.FlameLily.get(), net.minecraft.world.level.storage.loot.LootTable.lootTable().withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool().add(LootItem.lootTableItem(ItemList.FlameLilySeeds.get()))).withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool().when(ilootcondition1).add(LootItem.lootTableItem(ItemList.FlameLily.get()))).withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool().when(ilootcondition1).add(LootItem.lootTableItem(ItemList.FlameLilySeeds.get()).when(LootItemRandomChanceCondition.randomChance(0.01F))))));
         }
 
         @Override
@@ -126,12 +137,12 @@ public class LootTable extends LootTableProvider {
                     .collect(Collectors.toList());
         }
 
-        public static net.minecraft.loot.LootTable.Builder dropWithTags(Block block, String... tags) {
-            CopyNbt.Builder tagNbtBuilder = CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY);
+        public static net.minecraft.world.level.storage.loot.LootTable.Builder dropWithTags(net.minecraft.world.level.block.Block block, String... tags) {
+            CopyNbtFunction.Builder tagNbtBuilder = CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY);
             for (String tag : tags) {
                 tagNbtBuilder = tagNbtBuilder.copy(tag, "BlockEntityTag." + tag);
             }
-            return net.minecraft.loot.LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(block).apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(tagNbtBuilder))));
+            return net.minecraft.world.level.storage.loot.LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY)).apply(tagNbtBuilder))));
         }
     }
 }

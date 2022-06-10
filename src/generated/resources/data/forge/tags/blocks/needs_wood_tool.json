@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "miniutilities:ender_pearl_block",
+    "miniutilities:angel_block",
+    "miniutilities:wooden_spikes",
+    "miniutilities:stone_drum"
+  ]
+}

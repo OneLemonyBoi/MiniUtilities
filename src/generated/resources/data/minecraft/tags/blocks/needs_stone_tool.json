@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "miniutilities:ender_ore",
+    "miniutilities:iron_spikes",
+    "miniutilities:solar_panel_controller",
+    "miniutilities:laser_hub",
+    "miniutilities:laser_port",
+    "miniutilities:mechanical_miner",
+    "miniutilities:mechanical_placer"
+  ]
+}

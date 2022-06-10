@@ -1,36 +1,36 @@
 package onelemonyboi.miniutilities.blocks.spikes;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 
 import java.util.UUID;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import org.apache.logging.log4j.core.util.ReflectionUtil;
 
-public class SpikeBlock extends Block {
+public class SpikeBlock extends net.minecraft.world.level.block.Block {
     private int damage;
     private Boolean playerDamage;
     private Boolean expDropTrue;
@@ -41,7 +41,7 @@ public class SpikeBlock extends Block {
     private static final GameProfile PROFILE = new GameProfile(UUID.fromString("5c32fc23-8c26-47fe-91ed-9c204b22f430"), "[Spikes]");
     private FakePlayer fakePlayer;
 
-    public SpikeBlock(Properties properties, int damage, Boolean playerDamage, Boolean expDropTrue, Boolean dontKill) {
+    public SpikeBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties properties, int damage, Boolean playerDamage, Boolean expDropTrue, Boolean dontKill) {
         super(properties);
         this.damage = damage;
         this.playerDamage = playerDamage;
@@ -51,32 +51,32 @@ public class SpikeBlock extends Block {
     }
 
     @Deprecated
-    public BlockState rotate(BlockState state, Rotation rotation) {
+    public net.minecraft.world.level.block.state.BlockState rotate(net.minecraft.world.level.block.state.BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Deprecated
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
+    public BlockState mirror(net.minecraft.world.level.block.state.BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<net.minecraft.world.level.block.Block, net.minecraft.world.level.block.state.BlockState> builder) {
         builder.add(FACING);
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
-    public static final VoxelShape NorthShape = Block.box(0, 0, 9, 16, 16, 16);
-    public static final VoxelShape SouthShape = Block.box(0, 0, 0, 16, 16, 7);
-    public static final VoxelShape WestShape = Block.box(9, 0, 0, 16, 16, 16);
-    public static final VoxelShape EastShape = Block.box(0, 0, 0, 7, 16, 16);
-    public static final VoxelShape UpShape = Block.box(0, 0, 0, 16, 7, 16);
-    public static final VoxelShape DownShape = Block.box(0, 9, 0, 16, 16, 16);
+    public static final net.minecraft.world.phys.shapes.VoxelShape NorthShape = net.minecraft.world.level.block.Block.box(0, 0, 9, 16, 16, 16);
+    public static final net.minecraft.world.phys.shapes.VoxelShape SouthShape = net.minecraft.world.level.block.Block.box(0, 0, 0, 16, 16, 7);
+    public static final net.minecraft.world.phys.shapes.VoxelShape WestShape = Block.box(9, 0, 0, 16, 16, 16);
+    public static final VoxelShape EastShape = net.minecraft.world.level.block.Block.box(0, 0, 0, 7, 16, 16);
+    public static final net.minecraft.world.phys.shapes.VoxelShape UpShape = net.minecraft.world.level.block.Block.box(0, 0, 0, 16, 7, 16);
+    public static final VoxelShape DownShape = net.minecraft.world.level.block.Block.box(0, 9, 0, 16, 16, 16);
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public net.minecraft.world.phys.shapes.VoxelShape getShape(net.minecraft.world.level.block.state.BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         Direction dir = state.getValue(FACING);
         switch (dir) {
             case NORTH:
@@ -95,18 +95,17 @@ public class SpikeBlock extends Block {
     }
 
     @Override
-    public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (worldIn.isClientSide || !(entityIn instanceof LivingEntity)) return;
-
-        if (this.dontKill && ((LivingEntity) entityIn).getHealth() <= this.damage) {return;}
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+        if (!(worldIn instanceof ServerLevel level) || !(entityIn instanceof LivingEntity entity)) return;
+        if (this.dontKill && entity.getHealth() <= this.damage) {return;}
         if (this.playerDamage) {
             if(fakePlayer == null) {
-                fakePlayer = new SpikeFakePlayer(FakePlayerFactory.get((ServerWorld) worldIn, PROFILE));
-                fakePlayer.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(damage);
+                fakePlayer = new SpikeFakePlayer(FakePlayerFactory.get((ServerLevel) worldIn, PROFILE));
+                fakePlayer.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE).setBaseValue(damage);
                 fakePlayer.getAttribute(Attributes.ATTACK_SPEED).setBaseValue(1000000D);
             }
 
-            fakePlayer.setLevel(worldIn);
+            fakePlayer.setLevel(level);
             fakePlayer.setPos(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
             cancelSounds = true;
             fakePlayer.attack(entityIn);
@@ -115,9 +114,13 @@ public class SpikeBlock extends Block {
         }
         else {entityIn.hurt(DamageSource.CACTUS, this.damage);}
         if (this.expDropTrue) {
-            ((LivingEntity)entityIn).lastHurtByPlayerTime = 100;
+            try {
+                ReflectionUtil.setFieldValue(LivingEntity.class.getField("lastHurtByPlayerTime"), entity, 100);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
         }
-        super.stepOn(worldIn, pos, entityIn);
+        super.stepOn(worldIn, pos, state, entityIn);
     }
 
     public static void soundEvent(PlaySoundAtEntityEvent event) {

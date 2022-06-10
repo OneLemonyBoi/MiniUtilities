@@ -1,6 +1,6 @@
 package onelemonyboi.miniutilities.data;
 
-import net.minecraft.data.BlockTagsProvider;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -54,5 +54,15 @@ public class BlockTags extends BlockTagsProvider {
         tag(ModTags.Blocks.LAPIS_CAELESTIS).addTag(ModTags.Blocks.PINK_LAPIS_CAELESTIS);
         tag(ModTags.Blocks.BROWN_LAPIS_CAELESTIS).add(BlockList.BrownLapisCaelestis.get());
         tag(ModTags.Blocks.LAPIS_CAELESTIS).addTag(ModTags.Blocks.BROWN_LAPIS_CAELESTIS);
+
+        tag(Tags.Blocks.NEEDS_WOOD_TOOL).add(BlockList.EnderPearlBlock.get(), BlockList.AngelBlock.get(), BlockList.WoodenSpikes.get(), BlockList.StoneDrum.get());
+        tag(Tags.Blocks.NEEDS_GOLD_TOOL).add(BlockList.GoldSpikes.get());
+        tag(net.minecraft.tags.BlockTags.NEEDS_STONE_TOOL).add(BlockList.EnderOre.get(), BlockList.IronSpikes.get(), BlockList.SolarPanelController.get(), BlockList.LaserHub.get(), BlockList.LaserPort.get(), BlockList.MechanicalMiner.get(), BlockList.MechanicalPlacer.get());
+        tag(net.minecraft.tags.BlockTags.NEEDS_IRON_TOOL).add(BlockList.UnstableBlock.get(), BlockList.IronDrum.get(), BlockList.DiamondSpikes.get());
+        tag(net.minecraft.tags.BlockTags.NEEDS_DIAMOND_TOOL).add(BlockList.NetheriteSpikes.get(), BlockList.ReinforcedLargeDrum.get(), BlockList.NetheriteReinforcedDrum.get(), BlockList.QuantumQuarry.get());
+        tag(Tags.Blocks.NEEDS_NETHERITE_TOOL).add(BlockList.UnstableDrum.get());
+
+        tag(net.minecraft.tags.BlockTags.MINEABLE_WITH_PICKAXE).add(BlockList.EnderOre.get(), BlockList.UnstableBlock.get(), BlockList.EnderPearlBlock.get(), BlockList.GoldSpikes.get(), BlockList.IronSpikes.get(), BlockList.DiamondSpikes.get(), BlockList.NetheriteSpikes.get(), BlockList.StoneDrum.get(), BlockList.IronDrum.get(), BlockList.ReinforcedLargeDrum.get(), BlockList.NetheriteReinforcedDrum.get(), BlockList.UnstableDrum.get(), BlockList.SolarPanelController.get(), BlockList.LaserHub.get(), BlockList.LaserPort.get(), BlockList.MechanicalMiner.get(), BlockList.MechanicalPlacer.get(), BlockList.QuantumQuarry.get(), BlockList.RedstoneClockBlock.get());
+        tag(net.minecraft.tags.BlockTags.MINEABLE_WITH_AXE).add(BlockList.WoodenSpikes.get());
     }
 }

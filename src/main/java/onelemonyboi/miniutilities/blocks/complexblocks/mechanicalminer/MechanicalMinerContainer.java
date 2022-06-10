@@ -1,13 +1,14 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.BlockList;
@@ -16,14 +17,18 @@ import onelemonyboi.miniutilities.init.ContainerList;
 import java.util.Objects;
 
 
-public class MechanicalMinerContainer extends Container {
+public class MechanicalMinerContainer extends AbstractContainerMenu {
     public final MechanicalMinerTile te;
-    private final IWorldPosCallable canInteractWithCallable;
+    private final ContainerLevelAccess access;
 
-    public MechanicalMinerContainer(final int windowId, final PlayerInventory playerInv, final MechanicalMinerTile te) {
+    public MechanicalMinerContainer(final int windowId, final Inventory playerInv, FriendlyByteBuf buf) {
+        this(windowId, playerInv, ContainerLevelAccess.create(playerInv.player.level, buf.readBlockPos()));
+    }
+
+    public MechanicalMinerContainer(final int windowId, final Inventory playerInv, ContainerLevelAccess access) {
         super(ContainerList.MinerContainer.get(), windowId);
-        this.te = te;
-        this.canInteractWithCallable = IWorldPosCallable.create(te.getLevel(), te.getBlockPos());
+        this.access = access;
+        this.te = (MechanicalMinerTile) access.evaluate(Level::getBlockEntity).get();
 
         // Tile Entity
         for (int row = 0; row < 3; row++) {
@@ -58,14 +63,10 @@ public class MechanicalMinerContainer extends Container {
         }
     }
 
-    public MechanicalMinerContainer(final int windowId, final PlayerInventory playerInv, final PacketBuffer data) {
-        this(windowId, playerInv, getTileEntity(playerInv, data));
-    }
-
-    private static MechanicalMinerTile getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
+    private static MechanicalMinerTile getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(data, "Packet Buffer cannot be null.");
-        final TileEntity te = playerInv.player.level.getBlockEntity(data.readBlockPos());
+        final BlockEntity te = playerInv.player.level.getBlockEntity(data.readBlockPos());
         if (te instanceof MechanicalMinerTile) {
             return (MechanicalMinerTile) te;
         }
@@ -73,12 +74,12 @@ public class MechanicalMinerContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(canInteractWithCallable, playerIn, BlockList.MechanicalMiner.get());
+    public boolean stillValid(Player playerIn) {
+        return stillValid(access, playerIn, BlockList.MechanicalMiner.get());
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {

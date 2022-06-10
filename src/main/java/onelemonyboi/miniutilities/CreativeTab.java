@@ -1,10 +1,10 @@
 package onelemonyboi.miniutilities;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import onelemonyboi.miniutilities.init.BlockList;
 
-public class CreativeTab extends ItemGroup {
+public class CreativeTab extends CreativeModeTab {
     private static final CreativeTab INSTANCE = new CreativeTab();
 
     public CreativeTab() { super(MiniUtilities.MOD_ID); }
@@ -14,7 +14,7 @@ public class CreativeTab extends ItemGroup {
         return INSTANCE;
     }
 
-    public ItemStack makeIcon()
+    public net.minecraft.world.item.ItemStack makeIcon()
     {
         return new ItemStack(BlockList.AngelBlock.get());
     }

@@ -1,14 +1,16 @@
 package onelemonyboi.miniutilities.blocks.basic;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
 import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.init.BlockList;
 
@@ -19,7 +21,7 @@ public class AngelBlockItem extends BlockItem {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
     {
         if (!world.isClientSide){
             double x, y, z;
@@ -64,10 +66,10 @@ public class AngelBlockItem extends BlockItem {
 
             if (world.isEmptyBlock(pos) || !world.getFluidState(pos).isEmpty()) {
                 world.setBlockAndUpdate(pos, BlockList.AngelBlock.get().defaultBlockState());
-                if (!player.abilities.instabuild)
+                if (!player.getAbilities().instabuild)
                     player.getItemInHand(hand).shrink(1);
             }
         }
-        return new ActionResult<ItemStack>(ActionResultType.SUCCESS, player.getItemInHand(hand));
+        return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, player.getItemInHand(hand));
     }
 }

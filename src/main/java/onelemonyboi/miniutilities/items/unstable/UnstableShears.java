@@ -1,21 +1,16 @@
 package onelemonyboi.miniutilities.items.unstable;
 
-import com.google.common.collect.Sets;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import onelemonyboi.miniutilities.init.ItemList;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Set;
 
 public class UnstableShears extends ShearsItem {
     public UnstableShears(Item.Properties builder) {
@@ -23,30 +18,18 @@ public class UnstableShears extends ShearsItem {
     }
 
     @Override
-    public int getHarvestLevel(ItemStack stack, @Nonnull ToolType tool, @Nullable PlayerEntity player, @Nullable BlockState blockState) {
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
         return 1;
     }
 
-    private static final Set<ToolType> pickaxe = Sets.newHashSet(ToolType.PICKAXE);
-
-
-    @Nonnull
-    @Override
-    public Set<ToolType> getToolTypes(ItemStack stack) {
-        return pickaxe;
-    }
-
-    @Override
-    public float getDestroySpeed(ItemStack stack, BlockState state) {
-        return 20;
-    }
-
     public static void instantShear(PlayerInteractEvent.RightClickBlock event) {
+        if (!(event.getItemStack().getItem() instanceof TieredItem item)) return;
+        if (event.getWorld().isClientSide()) return;
         ItemStack stack = event.getItemStack();
-        PlayerEntity player = event.getPlayer();
-        World world = player.level;
+        Player player = event.getPlayer();
+        Level world = player.level;
         BlockPos pos = event.getPos();
-        if (player.isShiftKeyDown() && !world.isClientSide && stack.getItem() == ItemList.UnstableShears.get() && world.getBlockState(pos).getHarvestLevel() <= 2 && world.getBlockState(pos).getHarvestLevel() >= 0) {
+        if (player.isShiftKeyDown() && stack.getItem() == ItemList.UnstableShears.get() && TierSortingRegistry.isCorrectTierForDrops(item.getTier(), world.getBlockState(pos))) {
             player.addItem(new ItemStack(world.getBlockState(pos).getBlock()));
             world.destroyBlock(pos, false);
         }

@@ -1,15 +1,15 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.drum;
 
 import lombok.Getter;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -28,12 +28,12 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
     private FluidTank drum;
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> drum);
 
-    public DrumTile() {
-        this(0);
+    public DrumTile(BlockPos pos, BlockState state) {
+        this(0, pos, state);
     }
 
-    public DrumTile(int mb) {
-        super(TEList.DrumTile.get(), TileBehaviors.base);
+    public DrumTile(int mb, BlockPos pos, BlockState state) {
+        super(TEList.DrumTile.get(), pos, state, TileBehaviors.base);
         this.drum = new FluidTank(mb) {
             @Override
             protected void onContentsChanged() {
@@ -43,18 +43,16 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
-        super.load(state, tag);
+    public void load(CompoundTag tag) {
+        super.load(tag);
         drum.readFromNBT(tag);
         drum.setCapacity(tag.getInt("Capacity"));
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
-        tag = super.save(tag);
+    public void saveAdditional(CompoundTag tag) {
         drum.writeToNBT(tag);
         tag.putInt("Capacity", drum.getCapacity());
-        return tag;
     }
 
     @Override
@@ -66,20 +64,20 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
     }
 
     @Override
-    protected void invalidateCaps() {
+    public void invalidateCaps() {
         super.invalidateCaps();
         holder.invalidate();
     }
 
     @Override
-    public List<ITextComponent> getInfo() {
-        List<ITextComponent> output = new ArrayList<>();
+    public List<MutableComponent> getInfo() {
+        List<MutableComponent> output = new ArrayList<>();
 
         output.add(this.getBlockState().getBlock().getName());
-        output.add(new StringTextComponent(""));
-        output.add(new TranslationTextComponent("text.miniutilities.fluidname").append(": " + getDrum().getFluid().getDisplayName().getString()));
-        output.add(new TranslationTextComponent("text.miniutilities.drumamount").append(": " + this.drum.getFluidAmount()));
-        output.add(new TranslationTextComponent("text.miniutilities.drumcapacity").append(": " + this.drum.getCapacity()));
+        output.add(new TextComponent(""));
+        output.add(new TranslatableComponent("text.miniutilities.fluidname").append(": " + getDrum().getFluid().getDisplayName().getString()));
+        output.add(new TranslatableComponent("text.miniutilities.drumamount").append(": " + this.drum.getFluidAmount()));
+        output.add(new TranslatableComponent("text.miniutilities.drumcapacity").append(": " + this.drum.getCapacity()));
         return output;
     }
 }

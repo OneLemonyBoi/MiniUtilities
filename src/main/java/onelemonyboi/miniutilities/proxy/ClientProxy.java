@@ -1,12 +1,18 @@
 package onelemonyboi.miniutilities.proxy;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import onelemonyboi.miniutilities.entities.MagicalEggEntity;
+import onelemonyboi.miniutilities.init.EntityList;
 import onelemonyboi.miniutilities.renderer.AngelRingRendererLeft;
 import onelemonyboi.miniutilities.renderer.AngelRingRendererRight;
 import onelemonyboi.miniutilities.renderer.KikokuRenderer;
@@ -22,17 +28,7 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void init(FMLCommonSetupEvent event) {
-        Map<String, PlayerRenderer> skinMapAngelWingLeft = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
-        for (PlayerRenderer render : new PlayerRenderer[]{skinMapAngelWingLeft.get("default"), skinMapAngelWingLeft.get("slim")})
-            render.addLayer(new AngelRingRendererLeft(render));
 
-        Map<String, PlayerRenderer> skinMapAngelWingRight = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
-        for (PlayerRenderer render : new PlayerRenderer[]{skinMapAngelWingRight.get("default"), skinMapAngelWingRight.get("slim")})
-            render.addLayer(new AngelRingRendererRight(render));
-
-        Map<String, PlayerRenderer> skinMapKikoku = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
-        for (PlayerRenderer render : new PlayerRenderer[]{skinMapKikoku.get("default"), skinMapKikoku.get("slim")})
-            render.addLayer(new KikokuRenderer(render));
     }
 
     @Override
@@ -41,7 +37,24 @@ public class ClientProxy implements IProxy {
     }
 
     @Override
-    public <T extends Entity> void registerEntityRenderer(EntityType<T> entityClass, Supplier<IRenderFactory<T>> renderFactory) {
-        RenderingRegistry.registerEntityRenderingHandler(entityClass, renderFactory.get());
+    public void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(EntityList.SpecialEgg.get(), ThrownItemRenderer::new);
+    }
+
+    @Override
+    public void registerEntityLayers(EntityRenderersEvent.AddLayers event) {
+        EntityRenderer<? extends Player> def = event.getSkin("default");
+        EntityRenderer<? extends Player> slim = event.getSkin("slim");
+
+        if (def instanceof PlayerRenderer playerRendererA) {
+            playerRendererA.addLayer(new AngelRingRendererLeft(playerRendererA));
+            playerRendererA.addLayer(new AngelRingRendererRight(playerRendererA));
+            playerRendererA.addLayer(new KikokuRenderer(playerRendererA));
+        }
+        if (slim instanceof PlayerRenderer playerRendererB) {
+            playerRendererB.addLayer(new AngelRingRendererLeft(playerRendererB));
+            playerRendererB.addLayer(new AngelRingRendererRight(playerRendererB));
+            playerRendererB.addLayer(new KikokuRenderer(playerRendererB));
+        }
     }
 }

@@ -1,54 +1,55 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.*;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import onelemonyboi.lemonlib.blocks.block.BlockBase;
-import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryTile;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.init.TEList;
-import onelemonyboi.miniutilities.trait.BlockBehaviours;
-
-import java.util.UUID;
-
-import static onelemonyboi.miniutilities.misc.KeyBindingsHandler.keyBindingPressed;
+import onelemonyboi.miniutilities.trait.BlockBehaviors;
+import org.jetbrains.annotations.Nullable;
 
 public class MechanicalMinerBlock extends BlockBase {
     public MechanicalMinerBlock() {
-        super(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL), BlockBehaviours.mechanicalMiner);
+        super(Properties.of(Material.METAL).sound(SoundType.METAL), BlockBehaviors.mechanicalMiner);
+    }
+
+    @Nullable
+    @Override
+    public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+        return (MenuProvider) level.getBlockEntity(pos);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(level, type, TEList.MechanicalMinerTile.get(), MechanicalMinerTile::serverTick, null);
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide()) {
-            TileEntity te = worldIn.getBlockEntity(pos);
-            if (player.isShiftKeyDown()) {return ActionResultType.CONSUME;}
+            BlockEntity te = worldIn.getBlockEntity(pos);
+            if (player.isShiftKeyDown()) {return InteractionResult.CONSUME;}
 
             if (!(te instanceof MechanicalMinerTile)) {return super.use(state, worldIn, pos, player, handIn, hit);}
             MechanicalMinerTile TE = ((MechanicalMinerTile) te);
-            if (ModTags.Items.UPGRADES_SPEED.contains(player.getItemInHand(handIn).getItem())) {
+            if (player.getItemInHand(handIn).is(ModTags.Items.UPGRADES_SPEED)) {
                 if (TE.waittime > 5) {
                     TE.waittime = TE.waittime - 5;
                     player.getItemInHand(handIn).shrink(1);
@@ -61,11 +62,11 @@ public class MechanicalMinerBlock extends BlockBase {
                 }
             }
             else {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (MechanicalMinerTile) te, pos);
-                return ActionResultType.CONSUME;
+                NetworkHooks.openGui((ServerPlayer) player, (MechanicalMinerTile) te, pos);
+                return InteractionResult.CONSUME;
             }
         }
-        return ActionResultType.CONSUME;
+        return InteractionResult.CONSUME;
     }
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
@@ -74,11 +75,11 @@ public class MechanicalMinerBlock extends BlockBase {
                 MechanicalMinerTile TE = (MechanicalMinerTile) (event.getWorld().getBlockEntity(event.getPos()));
                 if (TE.waittime > 1 && TE.waittime < 20) {
                     TE.waittime = TE.waittime + 5;
-                    InventoryHelper.dropItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    Containers.dropItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
                     TE.timer = 0;
                 } else if (TE.waittime == 1) {
                     TE.waittime = 5;
-                    InventoryHelper.dropItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    Containers.dropItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new net.minecraft.world.item.ItemStack(ItemList.SpeedUpgrade.get()));
                     TE.timer = 0;
                 }
             }

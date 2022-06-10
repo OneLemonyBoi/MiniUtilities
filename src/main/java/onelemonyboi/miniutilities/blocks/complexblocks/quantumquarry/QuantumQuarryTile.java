@@ -1,16 +1,20 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.lemonlib.annotations.SaveInNBT;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
@@ -19,14 +23,14 @@ import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.startup.JSON.QuantumQuarryJSON;
 import onelemonyboi.miniutilities.trait.TileBehaviors;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class QuantumQuarryTile extends TileBase implements INamedContainerProvider, RenderInfoIdentifier, ITickableTileEntity {
+public class QuantumQuarryTile extends TileBase implements MenuProvider, RenderInfoIdentifier {
     public static int slots = 9;
 
     // 1: Always on
@@ -39,8 +43,8 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
     public Integer waittime;
     public ArrayList<ItemStack> insertStacks;
 
-    public QuantumQuarryTile() {
-        super(TEList.QuantumQuarryTile.get(), TileBehaviors.quantumQuarry);
+    public QuantumQuarryTile(BlockPos pos, BlockState state) {
+        super(TEList.QuantumQuarryTile.get(), pos, state, TileBehaviors.quantumQuarry);
         this.redstonemode = 1;
         this.timer = 0;
         this.waittime = 1200;
@@ -48,44 +52,40 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.miniutilities.quantum_quarry");
+    public Component getDisplayName() {
+        return new TranslatableComponent("container.miniutilities.quantum_quarry");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int id, PlayerInventory player, PlayerEntity entity) {
-        return new QuantumQuarryContainer(id, player, this);
+    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+        return new QuantumQuarryContainer(id, inventory, ContainerLevelAccess.create(getLevel(), getBlockPos()));
     }
 
     public static int calcRFCost(int waittime) {
         return Math.round(4000000 / (float) Math.pow(waittime, 1.5F));
     }
 
-    @Override
-    public void tick() {
-        if (level.isClientSide()) {return;}
+    public static void serverTick(Level level, BlockPos pos, BlockState state, QuantumQuarryTile tile) {
+        level.sendBlockUpdated(pos, state, state, 2);
 
-        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
-
-        if(this.timer == 0 && !insertStacks.isEmpty()){
-            tryInsert(insertStacks);
+        if (tile.timer == 0 && !tile.insertStacks.isEmpty()){
+            tile.tryInsert(tile.insertStacks);
             return;
         }
-
-        if ((!level.hasNeighborSignal(this.getBlockPos()) && this.redstonemode == 2) || (level.hasNeighborSignal(this.getBlockPos()) && this.redstonemode == 3)) {
+        if ((!level.hasNeighborSignal(pos) && tile.redstonemode == 2) || (level.hasNeighborSignal(pos) && tile.redstonemode == 3)) {
             return;
         }
-        if (!getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().checkedMachineConsume(calcRFCost(this.waittime))) {
+        if (!tile.getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().checkedMachineConsume(calcRFCost(tile.waittime))) {
             return;
         }
-        if (insertStacks.isEmpty()) {
-            insertStacks = generateItemStacks();
+        if (tile.insertStacks.isEmpty()) {
+            tile.insertStacks = tile.generateItemStacks();
         }
-        this.timer++;
-        if (this.timer < this.waittime) {return;}
-        this.timer = 0;
-        tryInsert(insertStacks);
+        tile.timer++;
+        if (tile.timer < tile.waittime) {return;}
+        tile.timer = 0;
+        tile.tryInsert(tile.insertStacks);
     }
 
     private void tryInsert(ArrayList<ItemStack> insertStacks) {
@@ -105,7 +105,7 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
     private ArrayList<ItemStack> generateItemStacks() {
         if (level == null) return new ArrayList<>();
 
-        String biomeStr = level.getBiome(getBlockPos()).getRegistryName().toString();
+        String biomeStr = level.getBiome(getBlockPos()).value().getRegistryName().toString();
         String dimensionStr = level.dimension().location().toString();
 
 
@@ -118,7 +118,7 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
         ArrayList<ItemStack> res = new ArrayList<>();
         if (itemsOfHighestWorth.size() > 0) {
             for (Map.Entry<QuantumQuarryJSON.OreInfo, Integer> entry : itemsOfHighestWorth.entrySet()) {
-                ResourceLocation id = ResourceLocation.tryParse(entry.getKey().name);
+                net.minecraft.resources.ResourceLocation id = ResourceLocation.tryParse(entry.getKey().name);
                 Item item = ForgeRegistries.ITEMS.getValue(id);
                 int count = entry.getValue();
                 while (count > item.getMaxStackSize()){
@@ -137,28 +137,28 @@ public class QuantumQuarryTile extends TileBase implements INamedContainerProvid
     }
 
     @Override
-    public List<ITextComponent> getInfo() {
-        List<ITextComponent> output = new ArrayList<>();
+    public List<MutableComponent> getInfo() {
+        List<MutableComponent> output = new ArrayList<>();
 
         output.add(this.getBlockState().getBlock().getName());
-        output.add(new StringTextComponent(""));
+        output.add(new TextComponent(""));
         switch (this.redstonemode) {
             case 1:
-                output.add(new TranslationTextComponent("text.miniutilities.redstonemodeone"));
+                output.add(new TranslatableComponent("text.miniutilities.redstonemodeone"));
                 break;
             case 2:
-                output.add(new TranslationTextComponent("text.miniutilities.redstonemodetwo"));
+                output.add(new TranslatableComponent("text.miniutilities.redstonemodetwo"));
                 break;
             case 3:
-                output.add(new TranslationTextComponent("text.miniutilities.redstonemodethree"));
+                output.add(new TranslatableComponent("text.miniutilities.redstonemodethree"));
                 break;
         }
-        output.add(new TranslationTextComponent("text.miniutilities.waittime")
+        output.add(new TranslatableComponent("text.miniutilities.waittime")
                 .append(this.waittime.toString() + " ticks(" + this.waittime.floatValue() / 20)
-                .append(new TranslationTextComponent("text.miniutilities.seconds"))
+                .append(new TranslatableComponent("text.miniutilities.seconds"))
                 .append(")"));
-        output.add(new StringTextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
-        output.add(new StringTextComponent("FE/t Consumption: " + calcRFCost(this.waittime)));
+        output.add(new TextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
+        output.add(new TextComponent("FE/t Consumption: " + calcRFCost(this.waittime)));
         return output;
     }
 }

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "miniutilities:unstable_block",
+    "miniutilities:iron_drum",
+    "miniutilities:diamond_spikes"
+  ]
+}

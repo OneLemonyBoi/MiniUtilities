@@ -1,11 +1,11 @@
 package onelemonyboi.miniutilities.items;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -25,7 +25,7 @@ public class AngelRing extends Item {
     }
 
     @Override
-    public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundNBT unused) {
+    public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag unused) {
         ICurio curio = new ICurio() {
             @Override
             public boolean canEquipFromUse(SlotContext slotContext) {
@@ -33,39 +33,44 @@ public class AngelRing extends Item {
             }
 
             @Override
-            public void onEquip(SlotContext slotContext, ItemStack prevStack) {
-                if (slotContext.getWearer() instanceof PlayerEntity) {
-                    startFlying((PlayerEntity) slotContext.getWearer());
+            public ItemStack getStack() {
+                return stack;
+            }
+
+            @Override
+            public void onEquip(SlotContext slotContext, net.minecraft.world.item.ItemStack prevStack) {
+                if (slotContext.getWearer() instanceof Player) {
+                    startFlying((Player) slotContext.getWearer());
                 }
             }
 
             @Override
-            public void onUnequip(SlotContext slotContext, ItemStack prevStack) {
-                if (slotContext.getWearer() instanceof PlayerEntity) {
-                    stopFlying((PlayerEntity) slotContext.getWearer());
+            public void onUnequip(SlotContext slotContext, net.minecraft.world.item.ItemStack prevStack) {
+                if (slotContext.getWearer() instanceof Player) {
+                    stopFlying((Player) slotContext.getWearer());
                 }
             }
 
-            private void startFlying(PlayerEntity player) {
+            private void startFlying(Player player) {
                 if (!player.isCreative() && !player.isSpectator()) {
-                    player.abilities.mayfly = true;
+                    player.getAbilities().mayfly = true;
                     player.onUpdateAbilities();
                 }
             }
 
-            private void stopFlying(PlayerEntity player) {
+            private void stopFlying(Player player) {
                 if (!player.isCreative() && !player.isSpectator()) {
-                    player.abilities.flying = false;
-                    player.abilities.mayfly = false;
+                    player.getAbilities().flying = false;
+                    player.getAbilities().mayfly = false;
                     player.onUpdateAbilities();
                 }
             }
 
             @Override
-            public void curioTick(String identifier, int index, LivingEntity livingEntity) {
-                if (livingEntity instanceof PlayerEntity) {
-                    PlayerEntity player = ((PlayerEntity) livingEntity);
-                    if (!player.abilities.mayfly) {
+            public void curioTick(String identifier, int index, net.minecraft.world.entity.LivingEntity livingEntity) {
+                if (livingEntity instanceof Player) {
+                    Player player = ((Player) livingEntity);
+                    if (!player.getAbilities().mayfly) {
                         startFlying(player);
                     }
                 }

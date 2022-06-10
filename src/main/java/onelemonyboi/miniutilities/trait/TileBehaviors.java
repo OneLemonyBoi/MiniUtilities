@@ -1,11 +1,9 @@
 package onelemonyboi.miniutilities.trait;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
-import net.minecraftforge.common.util.LazyOptional;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PickaxeItem;
 import onelemonyboi.lemonlib.handlers.MUItemStackHandler;
 import onelemonyboi.lemonlib.trait.tile.TileBehaviour;
-import onelemonyboi.lemonlib.trait.tile.TileBehaviours;
 import onelemonyboi.lemonlib.trait.tile.TilePartialBehaviours;
 
 import javax.annotation.Nonnull;

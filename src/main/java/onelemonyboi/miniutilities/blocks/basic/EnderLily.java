@@ -1,34 +1,40 @@
 package onelemonyboi.miniutilities.blocks.basic;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.Tags;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.ItemList;
 
 import java.util.Random;
 
-
-import net.minecraft.block.AbstractBlock.Properties;
-
-public class EnderLily extends CropsBlock {
+public class EnderLily extends CropBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
     public EnderLily()
     {
@@ -36,25 +42,25 @@ public class EnderLily extends CropsBlock {
     }
 
     @Override
-    protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos)
+    protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos)
     {
-        return Tags.Blocks.END_STONES.contains(state.getBlock()) || state.getBlock() instanceof SpreadableSnowyDirtBlock || ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL.contains(state.getBlock()) || Tags.Blocks.DIRT.contains(state.getBlock()) || state.is(Blocks.END_STONE);
+        return state.is(Tags.Blocks.END_STONES) || state.getBlock() instanceof SnowyDirtBlock || state.is(ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL) || state.is(BlockTags.DIRT);
     }
 
     @OnlyIn(Dist.CLIENT)
-    protected IItemProvider getBaseSeedId()
+    protected ItemLike getBaseSeedId()
     {
         return ItemList.EnderLilySeeds.get();
     }
 
     @OnlyIn(Dist.CLIENT)
-    public ItemStack getCloneItemStack(IBlockReader worldIn, BlockPos pos, BlockState state)
+    public ItemStack getCloneItemStack(BlockGetter worldIn, BlockPos pos, BlockState state)
     {
         return new ItemStack(this.getBaseSeedId());
     }
 
     @Override
-    public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.ENDERMAN) {
             if (!worldIn.isClientSide && state.getValue(AGE) > 0 && (entityIn.xOld != entityIn.getX() || entityIn.zOld != entityIn.getZ())) {
                 double d0 = Math.abs(entityIn.getX() - entityIn.xOld);
@@ -68,40 +74,40 @@ public class EnderLily extends CropsBlock {
 
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (state.getValue(AGE) != 7) {
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
         } else if (state.getValue(AGE) == 7) {
             popResource(worldIn, pos, new ItemStack(Items.ENDER_PEARL, 1));
-            worldIn.playSound((PlayerEntity)null, pos, SoundEvents.ENDER_PEARL_THROW, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+            worldIn.playSound(null, pos, SoundEvents.ENDER_PEARL_THROW, SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             worldIn.setBlock(pos, state.setValue(AGE, 4), 2);
-            return ActionResultType.sidedSuccess(worldIn.isClientSide);
+            return InteractionResult.sidedSuccess(worldIn.isClientSide);
         } else {
             return super.use(state, worldIn, pos, player, handIn, hit);
         }
     }
 
     @Override
-    public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
         return false;
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
         // Only here to implement new growth chance getter and make lily grow slower
 
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         int i = this.getAge(state);
         if (i < this.getMaxAge()) {
             float f = getLilyGrowthChance(this, worldIn, pos);
-            if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)((25.0F / f) * 4) + 1) == 0)) {
+            if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)((25.0F / f) * 4) + 1) == 0)) {
                 worldIn.setBlock(pos, this.getStateForAge(i + 1), 2);
                 net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
             }
         }
     }
 
-    protected static float getLilyGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
+    protected static float getLilyGrowthChance(Block blockIn, BlockGetter worldIn, BlockPos pos) {
         // This is only a thing so that lilies grow faster on End Stone
         float f = 1.0F;
         BlockPos blockpos = pos.below();
@@ -109,12 +115,12 @@ public class EnderLily extends CropsBlock {
             for(int j = -1; j <= 1; ++j) {
                 float f1 = 0.0F;
                 BlockState blockstate = worldIn.getBlockState(blockpos.offset(i, 0, j));
-                if (blockstate.canSustainPlant(worldIn, blockpos.offset(i, 0, j), net.minecraft.util.Direction.UP, (net.minecraftforge.common.IPlantable) blockIn)) {
+                if (blockstate.canSustainPlant(worldIn, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, (net.minecraftforge.common.IPlantable) blockIn)) {
                     f1 = 1.0F;
-                    if (Tags.Blocks.END_STONES.contains(blockIn)) {
+                    if (blockIn.defaultBlockState().is(Tags.Blocks.END_STONES)) {
                         f1 = 3.0F;
                     }
-                    else if (ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL.contains(blockIn)) {
+                    else if (blockIn.defaultBlockState().is(ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL)) {
                         f1 = 7.0F;
                     }
                 }
@@ -146,7 +152,7 @@ public class EnderLily extends CropsBlock {
     }
 
     @Override
-    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         BlockPos blockpos = pos.below();
         if (state.getBlock() == this)
             return worldIn.getBlockState(blockpos).canSustainPlant(worldIn, blockpos, Direction.UP, this);

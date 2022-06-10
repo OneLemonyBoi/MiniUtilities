@@ -1,34 +1,33 @@
 package onelemonyboi.miniutilities.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.thread.EffectiveSide;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraftforge.fml.util.thread.EffectiveSide;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class LapisLamp extends Block {
 
     public LapisLamp() {
-        super(Properties.of(Material.DIRT).sound(SoundType.GLASS).strength(0.3F));
+        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.GLASS).strength(0.3F));
     }
 
     @Override
-    public void animateTick(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos blockPos, @Nonnull Random random) {
+    public void animateTick(@Nonnull BlockState state, @Nonnull Level world, @Nonnull BlockPos blockPos, @Nonnull Random random) {
         if (world.isClientSide && world.getMaxLocalRawBrightness(blockPos) == 0) {
             world.getLightEngine().checkBlock(blockPos);
         }
     }
 
     @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
         if (EffectiveSide.get().isClient()) {
             return 15;
         } else {

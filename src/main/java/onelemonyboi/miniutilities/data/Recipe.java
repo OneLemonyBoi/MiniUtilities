@@ -1,25 +1,17 @@
 package onelemonyboi.miniutilities.data;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.data.*;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.StonecuttingRecipe;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.BlockList;
-import onelemonyboi.miniutilities.init.EnchantmentList;
 import onelemonyboi.miniutilities.init.ItemList;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class Recipe extends RecipeProvider {
@@ -28,26 +20,26 @@ public class Recipe extends RecipeProvider {
     }
 
     @Override
-    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
-        ShapelessRecipeBuilder.shapeless(Items.ENDER_PEARL)
+    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+        ShapelessRecipeBuilder.shapeless(net.minecraft.world.item.Items.ENDER_PEARL)
                 .requires(ModTags.Items.DUSTS_ENDER)
                 .requires(ModTags.Items.DUSTS_ENDER)
                 .requires(ModTags.Items.DUSTS_ENDER)
                 .requires(ModTags.Items.DUSTS_ENDER)
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer, modId("ender_dust_to_ender_pearl"));
 
         ShapedRecipeBuilder.shaped(BlockList.EnderPearlBlock.get())
-                .define('#', Items.ENDER_PEARL)
+                .define('#', net.minecraft.world.item.Items.ENDER_PEARL)
                 .pattern("###")
                 .pattern("###")
                 .pattern("###")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.AngelBlockItem.get())
                 .define('O', Tags.Items.OBSIDIAN)
-                .define('F', Items.FEATHER)
-                .define('G', Items.GOLD_INGOT)
+                .define('F', net.minecraft.world.item.Items.FEATHER)
+                .define('G', net.minecraft.world.item.Items.GOLD_INGOT)
                 .pattern(" G ")
                 .pattern("FOF")
                 .unlockedBy("has_item", has(Items.COBBLESTONE))
@@ -59,7 +51,7 @@ public class Recipe extends RecipeProvider {
                 .pattern(" I ")
                 .pattern(" S ")
                 .pattern(" D ")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.EnderLilySeeds.get())
                 .define('S', Tags.Items.SEEDS)
@@ -74,7 +66,7 @@ public class Recipe extends RecipeProvider {
 
         ShapedRecipeBuilder.shaped(ItemList.IronOpiniumCore.get())
                 .define('X', Tags.Items.INGOTS_IRON)
-                .define('E', Items.COAL)
+                .define('E', net.minecraft.world.item.Items.COAL)
                 .pattern("XEX")
                 .pattern("E E")
                 .pattern("XEX")
@@ -87,7 +79,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XEX")
                 .pattern("E E")
                 .pattern("XEX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ItemList.DiamondOpiniumCore.get())
@@ -105,7 +97,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XEX")
                 .pattern("E E")
                 .pattern("XEX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ItemList.EmeraldOpiniumCore.get())
@@ -114,7 +106,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XEX")
                 .pattern("E E")
                 .pattern("XEX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ItemList.ChorusOpiniumCore.get())
@@ -132,17 +124,17 @@ public class Recipe extends RecipeProvider {
                 .pattern("XEX")
                 .pattern("E E")
                 .pattern("XEX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ItemList.NetherStarOpiniumCore.get())
-                .define('X', Items.NETHER_STAR)
+                .define('X', net.minecraft.world.item.Items.NETHER_STAR)
                 .define('E', ItemList.EXPOpiniumCore.get())
                 .define('Z', ItemList.UnstableIngot.get())
                 .pattern("XEX")
                 .pattern("EZE")
                 .pattern("XEX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ItemList.TheFinalOpiniumCore.get())
@@ -167,7 +159,7 @@ public class Recipe extends RecipeProvider {
 
         // UNSTABLE TOOLS
         ShapedRecipeBuilder.shaped(ItemList.UnstableSword.get())
-                .define('X', Items.OBSIDIAN)
+                .define('X', net.minecraft.world.item.Items.OBSIDIAN)
                 .define('Y', ItemList.UnstableIngot.get())
                 .pattern(" Y ")
                 .pattern(" Y ")
@@ -188,7 +180,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("YY ")
                 .pattern(" X ")
                 .pattern(" X ")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.UnstableAxe.get())
                 .define('X', Items.OBSIDIAN)
@@ -204,7 +196,7 @@ public class Recipe extends RecipeProvider {
                 .pattern(" Y ")
                 .pattern(" X ")
                 .pattern(" X ")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.UnstableShears.get())
                 .define('X', ItemList.AngelBlockItem.get())
@@ -217,20 +209,20 @@ public class Recipe extends RecipeProvider {
 
         // EARTHS
         ShapedRecipeBuilder.shaped(BlockList.CursedEarth.get(), 8)
-                .define('X', Items.DIRT)
-                .define('Y', Items.WITHER_ROSE)
+                .define('X', net.minecraft.world.item.Items.DIRT)
+                .define('Y', net.minecraft.world.item.Items.WITHER_ROSE)
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
                 .unlockedBy("has_item", has(Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.BlessedEarth.get(), 8)
-                .define('X', Items.DIRT)
+                .define('X', net.minecraft.world.item.Items.DIRT)
                 .define('Y', Tags.Items.STORAGE_BLOCKS_IRON)
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.BlursedEarth.get(), 8)
                 .define('X', Items.DIRT)
@@ -256,7 +248,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.GrayLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -264,7 +256,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.BlackLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -272,7 +264,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.RedLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -296,7 +288,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.LimeLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -304,7 +296,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.GreenLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -312,7 +304,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.LightBlueLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -320,7 +312,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.CyanLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -328,7 +320,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.BlueLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -336,7 +328,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.PurpleLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -344,7 +336,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.MagentaLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -352,7 +344,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.PinkLapisCaelestis.get(), 8)
                 .define('X', ModTags.Items.LAPIS_CAELESTIS)
@@ -368,7 +360,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         // ARMOUR
@@ -383,14 +375,14 @@ public class Recipe extends RecipeProvider {
                 .pattern("X X")
                 .pattern("XXX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.UnstableLeggings.get())
                 .define('X', ItemList.UnstableIngot.get())
                 .pattern("XXX")
                 .pattern("X X")
                 .pattern("X X")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.UnstableBoots.get())
                 .define('X', ItemList.UnstableIngot.get())
@@ -420,7 +412,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("X X")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.InfusedBoots.get())
                 .define('X', ItemList.UnstableIngot.get())
@@ -428,7 +420,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("X X")
                 .pattern("X X")
                 .pattern("Y Y")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         // DRUMS
@@ -439,7 +431,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XYX")
                 .pattern("XZX")
                 .pattern("XYX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.IronDrum.get())
                 .define('X', Items.IRON_INGOT)
@@ -452,7 +444,7 @@ public class Recipe extends RecipeProvider {
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.ReinforcedLargeDrum.get())
                 .define('X', Tags.Items.GEMS_DIAMOND)
-                .define('Y', Items.LIGHT_WEIGHTED_PRESSURE_PLATE)
+                .define('Y', net.minecraft.world.item.Items.LIGHT_WEIGHTED_PRESSURE_PLATE)
                 .define('Z', BlockList.IronDrum.get())
                 .pattern("XYX")
                 .pattern("XZX")
@@ -461,12 +453,12 @@ public class Recipe extends RecipeProvider {
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.NetheriteReinforcedDrum.get())
                 .define('X', Tags.Items.ORES_NETHERITE_SCRAP)
-                .define('Y', Items.IRON_BLOCK)
+                .define('Y', net.minecraft.world.item.Items.IRON_BLOCK)
                 .define('Z', BlockList.ReinforcedLargeDrum.get())
                 .pattern("XYX")
                 .pattern("XZX")
                 .pattern("XYX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.UnstableDrum.get())
                 .define('X', ItemList.UnstableIngot.get())
@@ -480,22 +472,22 @@ public class Recipe extends RecipeProvider {
 
         // Spikes
         ShapedRecipeBuilder.shaped(BlockList.WoodenSpikes.get())
-                .define('X', Items.WOODEN_SWORD)
+                .define('X', net.minecraft.world.item.Items.WOODEN_SWORD)
                 .define('Y', Items.OAK_PLANKS)
-                .define('Z', Items.OAK_LOG)
+                .define('Z', net.minecraft.world.item.Items.OAK_LOG)
                 .pattern(" X ")
                 .pattern("XYX")
                 .pattern("YZY")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.IronSpikes.get())
-                .define('X', Items.IRON_SWORD)
+                .define('X', net.minecraft.world.item.Items.IRON_SWORD)
                 .define('Y', Tags.Items.INGOTS_IRON)
                 .define('Z', Tags.Items.STORAGE_BLOCKS_IRON)
                 .pattern(" X ")
                 .pattern("XYX")
                 .pattern("YZY")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.GoldSpikes.get())
                 .define('X', Items.GOLDEN_SWORD)
@@ -515,7 +507,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("YZY")
                 .unlockedBy("has_item", has(Items.COBBLESTONE))
                 .save(consumer);
-        SmithingRecipeBuilder.smithing(Ingredient.of(BlockList.DiamondSpikes.get()), Ingredient.of(Items.NETHERITE_INGOT), BlockList.NetheriteSpikes.get().asItem()).unlocks("has_cobblestone", has(Items.COBBLESTONE)).save(consumer, Registry.ITEM.getKey(BlockList.NetheriteSpikes.get().asItem()).getPath() + "_smithing");
+        UpgradeRecipeBuilder.smithing(Ingredient.of(BlockList.DiamondSpikes.get()), Ingredient.of(net.minecraft.world.item.Items.NETHERITE_INGOT), BlockList.NetheriteSpikes.get().asItem()).unlocks("has_cobblestone", has(net.minecraft.world.item.Items.COBBLESTONE)).save(consumer, Registry.ITEM.getKey(BlockList.NetheriteSpikes.get().asItem()).getPath() + "_smithing");
 
         // Angel Ring
         ShapelessRecipeBuilder.shapeless(ItemList.BaseAngelRing.get())
@@ -524,12 +516,12 @@ public class Recipe extends RecipeProvider {
                 .unlockedBy("has_item", has(Items.COBBLESTONE))
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ItemList.FeatherAngelRing.get())
-                .requires(Items.FEATHER, 2)
+                .requires(net.minecraft.world.item.Items.FEATHER, 2)
                 .requires(ModTags.Items.ANGELRING)
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ItemList.EnderDragonAngelRing.get())
-                .requires(Items.LEATHER, 2)
+                .requires(net.minecraft.world.item.Items.LEATHER, 2)
                 .requires(Ingredient.of(Tags.Items.DYES_BLACK), 2)
                 .requires(ModTags.Items.ANGELRING)
                 .unlockedBy("has_item", has(Items.COBBLESTONE))
@@ -542,10 +534,10 @@ public class Recipe extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(ItemList.BatAngelRing.get())
                 .requires(Items.COAL, 2)
                 .requires(ModTags.Items.ANGELRING)
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ItemList.PeacockAngelRing.get())
-                .requires(Items.FEATHER, 2)
+                .requires(net.minecraft.world.item.Items.FEATHER, 2)
                 .requires(Ingredient.of(Tags.Items.DYES_BLUE))
                 .requires(Ingredient.of(Tags.Items.DYES_LIME))
                 .requires(ModTags.Items.ANGELRING)
@@ -558,7 +550,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XXX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         // Item
@@ -569,9 +561,9 @@ public class Recipe extends RecipeProvider {
 
         // Machines
         ShapedRecipeBuilder.shaped(BlockList.MechanicalMiner.get())
-                .define('X', Items.IRON_INGOT)
-                .define('Y', Items.REDSTONE_BLOCK)
-                .define('Z', Items.DIAMOND_PICKAXE)
+                .define('X', net.minecraft.world.item.Items.IRON_INGOT)
+                .define('Y', net.minecraft.world.item.Items.REDSTONE_BLOCK)
+                .define('Z', net.minecraft.world.item.Items.DIAMOND_PICKAXE)
                 .define('A', Items.GOLD_INGOT)
                 .pattern("XZX")
                 .pattern("AYA")
@@ -586,29 +578,29 @@ public class Recipe extends RecipeProvider {
                 .pattern("XZX")
                 .pattern("AYA")
                 .pattern("XAX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.QuantumQuarry.get())
                 .define('X', Items.REDSTONE_BLOCK)
                 .define('Y', ItemList.DiamondOpiniumCore.get())
-                .define('Z', Items.NETHERITE_PICKAXE)
-                .define('A', Items.NETHERITE_SHOVEL)
+                .define('Z', net.minecraft.world.item.Items.NETHERITE_PICKAXE)
+                .define('A', net.minecraft.world.item.Items.NETHERITE_SHOVEL)
                 .define('B', BlockList.MechanicalMiner.get())
                 .define('C', BlockList.EnderPearlBlock.get())
                 .define('D', Blocks.OBSERVER)
                 .pattern("YXY")
                 .pattern("ZBA")
                 .pattern("CDC")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ItemList.SpeedUpgrade.get())
-                .define('X', Items.GOLD_INGOT)
+                .define('X', net.minecraft.world.item.Items.GOLD_INGOT)
                 .define('Y', Items.REDSTONE)
                 .pattern("XYX")
                 .pattern("Y Y")
                 .pattern("XYX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         // Experience Pearls
@@ -617,7 +609,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("X X")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.ExperiencePearl2x.get())
                 .define('X', ItemList.ExperiencePearl1x.get())
@@ -631,21 +623,21 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("X X")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.ExperiencePearl4x.get())
                 .define('X', ItemList.ExperiencePearl3x.get())
                 .pattern("XXX")
                 .pattern("X X")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.ExperiencePearl5x.get())
                 .define('X', ItemList.ExperiencePearl4x.get())
                 .pattern("XXX")
                 .pattern("X X")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ItemList.ExperiencePearl6x.get())
                 .define('X', ItemList.ExperiencePearl5x.get())
@@ -670,15 +662,15 @@ public class Recipe extends RecipeProvider {
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ItemList.ExperiencePearl.get(), 8)
                 .requires(ItemList.ExperiencePearl1x.get())
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer, modId("unpack1x"));
         ShapelessRecipeBuilder.shapeless(ItemList.ExperiencePearl1x.get(), 8)
                 .requires(ItemList.ExperiencePearl2x.get())
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer, modId("unpack2x"));
         ShapelessRecipeBuilder.shapeless(ItemList.ExperiencePearl2x.get(), 8)
                 .requires(ItemList.ExperiencePearl3x.get())
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer, modId("unpack3x"));
         ShapelessRecipeBuilder.shapeless(ItemList.ExperiencePearl3x.get(), 8)
                 .requires(ItemList.ExperiencePearl4x.get())
@@ -686,11 +678,11 @@ public class Recipe extends RecipeProvider {
                 .save(consumer, modId("unpack4x"));
         ShapelessRecipeBuilder.shapeless(ItemList.ExperiencePearl4x.get(), 8)
                 .requires(ItemList.ExperiencePearl5x.get())
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer, modId("unpack5x"));
         ShapelessRecipeBuilder.shapeless(ItemList.ExperiencePearl5x.get(), 8)
                 .requires(ItemList.ExperiencePearl6x.get())
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer, modId("unpack6x"));
         ShapelessRecipeBuilder.shapeless(ItemList.ExperiencePearl6x.get(), 8)
                 .requires(ItemList.ExperiencePearl7x.get())
@@ -703,7 +695,7 @@ public class Recipe extends RecipeProvider {
 
         ShapelessRecipeBuilder.shapeless(BlockList.ChorusTile.get(), 8)
                 .requires(Ingredient.of(Tags.Items.GLASS_PANES), 4)
-                .requires(Items.CHORUS_FRUIT, 1)
+                .requires(net.minecraft.world.item.Items.CHORUS_FRUIT, 1)
                 .requires(Ingredient.of(Tags.Items.GLASS_PANES), 4)
                 .unlockedBy("has_item", has(Items.COBBLESTONE))
                 .save(consumer);
@@ -711,39 +703,39 @@ public class Recipe extends RecipeProvider {
                 .requires(Ingredient.of(Tags.Items.GLASS_PANES), 4)
                 .requires(Ingredient.of(Tags.Items.ENDER_PEARLS), 1)
                 .requires(Ingredient.of(Tags.Items.GLASS_PANES), 4)
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         // RF Generators
         ShapedRecipeBuilder.shaped(BlockList.SolarPanel.get(), 2)
-                .define('X', Items.GOLD_INGOT)
+                .define('X', net.minecraft.world.item.Items.GOLD_INGOT)
                 .define('Y', Items.IRON_INGOT)
                 .define('Z', BlockList.EnderTile.get())
-                .define('A', Items.GLOWSTONE)
+                .define('A', net.minecraft.world.item.Items.GLOWSTONE)
                 .pattern("ZZZ")
                 .pattern("YAY")
                 .pattern("XYX")
                 .unlockedBy("has_item", has(Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.LunarPanel.get(), 2)
-                .define('X', Items.GOLD_INGOT)
-                .define('Y', Items.IRON_INGOT)
+                .define('X', net.minecraft.world.item.Items.GOLD_INGOT)
+                .define('Y', net.minecraft.world.item.Items.IRON_INGOT)
                 .define('Z', BlockList.ChorusTile.get())
                 .define('A', Items.LAPIS_LAZULI)
                 .pattern("ZZZ")
                 .pattern("YAY")
                 .pattern("XYX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.SolarPanelController.get())
-                .define('X', Items.IRON_INGOT)
+                .define('X', net.minecraft.world.item.Items.IRON_INGOT)
                 .define('Y', ItemList.GoldOpiniumCore.get())
                 .define('Z', BlockList.EnderTile.get())
-                .define('A', Blocks.REDSTONE_BLOCK)
+                .define('A', net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK)
                 .pattern("YZY")
                 .pattern("XAX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ItemList.MagicalEgg.get())
@@ -753,21 +745,21 @@ public class Recipe extends RecipeProvider {
                 .pattern(" Y ")
                 .pattern("ZXZ")
                 .pattern(" Y ")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(BlockList.LaserHub.get())
-                .define('X', Items.BEACON)
+                .define('X', net.minecraft.world.item.Items.BEACON)
                 .define('Y', ItemList.EmeraldOpiniumCore.get())
                 .define('Z', ItemList.UnstableIngot.get())
-                .define('A', Items.NETHERITE_INGOT)
+                .define('A', net.minecraft.world.item.Items.NETHERITE_INGOT)
                 .pattern("ZYZ")
                 .pattern("YXY")
                 .pattern("AAA")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.LaserPort.get())
-                .define('X', Items.GOLD_BLOCK)
+                .define('X', net.minecraft.world.item.Items.GOLD_BLOCK)
                 .define('Y', Items.REDSTONE)
                 .define('Z', ItemList.IronOpiniumCore.get())
                 .pattern(" Y ")
@@ -777,7 +769,7 @@ public class Recipe extends RecipeProvider {
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(BlockList.EtherealGlass.get(), 8)
-                .define('X', Items.GLASS)
+                .define('X', net.minecraft.world.item.Items.GLASS)
                 .define('Y', ItemList.UnstableIngot.get())
                 .pattern("XXX")
                 .pattern("XYX")
@@ -794,14 +786,14 @@ public class Recipe extends RecipeProvider {
                 .save(consumer, modId("regular_to_reverse"));
         ShapedRecipeBuilder.shaped(BlockList.RedstoneGlass.get(), 8)
                 .define('X', Items.GLASS)
-                .define('Y', Items.REDSTONE_BLOCK)
+                .define('Y', net.minecraft.world.item.Items.REDSTONE_BLOCK)
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.GlowingGlass.get(), 8)
-                .define('X', Items.GLASS)
+                .define('X', net.minecraft.world.item.Items.GLASS)
                 .define('Y', Items.GLOWSTONE)
                 .pattern("XXX")
                 .pattern("XYX")
@@ -814,11 +806,11 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XXX")
                 .pattern("XXY")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(BlockList.DarkEtherealGlass.get(), 8)
                 .define('X', BlockList.EtherealGlass.get())
-                .define('Y', Items.BLACK_DYE)
+                .define('Y', net.minecraft.world.item.Items.BLACK_DYE)
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
@@ -830,7 +822,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(BlockList.DarkEtherealGlass.get())
                 .requires(BlockList.DarkReverseEtherealGlass.get())
@@ -843,7 +835,7 @@ public class Recipe extends RecipeProvider {
 
         ShapedRecipeBuilder.shaped(BlockList.LapisLamp.get())
             .define('X', Items.LAPIS_LAZULI)
-            .define('Y', Items.REDSTONE_LAMP)
+            .define('Y', net.minecraft.world.item.Items.REDSTONE_LAMP)
             .pattern(" X ")
             .pattern("XYX")
             .pattern(" X ")
@@ -860,7 +852,7 @@ public class Recipe extends RecipeProvider {
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(BlockList.RedstoneClockBlock.get())
-                .define('X', Items.STONE)
+                .define('X', net.minecraft.world.item.Items.STONE)
                 .define('Y', Items.REDSTONE)
                 .pattern("XYX")
                 .pattern("Y Y")
@@ -868,8 +860,8 @@ public class Recipe extends RecipeProvider {
                 .unlockedBy("has_item", has(Items.COBBLESTONE))
                 .save(consumer);
 
-        CookingRecipeBuilder.smelting(Ingredient.of(BlockList.EnderOre.get()), ItemList.EnderDust.get(), 0.7f, 200)
-                .unlockedBy("has_item", has(Items.COBBLESTONE))
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(BlockList.EnderOre.get()), ItemList.EnderDust.get(), 0.7f, 200)
+                .unlockedBy("has_item", has(net.minecraft.world.item.Items.COBBLESTONE))
                 .save(consumer, modId("smelting/ender_ore"));
     }
 

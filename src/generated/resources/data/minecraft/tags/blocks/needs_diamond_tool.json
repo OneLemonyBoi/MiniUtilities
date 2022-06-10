@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "miniutilities:netherite_spikes",
+    "miniutilities:reinforced_large_drum",
+    "miniutilities:netherite_reinforced_drum",
+    "miniutilities:quantum_quarry"
+  ]
+}
