@@ -56,19 +56,19 @@ public class MechanicalPlacerTile extends TileBase implements MenuProvider, Rend
         return new MechanicalPlacerContainer(id, player, ContainerLevelAccess.create(getLevel(), getBlockPos()));
     }
 
-    public void serverTick(Level level, BlockPos pos, BlockState state, MechanicalMinerTile tile) {
-        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
-        this.timer++;
-        if (this.timer < this.waittime) {return;}
-        this.timer = 0;
-        if (this.redstonemode == 1){
-            blockPlacer();
+    public static void tick(Level level, BlockPos pos, BlockState state, MechanicalPlacerTile tile) {
+        level.sendBlockUpdated(pos, state, state, 2);
+        tile.timer++;
+        if (tile.timer < tile.waittime) {return;}
+        tile.timer = 0;
+        if (tile.redstonemode == 1){
+            tile.blockPlacer();
         }
-        else if (level.hasNeighborSignal(this.getBlockPos()) && this.redstonemode == 2){
-            blockPlacer();
+        else if (level.hasNeighborSignal(tile.getBlockPos()) && tile.redstonemode == 2){
+            tile.blockPlacer();
         }
-        else if (!level.hasNeighborSignal(this.getBlockPos()) && this.redstonemode == 3){
-            blockPlacer();
+        else if (!level.hasNeighborSignal(tile.getBlockPos()) && tile.redstonemode == 3){
+            tile.blockPlacer();
         }
     }
 
@@ -104,10 +104,7 @@ public class MechanicalPlacerTile extends TileBase implements MenuProvider, Rend
                 output.add(new TranslatableComponent("text.miniutilities.redstonemodethree"));
                 break;
         }
-        output.add(new TranslatableComponent("text.miniutilities.waittime")
-                .append(this.waittime.toString() + " ticks(" + this.waittime.floatValue() / 20)
-                .append(new TranslatableComponent("text.miniutilities.seconds"))
-                .append(")"));
+        output.add(new TranslatableComponent("text.miniutilities.waittime").append(this.waittime.toString() + " ticks"));
         return output;
     }
 }

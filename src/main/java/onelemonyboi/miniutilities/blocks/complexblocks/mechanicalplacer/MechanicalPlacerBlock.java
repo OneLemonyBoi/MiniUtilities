@@ -4,8 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,11 +22,25 @@ import onelemonyboi.lemonlib.blocks.block.BlockBase;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerTile;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.ItemList;
+import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.trait.BlockBehaviors;
+import org.jetbrains.annotations.Nullable;
 
 public class MechanicalPlacerBlock extends BlockBase {
     public MechanicalPlacerBlock() {
         super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL), BlockBehaviors.mechanicalPlacer);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(level, type, TEList.MechanicalPlacerTile.get(), MechanicalPlacerTile::tick, null);
+    }
+
+    @Nullable
+    @Override
+    public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+        return (MenuProvider) level.getBlockEntity(pos);
     }
 
     @SuppressWarnings("deprecation")

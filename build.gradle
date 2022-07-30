@@ -117,7 +117,7 @@ dependencies {
     // 3821390
     runtimeOnly fg.deobf("curse.maven:jei-238222:3821390")
     // 3737369
-    implementation fg.deobf("curse.maven:ctm-267602:3737369")
+    //implementation fg.deobf("curse.maven:ctm-267602:3737369")
     // 3671753
     runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3671753")
     // 2.0.1
