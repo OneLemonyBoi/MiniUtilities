@@ -107,10 +107,10 @@ public class FlameLily extends CropsBlock {
                 BlockState blockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
                 if (blockstate.canSustainPlant(worldIn, blockpos.add(i, 0, j), Direction.UP, (net.minecraftforge.common.IPlantable) blockIn)) {
                     f1 = 1.0F;
-                    if (Tags.Blocks.NETHERRACK.contains(blockIn)) {
+                    if (Tags.Blocks.NETHERRACK.contains(blockstate.getBlock())) {
                         f1 = 1.5F;
                     }
-                    else if (blockIn == Blocks.MAGMA_BLOCK) {
+                    else if (Blocks.MAGMA_BLOCK.matchesBlock(blockstate.getBlock())) {
                         f1 = 3.0F;
                     }
                 }
