@@ -109,8 +109,8 @@ repositories {
 }
 
 dependencies {
-    // 1.18.2-40.1.48
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.48'
+    // 1.18.2-40.2.1
+    minecraft 'net.minecraftforge:forge:1.18.2-40.2.1'
     // 1.18.2-5.0.7.0
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.18.2-5.0.7.0")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.18.2-5.0.7.0:api")
