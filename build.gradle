@@ -104,17 +104,24 @@ repositories {
         name = "Cursemaven"
         url = "https://www.cursemaven.com/"
     }
+    maven { // CTM
+        url "http://maven.tterrag.com/"
+    }
+    maven { // JEI
+        url "http://dvs1.progwml6.com/files/maven"
+    }
     maven { url 'https://jitpack.io' }
     maven { url 'https://maven.explodingcreeper.me/releases' }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.26'
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0:api")
-    runtimeOnly fg.deobf("curse.maven:jei-238222:3245079")
-    implementation fg.deobf("curse.maven:ctm-267602:3137659")
-    runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3157997")
+
+    implementation fg.deobf("team.chisel.ctm:CTM:MC1.16.1-1.1.2.6")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.91")
+    // runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3157997")
     implementation fg.deobf('onelemonyboi.lemonlib:lemonlib:1.4.3')
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
