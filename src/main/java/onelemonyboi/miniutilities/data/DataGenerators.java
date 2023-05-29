@@ -18,12 +18,11 @@ public final class DataGenerators {
 
         gen.addProvider(new BlockState(gen, existingFileHelper));
         gen.addProvider(new ItemModel(gen, existingFileHelper));
-
         BlockTags blockTags = new BlockTags(gen, existingFileHelper);
         gen.addProvider(blockTags);
         gen.addProvider(new ItemTags(gen, blockTags, existingFileHelper));
-
         gen.addProvider(new LootTable(gen));
         gen.addProvider(new Recipe(gen));
+        gen.addProvider(new LootModifier(gen));
     }
 }
