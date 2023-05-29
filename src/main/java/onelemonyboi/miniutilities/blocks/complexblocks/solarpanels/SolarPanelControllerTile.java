@@ -57,20 +57,25 @@ public class SolarPanelControllerTile extends TileBase implements RenderInfoIden
     public void solarPanelRecursion(BlockPos pos) {
         for (Direction d : Direction.Plane.HORIZONTAL) {
             BlockState blockState = world.getBlockState(pos.offset(d));
-            if (posList.contains(pos.offset(d)) || !world.canSeeSky(pos.offset(d)) || !world.isAreaLoaded(pos.offset(d), 1)) {
+             if (posList.contains(pos.offset(d)) || !world.isAreaLoaded(pos.offset(d), 1)) {
                 continue;
             }
             if (blockState.getBlock() instanceof SolarPanelBlock) {
-                if (world.isDaytime()) {
+                if (world.isDaytime() && world.canSeeSky(pos.offset(d))) {
                     activeSolarCount++;
                 }
                 posList.add(pos.offset(d));
                 solarPanelRecursion(pos.offset(d));
-            } else if (blockState.getBlock() instanceof LunarPanelBlock) {
-                if (world.isNightTime()) {
+            }
+            else if (blockState.getBlock() instanceof LunarPanelBlock) {
+                if (world.isNightTime() && world.canSeeSky(pos.offset(d))) {
                     activeSolarCount++;
                 }
                 posList.add(pos.offset(d));
+                solarPanelRecursion(pos.offset(d));
+            }
+            else if (blockState.getBlock() instanceof SolarPanelController && !pos.offset(d).equals(this.getPos())) {
+                world.destroyBlock(pos.offset(d), true);
                 solarPanelRecursion(pos.offset(d));
             }
         }
