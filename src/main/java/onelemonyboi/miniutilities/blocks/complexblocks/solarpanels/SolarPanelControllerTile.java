@@ -47,20 +47,25 @@ public class SolarPanelControllerTile extends TileBase implements RenderInfoIden
     public void solarPanelRecursion(BlockPos pos) {
         for (net.minecraft.core.Direction d : net.minecraft.core.Direction.Plane.HORIZONTAL) {
             BlockState blockState = level.getBlockState(pos.relative(d));
-            if (posList.contains(pos.relative(d)) || !level.canSeeSky(pos.relative(d)) || !level.isAreaLoaded(pos.relative(d), 1)) {
+            if (posList.contains(pos.relative(d)) || !level.isAreaLoaded(pos.relative(d), 1)) {
                 continue;
             }
             if (blockState.getBlock() instanceof SolarPanelBlock) {
-                if (level.isDay()) {
+                if (level.isDay() && level.canSeeSky(pos.relative(d))) {
                     activeSolarCount++;
                 }
                 posList.add(pos.relative(d));
                 solarPanelRecursion(pos.relative(d));
-            } else if (blockState.getBlock() instanceof LunarPanelBlock) {
-                if (level.isNight()) {
+            }
+            else if (blockState.getBlock() instanceof LunarPanelBlock) {
+                if (level.isNight() && level.canSeeSky(pos.relative(d))) {
                     activeSolarCount++;
                 }
                 posList.add(pos.relative(d));
+                solarPanelRecursion(pos.relative(d));
+            }
+            else if (blockState.getBlock() instanceof SolarPanelController && !pos.relative(d).equals(this.getBlockPos())) {
+                level.destroyBlock(pos.relative(d), true);
                 solarPanelRecursion(pos.relative(d));
             }
         }
