@@ -7,6 +7,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -21,6 +22,7 @@ public class ModRegistry {
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, MiniUtilities.MOD_ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MiniUtilities.MOD_ID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, MiniUtilities.MOD_ID);
+    public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, MiniUtilities.MOD_ID);
 
     public static void register() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -31,6 +33,7 @@ public class ModRegistry {
         ENCHANTMENTS.register(modEventBus);
         ENTITIES.register(modEventBus);
         ATTRIBUTES.register(modEventBus);
+        LOOT_MODIFIERS.register(modEventBus);
 
         BlockList.register();
         ItemList.register();
@@ -39,5 +42,6 @@ public class ModRegistry {
         EnchantmentList.register();
         EntityList.register();
         AttributeList.register();
+        LootModifierList.register();
     }
 }

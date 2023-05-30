@@ -1,16 +1,13 @@
 package onelemonyboi.miniutilities;
 
 import net.minecraft.core.Registry;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -28,7 +25,6 @@ import onelemonyboi.miniutilities.items.GoldenLasso;
 import onelemonyboi.miniutilities.items.Kikoku;
 import onelemonyboi.miniutilities.items.enchantments.EnchantmentTooltipHandler;
 import onelemonyboi.miniutilities.items.enchantments.ExperienceHarvesterHandler;
-import onelemonyboi.miniutilities.items.enchantments.MoltenHeadHandler;
 import onelemonyboi.miniutilities.items.enchantments.ShotgunHandler;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
 import onelemonyboi.miniutilities.misc.KeyBindingsHandler;
@@ -79,7 +75,6 @@ public class MiniUtilities {
         EVENT_BUS.addListener(MechanicalMinerBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(MechanicalPlacerBlock::PlayerInteractEvent);
         EVENT_BUS.addListener(QuantumQuarryBlock::PlayerInteractEvent);
-        EVENT_BUS.addListener(MoltenHeadHandler::handleBlockBreak);
         EVENT_BUS.addListener(ShotgunHandler::handleBowShot);
         EVENT_BUS.addListener(ExperienceHarvesterHandler::handleEntityKill);
         EVENT_BUS.addListener(SpikeBlock::soundEvent);
