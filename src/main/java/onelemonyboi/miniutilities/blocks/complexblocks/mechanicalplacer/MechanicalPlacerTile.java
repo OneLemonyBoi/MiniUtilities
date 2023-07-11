@@ -2,8 +2,6 @@ package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -48,7 +46,7 @@ public class MechanicalPlacerTile extends TileBase implements MenuProvider, Rend
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.miniutilities.mechanical_placer");
+        return Component.translatable("container.miniutilities.mechanical_placer");
     }
 
     @Override
@@ -92,19 +90,19 @@ public class MechanicalPlacerTile extends TileBase implements MenuProvider, Rend
         List<MutableComponent> output = new ArrayList<>();
 
         output.add(this.getBlockState().getBlock().getName());
-        output.add(new TextComponent(""));
+        output.add(Component.literal(""));
         switch (this.redstonemode) {
             case 1:
-                output.add(new TranslatableComponent("text.miniutilities.redstonemodeone"));
+                output.add(Component.translatable("text.miniutilities.redstonemodeone"));
                 break;
             case 2:
-                output.add(new TranslatableComponent("text.miniutilities.redstonemodetwo"));
+                output.add(Component.translatable("text.miniutilities.redstonemodetwo"));
                 break;
             case 3:
-                output.add(new TranslatableComponent("text.miniutilities.redstonemodethree"));
+                output.add(Component.translatable("text.miniutilities.redstonemodethree"));
                 break;
         }
-        output.add(new TranslatableComponent("text.miniutilities.waittime").append(this.waittime.toString() + " ticks"));
+        output.add(Component.translatable("text.miniutilities.waittime").append(this.waittime.toString() + " ticks"));
         return output;
     }
 }

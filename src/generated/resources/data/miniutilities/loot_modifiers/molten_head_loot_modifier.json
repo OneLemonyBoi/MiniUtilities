@@ -1,4 +1,5 @@
 {
+  "type": "miniutilities:molten_head_loot_modifier",
   "conditions": [
     {
       "condition": "minecraft:match_tool",
@@ -13,6 +14,5 @@
         ]
       }
     }
-  ],
-  "type": "miniutilities:molten_head_loot_modifier"
+  ]
 }

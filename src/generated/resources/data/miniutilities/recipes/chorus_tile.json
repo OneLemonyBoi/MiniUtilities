@@ -30,7 +30,7 @@
     }
   ],
   "result": {
-    "item": "miniutilities:chorus_tile",
-    "count": 8
+    "count": 8,
+    "item": "miniutilities:chorus_tile"
   }
 }

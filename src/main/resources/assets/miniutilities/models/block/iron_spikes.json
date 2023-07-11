@@ -6,6 +6,7 @@
 		"particle": "block/iron_block",
 		"spike": "miniutilities:block/spike_iron"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "Base",

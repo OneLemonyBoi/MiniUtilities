@@ -1,0 +1,27 @@
+{
+  "feature": "miniutilities:overworld_flame_lily",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 16
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "absolute": -64
+        },
+        "max_inclusive": {
+          "absolute": 300
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

@@ -1,11 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ZZZ",
-    "YAY",
-    "XYX"
-  ],
   "key": {
+    "A": {
+      "item": "minecraft:lapis_lazuli"
+    },
     "X": {
       "item": "minecraft:gold_ingot"
     },
@@ -14,13 +12,15 @@
     },
     "Z": {
       "item": "miniutilities:chorus_tile"
-    },
-    "A": {
-      "item": "minecraft:lapis_lazuli"
     }
   },
+  "pattern": [
+    "ZZZ",
+    "YAY",
+    "XYX"
+  ],
   "result": {
-    "item": "miniutilities:lunar_panel",
-    "count": 2
+    "count": 2,
+    "item": "miniutilities:lunar_panel"
   }
 }

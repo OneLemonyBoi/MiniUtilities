@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X ",
-    "XYX",
-    "YZY"
-  ],
   "key": {
     "X": {
       "item": "minecraft:golden_sword"
@@ -16,6 +11,11 @@
       "tag": "forge:storage_blocks/gold"
     }
   },
+  "pattern": [
+    " X ",
+    "XYX",
+    "YZY"
+  ],
   "result": {
     "item": "miniutilities:gold_spikes"
   }

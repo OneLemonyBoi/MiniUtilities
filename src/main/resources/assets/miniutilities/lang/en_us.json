@@ -130,5 +130,7 @@
   "enchantment.miniutilities.experience_harvester.desc": "\u00A7aDrops extra experience when killing a mob\u00A7a",
 
   "death.attack.unstable_division": "%1$s played hot-potato and lost",
-  "death.attack.divide_by_diamond": "%1$s divided by diamond"
+  "death.attack.divide_by_diamond": "%1$s divided by diamond",
+
+  "container.miniutilities.quantum_quarry": "Quantum Quarry"
 }

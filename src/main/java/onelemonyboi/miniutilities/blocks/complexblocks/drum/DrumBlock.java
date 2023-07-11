@@ -2,8 +2,7 @@ package onelemonyboi.miniutilities.blocks.complexblocks.drum;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -17,9 +16,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 import java.util.List;
 
@@ -40,17 +39,17 @@ public class DrumBlock extends BlockBase {
     public void appendHoverText(ItemStack stack, BlockGetter blockReader, List<Component> textComponents, TooltipFlag tooltipFlag) {
         CompoundTag nbt = stack.getTagElement("BlockEntityTag");
 
-        Component fluidName = TextComponent.EMPTY.copy();
+        Component fluidName = Component.empty().copy();
         int fluidAmount = 0;
 
         if (nbt != null) {
             FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(nbt);
-            fluidName = fluidStack.getFluid().getAttributes().getDisplayName(fluidStack);
+            fluidName = fluidStack.getFluid().getFluidType().getDescription(fluidStack);
             fluidAmount = fluidStack.getAmount();
         }
 
-        textComponents.add(new TranslatableComponent("text.miniutilities.tooltip.drum_fluid", fluidName));
-        textComponents.add(new TranslatableComponent("text.miniutilities.tooltip.drum_amount", fluidAmount, mb));
+        textComponents.add(Component.translatable("text.miniutilities.tooltip.drum_fluid", fluidName));
+        textComponents.add(Component.translatable("text.miniutilities.tooltip.drum_amount", fluidAmount, mb));
 
         super.appendHoverText(stack, blockReader, textComponents, tooltipFlag);
     }
@@ -60,7 +59,7 @@ public class DrumBlock extends BlockBase {
         ItemStack held = player.getItemInHand(hand);
 
         if (FluidUtil.interactWithFluidHandler(player, hand, world, pos, hit.getDirection()) ||
-                held.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()) {
+                held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
             return InteractionResult.SUCCESS;
         }
 

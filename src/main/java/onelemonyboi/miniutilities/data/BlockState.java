@@ -2,8 +2,11 @@ package onelemonyboi.miniutilities.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
@@ -25,31 +28,31 @@ public class BlockState extends BlockStateProvider {
         simpleBlock(BlockList.AngelBlock.get());
 
         // Lapis Caelestis
-        simpleBlock(BlockList.WhiteLapisCaelestis.get());
-        simpleBlock(BlockList.LightGrayLapisCaelestis.get());
-        simpleBlock(BlockList.GrayLapisCaelestis.get());
-        simpleBlock(BlockList.BlackLapisCaelestis.get());
-        simpleBlock(BlockList.RedLapisCaelestis.get());
-        simpleBlock(BlockList.OrangeLapisCaelestis.get());
-        simpleBlock(BlockList.YellowLapisCaelestis.get());
-        simpleBlock(BlockList.LimeLapisCaelestis.get());
-        simpleBlock(BlockList.GreenLapisCaelestis.get());
-        simpleBlock(BlockList.LightBlueLapisCaelestis.get());
-        simpleBlock(BlockList.CyanLapisCaelestis.get());
-        simpleBlock(BlockList.BlueLapisCaelestis.get());
-        simpleBlock(BlockList.PurpleLapisCaelestis.get());
-        simpleBlock(BlockList.MagentaLapisCaelestis.get());
-        simpleBlock(BlockList.PinkLapisCaelestis.get());
-        simpleBlock(BlockList.BrownLapisCaelestis.get());
+        simpleBlock(BlockList.WhiteLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.LightGrayLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.GrayLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.BlackLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.RedLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.OrangeLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.YellowLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.LimeLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.GreenLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.LightBlueLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.CyanLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.BlueLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.PurpleLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.MagentaLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.PinkLapisCaelestis.get(), "cutout");
+        simpleBlock(BlockList.BrownLapisCaelestis.get(), "cutout");
 
         // Special Glass
-        simpleBlock(BlockList.EtherealGlass.get());
-        simpleBlock(BlockList.ReverseEtherealGlass.get());
-        simpleBlock(BlockList.RedstoneGlass.get());
-        simpleBlock(BlockList.GlowingGlass.get());
-        simpleBlock(BlockList.DarkGlass.get());
-        simpleBlock(BlockList.DarkEtherealGlass.get());
-        simpleBlock(BlockList.DarkReverseEtherealGlass.get());
+        simpleBlock(BlockList.EtherealGlass.get(), "cutout");
+        simpleBlock(BlockList.ReverseEtherealGlass.get(), "cutout");
+        simpleBlock(BlockList.RedstoneGlass.get(), "cutout");
+        simpleBlock(BlockList.GlowingGlass.get(), "cutout");
+        simpleBlock(BlockList.DarkGlass.get(), "cutout");
+        simpleBlock(BlockList.DarkEtherealGlass.get(), "cutout");
+        simpleBlock(BlockList.DarkReverseEtherealGlass.get(), "cutout");
 
         simpleBlock(BlockList.LapisLamp.get());
 
@@ -61,5 +64,10 @@ public class BlockState extends BlockStateProvider {
                 .modelForState().modelFile(modelOne).addModel()
                 .partialState().with(BlockStateProperties.POWERED, false)
                 .modelForState().modelFile(modelTwo).addModel();
+    }
+
+    private void simpleBlock(Block block, String renderType) {
+        BlockModelBuilder model = (BlockModelBuilder) cubeAll(block);
+        simpleBlock(block, model.renderType(renderType));
     }
 }

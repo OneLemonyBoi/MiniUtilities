@@ -6,6 +6,7 @@
 		"particle": "block/gold_block",
 		"spike": "miniutilities:block/spike_gold"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "Base",

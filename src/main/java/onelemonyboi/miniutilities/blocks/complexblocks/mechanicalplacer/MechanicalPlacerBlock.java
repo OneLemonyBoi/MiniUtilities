@@ -62,7 +62,7 @@ public class MechanicalPlacerBlock extends BlockBase {
                     mpTile.timer = 0;
                 }
             } else if (te instanceof MechanicalPlacerTile) {
-                NetworkHooks.openGui((ServerPlayer) player, (MechanicalPlacerTile) te, pos);
+                NetworkHooks.openScreen((ServerPlayer) player, (MechanicalPlacerTile) te, pos);
                 return InteractionResult.CONSUME;
             }
         }
@@ -70,17 +70,17 @@ public class MechanicalPlacerBlock extends BlockBase {
     }
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
-        if (!event.getWorld().isClientSide()) {
-            if (event.getWorld().getBlockEntity(event.getPos()) instanceof MechanicalPlacerTile && event.getPlayer().isShiftKeyDown() && event.getPlayer().getItemInHand(event.getHand()).isEmpty()) {
-                MechanicalPlacerTile TE = (MechanicalPlacerTile) (event.getWorld().getBlockEntity(event.getPos()));
+        if (!event.getLevel().isClientSide()) {
+            if (event.getLevel().getBlockEntity(event.getPos()) instanceof MechanicalPlacerTile && event.getEntity().isShiftKeyDown() && event.getEntity().getItemInHand(event.getHand()).isEmpty()) {
+                MechanicalPlacerTile TE = (MechanicalPlacerTile) (event.getLevel().getBlockEntity(event.getPos()));
                 if (TE.waittime > 1 && TE.waittime < 20) {
                     TE.waittime = TE.waittime + 5;
-                    Containers.dropItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    Containers.dropItemStack(event.getLevel(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
                     TE.timer = 0;
                 }
                 else if (TE.waittime == 1){
                     TE.waittime = 5;
-                    Containers.dropItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new net.minecraft.world.item.ItemStack(ItemList.SpeedUpgrade.get()));
+                    Containers.dropItemStack(event.getLevel(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new net.minecraft.world.item.ItemStack(ItemList.SpeedUpgrade.get()));
                     TE.timer = 0;
                 }
             }

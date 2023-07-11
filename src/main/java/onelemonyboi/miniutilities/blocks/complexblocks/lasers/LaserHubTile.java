@@ -1,5 +1,6 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -7,7 +8,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.extensions.IForgeBlockEntity;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
@@ -47,8 +47,8 @@ public class LaserHubTile extends TileBase implements RenderInfoIdentifier {
         List<MutableComponent> output = new ArrayList<>();
 
         output.add(this.getBlockState().getBlock().getName());
-        output.add(new TextComponent(""));
-        output.add(new TextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
+        output.add(Component.literal(""));
+        output.add(Component.literal("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
         return output;
     }
 

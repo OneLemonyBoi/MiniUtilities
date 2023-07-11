@@ -2,7 +2,6 @@ package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -16,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerLevel;
@@ -51,7 +49,7 @@ public class MechanicalMinerTile extends TileBase implements MenuProvider, Rende
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.miniutilities.mechanical_miner");
+        return Component.translatable("container.miniutilities.mechanical_miner");
     }
 
     @Override
@@ -105,19 +103,19 @@ public class MechanicalMinerTile extends TileBase implements MenuProvider, Rende
         List<MutableComponent> output = new ArrayList<>();
 
         output.add(this.getBlockState().getBlock().getName());
-        output.add(new TextComponent(""));
+        output.add(Component.literal(""));
         switch (this.redstonemode) {
             case 1:
-                output.add(new TranslatableComponent("text.miniutilities.redstonemodeone"));
+                output.add(Component.translatable("text.miniutilities.redstonemodeone"));
                 break;
             case 2:
-                output.add(new TranslatableComponent("text.miniutilities.redstonemodetwo"));
+                output.add(Component.translatable("text.miniutilities.redstonemodetwo"));
                 break;
             case 3:
-                output.add(new TranslatableComponent("text.miniutilities.redstonemodethree"));
+                output.add(Component.translatable("text.miniutilities.redstonemodethree"));
                 break;
         }
-        output.add(new TranslatableComponent("text.miniutilities.waittime").append(this.waittime.toString() + " ticks"));
+        output.add(Component.translatable("text.miniutilities.waittime").append(this.waittime.toString() + " ticks"));
         return output;
     }
 

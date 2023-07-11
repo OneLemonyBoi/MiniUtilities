@@ -6,6 +6,7 @@
 		"particle": "block/diamond_block",
 		"spike": "miniutilities:block/spike_diamond"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "Base",

@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " I ",
-    " S ",
-    " D "
-  ],
   "key": {
+    "D": {
+      "tag": "forge:gems/diamond"
+    },
     "I": {
       "tag": "forge:ingots/iron"
     },
     "S": {
       "item": "minecraft:stick"
-    },
-    "D": {
-      "tag": "forge:gems/diamond"
     }
   },
+  "pattern": [
+    " I ",
+    " S ",
+    " D "
+  ],
   "result": {
     "item": "miniutilities:unstable_ingot"
   }

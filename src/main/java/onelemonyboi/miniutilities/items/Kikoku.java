@@ -121,16 +121,16 @@ public class Kikoku extends SwordItem {
     }
 
     @Override
-    public int getItemStackLimit(net.minecraft.world.item.ItemStack stack) {
+    public int getMaxStackSize(ItemStack stack) {
         return 1;
     }
 
     public static void AnvilRepairEvent(AnvilRepairEvent event) {
-        if (!event.getPlayer().getCommandSenderWorld().isClientSide) {
+        if (!event.getEntity().getCommandSenderWorld().isClientSide) {
             return;
         }
-        if (event.getItemResult().getItem() == ItemList.Kikoku.get() && event.getPlayer() instanceof AbstractClientPlayer) {
-            event.getPlayer().playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+        if (event.getOutput().getItem() == ItemList.Kikoku.get() && event.getEntity() instanceof AbstractClientPlayer) {
+            event.getEntity().playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
         }
     }
 }

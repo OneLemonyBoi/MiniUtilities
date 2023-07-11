@@ -24,7 +24,7 @@ public class LootModifier extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        add("molten_head_loot_modifier", LootModifierList.MoltenHeadLootModifierSerializer.get(), new MoltenHeadLootModifier(new LootItemCondition[]{
+        add("molten_head_loot_modifier", new MoltenHeadLootModifier(new LootItemCondition[]{
                 MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentList.MoltenHead.get(), MinMaxBounds.Ints.atLeast(1)))).build()
         }));
     }

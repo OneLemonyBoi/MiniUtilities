@@ -1,6 +1,7 @@
 package onelemonyboi.miniutilities.blocks.basic;
 
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -57,7 +58,7 @@ public class ChorusTileBlock extends Block {
     }
 
     private static void spawnParticles(Level world, BlockPos pos) {
-        Random random = world.random;
+        RandomSource random = world.random;
         net.minecraft.core.Direction.Axis direction$axis = Direction.NORTH.getAxis();
         double d1 = direction$axis == Direction.Axis.X ? 0.5D: (double)random.nextFloat();
         double d2 = direction$axis == Direction.Axis.Y ? 0.5D : (double)random.nextFloat();

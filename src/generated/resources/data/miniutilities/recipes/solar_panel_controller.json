@@ -1,11 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "YZY",
-    "XAX",
-    "XXX"
-  ],
   "key": {
+    "A": {
+      "item": "minecraft:redstone_block"
+    },
     "X": {
       "item": "minecraft:iron_ingot"
     },
@@ -14,11 +12,13 @@
     },
     "Z": {
       "item": "miniutilities:ender_tile"
-    },
-    "A": {
-      "item": "minecraft:redstone_block"
     }
   },
+  "pattern": [
+    "YZY",
+    "XAX",
+    "XXX"
+  ],
   "result": {
     "item": "miniutilities:solar_panel_controller"
   }

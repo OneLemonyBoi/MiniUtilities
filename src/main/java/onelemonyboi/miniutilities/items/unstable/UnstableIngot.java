@@ -1,6 +1,6 @@
 package onelemonyboi.miniutilities.items.unstable;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -56,8 +56,8 @@ public class UnstableIngot extends Item {
                 setDamage(stack, stack.getDamageValue() + 1);
                 CompoundTag compoundNBT = stack.getOrCreateTag();
                 if (stack.getDamageValue() == 200) {
-                    playerEntity.displayClientMessage((new TranslatableComponent("text.miniutilities.ingotisunstable").withStyle(ChatFormatting.RED)), true);
-                    stack.setHoverName(new TranslatableComponent("text.miniutilities.unstableingot"));
+                    playerEntity.displayClientMessage((Component.translatable("text.miniutilities.ingotisunstable").withStyle(ChatFormatting.RED)), true);
+                    stack.setHoverName(Component.translatable("text.miniutilities.unstableingot"));
                     compoundNBT.putInt("timeunstable", 0);
                 }
                 else if (stack.getDamageValue() > 200) {
@@ -85,7 +85,7 @@ public class UnstableIngot extends Item {
     @SubscribeEvent
     public static void onItemDrop(ItemTossEvent e) {
         Player p = e.getPlayer();
-        ItemEntity entityItem = e.getEntityItem();
+        ItemEntity entityItem = e.getEntity();
         net.minecraft.world.item.ItemStack stack = entityItem.getItem();
         if (stack.getItem() == ItemList.UnstableIngot.get().asItem() && Config.unstableIngotType.get() != ReactionType.NO_DAMAGE) {
             p.level.explode(null, p.getX(), p.getY(), p.getZ(), 1, Explosion.BlockInteraction.NONE);

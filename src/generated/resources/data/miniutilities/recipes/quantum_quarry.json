@@ -1,20 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "YXY",
-    "ZBA",
-    "CDC"
-  ],
   "key": {
-    "X": {
-      "item": "minecraft:redstone_block"
-    },
-    "Y": {
-      "item": "miniutilities:diamond_opinium_core"
-    },
-    "Z": {
-      "item": "minecraft:netherite_pickaxe"
-    },
     "A": {
       "item": "minecraft:netherite_shovel"
     },
@@ -26,8 +12,22 @@
     },
     "D": {
       "item": "minecraft:observer"
+    },
+    "X": {
+      "item": "minecraft:redstone_block"
+    },
+    "Y": {
+      "item": "miniutilities:diamond_opinium_core"
+    },
+    "Z": {
+      "item": "minecraft:netherite_pickaxe"
     }
   },
+  "pattern": [
+    "YXY",
+    "ZBA",
+    "CDC"
+  ],
   "result": {
     "item": "miniutilities:quantum_quarry"
   }

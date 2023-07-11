@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XYX",
-    "XXX"
-  ],
   "key": {
     "X": {
       "item": "miniutilities:ethereal_glass"
@@ -13,8 +8,13 @@
       "item": "minecraft:black_dye"
     }
   },
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
   "result": {
-    "item": "miniutilities:dark_ethereal_glass",
-    "count": 8
+    "count": 8,
+    "item": "miniutilities:dark_ethereal_glass"
   }
 }

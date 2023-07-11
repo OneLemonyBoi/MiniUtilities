@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "values": [
     "#forge:storage_blocks/ender_pearl",
     "#forge:storage_blocks/unstable"

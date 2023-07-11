@@ -3,14 +3,13 @@ package onelemonyboi.miniutilities.blocks.complexblocks.drum;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
@@ -58,7 +57,7 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
     @Override
     @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        if (capability == ForgeCapabilities.FLUID_HANDLER)
             return holder.cast();
         return super.getCapability(capability, facing);
     }
@@ -74,10 +73,10 @@ public class DrumTile extends TileBase implements RenderInfoIdentifier {
         List<MutableComponent> output = new ArrayList<>();
 
         output.add(this.getBlockState().getBlock().getName());
-        output.add(new TextComponent(""));
-        output.add(new TranslatableComponent("text.miniutilities.fluidname").append(": " + getDrum().getFluid().getDisplayName().getString()));
-        output.add(new TranslatableComponent("text.miniutilities.drumamount").append(": " + this.drum.getFluidAmount()));
-        output.add(new TranslatableComponent("text.miniutilities.drumcapacity").append(": " + this.drum.getCapacity()));
+        output.add(Component.literal(""));
+        output.add(Component.translatable("text.miniutilities.fluidname").append(": " + getDrum().getFluid().getDisplayName().getString()));
+        output.add(Component.translatable("text.miniutilities.drumamount").append(": " + this.drum.getFluidAmount()));
+        output.add(Component.translatable("text.miniutilities.drumcapacity").append(": " + this.drum.getCapacity()));
         return output;
     }
 }

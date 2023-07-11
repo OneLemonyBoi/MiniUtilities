@@ -1,20 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " G ",
-    "FOF"
-  ],
   "key": {
-    "O": {
-      "tag": "forge:obsidian"
-    },
     "F": {
       "item": "minecraft:feather"
     },
     "G": {
       "item": "minecraft:gold_ingot"
+    },
+    "O": {
+      "tag": "forge:obsidian"
     }
   },
+  "pattern": [
+    " G ",
+    "FOF"
+  ],
   "result": {
     "item": "miniutilities:angel_block"
   }

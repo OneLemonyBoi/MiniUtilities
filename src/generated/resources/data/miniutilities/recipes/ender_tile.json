@@ -30,7 +30,7 @@
     }
   ],
   "result": {
-    "item": "miniutilities:ender_tile",
-    "count": 8
+    "count": 8,
+    "item": "miniutilities:ender_tile"
   }
 }

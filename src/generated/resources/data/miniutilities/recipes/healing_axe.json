@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "YY ",
-    "YX ",
-    " X "
-  ],
   "key": {
     "X": {
       "item": "minecraft:obsidian"
@@ -13,6 +8,11 @@
       "item": "miniutilities:unstable_ingot"
     }
   },
+  "pattern": [
+    "YY ",
+    "YX ",
+    " X "
+  ],
   "result": {
     "item": "miniutilities:healing_axe"
   }

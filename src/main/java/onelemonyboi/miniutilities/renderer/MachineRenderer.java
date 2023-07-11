@@ -11,19 +11,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.gui.GuiUtils;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class MachineRenderer {
-    public static void blockRenderInfo(RenderGameOverlayEvent.Text event) {
-        PoseStack ms = event.getMatrixStack();
+    public static void blockRenderInfo(RenderGuiOverlayEvent event) {
+        PoseStack ms = event.getPoseStack();
 
         HitResult mouseOver = Minecraft.getInstance().hitResult;
         if (!(mouseOver instanceof BlockHitResult)) {

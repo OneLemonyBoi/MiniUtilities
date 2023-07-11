@@ -24,9 +24,9 @@ public class UnstableShears extends ShearsItem {
 
     public static void instantShear(PlayerInteractEvent.RightClickBlock event) {
         if (!(event.getItemStack().getItem() instanceof TieredItem item)) return;
-        if (event.getWorld().isClientSide()) return;
+        if (event.getLevel().isClientSide()) return;
         ItemStack stack = event.getItemStack();
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Level world = player.level;
         BlockPos pos = event.getPos();
         if (player.isShiftKeyDown() && stack.getItem() == ItemList.UnstableShears.get() && TierSortingRegistry.isCorrectTierForDrops(item.getTier(), world.getBlockState(pos))) {

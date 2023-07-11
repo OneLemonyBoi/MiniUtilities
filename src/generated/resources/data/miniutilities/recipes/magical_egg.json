@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " Y ",
-    "ZXZ",
-    " Y "
-  ],
   "key": {
     "X": {
       "item": "minecraft:egg"
@@ -16,6 +11,11 @@
       "item": "miniutilities:unstable_ingot"
     }
   },
+  "pattern": [
+    " Y ",
+    "ZXZ",
+    " Y "
+  ],
   "result": {
     "item": "miniutilities:magical_egg"
   }

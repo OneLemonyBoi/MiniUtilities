@@ -1,5 +1,7 @@
 package onelemonyboi.miniutilities;
 
+import com.mojang.serialization.Codec;
+import net.minecraft.core.Registry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -7,7 +9,10 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -17,12 +22,16 @@ import onelemonyboi.miniutilities.init.*;
 public class ModRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MiniUtilities.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MiniUtilities.MOD_ID);
-    public static final DeferredRegister<BlockEntityType<?>> TE = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MiniUtilities.MOD_ID);
-    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MiniUtilities.MOD_ID);
+    public static final DeferredRegister<BlockEntityType<?>> TE = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MiniUtilities.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, MiniUtilities.MOD_ID);
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, MiniUtilities.MOD_ID);
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MiniUtilities.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MiniUtilities.MOD_ID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, MiniUtilities.MOD_ID);
-    public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, MiniUtilities.MOD_ID);
+    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MiniUtilities.MOD_ID);
+
+    public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registry.CONFIGURED_FEATURE_REGISTRY, MiniUtilities.MOD_ID);
+    public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, MiniUtilities.MOD_ID);
+    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, MiniUtilities.MOD_ID);
 
     public static void register() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -34,6 +43,9 @@ public class ModRegistry {
         ENTITIES.register(modEventBus);
         ATTRIBUTES.register(modEventBus);
         LOOT_MODIFIERS.register(modEventBus);
+        CONFIGURED_FEATURES.register(modEventBus);
+        PLACED_FEATURES.register(modEventBus);
+        FEATURES.register(modEventBus);
 
         BlockList.register();
         ItemList.register();
@@ -43,5 +55,6 @@ public class ModRegistry {
         EntityList.register();
         AttributeList.register();
         LootModifierList.register();
+        FeatureList.register();
     }
 }

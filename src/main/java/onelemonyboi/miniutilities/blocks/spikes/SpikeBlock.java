@@ -24,10 +24,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 
 import java.util.UUID;
 
+import net.minecraftforge.event.PlayLevelSoundEvent;
 import org.apache.logging.log4j.core.util.ReflectionUtil;
 
 public class SpikeBlock extends net.minecraft.world.level.block.Block {
@@ -123,7 +123,7 @@ public class SpikeBlock extends net.minecraft.world.level.block.Block {
         super.stepOn(worldIn, pos, state, entityIn);
     }
 
-    public static void soundEvent(PlaySoundAtEntityEvent event) {
+    public static void soundEvent(PlayLevelSoundEvent event) {
         if(cancelSounds) {
             SoundEvent e = event.getSound();
 

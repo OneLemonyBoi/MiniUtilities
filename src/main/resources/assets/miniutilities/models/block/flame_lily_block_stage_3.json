@@ -2,5 +2,6 @@
     "parent": "block/cross",
     "textures": {
         "cross": "miniutilities:block/flame_lily_block_stage_3"
-    }
+    },
+    "render_type": "cutout"
 }

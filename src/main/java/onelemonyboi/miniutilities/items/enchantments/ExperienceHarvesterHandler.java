@@ -25,7 +25,7 @@ public class ExperienceHarvesterHandler {
         if (!event.getEntity().getCommandSenderWorld().isClientSide() && enchantLevel > 0 && event.getEntity() instanceof Mob) {
             int randInt = new Random().nextInt(50);
             if (randInt < enchantLevel) {
-                int experienceGiven = (int) Math.ceil((event.getEntityLiving().getMaxHealth() / 2.0));
+                int experienceGiven = (int) Math.ceil((event.getEntity().getMaxHealth() / 2.0));
                 String octalExperience = Integer.toOctalString(experienceGiven);
                 octalExperience = StringUtils.reverse(octalExperience);
                 // JANK INCOMING

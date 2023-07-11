@@ -105,7 +105,6 @@ public class MiniUtilities {
 
     private void init(FMLCommonSetupEvent event) {
         proxy.init(event);
-        event.enqueueWork(FeatureList::register);
     }
 
     private void postInit(FMLCommonSetupEvent event) {

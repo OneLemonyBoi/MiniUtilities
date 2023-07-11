@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " Y ",
-    " Y ",
-    " X "
-  ],
   "key": {
     "X": {
       "item": "minecraft:stick"
@@ -13,6 +8,11 @@
       "item": "miniutilities:the_final_opinium_core"
     }
   },
+  "pattern": [
+    " Y ",
+    " Y ",
+    " X "
+  ],
   "result": {
     "item": "miniutilities:kikoku"
   }

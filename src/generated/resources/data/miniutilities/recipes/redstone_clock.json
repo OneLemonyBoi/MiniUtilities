@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XYX",
-    "Y Y",
-    "XYX"
-  ],
   "key": {
     "X": {
       "item": "minecraft:stone"
@@ -13,6 +8,11 @@
       "item": "minecraft:redstone"
     }
   },
+  "pattern": [
+    "XYX",
+    "Y Y",
+    "XYX"
+  ],
   "result": {
     "item": "miniutilities:redstone_clock"
   }

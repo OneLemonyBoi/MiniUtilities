@@ -2,8 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
@@ -14,39 +18,35 @@
             },
             {
               "function": "minecraft:copy_nbt",
-              "source": "block_entity",
               "ops": [
                 {
+                  "op": "replace",
                   "source": "FluidName",
-                  "target": "BlockEntityTag.FluidName",
-                  "op": "replace"
+                  "target": "BlockEntityTag.FluidName"
                 },
                 {
+                  "op": "replace",
                   "source": "Amount",
-                  "target": "BlockEntityTag.Amount",
-                  "op": "replace"
+                  "target": "BlockEntityTag.Amount"
                 },
                 {
+                  "op": "replace",
                   "source": "Tag",
-                  "target": "BlockEntityTag.Tag",
-                  "op": "replace"
+                  "target": "BlockEntityTag.Tag"
                 },
                 {
+                  "op": "replace",
                   "source": "Capacity",
-                  "target": "BlockEntityTag.Capacity",
-                  "op": "replace"
+                  "target": "BlockEntityTag.Capacity"
                 }
-              ]
+              ],
+              "source": "block_entity"
             }
           ],
           "name": "miniutilities:stone_drum"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "rolls": 1.0
     }
   ]
 }

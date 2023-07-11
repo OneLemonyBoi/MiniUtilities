@@ -3,8 +3,6 @@ package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -53,7 +51,7 @@ public class QuantumQuarryTile extends TileBase implements MenuProvider, RenderI
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.miniutilities.quantum_quarry");
+        return Component.translatable("container.miniutilities.quantum_quarry");
     }
 
     @Nullable
@@ -105,7 +103,7 @@ public class QuantumQuarryTile extends TileBase implements MenuProvider, RenderI
     private ArrayList<ItemStack> generateItemStacks() {
         if (level == null) return new ArrayList<>();
 
-        String biomeStr = level.getBiome(getBlockPos()).value().getRegistryName().toString();
+        String biomeStr = ForgeRegistries.BIOMES.getKey(level.getBiome(getBlockPos()).value()).toString();
         String dimensionStr = level.dimension().location().toString();
 
 
@@ -141,24 +139,24 @@ public class QuantumQuarryTile extends TileBase implements MenuProvider, RenderI
         List<MutableComponent> output = new ArrayList<>();
 
         output.add(this.getBlockState().getBlock().getName());
-        output.add(new TextComponent(""));
+        output.add(Component.literal(""));
         switch (this.redstonemode) {
             case 1:
-                output.add(new TranslatableComponent("text.miniutilities.redstonemodeone"));
+                output.add(Component.translatable("text.miniutilities.redstonemodeone"));
                 break;
             case 2:
-                output.add(new TranslatableComponent("text.miniutilities.redstonemodetwo"));
+                output.add(Component.translatable("text.miniutilities.redstonemodetwo"));
                 break;
             case 3:
-                output.add(new TranslatableComponent("text.miniutilities.redstonemodethree"));
+                output.add(Component.translatable("text.miniutilities.redstonemodethree"));
                 break;
         }
-        output.add(new TranslatableComponent("text.miniutilities.waittime")
+        output.add(Component.translatable("text.miniutilities.waittime")
                 .append(this.waittime.toString() + " ticks(" + this.waittime.floatValue() / 20)
-                .append(new TranslatableComponent("text.miniutilities.seconds"))
+                .append(Component.translatable("text.miniutilities.seconds"))
                 .append(")"));
-        output.add(new TextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
-        output.add(new TextComponent("FE/t Consumption: " + calcRFCost(this.waittime)));
+        output.add(Component.literal("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
+        output.add(Component.literal("FE/t Consumption: " + calcRFCost(this.waittime)));
         return output;
     }
 }

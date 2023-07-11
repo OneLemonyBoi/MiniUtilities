@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_end",
+  "features": "miniutilities:overworld_ender_lily",
+  "step": "vegetal_decoration"
+}

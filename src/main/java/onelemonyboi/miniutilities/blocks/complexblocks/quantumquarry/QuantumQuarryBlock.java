@@ -54,7 +54,7 @@ public class QuantumQuarryBlock extends BlockBase {
                 }
             }
             else if (te instanceof QuantumQuarryTile) {
-                NetworkHooks.openGui((ServerPlayer) player, (QuantumQuarryTile) te, pos);
+                NetworkHooks.openScreen((ServerPlayer) player, (QuantumQuarryTile) te, pos);
                 return InteractionResult.CONSUME;
             }
         }
@@ -62,17 +62,17 @@ public class QuantumQuarryBlock extends BlockBase {
     }
 
     public static void PlayerInteractEvent(PlayerInteractEvent event) {
-        if (!event.getWorld().isClientSide()) {
-            if (event.getWorld().getBlockEntity(event.getPos()) instanceof QuantumQuarryTile && event.getPlayer().isShiftKeyDown() && event.getPlayer().getItemInHand(event.getHand()).isEmpty()) {
-                QuantumQuarryTile TE = (QuantumQuarryTile) event.getWorld().getBlockEntity(event.getPos());
+        if (!event.getLevel().isClientSide()) {
+            if (event.getLevel().getBlockEntity(event.getPos()) instanceof QuantumQuarryTile && event.getEntity().isShiftKeyDown() && event.getEntity().getItemInHand(event.getHand()).isEmpty()) {
+                QuantumQuarryTile TE = (QuantumQuarryTile) event.getLevel().getBlockEntity(event.getPos());
                 if (TE.waittime > 1 && TE.waittime < 1200) {
                     TE.waittime = TE.waittime + 25;
-                    Containers.dropItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new net.minecraft.world.item.ItemStack(ItemList.SpeedUpgrade.get()));
+                    Containers.dropItemStack(event.getLevel(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new net.minecraft.world.item.ItemStack(ItemList.SpeedUpgrade.get()));
                     TE.timer = 0;
                 }
                 else if (TE.waittime == 1){
                     TE.waittime = 25;
-                    Containers.dropItemStack(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
+                    Containers.dropItemStack(event.getLevel(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemList.SpeedUpgrade.get()));
                     TE.timer = 0;
                 }
             }

@@ -1,6 +1,6 @@
 package onelemonyboi.miniutilities.items.enchantments;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -18,13 +18,13 @@ public class EnchantmentTooltipHandler {
         if (!(event.getItemStack().getItem() instanceof EnchantedBookItem)) return;
         for (Enchantment e : EnchantmentHelper.getEnchantments(event.getItemStack()).keySet()) {
             if (e.equals(EnchantmentList.Shotgun.get())) {
-                event.getToolTip().add(new TranslatableComponent("enchantment.miniutilities.shotgun.desc"));
+                event.getToolTip().add(Component.translatable("enchantment.miniutilities.shotgun.desc"));
             }
             else if (e.equals(EnchantmentList.MoltenHead.get())) {
-                event.getToolTip().add(new TranslatableComponent("enchantment.miniutilities.molten_head.desc"));
+                event.getToolTip().add(Component.translatable("enchantment.miniutilities.molten_head.desc"));
             }
             else if (e.equals(EnchantmentList.ExperienceHarvester.get())) {
-                event.getToolTip().add(new TranslatableComponent("enchantment.miniutilities.experience_harvester.desc"));
+                event.getToolTip().add(Component.translatable("enchantment.miniutilities.experience_harvester.desc"));
             }
         }
     }

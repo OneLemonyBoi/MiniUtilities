@@ -89,12 +89,12 @@ public class FlameLily extends CropBlock {
     }
 
     @Override
-    public boolean isBonemealSuccess(Level worldIn, Random rand, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, RandomSource rand, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
         return false;
     }
 
     @Override
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         // Only here to implement new growth chance getter and make lily grow slower
 
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light

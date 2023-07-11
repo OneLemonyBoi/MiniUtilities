@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -31,9 +29,9 @@ public class GoldenLasso extends Item {
 
     @Override
     public Component getHighlightTip(ItemStack item, Component displayName) {
-        String text = displayName.getContents();
-        text = text.equals("") ? new TranslatableComponent("item.miniutilities.golden_lasso").getContents() : text;
-        return new TextComponent(text);
+        String text = displayName.getString();
+        text = text.equals("") ? Component.translatable("item.miniutilities.golden_lasso").getString() : text;
+        return Component.literal(text);
         // if (item.getTag() == null || !item.getTag().contains("EntityTag")) return displayName;
         // return new StringTextComponent(displayName.getUnformattedComponentText() + " - " + EntityType.byKey(item.getChildTag("EntityTag").getString("id")).get().getName());
     }
@@ -42,7 +40,7 @@ public class GoldenLasso extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack.getTag() != null && stack.getTag().contains("EntityTag")) {
-            tooltip.add(new TextComponent("Contains: ").append(EntityType.byString(stack.getTagElement("EntityTag").getString("id")).get().getDescription()));
+            tooltip.add(Component.literal("Contains: ").append(EntityType.byString(stack.getTagElement("EntityTag").getString("id")).get().getDescription()));
         }
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }

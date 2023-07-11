@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " Y ",
-    "ZXZ",
-    "YYY"
-  ],
   "key": {
     "X": {
       "item": "minecraft:gold_block"
@@ -16,6 +11,11 @@
       "item": "miniutilities:iron_opinium_core"
     }
   },
+  "pattern": [
+    " Y ",
+    "ZXZ",
+    "YYY"
+  ],
   "result": {
     "item": "miniutilities:laser_port"
   }

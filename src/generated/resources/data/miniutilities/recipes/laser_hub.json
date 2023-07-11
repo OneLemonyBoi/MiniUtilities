@@ -1,11 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ZYZ",
-    "YXY",
-    "AAA"
-  ],
   "key": {
+    "A": {
+      "item": "minecraft:netherite_ingot"
+    },
     "X": {
       "item": "minecraft:beacon"
     },
@@ -14,11 +12,13 @@
     },
     "Z": {
       "item": "miniutilities:unstable_ingot"
-    },
-    "A": {
-      "item": "minecraft:netherite_ingot"
     }
   },
+  "pattern": [
+    "ZYZ",
+    "YXY",
+    "AAA"
+  ],
   "result": {
     "item": "miniutilities:laser_hub"
   }

@@ -4,8 +4,8 @@ import com.mojang.math.Vector3f;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.Item;
@@ -92,7 +92,7 @@ public class GenericEarthBlock extends GrassBlock {
 
     @Override
     @SuppressWarnings("deprecation")
-    public void randomTick(@Nonnull net.minecraft.world.level.block.state.BlockState state, @Nonnull ServerLevel world, @Nonnull BlockPos pos, @Nonnull Random random) {
+    public void randomTick(@Nonnull net.minecraft.world.level.block.state.BlockState state, @Nonnull ServerLevel world, @Nonnull BlockPos pos, @Nonnull RandomSource random) {
         this.tick(state, world, pos, random);
 
         if (lightDecay && world.getMaxLocalRawBrightness(pos.above()) >= 7 && world.canSeeSkyFromBelowWater(pos)) {
@@ -114,7 +114,7 @@ public class GenericEarthBlock extends GrassBlock {
     @Override
     @Deprecated
     @SuppressWarnings({"deprecation", "DeprecatedIsStillUsed"})
-    public void tick (@Nonnull net.minecraft.world.level.block.state.BlockState state, @Nonnull ServerLevel world, @Nonnull BlockPos pos, @Nonnull Random random) {
+    public void tick(@Nonnull net.minecraft.world.level.block.state.BlockState state, @Nonnull ServerLevel world, @Nonnull BlockPos pos, @Nonnull RandomSource random) {
         // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
         if (!world.isAreaLoaded(pos, 3)) return;
         if (!world.getFluidState(pos.above()).isEmpty()) return;
@@ -138,8 +138,7 @@ public class GenericEarthBlock extends GrassBlock {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(@Nonnull BlockState stateIn, Level worldIn, BlockPos pos, @Nonnull Random rand) {
-        Random random = worldIn.random;
+    public void animateTick(@Nonnull BlockState stateIn, Level worldIn, BlockPos pos, @Nonnull RandomSource random) {
         Direction.Axis direction$axis = net.minecraft.core.Direction.UP.getAxis();
         double d1 = direction$axis == net.minecraft.core.Direction.Axis.X ? 0.5D + 0.5625D * (double) net.minecraft.core.Direction.UP.getStepX() : (double)random.nextFloat();
         double d2 = direction$axis == net.minecraft.core.Direction.Axis.Y ? 0.5D + 0.5625D * (double) net.minecraft.core.Direction.UP.getStepY() : (double)random.nextFloat();
@@ -153,21 +152,21 @@ public class GenericEarthBlock extends GrassBlock {
     }
 
     @Override
-    public void performBonemeal(@Nonnull ServerLevel world, @Nonnull Random random, @Nonnull BlockPos pos, @Nonnull net.minecraft.world.level.block.state.BlockState state) {
-        //no
+    public void performBonemeal(ServerLevel p_221270_, RandomSource p_221271_, BlockPos p_221272_, BlockState p_221273_) {
+        super.performBonemeal(p_221270_, p_221271_, p_221272_, p_221273_);
     }
 
     @Override
-    public boolean isBonemealSuccess(@Nonnull Level world, @Nonnull Random random, @Nonnull BlockPos pos, @Nonnull net.minecraft.world.level.block.state.BlockState state) {
+    public boolean isBonemealSuccess(@Nonnull Level world, @Nonnull RandomSource random, @Nonnull BlockPos pos, @Nonnull BlockState state) {
         return false;//no
     }
 
-    private net.minecraft.world.entity.Entity findMonsterToSpawn(ServerLevel world, BlockPos pos, Random rand) {
+    private Entity findMonsterToSpawn(ServerLevel world, BlockPos pos, RandomSource random) {
         WeightedRandomList<MobSpawnSettings.SpawnerData> spawnOptions = entitySupplier.getEntities(world.getChunkSource(), world, pos);
         //required to account for structure based mobs such as wither skeletons
         //there is nothing to spawn
         if (spawnOptions.unwrap().size() == 0) return null;
-        MobSpawnSettings.SpawnerData entry = spawnOptions.getRandom(rand).get();
+        MobSpawnSettings.SpawnerData entry = spawnOptions.getRandom(random).get();
 
         // can the mob actually spawn here naturally, filters out mobs such as slimes which have more specific spawn requirements but
         // still show up in spawnlist; ignore them when force spawning
@@ -198,7 +197,7 @@ public class GenericEarthBlock extends GrassBlock {
     }
 
     private static void handleConvertEarth(PlayerInteractEvent.RightClickBlock event, ItemChecker itemChecker, net.minecraft.world.level.block.Block defaultState) {
-        Player playerEntity = event.getPlayer();
+        Player playerEntity = event.getEntity();
         Level world = playerEntity.level;
         BlockPos pos = event.getPos();
 
@@ -208,20 +207,20 @@ public class GenericEarthBlock extends GrassBlock {
     }
 
     static WeightedRandomList<MobSpawnSettings.SpawnerData> getCursedEntities(ServerChunkCache chunkProvider, ServerLevel world, BlockPos pos) {
-        return chunkProvider.getGenerator().getMobsAt(world.getBiome(pos), world.structureFeatureManager(), MobCategory.MONSTER, pos);
+        return chunkProvider.getGenerator().getMobsAt(world.getBiome(pos), world.structureManager(), MobCategory.MONSTER, pos);
     }
     static WeightedRandomList<MobSpawnSettings.SpawnerData> getBlursedEntities(ServerChunkCache chunkProvider, ServerLevel world, BlockPos pos) {
         List<MobSpawnSettings.SpawnerData> list = new ArrayList<>();
 
         for (MobCategory cat : MobCategory.values()) {
             if (cat.equals(MobCategory.MISC) || cat.equals(MobCategory.AXOLOTLS)) continue; // No killing axolotls 😡😡
-            list.addAll(chunkProvider.getGenerator().getMobsAt(world.getBiome(pos), world.structureFeatureManager(), cat, pos).unwrap());
+            list.addAll(chunkProvider.getGenerator().getMobsAt(world.getBiome(pos), world.structureManager(), cat, pos).unwrap());
         }
 
         return WeightedRandomList.create(list);
     }
     static WeightedRandomList<MobSpawnSettings.SpawnerData> getBlessedEntities(ServerChunkCache chunkProvider, ServerLevel world, BlockPos pos) {
-        return chunkProvider.getGenerator().getMobsAt(world.getBiome(pos), world.structureFeatureManager(), MobCategory.CREATURE, pos);
+        return chunkProvider.getGenerator().getMobsAt(world.getBiome(pos), world.structureManager(), MobCategory.CREATURE, pos);
     }
 
     @FunctionalInterface

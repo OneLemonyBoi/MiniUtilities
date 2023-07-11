@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "item": "miniutilities:chorus_opinium_core"
+    },
+    "X": {
+      "tag": "forge:experience_containers"
+    }
+  },
   "pattern": [
     "XEX",
     "E E",
     "XEX"
   ],
-  "key": {
-    "X": {
-      "tag": "forge:experience_containers"
-    },
-    "E": {
-      "item": "miniutilities:chorus_opinium_core"
-    }
-  },
   "result": {
     "item": "miniutilities:experience_opinium_core"
   }

@@ -14,8 +14,8 @@ public class ShotgunHandler {
         if (event.hasAmmo()) {
             float charge = BowItem.getPowerForTime(event.getCharge());
             for (int x = 0; x < level; x++) {
-                AbstractArrow arrowEntity = new Arrow(event.getWorld(), event.getPlayer());
-                arrowEntity.shootFromRotation(event.getPlayer(), event.getPlayer().xRotO, event.getPlayer().yRotO, 0, charge * 3.0F, (float) Math.pow(x, 1.5));
+                AbstractArrow arrowEntity = new Arrow(event.getLevel(), event.getEntity());
+                arrowEntity.shootFromRotation(event.getEntity(), event.getEntity().xRotO, event.getEntity().yRotO, 0, charge * 3.0F, (float) Math.pow(x, 1.5));
                 arrowEntity.setDeltaMovement(arrowEntity.getDeltaMovement().x, arrowEntity.getDeltaMovement().y + 0.1, arrowEntity.getDeltaMovement().z);
                 if (charge == 1.0F) {
                     arrowEntity.setCritArrow(true);
@@ -35,12 +35,12 @@ public class ShotgunHandler {
                     arrowEntity.setSecondsOnFire(100);
                 }
 
-                event.getBow().hurtAndBreak(1, event.getPlayer(), (player) -> {
-                    player.broadcastBreakEvent(event.getPlayer().getUsedItemHand());
+                event.getBow().hurtAndBreak(1, event.getEntity(), (player) -> {
+                    player.broadcastBreakEvent(event.getEntity().getUsedItemHand());
                 });
                 arrowEntity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
 
-                event.getWorld().addFreshEntity(arrowEntity);
+                event.getLevel().addFreshEntity(arrowEntity);
             }
         }
     }

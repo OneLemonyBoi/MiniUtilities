@@ -1,11 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XZX",
-    "AYA",
-    "XAX"
-  ],
   "key": {
+    "A": {
+      "item": "minecraft:diamond"
+    },
     "X": {
       "item": "minecraft:gold_ingot"
     },
@@ -14,11 +12,13 @@
     },
     "Z": {
       "item": "minecraft:dispenser"
-    },
-    "A": {
-      "item": "minecraft:diamond"
     }
   },
+  "pattern": [
+    "XZX",
+    "AYA",
+    "XAX"
+  ],
   "result": {
     "item": "miniutilities:mechanical_placer"
   }

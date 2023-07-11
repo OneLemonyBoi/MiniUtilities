@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "X X",
-    "XXX"
-  ],
   "key": {
     "X": {
       "item": "miniutilities:experience_pearl_2x"
     }
   },
+  "pattern": [
+    "XXX",
+    "X X",
+    "XXX"
+  ],
   "result": {
     "item": "miniutilities:experience_pearl_3x"
   }

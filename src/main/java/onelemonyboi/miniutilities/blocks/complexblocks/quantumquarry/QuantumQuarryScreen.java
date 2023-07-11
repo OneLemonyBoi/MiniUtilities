@@ -6,11 +6,9 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.item.Item;
 import onelemonyboi.lemonlib.gui.ItemStackButton;
@@ -48,13 +46,13 @@ public class QuantumQuarryScreen extends AbstractContainerScreen<QuantumQuarryCo
                 break;
         }
 
-        redstoneButton = new ItemStackButton(this.leftPos + 156, this.topPos + 4, 16, 16, new TextComponent(""), this::changeRedstone, baseItem, this::displayMode);
+        redstoneButton = new ItemStackButton(this.leftPos + 156, this.topPos + 4, 16, 16, Component.literal(""), this::changeRedstone, baseItem, this::displayMode);
         addRenderableWidget(redstoneButton);
     }
 
     @Override
     public MutableComponent getTitle() {
-        return new TextComponent("Quantum Quarry").withStyle(ChatFormatting.BLUE);
+        return Component.literal("Quantum Quarry").withStyle(ChatFormatting.BLUE);
     }
 
     @Override
@@ -98,18 +96,18 @@ public class QuantumQuarryScreen extends AbstractContainerScreen<QuantumQuarryCo
     }
 
     public void displayMode(Button buttons, PoseStack matrixStack, int mouseX, int mouseY) {
-        TranslatableComponent tooltip;
+        Component tooltip;
         if (redstoneButton.item == Items.REDSTONE) {
-            tooltip = new TranslatableComponent("text.miniutilities.redstonemodeone");
+            tooltip = Component.translatable("text.miniutilities.redstonemodeone");
         }
         else if (redstoneButton.item == net.minecraft.world.item.Items.GLOWSTONE_DUST) {
-            tooltip = new TranslatableComponent("text.miniutilities.redstonemodetwo");
+            tooltip = Component.translatable("text.miniutilities.redstonemodetwo");
         }
         else if (redstoneButton.item == Items.GUNPOWDER) {
-            tooltip = new TranslatableComponent("text.miniutilities.redstonemodethree");
+            tooltip = Component.translatable("text.miniutilities.redstonemodethree");
         }
         else {
-            tooltip = new TranslatableComponent("text.miniutilities.redstonemodeone");
+            tooltip = Component.translatable("text.miniutilities.redstonemodeone");
         }
         this.renderTooltip(matrixStack, tooltip, mouseX, mouseY);
     }

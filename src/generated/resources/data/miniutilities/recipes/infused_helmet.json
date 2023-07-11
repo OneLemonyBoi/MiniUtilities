@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XYX"
-  ],
   "key": {
     "X": {
       "item": "miniutilities:unstable_ingot"
@@ -12,6 +8,10 @@
       "item": "miniutilities:experience_opinium_core"
     }
   },
+  "pattern": [
+    "XXX",
+    "XYX"
+  ],
   "result": {
     "item": "miniutilities:infused_helmet"
   }

@@ -1,8 +1,8 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import onelemonyboi.lemonlib.annotations.SaveInNBT;
@@ -39,9 +39,9 @@ public class LaserPortTile extends TileBase implements RenderInfoIdentifier {
         List<MutableComponent> output = new ArrayList<>();
 
         output.add(this.getBlockState().getBlock().getName());
-        output.add(new TextComponent(""));
-        output.add(new TextComponent("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
-        output.add(new TextComponent("I/O Mode: " + (this.isInput ? "Push to Machine" : "Pull from Machine")));
+        output.add(Component.literal(""));
+        output.add(Component.literal("Power: " + getBehaviour().getRequired(TileTraits.PowerTrait.class).getEnergyStorage().toString()));
+        output.add(Component.literal("I/O Mode: " + (this.isInput ? "Push to Machine" : "Pull from Machine")));
         return output;
     }
 }

@@ -4,6 +4,7 @@ import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -57,7 +58,7 @@ public class EnderTileBlock extends Block {
     }
 
     private static void spawnParticles(Level world, net.minecraft.core.BlockPos pos) {
-        Random random = world.random;
+        RandomSource random = world.random;
         Direction.Axis direction$axis = Direction.NORTH.getAxis();
         double d1 = direction$axis == Direction.Axis.X ? 0.5D: (double)random.nextFloat();
         double d2 = direction$axis == Direction.Axis.Y ? 0.5D : (double)random.nextFloat();

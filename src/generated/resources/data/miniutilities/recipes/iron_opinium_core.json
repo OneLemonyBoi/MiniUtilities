@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "item": "minecraft:coal"
+    },
+    "X": {
+      "tag": "forge:ingots/iron"
+    }
+  },
   "pattern": [
     "XEX",
     "E E",
     "XEX"
   ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/iron"
-    },
-    "E": {
-      "item": "minecraft:coal"
-    }
-  },
   "result": {
     "item": "miniutilities:iron_opinium_core"
   }

@@ -6,6 +6,7 @@
 		"top": "miniutilities:block/laser_port_top",
 		"bottom": "miniutilities:block/laser_port_bottom"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"from": [0, 0, 0],

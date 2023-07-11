@@ -6,6 +6,7 @@
 		"base": "block/oak_log",
 		"spike": "miniutilities:block/spike_wood"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "Base",

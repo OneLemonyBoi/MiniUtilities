@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XYX",
-    "XXX"
-  ],
   "key": {
     "X": {
       "item": "minecraft:dirt"
@@ -13,8 +8,13 @@
       "item": "miniutilities:unstable_ingot"
     }
   },
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
   "result": {
-    "item": "miniutilities:blursed_earth",
-    "count": 8
+    "count": 8,
+    "item": "miniutilities:blursed_earth"
   }
 }

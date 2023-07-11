@@ -1,10 +1,10 @@
 {
   "type": "minecraft:smithing",
-  "base": {
-    "item": "miniutilities:diamond_spikes"
-  },
   "addition": {
     "item": "minecraft:netherite_ingot"
+  },
+  "base": {
+    "item": "miniutilities:diamond_spikes"
   },
   "result": {
     "item": "miniutilities:netherite_spikes"

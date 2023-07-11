@@ -1,5 +1,6 @@
 package onelemonyboi.miniutilities.blocks;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.core.BlockPos;
@@ -20,7 +21,7 @@ public class LapisLamp extends Block {
     }
 
     @Override
-    public void animateTick(@Nonnull BlockState state, @Nonnull Level world, @Nonnull BlockPos blockPos, @Nonnull Random random) {
+    public void animateTick(@Nonnull BlockState state, @Nonnull Level world, @Nonnull BlockPos blockPos, @Nonnull RandomSource random) {
         if (world.isClientSide && world.getMaxLocalRawBrightness(blockPos) == 0) {
             world.getLightEngine().checkBlock(blockPos);
         }

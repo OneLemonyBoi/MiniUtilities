@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "item": "miniutilities:gold_opinium_core"
+    },
+    "X": {
+      "tag": "forge:gems/diamond"
+    }
+  },
   "pattern": [
     "XEX",
     "E E",
     "XEX"
   ],
-  "key": {
-    "X": {
-      "tag": "forge:gems/diamond"
-    },
-    "E": {
-      "item": "miniutilities:gold_opinium_core"
-    }
-  },
   "result": {
     "item": "miniutilities:diamond_opinium_core"
   }

@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "tag": "forge:ender_pearls"
+    },
+    "S": {
+      "tag": "forge:seeds"
+    }
+  },
   "pattern": [
     "EEE",
     "ESE",
     "EEE"
   ],
-  "key": {
-    "S": {
-      "tag": "forge:seeds"
-    },
-    "E": {
-      "tag": "forge:ender_pearls"
-    }
-  },
   "result": {
     "item": "miniutilities:ender_lily_seeds"
   }

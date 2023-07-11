@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "miniutilities:overworld_flame_lily",
+  "step": "vegetal_decoration"
+}

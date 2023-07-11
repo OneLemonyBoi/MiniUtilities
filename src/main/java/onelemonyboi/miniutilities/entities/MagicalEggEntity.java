@@ -33,9 +33,6 @@ public class MagicalEggEntity extends ThrowableItemProjectile {
         super(EntityList.SpecialEgg.get(), x, y, z, worldIn);
     }
 
-    /**
-     * Handler for {@link Level#setEntityState}
-     */
     @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte id) {
         if (id == 3) {

@@ -6,6 +6,7 @@
 		"3": "block/netherite_block",
 		"particle": "block/netherite_block"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "Base",
