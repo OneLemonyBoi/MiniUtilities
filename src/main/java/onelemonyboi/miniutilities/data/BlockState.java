@@ -1,5 +1,6 @@
 package onelemonyboi.miniutilities.data;
 
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -28,22 +29,22 @@ public class BlockState extends BlockStateProvider {
         simpleBlock(BlockList.AngelBlock.get());
 
         // Lapis Caelestis
-        simpleBlock(BlockList.WhiteLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.LightGrayLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.GrayLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.BlackLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.RedLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.OrangeLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.YellowLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.LimeLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.GreenLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.LightBlueLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.CyanLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.BlueLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.PurpleLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.MagentaLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.PinkLapisCaelestis.get(), "cutout");
-        simpleBlock(BlockList.BrownLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.WhiteLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.LightGrayLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.GrayLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.BlackLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.RedLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.OrangeLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.YellowLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.LimeLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.GreenLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.LightBlueLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.CyanLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.BlueLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.PurpleLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.MagentaLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.PinkLapisCaelestis.get(), "cutout");
+        simpleEmissiveBlock(BlockList.BrownLapisCaelestis.get(), "cutout");
 
         // Special Glass
         simpleBlock(BlockList.EtherealGlass.get(), "cutout");
@@ -69,5 +70,16 @@ public class BlockState extends BlockStateProvider {
     private void simpleBlock(Block block, String renderType) {
         BlockModelBuilder model = (BlockModelBuilder) cubeAll(block);
         simpleBlock(block, model.renderType(renderType));
+    }
+
+    private void simpleEmissiveBlock(Block block, String renderType) {
+        BlockModelBuilder model = (BlockModelBuilder) cubeAll(block);
+        model = model.renderType(renderType);
+        model.element().allFaces((direction, builder) -> {
+            builder.ao(false);
+            builder.emissive();
+            builder.texture("#all");
+        });
+        simpleBlock(block, model);
     }
 }

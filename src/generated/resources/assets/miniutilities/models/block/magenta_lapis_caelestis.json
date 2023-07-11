@@ -1,5 +1,51 @@
 {
   "parent": "minecraft:block/cube_all",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "ambientocclusion": false,
+          "emissivity": 15,
+          "texture": "#all"
+        },
+        "east": {
+          "ambientocclusion": false,
+          "emissivity": 15,
+          "texture": "#all"
+        },
+        "north": {
+          "ambientocclusion": false,
+          "emissivity": 15,
+          "texture": "#all"
+        },
+        "south": {
+          "ambientocclusion": false,
+          "emissivity": 15,
+          "texture": "#all"
+        },
+        "up": {
+          "ambientocclusion": false,
+          "emissivity": 15,
+          "texture": "#all"
+        },
+        "west": {
+          "ambientocclusion": false,
+          "emissivity": 15,
+          "texture": "#all"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
   "render_type": "minecraft:cutout",
   "textures": {
     "all": "miniutilities:block/magenta_lapis_caelestis"
