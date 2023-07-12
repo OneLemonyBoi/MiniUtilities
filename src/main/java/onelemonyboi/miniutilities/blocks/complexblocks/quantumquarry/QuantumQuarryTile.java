@@ -1,6 +1,7 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.MenuProvider;
@@ -12,10 +13,16 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.VanillaInventoryCodeHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.lemonlib.annotations.SaveInNBT;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
+import onelemonyboi.lemonlib.handlers.MUItemStackHandler;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.lemonlib.trait.tile.TileTraits;
 import onelemonyboi.miniutilities.init.TEList;
@@ -79,6 +86,26 @@ public class QuantumQuarryTile extends TileBase implements MenuProvider, RenderI
         }
         if (tile.insertStacks.isEmpty()) {
             tile.insertStacks = tile.generateItemStacks();
+        }
+        // Auto-Eject to top
+        MUItemStackHandler tileInv = tile.getBehaviour().getRequired(TileTraits.ItemTrait.class).getItemStackHandler();
+        if (level.getBlockEntity(pos.above()) != null) {
+            BlockEntity aboveBE = level.getBlockEntity(pos.above());
+            if (aboveBE.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).isPresent()) {
+                IItemHandler handler = aboveBE.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).resolve().get();
+                for (int i = 0; i < 27; i++) {
+                    if (tileInv.extractItem(i, 64, true).isEmpty()) continue;
+                    else {
+                        ItemStack simPull = tileInv.extractItem(i, 64, true);
+                        if (!ItemHandlerHelper.insertItemStacked(handler, simPull, true).equals(simPull, false)) {
+                            tileInv.extractItem(i, 64, false);
+                            ItemStack reinsertBack = ItemHandlerHelper.insertItemStacked(handler, simPull, false);
+                            tileInv.insertItem(i, reinsertBack, false);
+                            break;
+                        }
+                    }
+                }
+            }
         }
         tile.timer++;
         if (tile.timer < tile.waittime) {return;}
