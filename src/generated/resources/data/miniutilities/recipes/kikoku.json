@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "item": "minecraft:stick"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "miniutilities:kikoku"
-  }
+  },
+  "show_notification": true
 }

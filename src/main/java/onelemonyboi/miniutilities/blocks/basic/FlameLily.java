@@ -14,7 +14,6 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -39,7 +38,7 @@ public class FlameLily extends CropBlock {
 
     public FlameLily()
     {
-        super(Properties.of(Material.PLANT).noCollission().randomTicks().sound(SoundType.CROP));
+        super(Properties.of().noCollission().randomTicks().sound(SoundType.CROP));
     }
 
     @Override
@@ -67,7 +66,7 @@ public class FlameLily extends CropBlock {
                 double d0 = Math.abs(entityIn.getX() - entityIn.xOld);
                 double d1 = Math.abs(entityIn.getZ() - entityIn.zOld);
                 if (d0 >= (double)0.003F || d1 >= (double)0.003F) {
-                    entityIn.hurt(DamageSource.ON_FIRE, 1.0F);
+                    entityIn.hurt(worldIn.damageSources().inFire(), 1.0F);
                 }
             }
         }

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "item": "minecraft:smooth_stone"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "miniutilities:stone_drum"
-  }
+  },
+  "show_notification": true
 }

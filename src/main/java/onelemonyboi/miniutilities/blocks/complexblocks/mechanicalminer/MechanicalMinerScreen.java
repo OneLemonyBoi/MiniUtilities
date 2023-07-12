@@ -1,8 +1,10 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -14,6 +16,8 @@ import onelemonyboi.lemonlib.gui.ItemStackButton;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.packets.Packet;
 import onelemonyboi.miniutilities.packets.RedstoneModeUpdate;
+
+import java.util.Optional;
 
 public class MechanicalMinerScreen extends AbstractContainerScreen<MechanicalMinerContainer> {
     private static final ResourceLocation TestDisplay = new net.minecraft.resources.ResourceLocation(MiniUtilities.MOD_ID,
@@ -45,7 +49,7 @@ public class MechanicalMinerScreen extends AbstractContainerScreen<MechanicalMin
                 break;
         }
 
-        redstoneButton = new ItemStackButton(this.leftPos + 156, this.topPos + 4, 16, 16, Component.literal(""), this::changeRedstone, baseItem, this::displayMode);
+        redstoneButton = new ItemStackButton(this.leftPos + 156, this.topPos + 4, 16, 16, Component.literal(""), this::changeRedstone, baseItem);
         addRenderableWidget(redstoneButton);
     }
 
@@ -55,28 +59,21 @@ public class MechanicalMinerScreen extends AbstractContainerScreen<MechanicalMin
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float partialTicks) {
+        if (redstoneButton.isHovered()) displayMode(redstoneButton, matrixStack, mouseX, mouseY);
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
-    @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) {
-        this.font.draw(matrixStack, playerInventoryTitle, (float) this.inventoryLabelX,
-                (float) this.inventoryLabelY, 4210752);
-        this.font.draw(matrixStack, getTitle(), (float) this.inventoryLabelX,
-                6, 4210752);
-    }
-
     @SuppressWarnings("deprecation")
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics matrixStack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
         RenderSystem.setShaderTexture(0, TestDisplay);
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
+        matrixStack.blit(TestDisplay, x, y, 0, 0, this.imageWidth, this.imageHeight);
     }
 
     public void changeRedstone(Button x) {
@@ -94,7 +91,7 @@ public class MechanicalMinerScreen extends AbstractContainerScreen<MechanicalMin
         }
     }
 
-    public void displayMode(Button buttons, PoseStack matrixStack, int mouseX, int mouseY) {
+    public void displayMode(Button buttons, GuiGraphics matrixStack, int mouseX, int mouseY) {
         Component tooltip;
         if (redstoneButton.item == net.minecraft.world.item.Items.REDSTONE) {
             tooltip = Component.translatable("text.miniutilities.redstonemodeone");
@@ -108,6 +105,6 @@ public class MechanicalMinerScreen extends AbstractContainerScreen<MechanicalMin
         else {
             tooltip = Component.translatable("text.miniutilities.redstonemodeone");
         }
-        this.renderTooltip(matrixStack, tooltip, mouseX, mouseY);
+        matrixStack.renderTooltip(this.font, ImmutableList.of(tooltip), Optional.empty(), mouseX, mouseY);
     }
 }

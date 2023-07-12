@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import onelemonyboi.lemonlib.blocks.block.BlockBase;
@@ -17,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class RedstoneClockBlock extends BlockBase {
     public RedstoneClockBlock() {
-        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(Material.METAL), BlockBehaviors.redstoneClock);
+        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(), BlockBehaviors.redstoneClock);
     }
 
     @Nullable

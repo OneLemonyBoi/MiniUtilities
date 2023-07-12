@@ -17,7 +17,7 @@ import onelemonyboi.miniutilities.init.BlockList;
 public class AngelBlockItem extends BlockItem {
     public AngelBlockItem(Block block)
     {
-        super(block, new Item.Properties().stacksTo(64).tab(CreativeTab.getInstance()));
+        super(block, new Item.Properties().stacksTo(64));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class AngelBlockItem extends BlockItem {
                     y = player.getEyeHeight() + player.getY() + 3 * player.getLookAngle().y;
                     z = player.getZ() + 3 * player.getLookAngle().z;
             }
-            BlockPos pos = new BlockPos(x,y,z);
+            BlockPos pos = new BlockPos((int) x, (int) y, (int) z);
 
             if (world.isEmptyBlock(pos) || !world.getFluidState(pos).isEmpty()) {
                 world.setBlockAndUpdate(pos, BlockList.AngelBlock.get().defaultBlockState());

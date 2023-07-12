@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class ItemModel extends ItemModelProvider {
     public ItemModel(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, MiniUtilities.MOD_ID, existingFileHelper);
+        super(generator.getPackOutput(), MiniUtilities.MOD_ID, existingFileHelper);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class ItemModel extends ItemModelProvider {
         withExistingParent("netherite_spikes", modLoc("block/netherite_spikes"));
         withExistingParent("unstable_block", modLoc("block/unstable_block"));
         withExistingParent("cursed_earth", new ResourceLocation("block/grass_block"));
-        withExistingParent("blessed_earth", new net.minecraft.resources.ResourceLocation("block/grass_block"));
-        withExistingParent("blursed_earth", new net.minecraft.resources.ResourceLocation("block/grass_block"));
+        withExistingParent("blessed_earth", new ResourceLocation("block/grass_block"));
+        withExistingParent("blursed_earth", new ResourceLocation("block/grass_block"));
 
         withExistingParent("ethereal_glass", modLoc("block/ethereal_glass"));
         withExistingParent("reverse_ethereal_glass", modLoc("block/reverse_ethereal_glass"));

@@ -22,7 +22,7 @@ public class QuantumQuarryContainer extends AbstractContainerMenu {
     private final ContainerLevelAccess access;
 
     public QuantumQuarryContainer(final int windowId, final Inventory playerInv, FriendlyByteBuf buf) {
-        this(windowId, playerInv, ContainerLevelAccess.create(playerInv.player.level, buf.readBlockPos()));
+        this(windowId, playerInv, ContainerLevelAccess.create(playerInv.player.level(), buf.readBlockPos()));
     }
 
     public QuantumQuarryContainer(final int windowId, final Inventory playerInv, ContainerLevelAccess access) {

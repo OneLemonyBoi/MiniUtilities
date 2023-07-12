@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "item": "minecraft:glass"
@@ -16,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "miniutilities:ethereal_glass"
-  }
+  },
+  "show_notification": true
 }

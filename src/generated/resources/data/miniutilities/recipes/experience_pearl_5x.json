@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "item": "miniutilities:experience_pearl_4x"
@@ -12,5 +13,6 @@
   ],
   "result": {
     "item": "miniutilities:experience_pearl_5x"
-  }
+  },
+  "show_notification": true
 }

@@ -1,6 +1,5 @@
 package onelemonyboi.miniutilities.blocks.earth;
 
-import com.mojang.math.Vector3f;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
@@ -10,6 +9,7 @@ import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.GrassBlock;
@@ -32,6 +32,7 @@ import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.startup.Config;
+import org.joml.Vector3f;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -147,8 +148,8 @@ public class GenericEarthBlock extends GrassBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(@Nonnull BlockGetter world, @Nonnull BlockPos pos, @Nonnull net.minecraft.world.level.block.state.BlockState state, boolean p_176473_4_) {
-        return false;//no
+    public boolean isValidBonemealTarget(LevelReader p_256229_, BlockPos p_256432_, BlockState p_255677_, boolean p_256630_) {
+        return false;
     }
 
     @Override
@@ -198,7 +199,7 @@ public class GenericEarthBlock extends GrassBlock {
 
     private static void handleConvertEarth(PlayerInteractEvent.RightClickBlock event, ItemChecker itemChecker, net.minecraft.world.level.block.Block defaultState) {
         Player playerEntity = event.getEntity();
-        Level world = playerEntity.level;
+        Level world = playerEntity.level();
         BlockPos pos = event.getPos();
 
         if (playerEntity.isShiftKeyDown() && !world.isClientSide && itemChecker.isItemValid(event.getItemStack().getItem()) && world.getBlockState(pos).getBlock() == Blocks.DIRT) {

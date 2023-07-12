@@ -10,6 +10,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +26,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
@@ -39,7 +39,7 @@ public class EnderLily extends CropBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
     public EnderLily()
     {
-        super(Properties.of(Material.PLANT).noCollission().randomTicks().sound(SoundType.CROP));
+        super(Properties.of().noCollission().randomTicks().sound(SoundType.CROP));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class EnderLily extends CropBlock {
                 double d0 = Math.abs(entityIn.getX() - entityIn.xOld);
                 double d1 = Math.abs(entityIn.getZ() - entityIn.zOld);
                 if (d0 >= (double)0.003F || d1 >= (double)0.003F) {
-                    entityIn.hurt(DamageSource.CACTUS, 1.0F);
+                    entityIn.hurt(worldIn.damageSources().cactus(), 1.0F);
                 }
             }
         }

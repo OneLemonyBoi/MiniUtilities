@@ -1,6 +1,10 @@
 package onelemonyboi.miniutilities.items.unstable;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -16,14 +20,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.startup.Config;
 
 @Mod.EventBusSubscriber
 public class UnstableIngot extends Item {
 
-    public static final DamageSource DIVIDE_BY_DIAMOND = (new DamageSource("divide_by_diamond").bypassArmor().bypassInvul());
-    public static final DamageSource UNSTABLE_DIVISION = (new DamageSource("unstable_division").bypassArmor().bypassInvul());
+    public static final ResourceKey<DamageType> DIVIDE_BY_DIAMOND = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(MiniUtilities.MOD_ID, "divide_by_diamond"));
+    public static final ResourceKey<DamageType> UNSTABLE_DIVISION = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(MiniUtilities.MOD_ID, "unstable_division"));
 
     public UnstableIngot(Properties properties) {
         super(properties);
@@ -33,7 +38,7 @@ public class UnstableIngot extends Item {
         if (playerEntity.getHealth() < damage) {
             stack.shrink(1);
         }
-        playerEntity.hurt(UNSTABLE_DIVISION, damage);
+        playerEntity.hurt(playerEntity.level().damageSources().source(UNSTABLE_DIVISION), damage);
     }
 
     @Override
@@ -75,8 +80,8 @@ public class UnstableIngot extends Item {
                 setDamage(stack, stack.getDamageValue() + 1);
                 if (stack.getDamageValue() == 200) {
                     stack.shrink(1);
-                    world.explode(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), 1, Explosion.BlockInteraction.NONE);
-                    playerEntity.hurt(DIVIDE_BY_DIAMOND, Float.MAX_VALUE);
+                    world.explode(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), 1, Level.ExplosionInteraction.NONE);
+                    playerEntity.hurt(playerEntity.level().damageSources().source(DIVIDE_BY_DIAMOND), Float.MAX_VALUE);
                 }
                 break;
         }
@@ -88,8 +93,8 @@ public class UnstableIngot extends Item {
         ItemEntity entityItem = e.getEntity();
         net.minecraft.world.item.ItemStack stack = entityItem.getItem();
         if (stack.getItem() == ItemList.UnstableIngot.get().asItem() && Config.unstableIngotType.get() != ReactionType.NO_DAMAGE) {
-            p.level.explode(null, p.getX(), p.getY(), p.getZ(), 1, Explosion.BlockInteraction.NONE);
-            p.hurt(DIVIDE_BY_DIAMOND, Float.MAX_VALUE);
+            p.level().explode(null, p.getX(), p.getY(), p.getZ(), 1, Level.ExplosionInteraction.NONE);
+            p.hurt(p.level().damageSources().source(DIVIDE_BY_DIAMOND), Float.MAX_VALUE);
             e.setCanceled(true);
         }
     }

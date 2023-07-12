@@ -13,7 +13,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.network.NetworkHooks;
 import onelemonyboi.lemonlib.blocks.block.BlockBase;
@@ -25,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class MechanicalMinerBlock extends BlockBase {
     public MechanicalMinerBlock() {
-        super(Properties.of(Material.METAL).sound(SoundType.METAL), BlockBehaviors.mechanicalMiner);
+        super(Properties.of().sound(SoundType.METAL), BlockBehaviors.mechanicalMiner);
     }
 
     @Nullable

@@ -1,19 +1,22 @@
 package onelemonyboi.miniutilities.data;
 
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.BlockList;
 
+import java.util.concurrent.CompletableFuture;
+
 public class BlockTags extends BlockTagsProvider {
-    public BlockTags(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, MiniUtilities.MOD_ID, existingFileHelper);
+    public BlockTags(DataGenerator generatorIn, ExistingFileHelper existingFileHelper, CompletableFuture<HolderLookup.Provider> provider) {
+        super(generatorIn.getPackOutput(), provider, MiniUtilities.MOD_ID, existingFileHelper);
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.Provider provider) {
         tag(ModTags.Blocks.ORES_ENDER).add(BlockList.EnderOre.get());
         tag(Tags.Blocks.ORES).addTag(ModTags.Blocks.ORES_ENDER);
         tag(ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL).add(BlockList.EnderPearlBlock.get());

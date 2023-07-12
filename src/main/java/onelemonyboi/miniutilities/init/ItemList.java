@@ -1,6 +1,6 @@
 package onelemonyboi.miniutilities.init;
 
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.RegistryObject;
 import onelemonyboi.lemonlib.items.*;
@@ -10,95 +10,103 @@ import onelemonyboi.miniutilities.blocks.basic.AngelBlockItem;
 import onelemonyboi.miniutilities.items.*;
 import onelemonyboi.miniutilities.items.unstable.*;
 
+import java.util.function.Supplier;
+
 public class ItemList {
-    public static final RegistryObject<net.minecraft.world.item.Item> EnderDust = ModRegistry.ITEMS.register("ender_dust", () ->
-            new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<Item> AngelBlockItem = ModRegistry.ITEMS.register("angel_block", () ->
+    public static final RegistryObject<Item> EnderDust = register("ender_dust", () ->
+            new Item(new Item.Properties()));
+    public static final RegistryObject<Item> AngelBlockItem = register("angel_block", () ->
             new AngelBlockItem(BlockList.AngelBlock.get()));
-    public static final RegistryObject<net.minecraft.world.item.Item> Kikoku = ModRegistry.ITEMS.register("kikoku", () ->
-            new Kikoku(Materials.KIKOKU,  13, -2.4F, (new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()))));
-    public static final net.minecraftforge.registries.RegistryObject<Item> EnderLilySeeds = ModRegistry.ITEMS.register("ender_lily_seeds", () ->
-            new ItemSeeds(BlockList.EnderLily.get(), CreativeTab.getInstance()));
-    public static final net.minecraftforge.registries.RegistryObject<Item> FlameLilySeeds = ModRegistry.ITEMS.register("flame_lily_seeds", () ->
-            new ItemSeeds(BlockList.FlameLily.get(), CreativeTab.getInstance()));
-    public static final net.minecraftforge.registries.RegistryObject<Item> FlameLily = ModRegistry.ITEMS.register("flame_lily", () ->
-            new FuelItems(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()), 2400));
+    public static final RegistryObject<Item> Kikoku = register("kikoku", () ->
+            new Kikoku(Materials.KIKOKU,  13, -2.4F, (new Item.Properties())));
+    public static final RegistryObject<Item> EnderLilySeeds = register("ender_lily_seeds", () ->
+            new ItemSeeds(BlockList.EnderLily.get()));
+    public static final RegistryObject<Item> FlameLilySeeds = register("flame_lily_seeds", () ->
+            new ItemSeeds(BlockList.FlameLily.get()));
+    public static final RegistryObject<Item> FlameLily = register("flame_lily", () ->
+            new FuelItems(new Item.Properties(), 2400));
 
     // Angel Wings
-    public static final net.minecraftforge.registries.RegistryObject<Item> BaseAngelRing = ModRegistry.ITEMS.register("angel_ring", AngelRing::new);
-    public static final net.minecraftforge.registries.RegistryObject<Item> GoldAngelRing = ModRegistry.ITEMS.register("gold_angel_ring", AngelRing::new);
-    public static final net.minecraftforge.registries.RegistryObject<Item> EnderDragonAngelRing = ModRegistry.ITEMS.register("ender_dragon_angel_ring", AngelRing::new);
-    public static final RegistryObject<net.minecraft.world.item.Item> FeatherAngelRing = ModRegistry.ITEMS.register("feather_angel_ring", AngelRing::new);
-    public static final RegistryObject<net.minecraft.world.item.Item> BatAngelRing = ModRegistry.ITEMS.register("bat_angel_ring", AngelRing::new);
-    public static final net.minecraftforge.registries.RegistryObject<Item> PeacockAngelRing = ModRegistry.ITEMS.register("peacock_angel_ring", AngelRing::new);
-    public static final net.minecraftforge.registries.RegistryObject<Item> GoldWing = ModRegistry.ITEMS.register("gold_wing", () ->
-            new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties()));
-    public static final RegistryObject<net.minecraft.world.item.Item> EnderDragonWing = ModRegistry.ITEMS.register("ender_dragon_wing", () ->
-            new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties()));
-    public static final net.minecraftforge.registries.RegistryObject<Item> FeatherWing = ModRegistry.ITEMS.register("feather_wing", () ->
-            new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties()));
-    public static final net.minecraftforge.registries.RegistryObject<Item> BatWing = ModRegistry.ITEMS.register("bat_wing", () ->
-            new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties()));
-    public static final net.minecraftforge.registries.RegistryObject<Item> PeacockWing = ModRegistry.ITEMS.register("peacock_wing", () ->
-            new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties()));
+    public static final RegistryObject<Item> BaseAngelRing = register("angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> GoldAngelRing = register("gold_angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> EnderDragonAngelRing = register("ender_dragon_angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> FeatherAngelRing = register("feather_angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> BatAngelRing = register("bat_angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> PeacockAngelRing = register("peacock_angel_ring", AngelRing::new);
+    public static final RegistryObject<Item> GoldWing = register("gold_wing", () ->
+            new Item(new Item.Properties()));
+    public static final RegistryObject<Item> EnderDragonWing = register("ender_dragon_wing", () ->
+            new Item(new Item.Properties()));
+    public static final RegistryObject<Item> FeatherWing = register("feather_wing", () ->
+            new Item(new Item.Properties()));
+    public static final RegistryObject<Item> BatWing = register("bat_wing", () ->
+            new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PeacockWing = register("peacock_wing", () ->
+            new Item(new Item.Properties()));
 
 
 
     // Unstable Tools + Ingot
-    public static final RegistryObject<AxeItem> UnstableAxe = ModRegistry.ITEMS.register("healing_axe", () ->
-            new UnstableAxe(Materials.UNSTABLE, 1, -3, new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<HoeItem> UnstableHoe = ModRegistry.ITEMS.register("reversing_hoe", () ->
-            new UnstableHoe(Materials.UNSTABLE, -8, 0, new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final RegistryObject<net.minecraft.world.item.Item> UnstableIngot = ModRegistry.ITEMS.register("unstable_ingot", () ->
-            new UnstableIngot(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()).setNoRepair().durability(200)));
-    public static final RegistryObject<PickaxeItem> UnstablePickaxe = ModRegistry.ITEMS.register("destruction_pickaxe", () ->
-            new UnstablePickaxe(Materials.UNSTABLE, -3, -2.8f, new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<ShearsItem> UnstableShears = ModRegistry.ITEMS.register("precision_shears", () ->
-            new UnstableShears(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final RegistryObject<ShovelItem> UnstableShovel = ModRegistry.ITEMS.register("erosion_shovel", () ->
-            new UnstableShovel(Materials.UNSTABLE, -2.5f, -3, new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<SwordItem> UnstableSword = ModRegistry.ITEMS.register("etheric_sword", () ->
-            new UnstableSword(Materials.UNSTABLE, -1, -2.4f, new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> UnstableAxe = register("healing_axe", () ->
+            new UnstableAxe(Materials.UNSTABLE, 1, -3, new Item.Properties()));
+    public static final RegistryObject<Item> UnstableHoe = register("reversing_hoe", () ->
+            new UnstableHoe(Materials.UNSTABLE, -8, 0, new Item.Properties()));
+    public static final RegistryObject<Item> UnstableIngot = register("unstable_ingot", () ->
+            new UnstableIngot(new Item.Properties().setNoRepair().durability(200)));
+    public static final RegistryObject<Item> UnstablePickaxe = register("destruction_pickaxe", () ->
+            new UnstablePickaxe(Materials.UNSTABLE, -3, -2.8f, new Item.Properties()));
+    public static final RegistryObject<Item> UnstableShears = register("precision_shears", () ->
+            new UnstableShears(new Item.Properties()));
+    public static final RegistryObject<Item> UnstableShovel = register("erosion_shovel", () ->
+            new UnstableShovel(Materials.UNSTABLE, -2.5f, -3, new Item.Properties()));
+    public static final RegistryObject<Item> UnstableSword = register("etheric_sword", () ->
+            new UnstableSword(Materials.UNSTABLE, -1, -2.4f, new Item.Properties()));
 
     // Unstable Armour + Infused Armor
 
-    public static final net.minecraftforge.registries.RegistryObject<ArmorItem> UnstableHelmet = ModRegistry.ITEMS.register("unstable_helmet", () -> new net.minecraft.world.item.ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlot.HEAD, (new net.minecraft.world.item.Item.Properties()).tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<ArmorItem> UnstableChestplate = ModRegistry.ITEMS.register("unstable_chestplate", () -> new net.minecraft.world.item.ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlot.CHEST, (new net.minecraft.world.item.Item.Properties()).tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<ArmorItem> UnstableLeggings = ModRegistry.ITEMS.register("unstable_leggings", () -> new net.minecraft.world.item.ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlot.LEGS, (new net.minecraft.world.item.Item.Properties()).tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<ArmorItem> UnstableBoots = ModRegistry.ITEMS.register("unstable_boots", () -> new net.minecraft.world.item.ArmorItem(MUArmorMaterial.UNSTABLE, EquipmentSlot.FEET, (new net.minecraft.world.item.Item.Properties()).tab(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> UnstableHelmet = register("unstable_helmet", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, ArmorItem.Type.HELMET, (new Item.Properties())));
+    public static final RegistryObject<Item> UnstableChestplate = register("unstable_chestplate", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
+    public static final RegistryObject<Item> UnstableLeggings = register("unstable_leggings", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
+    public static final RegistryObject<Item> UnstableBoots = register("unstable_boots", () -> new ArmorItem(MUArmorMaterial.UNSTABLE, ArmorItem.Type.BOOTS, (new Item.Properties())));
 
-    public static final RegistryObject<net.minecraft.world.item.ArmorItem> InfusedHelmet = ModRegistry.ITEMS.register("infused_helmet", () -> new net.minecraft.world.item.ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlot.HEAD, (new net.minecraft.world.item.Item.Properties()).tab(CreativeTab.getInstance())));
-    public static final RegistryObject<ArmorItem> InfusedChestplate = ModRegistry.ITEMS.register("infused_chestplate", () -> new net.minecraft.world.item.ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlot.CHEST, (new net.minecraft.world.item.Item.Properties()).tab(CreativeTab.getInstance())));
-    public static final RegistryObject<net.minecraft.world.item.ArmorItem> InfusedLeggings = ModRegistry.ITEMS.register("infused_leggings", () -> new net.minecraft.world.item.ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlot.LEGS, (new net.minecraft.world.item.Item.Properties()).tab(CreativeTab.getInstance())));
-    public static final RegistryObject<net.minecraft.world.item.ArmorItem> InfusedBoots = ModRegistry.ITEMS.register("infused_boots", () -> new net.minecraft.world.item.ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, EquipmentSlot.FEET, (new net.minecraft.world.item.Item.Properties()).tab(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> InfusedHelmet = register("infused_helmet", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, ArmorItem.Type.HELMET, (new Item.Properties())));
+    public static final RegistryObject<Item> InfusedChestplate = register("infused_chestplate", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
+    public static final RegistryObject<Item> InfusedLeggings = register("infused_leggings", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
+    public static final RegistryObject<Item> InfusedBoots = register("infused_boots", () -> new ArmorItem(MUArmorMaterial.INFUSEDUNSTABLE, ArmorItem.Type.BOOTS, (new Item.Properties())));
 
     // Opinium Cores
 
-    public static final net.minecraftforge.registries.RegistryObject<Item> IronOpiniumCore = ModRegistry.ITEMS.register("iron_opinium_core", () -> new Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final RegistryObject<net.minecraft.world.item.Item> GoldOpiniumCore = ModRegistry.ITEMS.register("gold_opinium_core", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final RegistryObject<net.minecraft.world.item.Item> DiamondOpiniumCore = ModRegistry.ITEMS.register("diamond_opinium_core", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<Item> NetheriteOpiniumCore = ModRegistry.ITEMS.register("netherite_opinium_core", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final RegistryObject<net.minecraft.world.item.Item> EmeraldOpiniumCore = ModRegistry.ITEMS.register("emerald_opinium_core", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<Item> ChorusOpiniumCore = ModRegistry.ITEMS.register("chorus_opinium_core", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final RegistryObject<net.minecraft.world.item.Item> EXPOpiniumCore = ModRegistry.ITEMS.register("experience_opinium_core", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final RegistryObject<net.minecraft.world.item.Item> NetherStarOpiniumCore = ModRegistry.ITEMS.register("nether_star_opinium_core", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<Item> TheFinalOpiniumCore = ModRegistry.ITEMS.register("the_final_opinium_core", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> IronOpiniumCore = register("iron_opinium_core", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GoldOpiniumCore = register("gold_opinium_core", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> DiamondOpiniumCore = register("diamond_opinium_core", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> NetheriteOpiniumCore = register("netherite_opinium_core", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> EmeraldOpiniumCore = register("emerald_opinium_core", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ChorusOpiniumCore = register("chorus_opinium_core", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> EXPOpiniumCore = register("experience_opinium_core", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> NetherStarOpiniumCore = register("nether_star_opinium_core", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> TheFinalOpiniumCore = register("the_final_opinium_core", () -> new Item(new Item.Properties()));
 
-    public static final net.minecraftforge.registries.RegistryObject<Item> SpeedUpgrade = ModRegistry.ITEMS.register("speed_upgrade", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> SpeedUpgrade = register("speed_upgrade", () -> new Item(new Item.Properties()));
 
-    public static final net.minecraftforge.registries.RegistryObject<Item> ExperiencePearl = ModRegistry.ITEMS.register("experience_pearl", () -> new ExperiencePearl(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
-    public static final net.minecraftforge.registries.RegistryObject<Item> ExperiencePearl1x = ModRegistry.ITEMS.register("experience_pearl_1x", () -> new ExperiencePearl(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()), 1));
-    public static final RegistryObject<net.minecraft.world.item.Item> ExperiencePearl2x = ModRegistry.ITEMS.register("experience_pearl_2x", () -> new ExperiencePearl(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()), 2));
-    public static final RegistryObject<net.minecraft.world.item.Item> ExperiencePearl3x = ModRegistry.ITEMS.register("experience_pearl_3x", () -> new ExperiencePearl(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()), 3));
-    public static final net.minecraftforge.registries.RegistryObject<Item> ExperiencePearl4x = ModRegistry.ITEMS.register("experience_pearl_4x", () -> new ExperiencePearl(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()), 4));
-    public static final RegistryObject<net.minecraft.world.item.Item> ExperiencePearl5x = ModRegistry.ITEMS.register("experience_pearl_5x", () -> new ExperiencePearl(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()), 5));
-    public static final net.minecraftforge.registries.RegistryObject<Item> ExperiencePearl6x = ModRegistry.ITEMS.register("experience_pearl_6x", () -> new ExperiencePearl(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()), 6));
-    public static final net.minecraftforge.registries.RegistryObject<Item> ExperiencePearl7x = ModRegistry.ITEMS.register("experience_pearl_7x", () -> new ExperiencePearl(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()), 7));
-    public static final RegistryObject<net.minecraft.world.item.Item> ExperiencePearl8x = ModRegistry.ITEMS.register("experience_pearl_8x", () -> new ExperiencePearl(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance()), 8));
+    public static final RegistryObject<Item> ExperiencePearl = register("experience_pearl", () -> new ExperiencePearl(new Item.Properties()));
+    public static final RegistryObject<Item> ExperiencePearl1x = register("experience_pearl_1x", () -> new ExperiencePearl(new Item.Properties(), 1));
+    public static final RegistryObject<Item> ExperiencePearl2x = register("experience_pearl_2x", () -> new ExperiencePearl(new Item.Properties(), 2));
+    public static final RegistryObject<Item> ExperiencePearl3x = register("experience_pearl_3x", () -> new ExperiencePearl(new Item.Properties(), 3));
+    public static final RegistryObject<Item> ExperiencePearl4x = register("experience_pearl_4x", () -> new ExperiencePearl(new Item.Properties(), 4));
+    public static final RegistryObject<Item> ExperiencePearl5x = register("experience_pearl_5x", () -> new ExperiencePearl(new Item.Properties(), 5));
+    public static final RegistryObject<Item> ExperiencePearl6x = register("experience_pearl_6x", () -> new ExperiencePearl(new Item.Properties(), 6));
+    public static final RegistryObject<Item> ExperiencePearl7x = register("experience_pearl_7x", () -> new ExperiencePearl(new Item.Properties(), 7));
+    public static final RegistryObject<Item> ExperiencePearl8x = register("experience_pearl_8x", () -> new ExperiencePearl(new Item.Properties(), 8));
 
-    public static final net.minecraftforge.registries.RegistryObject<Item> MagicalEgg = ModRegistry.ITEMS.register("magical_egg", () -> new MagicalEgg(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> MagicalEgg = register("magical_egg", () -> new MagicalEgg(new Item.Properties()));
 
-    public static final net.minecraftforge.registries.RegistryObject<Item> GoldenLasso = ModRegistry.ITEMS.register("golden_lasso", () -> new GoldenLasso(new net.minecraft.world.item.Item.Properties().tab(CreativeTab.getInstance())));
+    public static final RegistryObject<Item> GoldenLasso = register("golden_lasso", () -> new GoldenLasso(new Item.Properties()));
 
     public static void register() {}
+
+    public static RegistryObject<Item> register(final String name, final Supplier<Item> sup) {
+        RegistryObject<Item> item = ModRegistry.ITEMS.register(name, sup);
+        CreativeTab.setTab(item::get, BuiltInRegistries.CREATIVE_MODE_TAB.get(CreativeModeTabs.TOOLS_AND_UTILITIES));
+        return item;
+    }
 }

@@ -12,11 +12,12 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.Item;
-import com.mojang.math.Vector3f;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import onelemonyboi.miniutilities.init.ItemList;
+import org.joml.Quaternionf;
 
 @OnlyIn(Dist.CLIENT)
 public class KikokuRenderer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
@@ -43,9 +44,7 @@ public class KikokuRenderer extends RenderLayer<AbstractClientPlayer, PlayerMode
             matrixStack.pushPose();
             getParentModel().body.translateAndRotate(matrixStack);
             matrixStack.translate(0, 0.25, 0.2);
-            matrixStack.scale(1f, -1f, -0.25f);
-            matrixStack.mulPose(Vector3f.XP.rotationDegrees(180));
-            Minecraft.getInstance().getItemRenderer().renderStatic(player, ItemList.Kikoku.get().getDefaultInstance(), ItemTransforms.TransformType.NONE, false, matrixStack, buffer, player.level, 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+            Minecraft.getInstance().getItemRenderer().renderStatic(player, ItemList.Kikoku.get().getDefaultInstance(), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
             matrixStack.popPose();
         }
     }

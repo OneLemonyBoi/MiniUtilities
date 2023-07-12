@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "tag": "forge:lapis_caelestis"
@@ -16,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "miniutilities:magenta_lapis_caelestis"
-  }
+  },
+  "show_notification": true
 }

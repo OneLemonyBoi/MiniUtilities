@@ -1,6 +1,5 @@
 package onelemonyboi.miniutilities.blocks.basic;
 
-import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.sounds.SoundEvents;
@@ -15,18 +14,18 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import onelemonyboi.miniutilities.init.BlockList;
+import org.joml.Vector3f;
 
 import java.util.Random;
 
 public class EnderTileBlock extends Block {
     public EnderTileBlock() {
-        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(Material.GLASS).strength(4f).sound(SoundType.GLASS));
+        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().strength(4f).sound(SoundType.GLASS));
     }
 
     @Override

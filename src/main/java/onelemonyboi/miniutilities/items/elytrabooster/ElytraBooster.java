@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item.Properties;
 
 public class ElytraBooster extends ArmorItem {
     public ElytraBooster(Properties properties) {
-        super(MUArmorMaterial.BOOSTER, EquipmentSlot.CHEST, properties);
+        super(MUArmorMaterial.BOOSTER, Type.CHESTPLATE, properties);
     }
 
     @Override

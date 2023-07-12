@@ -4,33 +4,45 @@
     {
       "faces": {
         "down": {
-          "ambientocclusion": false,
-          "emissivity": 15,
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
           "texture": "#all"
         },
         "east": {
-          "ambientocclusion": false,
-          "emissivity": 15,
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
           "texture": "#all"
         },
         "north": {
-          "ambientocclusion": false,
-          "emissivity": 15,
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
           "texture": "#all"
         },
         "south": {
-          "ambientocclusion": false,
-          "emissivity": 15,
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
           "texture": "#all"
         },
         "up": {
-          "ambientocclusion": false,
-          "emissivity": 15,
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
           "texture": "#all"
         },
         "west": {
-          "ambientocclusion": false,
-          "emissivity": 15,
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
           "texture": "#all"
         }
       },

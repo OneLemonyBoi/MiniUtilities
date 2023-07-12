@@ -1,6 +1,7 @@
 package onelemonyboi.miniutilities;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.BlockTags;
@@ -48,7 +49,7 @@ public class MiniUtilities {
     public static final TagKey<Block> cursedspreadable = BlockTags.create(new ResourceLocation(MOD_ID, "cursedspreadable"));
     public static final TagKey<Block> blessedspreadable = BlockTags.create(new ResourceLocation(MOD_ID, "blessedspreadable"));
     public static final TagKey<Block> blursedspreadable = BlockTags.create(new ResourceLocation(MOD_ID, "blursedspreadable"));
-    public static final TagKey<EntityType<?>> blacklisted_entities = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(MOD_ID, "blacklisted"));
+    public static final TagKey<EntityType<?>> blacklisted_entities = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(MOD_ID, "blacklisted"));
     public static final Logger LOGGER = LogManager.getLogger();
     public static IProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
@@ -62,6 +63,7 @@ public class MiniUtilities {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerEntityRenderers);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerEntityLayers);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(CreativeTab::buildContents);
         JSONLoader.loadJSON();
         EVENT_BUS.register(this);
         EVENT_BUS.addListener(GenericEarthBlock::convertCursed);

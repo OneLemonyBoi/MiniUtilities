@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "miniutilities:divine_damage",
+    "miniutilities:armor_piercing_damage",
+    "miniutilities:divide_by_diamond",
+    "miniutilities:unstable_division"
+  ]
+}

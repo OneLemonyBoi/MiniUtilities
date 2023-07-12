@@ -21,7 +21,7 @@ public class MechanicalPlacerContainer extends AbstractContainerMenu {
     private final ContainerLevelAccess access;
 
     public MechanicalPlacerContainer(final int windowId, final Inventory playerInv, FriendlyByteBuf buf) {
-        this(windowId, playerInv, ContainerLevelAccess.create(playerInv.player.level, buf.readBlockPos()));
+        this(windowId, playerInv, ContainerLevelAccess.create(playerInv.player.level(), buf.readBlockPos()));
     }
 
     public MechanicalPlacerContainer(final int windowId, final Inventory playerInv, ContainerLevelAccess access) {
@@ -62,7 +62,7 @@ public class MechanicalPlacerContainer extends AbstractContainerMenu {
     private static MechanicalPlacerTile getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(data, "Packet Buffer cannot be null.");
-        final BlockEntity te = playerInv.player.level.getBlockEntity(data.readBlockPos());
+        final BlockEntity te = playerInv.player.level().getBlockEntity(data.readBlockPos());
         if (te instanceof MechanicalPlacerTile) {
             return (MechanicalPlacerTile) te;
         }

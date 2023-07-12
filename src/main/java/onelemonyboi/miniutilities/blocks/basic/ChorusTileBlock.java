@@ -16,8 +16,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import onelemonyboi.miniutilities.init.BlockList;
@@ -26,7 +24,7 @@ import java.util.Random;
 
 public class ChorusTileBlock extends Block {
     public ChorusTileBlock() {
-        super(Properties.of(Material.GLASS).strength(4f).sound(SoundType.GLASS));
+        super(Properties.of().strength(4f).sound(SoundType.GLASS));
     }
 
     @Override

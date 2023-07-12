@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "item": "miniutilities:reverse_ethereal_glass"
@@ -16,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "miniutilities:dark_reverse_ethereal_glass"
-  }
+  },
+  "show_notification": true
 }

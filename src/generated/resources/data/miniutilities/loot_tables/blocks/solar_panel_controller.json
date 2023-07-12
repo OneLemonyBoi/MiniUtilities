@@ -38,5 +38,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "miniutilities:blocks/solar_panel_controller"
 }

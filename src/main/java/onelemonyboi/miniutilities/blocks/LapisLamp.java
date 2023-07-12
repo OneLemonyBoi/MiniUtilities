@@ -8,7 +8,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fml.util.thread.EffectiveSide;
 
 import javax.annotation.Nonnull;
@@ -17,7 +16,7 @@ import java.util.Random;
 public class LapisLamp extends Block {
 
     public LapisLamp() {
-        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.GLASS).strength(0.3F));
+        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(SoundType.GLASS).strength(0.3F));
     }
 
     @Override

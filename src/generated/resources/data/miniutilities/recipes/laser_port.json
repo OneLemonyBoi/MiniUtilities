@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "item": "minecraft:gold_block"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "miniutilities:laser_port"
-  }
+  },
+  "show_notification": true
 }

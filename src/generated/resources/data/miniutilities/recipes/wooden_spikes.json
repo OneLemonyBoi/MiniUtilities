@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "item": "minecraft:wooden_sword"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "miniutilities:wooden_spikes"
-  }
+  },
+  "show_notification": true
 }

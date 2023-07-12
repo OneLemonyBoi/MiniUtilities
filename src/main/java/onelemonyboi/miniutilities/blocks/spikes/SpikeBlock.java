@@ -105,14 +105,14 @@ public class SpikeBlock extends net.minecraft.world.level.block.Block {
                 fakePlayer.getAttribute(Attributes.ATTACK_SPEED).setBaseValue(1000000D);
             }
 
-            fakePlayer.setLevel(level);
+            fakePlayer.setServerLevel(level);
             fakePlayer.setPos(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
             cancelSounds = true;
             fakePlayer.attack(entityIn);
             cancelSounds = false;
             entityIn.setDeltaMovement(entityIn.getDeltaMovement().multiply(0, 1, 0));
         }
-        else {entityIn.hurt(DamageSource.CACTUS, this.damage);}
+        else {entityIn.hurt(worldIn.damageSources().cactus(), this.damage);}
         if (this.expDropTrue) {
             try {
                 ReflectionUtil.setFieldValue(LivingEntity.class.getDeclaredField("lastHurtByPlayerTime"), entity, 100);
@@ -124,8 +124,8 @@ public class SpikeBlock extends net.minecraft.world.level.block.Block {
     }
 
     public static void soundEvent(PlayLevelSoundEvent event) {
-        if(cancelSounds) {
-            SoundEvent e = event.getSound();
+        if (cancelSounds) {
+            SoundEvent e = event.getSound().get();
 
             if (e == SoundEvents.PLAYER_ATTACK_KNOCKBACK
                     || e == SoundEvents.PLAYER_ATTACK_SWEEP

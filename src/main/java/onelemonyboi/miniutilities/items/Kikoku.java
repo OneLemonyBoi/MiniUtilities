@@ -4,7 +4,12 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -18,6 +23,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.init.AttributeList;
 import onelemonyboi.miniutilities.init.ItemList;
 import onelemonyboi.miniutilities.startup.Config;
@@ -30,8 +37,8 @@ import java.util.UUID;
 public class Kikoku extends SwordItem {
     public static UUID SOUL_DAMAGE_MODIFIER = UUID.fromString("d2928c01-5d7d-41c5-bd3a-9ca8f43c8ff8");
 
-    public static final DamageSource DIVINE_DAMAGE_SOURCE = (new DamageSource("divineDamage")).bypassArmor().bypassInvul().bypassMagic();
-    public static final net.minecraft.world.damagesource.DamageSource ARMOR_PIERCING_DAMAGE_SOURCE = (new net.minecraft.world.damagesource.DamageSource("armourPiercingDamage")).bypassArmor().bypassMagic();
+    public static final ResourceKey<DamageType> DIVINE_DAMAGE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(MiniUtilities.MOD_ID, "divine_damage"));
+    public static final ResourceKey<DamageType> ARMOR_PIERCING_DAMAGE_SOURCE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(MiniUtilities.MOD_ID, "armor_piercing_damage"));
 
     public Kikoku(Tier tier, int attackDamageIn, float attackSpeedIn, net.minecraft.world.item.Item.Properties builderIn) {
         super(tier, attackDamageIn, attackSpeedIn, builderIn);
@@ -55,7 +62,7 @@ public class Kikoku extends SwordItem {
 
     @Override
     public boolean hurtEnemy(net.minecraft.world.item.ItemStack stack, LivingEntity target, net.minecraft.world.entity.LivingEntity attacker) {
-        if (target == null || !target.isAttackable() || attacker.level.isClientSide) {
+        if (target == null || !target.isAttackable() || attacker.level().isClientSide) {
             return false;
         }
         Map<net.minecraft.world.item.enchantment.Enchantment, Integer> stackEnchantments = EnchantmentHelper.getEnchantments(stack);
@@ -64,11 +71,11 @@ public class Kikoku extends SwordItem {
             Player player = (Player) target;
             if (player.isCreative()) {
                 target.invulnerableTime = 0;
-                target.hurt(DIVINE_DAMAGE_SOURCE, (sharpnessLevel * 0.5F) + 2.5F);
+                target.hurt(player.level().damageSources().source(DIVINE_DAMAGE_TYPE), (sharpnessLevel * 0.5F) + 2.5F);
             }
         }
         target.invulnerableTime = 0;
-        target.hurt(ARMOR_PIERCING_DAMAGE_SOURCE, ((sharpnessLevel * 0.5F) + 4.5F));
+        target.hurt(target.level().damageSources().source(ARMOR_PIERCING_DAMAGE_SOURCE), ((sharpnessLevel * 0.5F) + 4.5F));
         drainHealth(target);
         return true;
     }

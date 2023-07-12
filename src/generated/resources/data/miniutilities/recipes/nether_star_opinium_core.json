@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "E": {
       "item": "miniutilities:experience_opinium_core"
@@ -17,6 +18,8 @@
     "XEX"
   ],
   "result": {
+    "count": 2,
     "item": "miniutilities:nether_star_opinium_core"
-  }
+  },
+  "show_notification": true
 }

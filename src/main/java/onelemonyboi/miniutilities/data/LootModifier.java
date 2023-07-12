@@ -19,7 +19,7 @@ import onelemonyboi.miniutilities.items.enchantments.MoltenHeadLootModifier;
 
 public class LootModifier extends GlobalLootModifierProvider {
     public LootModifier(DataGenerator gen) {
-        super(gen, MiniUtilities.MOD_ID);
+        super(gen.getPackOutput(), MiniUtilities.MOD_ID);
     }
 
     @Override

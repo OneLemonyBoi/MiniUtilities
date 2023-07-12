@@ -60,5 +60,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "miniutilities:blocks/flame_lily_block"
 }

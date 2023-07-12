@@ -17,7 +17,7 @@ public class BlockState extends BlockStateProvider {
     private ExistingFileHelper exFileHelper;
 
     public BlockState(DataGenerator gen, ExistingFileHelper exFileHelper) {
-        super(gen, MiniUtilities.MOD_ID, exFileHelper);
+        super(gen.getPackOutput(), MiniUtilities.MOD_ID, exFileHelper);
 
         this.exFileHelper = exFileHelper;
     }
@@ -77,7 +77,7 @@ public class BlockState extends BlockStateProvider {
         model = model.renderType(renderType);
         model.element().allFaces((direction, builder) -> {
             builder.ao(false);
-            builder.emissive();
+            builder.emissivity(15, 0);
             builder.texture("#all");
         });
         simpleBlock(block, model);

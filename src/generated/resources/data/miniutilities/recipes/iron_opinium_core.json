@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "E": {
       "item": "minecraft:coal"
@@ -14,6 +15,8 @@
     "XEX"
   ],
   "result": {
+    "count": 2,
     "item": "miniutilities:iron_opinium_core"
-  }
+  },
+  "show_notification": true
 }

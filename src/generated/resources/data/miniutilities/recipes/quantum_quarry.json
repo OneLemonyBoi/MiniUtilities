@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "A": {
       "item": "minecraft:netherite_shovel"
@@ -30,5 +31,6 @@
   ],
   "result": {
     "item": "miniutilities:quantum_quarry"
-  }
+  },
+  "show_notification": true
 }

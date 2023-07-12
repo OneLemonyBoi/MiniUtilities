@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "item": "miniutilities:unstable_ingot"
@@ -12,5 +13,6 @@
   ],
   "result": {
     "item": "miniutilities:unstable_block"
-  }
+  },
+  "show_notification": true
 }

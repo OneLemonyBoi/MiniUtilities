@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class AngelRing extends Item {
     public AngelRing() {
-        super(new Item.Properties().stacksTo(1).tab(CreativeTab.getInstance()));
+        super(new Item.Properties().stacksTo(1));
     }
 
     @Override

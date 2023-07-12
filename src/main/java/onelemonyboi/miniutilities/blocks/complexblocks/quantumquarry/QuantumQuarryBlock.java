@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.BlockHitResult;
@@ -26,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class QuantumQuarryBlock extends BlockBase {
     public QuantumQuarryBlock() {
-        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL), BlockBehaviors.quantumQuarry);
+        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(SoundType.METAL), BlockBehaviors.quantumQuarry);
     }
 
     @Nullable

@@ -24,12 +24,12 @@ public class UnstableAxe extends AxeItem {
     public boolean onLeftClickEntity(net.minecraft.world.item.ItemStack stack, Player player, Entity entity) {
         if (entity instanceof LivingEntity) {
             if (((net.minecraft.world.entity.LivingEntity) entity).getMobType() == MobType.UNDEAD)
-                entity.hurt(net.minecraft.world.damagesource.DamageSource.playerAttack(player), 4);
+                entity.hurt(player.level().damageSources().playerAttack(player), 4);
             else {
                 ((LivingEntity) entity).heal(8);
                 return true;
             }
-            player.hurt(DamageSource.MAGIC, 2);
+            player.hurt(player.level().damageSources().magic(), 2);
         }
         return false;
     }

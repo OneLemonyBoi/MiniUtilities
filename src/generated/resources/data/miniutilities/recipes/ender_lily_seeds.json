@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "E": {
       "tag": "forge:ender_pearls"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "miniutilities:ender_lily_seeds"
-  }
+  },
+  "show_notification": true
 }

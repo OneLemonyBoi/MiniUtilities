@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "item": "minecraft:stone"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "miniutilities:redstone_clock"
-  }
+  },
+  "show_notification": true
 }

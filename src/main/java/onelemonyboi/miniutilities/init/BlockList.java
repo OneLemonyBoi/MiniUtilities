@@ -1,9 +1,10 @@
 package onelemonyboi.miniutilities.init;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraftforge.registries.RegistryObject;
@@ -30,11 +31,11 @@ public class BlockList {
     public static final RegistryObject<Block> CursedEarth = register("cursed_earth", () -> GenericEarthBlock.CURSED_EARTH.apply(Properties.copy(Blocks.GRASS_BLOCK)));
     public static final RegistryObject<Block> BlessedEarth = register("blessed_earth", () -> GenericEarthBlock.BLESSED_EARTH.apply(Properties.copy(Blocks.GRASS_BLOCK)));
     public static final RegistryObject<Block> BlursedEarth = register("blursed_earth", () -> GenericEarthBlock.BLURSED_EARTH.apply(Properties.copy(net.minecraft.world.level.block.Blocks.GRASS_BLOCK)));
-    public static final RegistryObject<Block> EnderOre = register("ender_ore", () -> new Block(Properties.of(net.minecraft.world.level.material.Material.STONE).strength(3).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> UnstableBlock = register("unstable_block", () -> new Block(Properties.of(Material.STONE).strength(12).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> EnderPearlBlock = register("ender_pearl_block", () -> new Block(Properties.of(net.minecraft.world.level.material.Material.STONE).strength(3).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> EnderOre = register("ender_ore", () -> new Block(Properties.of().strength(3).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> UnstableBlock = register("unstable_block", () -> new Block(Properties.of().strength(12).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> EnderPearlBlock = register("ender_pearl_block", () -> new Block(Properties.of().strength(3).requiresCorrectToolForDrops()));
     // ANGEL BLOCK TAKES 1 TICK TO BREAK
-    public static final RegistryObject<Block> AngelBlock = registerNoItem("angel_block", () -> new AngelBlock(Material.STONE, 0.01F, 3F));
+    public static final RegistryObject<Block> AngelBlock = registerNoItem("angel_block", () -> new AngelBlock(0.01F, 3F));
     public static final RegistryObject<Block> EnderLily = registerNoTab("ender_lily_block", EnderLily::new);
     public static final RegistryObject<Block> FlameLily = registerNoTab("flame_lily_block", FlameLily::new);
     public static final RegistryObject<Block> WhiteLapisCaelestis = register("white_lapis_caelestis", LapisCaelestis::new);
@@ -54,17 +55,17 @@ public class BlockList {
     public static final RegistryObject<Block> PinkLapisCaelestis = register("pink_lapis_caelestis", LapisCaelestis::new);
     public static final RegistryObject<Block> BrownLapisCaelestis = register("brown_lapis_caelestis", LapisCaelestis::new);
 
-    public static final RegistryObject<Block> StoneDrum = register("stone_drum", () -> new DrumBlock(16000, Properties.of(Material.STONE)));
-    public static final RegistryObject<Block> IronDrum = register("iron_drum", () -> new DrumBlock(256000, Properties.of(net.minecraft.world.level.material.Material.METAL)));
-    public static final RegistryObject<Block> ReinforcedLargeDrum = register("reinforced_large_drum", () -> new DrumBlock(4096000, Properties.of(net.minecraft.world.level.material.Material.METAL)));
-    public static final RegistryObject<Block> NetheriteReinforcedDrum = register("netherite_reinforced_drum", () -> new DrumBlock(65536000, Properties.of(net.minecraft.world.level.material.Material.METAL)));
-    public static final RegistryObject<Block> UnstableDrum = register("unstable_drum", () -> new DrumBlock(2147483647, Properties.of(Material.METAL)));
+    public static final RegistryObject<Block> StoneDrum = register("stone_drum", () -> new DrumBlock(16000, Properties.of()));
+    public static final RegistryObject<Block> IronDrum = register("iron_drum", () -> new DrumBlock(256000, Properties.of()));
+    public static final RegistryObject<Block> ReinforcedLargeDrum = register("reinforced_large_drum", () -> new DrumBlock(4096000, Properties.of()));
+    public static final RegistryObject<Block> NetheriteReinforcedDrum = register("netherite_reinforced_drum", () -> new DrumBlock(65536000, Properties.of()));
+    public static final RegistryObject<Block> UnstableDrum = register("unstable_drum", () -> new DrumBlock(2147483647, Properties.of()));
 
-    public static final RegistryObject<Block> WoodenSpikes = register("wooden_spikes", () -> new SpikeBlock(Properties.of(Material.WOOD).strength(2.0F), 1, false, false, true));
-    public static final RegistryObject<Block> IronSpikes = register("iron_spikes", () -> new SpikeBlock(Properties.of(Material.METAL).strength(4.0F), 2, false, false, false));
-    public static final RegistryObject<Block> GoldSpikes = register("gold_spikes", () -> new SpikeBlock(Properties.of(net.minecraft.world.level.material.Material.METAL).strength(6.0F), 4, false, true, false));
-    public static final RegistryObject<Block> DiamondSpikes = register("diamond_spikes", () -> new SpikeBlock(Properties.of(net.minecraft.world.level.material.Material.METAL).strength(8.0F), 8, true, false, false));
-    public static final RegistryObject<Block> NetheriteSpikes = register("netherite_spikes", () -> new SpikeBlock(Properties.of(net.minecraft.world.level.material.Material.METAL).strength(16.0F), 16, true, true, false));
+    public static final RegistryObject<Block> WoodenSpikes = register("wooden_spikes", () -> new SpikeBlock(Properties.of().strength(2.0F), 1, false, false, true));
+    public static final RegistryObject<Block> IronSpikes = register("iron_spikes", () -> new SpikeBlock(Properties.of().strength(4.0F), 2, false, false, false));
+    public static final RegistryObject<Block> GoldSpikes = register("gold_spikes", () -> new SpikeBlock(Properties.of().strength(6.0F), 4, false, true, false));
+    public static final RegistryObject<Block> DiamondSpikes = register("diamond_spikes", () -> new SpikeBlock(Properties.of().strength(8.0F), 8, true, false, false));
+    public static final RegistryObject<Block> NetheriteSpikes = register("netherite_spikes", () -> new SpikeBlock(Properties.of().strength(16.0F), 16, true, true, false));
 
     public static final RegistryObject<Block> MechanicalMiner = register("mechanical_miner", MechanicalMinerBlock::new);
     public static final RegistryObject<Block> MechanicalPlacer = register("mechanical_placer", MechanicalPlacerBlock::new);
@@ -105,7 +106,8 @@ public class BlockList {
 
     private static <T extends net.minecraft.world.level.block.Block> net.minecraftforge.registries.RegistryObject<T> register(String name, Supplier<T> block) {
         net.minecraftforge.registries.RegistryObject<T> ret = registerNoItem(name, block);
-        ModRegistry.ITEMS.register(name, () -> new net.minecraft.world.item.BlockItem(ret.get(), new Item.Properties().tab(CreativeTab.getInstance())));
+        ModRegistry.ITEMS.register(name, () -> new net.minecraft.world.item.BlockItem(ret.get(), new Item.Properties()));
+        CreativeTab.setTab(ret::get, BuiltInRegistries.CREATIVE_MODE_TAB.get(CreativeModeTabs.FUNCTIONAL_BLOCKS));
         return ret;
     }
 }

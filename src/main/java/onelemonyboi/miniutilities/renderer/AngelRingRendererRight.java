@@ -11,11 +11,12 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import onelemonyboi.miniutilities.init.ItemList;
+import org.joml.Quaternionf;
 
 import static onelemonyboi.miniutilities.renderer.AngelRingCheck.*;
 
@@ -39,10 +40,11 @@ public class AngelRingRendererRight extends RenderLayer<AbstractClientPlayer, Pl
             matrixStack.pushPose();
             getParentModel().body.translateAndRotate(matrixStack);
             float zTranslate = (float) (player.getInventory().armor.get(2) == ItemStack.EMPTY ? 0.3 : 0.4);
-            matrixStack.translate(-0.4, 0.2, zTranslate);
-            matrixStack.scale(1f, -1f, -0.25f);
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(135));
-            Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(item), ItemTransforms.TransformType.NONE, false, matrixStack, buffer, player.level, 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+            matrixStack.translate(-0.4, 0.2, 0.4);
+            matrixStack.scale(0.9f, 0.9f, 0.9f);
+            matrixStack.mulPose(new Quaternionf().rotateY((float) (Math.PI / 6)));
+            matrixStack.scale(-1, -1, -1);
+            Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(item), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
             matrixStack.popPose();
         }
     }

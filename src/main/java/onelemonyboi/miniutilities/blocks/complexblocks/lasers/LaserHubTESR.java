@@ -3,14 +3,14 @@ package onelemonyboi.miniutilities.blocks.complexblocks.lasers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import com.mojang.math.Matrix4f;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 import java.awt.*;
 import java.util.List;
@@ -43,7 +43,7 @@ public class LaserHubTESR implements BlockEntityRenderer<LaserHubTile> {
     }
 
     private static void laser(VertexConsumer builder, PoseStack matrixStack, Color color, Vec3 endPoint, Vec3 startPointOffset) {
-        com.mojang.math.Matrix4f matrix4f = matrixStack.last().pose();
+        Matrix4f matrix4f = matrixStack.last().pose();
         Matrix3f matrix3f = matrixStack.last().normal();
 
         pos(builder, matrix4f, matrix3f, (float) startPointOffset.x, (float) startPointOffset.y, (float) startPointOffset.z, color.getRed(), color.getGreen(), color.getBlue());

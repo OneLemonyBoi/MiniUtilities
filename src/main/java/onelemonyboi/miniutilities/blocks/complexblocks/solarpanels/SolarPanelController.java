@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class SolarPanelController extends BlockBase {
     public SolarPanelController() {
-        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(Material.METAL), BlockBehaviors.solarPanelController);
+        super(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(), BlockBehaviors.solarPanelController);
     }
 
     @Override

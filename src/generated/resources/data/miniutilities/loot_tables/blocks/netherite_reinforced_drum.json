@@ -48,5 +48,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "miniutilities:blocks/netherite_reinforced_drum"
 }

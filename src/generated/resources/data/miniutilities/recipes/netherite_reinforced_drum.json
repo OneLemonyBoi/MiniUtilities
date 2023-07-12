@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "tag": "forge:ores/netherite_scrap"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "miniutilities:netherite_reinforced_drum"
-  }
+  },
+  "show_notification": true
 }

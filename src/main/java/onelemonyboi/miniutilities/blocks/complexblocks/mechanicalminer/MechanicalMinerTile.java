@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerLevel;
@@ -80,8 +81,8 @@ public class MechanicalMinerTile extends TileBase implements MenuProvider, Rende
         BlockState state = level.getBlockState(blockPos);
 
         if (state.requiresCorrectToolForDrops() && !getPickaxe().isCorrectToolForDrops(state)) {return;}
-        LootContext.Builder ctx = new LootContext.Builder((ServerLevel) level)
-                .withRandom(this.level.random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos))
+        LootParams.Builder ctx = new LootParams.Builder((ServerLevel) level)
+                .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos))
                 .withParameter(LootContextParams.TOOL, getPickaxe())
                 .withOptionalParameter(LootContextParams.BLOCK_ENTITY, level.getBlockEntity(blockPos));
         List<ItemStack> lists = level.getBlockState(blockPos).getDrops(ctx);

@@ -29,8 +29,6 @@ public class ModRegistry {
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, MiniUtilities.MOD_ID);
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MiniUtilities.MOD_ID);
 
-    public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registry.CONFIGURED_FEATURE_REGISTRY, MiniUtilities.MOD_ID);
-    public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, MiniUtilities.MOD_ID);
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, MiniUtilities.MOD_ID);
 
     public static void register() {
@@ -43,8 +41,6 @@ public class ModRegistry {
         ENTITIES.register(modEventBus);
         ATTRIBUTES.register(modEventBus);
         LOOT_MODIFIERS.register(modEventBus);
-        CONFIGURED_FEATURES.register(modEventBus);
-        PLACED_FEATURES.register(modEventBus);
         FEATURES.register(modEventBus);
 
         BlockList.register();

@@ -59,7 +59,7 @@ public class GoldenLasso extends Item {
             BlockPos newPos = context.getClickedPos().relative(context.getClickedFace());
             context.getItemInHand().getTagElement("EntityTag").remove("Pos");
             context.getItemInHand().getTagElement("EntityTag").put("Pos", newDoubleNBTList(newPos.getX(), newPos.getY(), newPos.getZ()));
-            Entity entity = net.minecraft.world.entity.EntityType.byString(context.getItemInHand().getTagElement("EntityTag").getString("id")).get().spawn((ServerLevel) context.getLevel(), context.getItemInHand().getTag(), null, null, newPos, MobSpawnType.MOB_SUMMONED, false, false);
+            Entity entity = net.minecraft.world.entity.EntityType.byString(context.getItemInHand().getTagElement("EntityTag").getString("id")).get().spawn((ServerLevel) context.getLevel(), context.getItemInHand().getTag(), null, newPos, MobSpawnType.MOB_SUMMONED, false, false);
             entity.load(context.getItemInHand().getTagElement("EntityTag"));
             context.getItemInHand().setTag(new CompoundTag());
             return InteractionResult.CONSUME;

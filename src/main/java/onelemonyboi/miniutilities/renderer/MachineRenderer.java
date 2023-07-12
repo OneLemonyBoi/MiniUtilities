@@ -1,6 +1,7 @@
 package onelemonyboi.miniutilities.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
@@ -21,7 +22,7 @@ import java.util.List;
 @OnlyIn(Dist.CLIENT)
 public class MachineRenderer {
     public static void blockRenderInfo(RenderGuiOverlayEvent event) {
-        PoseStack ms = event.getPoseStack();
+        GuiGraphics ms = event.getGuiGraphics();
 
         HitResult mouseOver = Minecraft.getInstance().hitResult;
         if (!(mouseOver instanceof BlockHitResult)) {
@@ -38,7 +39,7 @@ public class MachineRenderer {
             return;
         }
 
-        ms.pushPose();
+        ms.pose().pushPose();
         List<MutableComponent> tooltip = ((RenderInfoIdentifier) te).getInfo();
 
         int width = mc.getWindow().getGuiScaledWidth();
@@ -53,12 +54,12 @@ public class MachineRenderer {
         int maxLen = 0;
         for (MutableComponent component : tooltip) {
             int len = mc.font.width(component.getString());
-            mc.font.drawShadow(ms, component, posX - (len / 2F), posY + count, 16777215);
+            ms.drawString(mc.font, component.getVisualOrderText(), posX - (len / 2F), posY + count, 16777215, true);
             if (len > maxLen) {
                 maxLen = mc.font.width(component.getString());
             }
             count += 12;
         }
-        ms.popPose();
+        ms.pose().popPose();
     }
 }

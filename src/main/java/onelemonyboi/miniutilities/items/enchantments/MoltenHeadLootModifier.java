@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
@@ -41,7 +42,7 @@ public class MoltenHeadLootModifier extends LootModifier {
         ObjectArrayList<ItemStack> smeltedLoot = new ObjectArrayList<>();
         for (ItemStack item : generatedLoot) {
             Optional<SmeltingRecipe> recipe = context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(item), context.getLevel());
-            smeltedLoot.add(recipe.map(AbstractCookingRecipe::getResultItem).orElse(item));
+            smeltedLoot.add(recipe.map(a -> a.getResultItem(RegistryAccess.EMPTY)).orElse(item));
         }
         return smeltedLoot;
     }

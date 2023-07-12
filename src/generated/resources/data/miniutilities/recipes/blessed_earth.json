@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "X": {
       "item": "minecraft:dirt"
@@ -16,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "miniutilities:blessed_earth"
-  }
+  },
+  "show_notification": true
 }
