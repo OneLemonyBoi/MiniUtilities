@@ -18,11 +18,11 @@ public class UnstableHoe extends HoeItem {
     public InteractionResult useOn(UseOnContext context) {
         if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown() && context.getHand().equals(InteractionHand.MAIN_HAND)) {
             Block block = context.getLevel().getBlockState(context.getClickedPos()).getBlock();
-            if (block.equals(Blocks.STONE)) block = net.minecraft.world.level.block.Blocks.COBBLESTONE;
-            else if (block.equals(net.minecraft.world.level.block.Blocks.COBBLESTONE)) block = Blocks.GRAVEL;
-            else if (block.equals(Blocks.GRAVEL)) block = net.minecraft.world.level.block.Blocks.COARSE_DIRT;
-            else if (block.equals(Blocks.COARSE_DIRT)) block = net.minecraft.world.level.block.Blocks.CLAY;
-            else if (block.equals(net.minecraft.world.level.block.Blocks.CLAY)) block = Blocks.SAND;
+            if (block.equals(Blocks.COBBLESTONE)) block = Blocks.STONE;
+            else if (block.equals(Blocks.GRAVEL)) block = Blocks.COBBLESTONE;
+            else if (block.equals(Blocks.COARSE_DIRT)) block = Blocks.GRAVEL;
+            else if (block.equals(net.minecraft.world.level.block.Blocks.CLAY)) block = Blocks.COARSE_DIRT;
+            else if (block.equals(Blocks.SAND)) block = Blocks.CLAY;
             context.getLevel().setBlockAndUpdate(context.getClickedPos(), block.defaultBlockState());
             return InteractionResult.CONSUME;
         }

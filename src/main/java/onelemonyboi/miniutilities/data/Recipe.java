@@ -509,7 +509,7 @@ public class Recipe extends RecipeProvider {
                 .pattern("YZY")
                 .unlockedBy("has_item", has(Items.COBBLESTONE))
                 .save(consumer);
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(BlockList.DiamondSpikes.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.COMBAT, BlockList.NetheriteSpikes.get().asItem()).unlocks("has_cobblestone", has(Items.COBBLESTONE)).save(consumer, ForgeRegistries.ITEMS.getKey(BlockList.NetheriteSpikes.get().asItem()).getPath() + "_smithing");
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(BlockList.DiamondSpikes.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.COMBAT, BlockList.NetheriteSpikes.get().asItem()).unlocks("has_cobblestone", has(Items.COBBLESTONE)).save(consumer, ForgeRegistries.ITEMS.getKey(BlockList.NetheriteSpikes.get().asItem()).getPath() + "_smithing");
 
         // Angel Ring
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemList.BaseAngelRing.get())

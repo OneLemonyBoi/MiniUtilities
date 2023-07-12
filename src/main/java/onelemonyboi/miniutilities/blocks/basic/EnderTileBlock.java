@@ -36,7 +36,7 @@ public class EnderTileBlock extends Block {
     @Override
     public void entityInside(BlockState state, Level worldIn, net.minecraft.core.BlockPos pos, Entity entityIn) {
         int yPos = entityIn.blockPosition().getY();
-        for (int x = 1; x <= (256 - yPos); x++) {
+        for (int x = -63; x <= (320 - yPos); x++) {
             Boolean blockCheck = !worldIn.isEmptyBlock(entityIn.blockPosition().above(x)) &&
                     worldIn.getBlockState(entityIn.blockPosition().above(x)).getBlock() != Blocks.BEDROCK &&
                     worldIn.getBlockState(entityIn.blockPosition().above(x)).getBlock() != BlockList.ChorusTile.get() &&

@@ -107,6 +107,7 @@ public class ItemList {
     public static RegistryObject<Item> register(final String name, final Supplier<Item> sup) {
         RegistryObject<Item> item = ModRegistry.ITEMS.register(name, sup);
         CreativeTab.setTab(item::get, BuiltInRegistries.CREATIVE_MODE_TAB.get(CreativeModeTabs.TOOLS_AND_UTILITIES));
+
         return item;
     }
 }

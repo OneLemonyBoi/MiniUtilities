@@ -35,7 +35,7 @@ public class ChorusTileBlock extends Block {
     @Override
     public void entityInside(BlockState state, Level worldIn, net.minecraft.core.BlockPos pos, Entity entityIn) {
         int yPos = entityIn.blockPosition().getY();
-        for (int x = 1; x <= yPos; x++) {
+        for (int x = -63; x <= yPos; x++) {
             Boolean blockCheck = !worldIn.isEmptyBlock(entityIn.blockPosition().below(x+2)) &&
                     worldIn.getBlockState(entityIn.blockPosition().below(x+2)).getBlock() != Blocks.BEDROCK &&
                     worldIn.getBlockState(entityIn.blockPosition().above(x)).getBlock() != BlockList.EnderTile.get() &&

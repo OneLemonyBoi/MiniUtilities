@@ -9,5 +9,7 @@
   "result": {
     "item": "miniutilities:netherite_spikes"
   },
-  "template": []
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
 }
