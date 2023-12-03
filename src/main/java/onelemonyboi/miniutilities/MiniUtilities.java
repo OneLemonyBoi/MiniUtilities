@@ -51,7 +51,7 @@ public class MiniUtilities {
     public static final TagKey<Block> blursedspreadable = BlockTags.create(new ResourceLocation(MOD_ID, "blursedspreadable"));
     public static final TagKey<EntityType<?>> blacklisted_entities = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(MOD_ID, "blacklisted"));
     public static final Logger LOGGER = LogManager.getLogger();
-    public static IProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
+    public static IProxy proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
     public MiniUtilities()
     {
@@ -62,7 +62,7 @@ public class MiniUtilities {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerEntityRenderers);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerEntityLayers);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,()->this::doInClient);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(CreativeTab::buildContents);
         JSONLoader.loadJSON();
         EVENT_BUS.register(this);
@@ -97,6 +97,9 @@ public class MiniUtilities {
 //        KeyBindings.register();
     }
 
+    private void doInClient(){
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerEntityLayers);
+    }
     private void enqueueIMC(InterModEnqueueEvent event) {
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.RING.getMessageBuilder().build());
     }
