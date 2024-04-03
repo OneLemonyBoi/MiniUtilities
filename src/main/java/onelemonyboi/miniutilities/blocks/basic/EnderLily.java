@@ -109,10 +109,10 @@ public class EnderLily extends CropsBlock {
                 BlockState blockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
                 if (blockstate.canSustainPlant(worldIn, blockpos.add(i, 0, j), net.minecraft.util.Direction.UP, (net.minecraftforge.common.IPlantable) blockIn)) {
                     f1 = 1.0F;
-                    if (Tags.Blocks.END_STONES.contains(blockIn)) {
+                    if (Tags.Blocks.END_STONES.contains(blockstate.getBlock())) {
                         f1 = 3.0F;
                     }
-                    else if (ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL.contains(blockIn)) {
+                    else if (ModTags.Blocks.STORAGE_BLOCKS_ENDER_PEARL.contains(blockstate.getBlock())) {
                         f1 = 7.0F;
                     }
                 }
