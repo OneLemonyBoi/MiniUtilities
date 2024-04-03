@@ -114,11 +114,7 @@ public class SpikeBlock extends net.minecraft.world.level.block.Block {
         }
         else {entityIn.hurt(DamageSource.CACTUS, this.damage);}
         if (this.expDropTrue) {
-            try {
-                ReflectionUtil.setFieldValue(LivingEntity.class.getDeclaredField("lastHurtByPlayerTime"), entity, 100);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            }
+            entity.lastHurtByPlayerTime = 100;
         }
         super.stepOn(worldIn, pos, state, entityIn);
     }
