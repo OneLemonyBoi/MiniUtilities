@@ -9,7 +9,6 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.init.ItemList;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
@@ -39,15 +38,15 @@ public class AngelRing extends Item {
 
             @Override
             public void onEquip(SlotContext slotContext, net.minecraft.world.item.ItemStack prevStack) {
-                if (slotContext.getWearer() instanceof Player) {
-                    startFlying((Player) slotContext.getWearer());
+                if (slotContext.entity() instanceof Player) {
+                    startFlying((Player) slotContext.entity());
                 }
             }
 
             @Override
-            public void onUnequip(SlotContext slotContext, net.minecraft.world.item.ItemStack prevStack) {
-                if (slotContext.getWearer() instanceof Player) {
-                    stopFlying((Player) slotContext.getWearer());
+            public void onUnequip(SlotContext slotContext, net.minecraft.world.item.ItemStack newStack) {
+                if (slotContext.entity() instanceof Player) {
+                    stopFlying((Player) slotContext.entity());
                 }
             }
 
@@ -67,9 +66,9 @@ public class AngelRing extends Item {
             }
 
             @Override
-            public void curioTick(String identifier, int index, net.minecraft.world.entity.LivingEntity livingEntity) {
-                if (livingEntity instanceof Player) {
-                    Player player = ((Player) livingEntity);
+            public void curioTick(SlotContext slotContext) {
+                if (slotContext.entity() instanceof Player) {
+                    Player player = ((Player) slotContext.entity());
                     if (!player.getAbilities().mayfly) {
                         startFlying(player);
                     }
@@ -77,13 +76,15 @@ public class AngelRing extends Item {
             }
 
             @Override
-            public boolean canEquip(String identifier, LivingEntity entityLivingBase) {
-                return !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.BaseAngelRing.get(), entityLivingBase).isPresent()
-                        && !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.BatAngelRing.get(), entityLivingBase).isPresent()
-                        && !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.GoldAngelRing.get(), entityLivingBase).isPresent()
-                        && !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.PeacockAngelRing.get(), entityLivingBase).isPresent()
-                        && !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.EnderDragonAngelRing.get(), entityLivingBase).isPresent()
-                        && !CuriosApi.getCuriosHelper().findEquippedCurio(ItemList.FeatherAngelRing.get(), entityLivingBase).isPresent();
+            public boolean canEquip(SlotContext slotContext) {
+                LivingEntity player = slotContext.entity();
+
+                return CuriosApi.getCuriosHelper().findFirstCurio(player, ItemList.BaseAngelRing.get()).isEmpty()
+                        && CuriosApi.getCuriosHelper().findFirstCurio(player, ItemList.BatAngelRing.get()).isEmpty()
+                        && CuriosApi.getCuriosHelper().findFirstCurio(player, ItemList.GoldAngelRing.get()).isEmpty()
+                        && CuriosApi.getCuriosHelper().findFirstCurio(player, ItemList.PeacockAngelRing.get()).isEmpty()
+                        && CuriosApi.getCuriosHelper().findFirstCurio(player, ItemList.EnderDragonAngelRing.get()).isEmpty()
+                        && CuriosApi.getCuriosHelper().findFirstCurio(player, ItemList.FeatherAngelRing.get()).isEmpty();
             }
         };
 

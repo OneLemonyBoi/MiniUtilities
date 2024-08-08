@@ -100,7 +100,7 @@ public class ItemList {
 
     public static final RegistryObject<Item> MagicalEgg = register("magical_egg", () -> new MagicalEgg(new Item.Properties()));
 
-    public static final RegistryObject<Item> GoldenLasso = register("golden_lasso", () -> new GoldenLasso(new Item.Properties()));
+    public static final RegistryObject<Item> GoldenLasso = register("golden_lasso", () -> new GoldenLasso(new Item.Properties().stacksTo(1)));
 
     public static void register() {}
 
