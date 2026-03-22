@@ -6,7 +6,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraftforge.registries.RegistryObject;
 import onelemonyboi.miniutilities.MiniUtilities;
 
 public class ModTags {

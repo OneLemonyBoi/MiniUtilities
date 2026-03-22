@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.VanillaInventoryCodeHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import onelemonyboi.lemonlib.annotations.SaveInNBT;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
@@ -94,7 +93,7 @@ public class QuantumQuarryTile extends TileBase implements MenuProvider, RenderI
             BlockEntity aboveBE = level.getBlockEntity(pos.above());
             if (aboveBE.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).isPresent()) {
                 IItemHandler handler = aboveBE.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).resolve().get();
-                for (int i = 0; i < 27; i++) {
+                for (int i = 0; i < tileInv.getSlots(); i++) {
                     if (tileInv.extractItem(i, 64, true).isEmpty()) continue;
                     else {
                         ItemStack simPull = tileInv.extractItem(i, 64, true);

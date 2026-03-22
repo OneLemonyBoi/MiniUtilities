@@ -6,7 +6,7 @@ buildscript {
         maven { url = 'https://maven.parchmentmc.org' } // Add this line
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
         classpath 'org.parchmentmc:librarian:1.+'
     }
@@ -107,6 +107,7 @@ repositories {
         name = "Cursemaven"
         url = "https://www.cursemaven.com/"
     }
+    maven { url 'https://modmaven.dev/' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://maven.explodingcreeper.me/releases' }
     maven {
@@ -117,13 +118,12 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.2.0-beta.3+1.20.1")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.2.0-beta.3+1.20.1:api")
-    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:15.1.0.19"))
-    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:15.1.0.19"))
-    runtimeOnly fg.deobf("curse.maven:jei-238222:4597711")
-    //implementation fg.deobf("curse.maven:ctm-267602:3737369")
-    runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:4629624")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1:api")
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:15.20.0.106"))
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:15.20.0.106"))
+    runtimeOnly fg.deobf("curse.maven:jei-238222:6075247")
+    runtimeOnly fg.deobf("curse.maven:jade-324717:6271651")
     implementation fg.deobf("curse.maven:lemon-lib-471136:4637805")
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
@@ -131,10 +131,6 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
-
-    // Testing
-    // implementation fg.deobf("curse.maven:mekanism-268560:3206392")
-    // implementation fg.deobf("curse.maven:refined-pipes-370696:3113506")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

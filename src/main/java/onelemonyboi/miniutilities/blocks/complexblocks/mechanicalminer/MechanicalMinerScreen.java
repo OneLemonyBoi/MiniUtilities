@@ -1,7 +1,6 @@
 package onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.GuiGraphics;

@@ -1,4 +1,4 @@
-// 1.20.1	2023-07-11T19:23:11.1683519	Loot Tables
+// 1.20.1	2025-05-29T00:43:27.3412473	Loot Tables
 90141f8ddd5504d0fdec07268bcb8cb0a8023508 data/miniutilities/loot_tables/blocks/angel_block.json
 2a3b9dafa3008f602a71ddae34b65147e50a9be3 data/miniutilities/loot_tables/blocks/black_lapis_caelestis.json
 f945cb8383aa95b1c69e018b1e28da358c48c75a data/miniutilities/loot_tables/blocks/blessed_earth.json
@@ -25,8 +25,6 @@ b8d03f43b064897003efd629d94bd2262609e41d data/miniutilities/loot_tables/blocks/g
 36969503ba1c95aa5211ce1c23f25acd185186e4 data/miniutilities/loot_tables/blocks/iron_drum.json
 1c5a656b4e652bf01c18c3370b342119ee28e655 data/miniutilities/loot_tables/blocks/iron_spikes.json
 acfa601be51598281f55532147375cecf328e4ff data/miniutilities/loot_tables/blocks/lapis_lamp.json
-9f6936f3159295c3952ad492ecc3033bfd644732 data/miniutilities/loot_tables/blocks/laser_hub.json
-daca071427d46bf0764c95e2de62f0150259ee1d data/miniutilities/loot_tables/blocks/laser_port.json
 e3097e133666aca4f74387f4272a2704d9d9ed04 data/miniutilities/loot_tables/blocks/light_blue_lapis_caelestis.json
 5f141984d2533fca21f9b5253e2002f82ad846c0 data/miniutilities/loot_tables/blocks/light_gray_lapis_caelestis.json
 ad6adfe6a3fcedb4392df8294cad7f28ee58234d data/miniutilities/loot_tables/blocks/lime_lapis_caelestis.json

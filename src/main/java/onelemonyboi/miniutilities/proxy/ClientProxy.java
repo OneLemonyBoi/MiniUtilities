@@ -1,24 +1,15 @@
 package onelemonyboi.miniutilities.proxy;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import onelemonyboi.miniutilities.entities.MagicalEggEntity;
 import onelemonyboi.miniutilities.init.EntityList;
 import onelemonyboi.miniutilities.renderer.AngelRingRendererLeft;
 import onelemonyboi.miniutilities.renderer.AngelRingRendererRight;
 import onelemonyboi.miniutilities.renderer.KikokuRenderer;
-
-import java.util.Map;
-import java.util.function.Supplier;
 
 public class ClientProxy implements IProxy {
     @Override

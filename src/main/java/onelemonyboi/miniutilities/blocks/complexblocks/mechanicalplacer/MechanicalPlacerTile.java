@@ -18,7 +18,6 @@ import onelemonyboi.lemonlib.annotations.SaveInNBT;
 import onelemonyboi.lemonlib.blocks.tile.TileBase;
 import onelemonyboi.lemonlib.identifiers.RenderInfoIdentifier;
 import onelemonyboi.lemonlib.trait.tile.TileTraits;
-import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerTile;
 import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.trait.TileBehaviors;
 

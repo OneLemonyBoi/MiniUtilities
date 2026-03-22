@@ -1,6 +1,5 @@
 package onelemonyboi.miniutilities;
 
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -21,14 +20,12 @@ import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuar
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerBlock;
 import onelemonyboi.miniutilities.blocks.spikes.SpikeBlock;
-import onelemonyboi.miniutilities.init.FeatureList;
 import onelemonyboi.miniutilities.items.GoldenLasso;
 import onelemonyboi.miniutilities.items.Kikoku;
 import onelemonyboi.miniutilities.items.enchantments.EnchantmentTooltipHandler;
 import onelemonyboi.miniutilities.items.enchantments.ExperienceHarvesterHandler;
 import onelemonyboi.miniutilities.items.enchantments.ShotgunHandler;
 import onelemonyboi.miniutilities.items.unstable.UnstableShears;
-import onelemonyboi.miniutilities.misc.KeyBindingsHandler;
 import onelemonyboi.miniutilities.misc.UnstableArmorHandler;
 import onelemonyboi.miniutilities.packets.Packet;
 import onelemonyboi.miniutilities.proxy.ClientProxy;
@@ -73,7 +70,6 @@ public class MiniUtilities {
         EVENT_BUS.addListener(UnstableShears::instantShear);
         EVENT_BUS.addListener(Kikoku::AnvilUpdateEvent);
         EVENT_BUS.addListener(Kikoku::AnvilRepairEvent);
-        EVENT_BUS.addListener(KeyBindingsHandler::keybinds);
         EVENT_BUS.addListener(UnstableArmorHandler::unstableArmor);
         EVENT_BUS.addListener(GoldenLasso::onRightClick);
         EVENT_BUS.addListener(MechanicalMinerBlock::PlayerInteractEvent);
@@ -96,7 +92,6 @@ public class MiniUtilities {
     private void doClientStuff(final FMLClientSetupEvent event) // Render Stuff HERE!!
     {
         ClientStuff.clientStuff();
-//        KeyBindings.register();
     }
 
     private void doInClient(){

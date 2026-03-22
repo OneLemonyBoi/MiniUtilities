@@ -11,7 +11,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
-import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.init.BlockList;
 
 public class AngelBlockItem extends BlockItem {

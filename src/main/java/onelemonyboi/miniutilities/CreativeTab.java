@@ -1,14 +1,8 @@
 package onelemonyboi.miniutilities;
 
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.RegistryObject;
-import onelemonyboi.miniutilities.init.BlockList;
 
 import java.util.ArrayList;
 import java.util.HashMap;

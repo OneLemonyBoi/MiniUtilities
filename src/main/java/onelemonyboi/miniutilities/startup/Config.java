@@ -1,13 +1,10 @@
 package onelemonyboi.miniutilities.startup;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import onelemonyboi.miniutilities.items.unstable.UnstableIngot;
-
-import java.util.List;
 
 @Mod.EventBusSubscriber
 public class Config {

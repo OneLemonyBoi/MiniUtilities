@@ -2,7 +2,6 @@ package onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -38,17 +37,12 @@ public class QuantumQuarryScreen extends AbstractContainerScreen<QuantumQuarryCo
     protected void init() {
         super.init();
         Item baseItem = net.minecraft.world.item.Items.REDSTONE;
-        switch (menu.te.redstonemode) {
-            case 1:
-                baseItem = net.minecraft.world.item.Items.REDSTONE;
-                break;
-            case 2:
-                baseItem = Items.GLOWSTONE_DUST;
-                break;
-            case 3:
-                baseItem = net.minecraft.world.item.Items.GUNPOWDER;
-                break;
-        }
+        baseItem = switch (menu.te.redstonemode) {
+            case 1 -> Items.REDSTONE;
+            case 2 -> Items.GLOWSTONE_DUST;
+            case 3 -> Items.GUNPOWDER;
+            default -> baseItem;
+        };
 
         redstoneButton = new ItemStackButton(this.leftPos + 156, this.topPos + 4, 16, 16, Component.literal(""), this::changeRedstone, baseItem);
         addRenderableWidget(redstoneButton);

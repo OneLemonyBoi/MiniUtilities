@@ -8,8 +8,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 import onelemonyboi.miniutilities.startup.Config;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class ExperiencePearl extends Item {
     int compressed = 0;
     public ExperiencePearl(Properties properties, int compressed) {

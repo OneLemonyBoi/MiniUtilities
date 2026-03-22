@@ -6,12 +6,10 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.util.thread.EffectiveSide;
 
 import javax.annotation.Nonnull;
-import java.util.Random;
 
 public class LapisLamp extends Block {
 

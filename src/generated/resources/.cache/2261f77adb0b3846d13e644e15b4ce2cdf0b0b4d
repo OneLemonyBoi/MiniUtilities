@@ -1,4 +1,4 @@
-// 1.20.1	2023-07-11T19:23:11.1797002	Tags for minecraft:block mod id miniutilities
+// 1.20.1	2025-05-29T00:43:27.3425637	Tags for minecraft:block mod id miniutilities
 ecabf0ede406e8c51dccaf6f031261451eecb630 data/forge/tags/blocks/lapis_caelestis.json
 95dd8c10bd6b9bb55aa3cf3161761343ecbf67c0 data/forge/tags/blocks/lapis_caelestis/black.json
 7702c35dbf7a4a0029d33b7b78f0414ef7744de3 data/forge/tags/blocks/lapis_caelestis/blue.json
@@ -25,7 +25,7 @@ c72b726efe4a66660f88258f370bb6d90ac65b8f data/forge/tags/blocks/ores/ender.json
 0085c24d23fbf3ceb6cf92f0f287b8a247ad4151 data/forge/tags/blocks/storage_blocks/ender_pearl.json
 5aa4f1ad1c7291277d315aa4513e0298b2867631 data/forge/tags/blocks/storage_blocks/unstable.json
 2b7fdabb3bf99ef409f17f6c048848a18a5e20c1 data/minecraft/tags/blocks/mineable/axe.json
-2974066623745f64b539e063eff058a9be887fa7 data/minecraft/tags/blocks/mineable/pickaxe.json
+00f563b18a49b5e2dc2e161260e5a88f05513cc6 data/minecraft/tags/blocks/mineable/pickaxe.json
 4a219920f510bd885456d2680c8688257e214580 data/minecraft/tags/blocks/needs_diamond_tool.json
 d8b13be68f34ed0ede8bb877f5bf8b1e972df940 data/minecraft/tags/blocks/needs_iron_tool.json
-5f6e2912f77210062fa9bccfcb7ba164a3445068 data/minecraft/tags/blocks/needs_stone_tool.json
+bafb953d8b5aa4715aa574c52428138de4796513 data/minecraft/tags/blocks/needs_stone_tool.json

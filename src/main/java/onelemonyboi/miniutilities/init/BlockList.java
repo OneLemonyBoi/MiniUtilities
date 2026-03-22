@@ -12,8 +12,6 @@ import onelemonyboi.miniutilities.CreativeTab;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.LapisLamp;
 import onelemonyboi.miniutilities.blocks.basic.*;
-import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserHubBlock;
-import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserPortBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.redstoneclock.RedstoneClockBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.LunarPanelBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.solarpanels.SolarPanelBlock;
@@ -76,9 +74,6 @@ public class BlockList {
     public static final RegistryObject<Block> SolarPanelController = register("solar_panel_controller", SolarPanelController::new);
     public static final RegistryObject<Block> EnderTile = register("ender_tile", EnderTileBlock::new);
     public static final RegistryObject<Block> ChorusTile = register("chorus_tile", ChorusTileBlock::new);
-
-    public static final RegistryObject<Block> LaserHub = register("laser_hub", () -> new LaserHubBlock(Properties.copy(net.minecraft.world.level.block.Blocks.IRON_BLOCK)));
-    public static final RegistryObject<Block> LaserPort = register("laser_port", () -> new LaserPortBlock(Properties.copy(Blocks.IRON_BLOCK)));
 
     public static final RegistryObject<Block> EtherealGlass = register("ethereal_glass", () -> new SpecialGlass(true, false, false, false, false));
     public static final RegistryObject<Block> ReverseEtherealGlass = register("reverse_ethereal_glass", () -> new SpecialGlass(false, true, false, false, false));

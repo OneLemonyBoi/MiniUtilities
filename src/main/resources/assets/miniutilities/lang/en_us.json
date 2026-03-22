@@ -122,6 +122,11 @@
   "item.miniutilities.experience_pearl_8x": "\u00A7a8x Compressed Experience Pearl\u00A7a",
   "item.miniutilities.magical_egg": "Magical Egg",
   "item.miniutilities.golden_lasso": "Golden Lasso",
+  "item.miniutilities.gold_wing": "Gold Wing",
+  "item.miniutilities.ender_dragon_wing": "Ender Dragon Wing",
+  "item.miniutilities.feather_wing": "Feather Wing",
+  "item.miniutilities.bat_wing": "Bat Wing",
+  "item.miniutilities.peacock_wing": "Peacock Wing",
 
   "enchantment.miniutilities.shotgun": "Shotgun",
   "enchantment.miniutilities.shotgun.desc": "Shoots an extra arrow for every enchantment level",

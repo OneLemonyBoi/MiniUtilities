@@ -1,21 +1,15 @@
 package onelemonyboi.miniutilities.data;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.loot.packs.VanillaBlockLoot;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
@@ -27,9 +21,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCon
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import onelemonyboi.miniutilities.MiniUtilities;
 import onelemonyboi.miniutilities.ModRegistry;
 import onelemonyboi.miniutilities.blocks.basic.EnderLily;
 import onelemonyboi.miniutilities.blocks.basic.FlameLily;
@@ -37,9 +29,6 @@ import onelemonyboi.miniutilities.init.BlockList;
 import onelemonyboi.miniutilities.init.ItemList;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LootTable extends LootTableProvider {
@@ -100,9 +89,6 @@ public class LootTable extends LootTableProvider {
             dropSelf(BlockList.LunarPanel.get());
             dropSelf(BlockList.EnderTile.get());
             dropSelf(BlockList.ChorusTile.get());
-
-            add(BlockList.LaserHub.get(), (block) -> dropWithTags(block, "IsInput"));
-            add(BlockList.LaserPort.get(), (block) -> dropWithTags(block, "IsInput"));
 
             dropSelf(BlockList.EtherealGlass.get());
             dropSelf(BlockList.ReverseEtherealGlass.get());

@@ -1,6 +1,5 @@
 package onelemonyboi.miniutilities.items;
 
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;

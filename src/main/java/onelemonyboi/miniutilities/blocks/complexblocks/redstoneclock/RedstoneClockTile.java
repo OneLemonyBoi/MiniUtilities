@@ -13,7 +13,6 @@ import onelemonyboi.miniutilities.init.TEList;
 import onelemonyboi.miniutilities.trait.TileBehaviors;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.stream.Stream;
 
 public class RedstoneClockTile extends TileBase {

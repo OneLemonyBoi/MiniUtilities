@@ -9,8 +9,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
@@ -32,8 +30,6 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.Tags;
 import onelemonyboi.miniutilities.data.ModTags;
 import onelemonyboi.miniutilities.init.ItemList;
-
-import java.util.Random;
 
 public class EnderLily extends CropBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_7;

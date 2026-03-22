@@ -5,8 +5,6 @@ import onelemonyboi.lemonlib.trait.block.BlockPartialBehaviours;
 import onelemonyboi.lemonlib.trait.block.BlockTraits;
 import onelemonyboi.miniutilities.blocks.complexblocks.drum.DrumBlock;
 import onelemonyboi.miniutilities.blocks.complexblocks.drum.DrumTile;
-import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserHubTile;
-import onelemonyboi.miniutilities.blocks.complexblocks.lasers.LaserPortTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalminer.MechanicalMinerTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.mechanicalplacer.MechanicalPlacerTile;
 import onelemonyboi.miniutilities.blocks.complexblocks.quantumquarry.QuantumQuarryTile;
@@ -25,19 +23,6 @@ public class BlockBehaviors {
     public static BlockBehavior solarPanelController = new BlockBehavior.Builder()
             .composeFrom(BlockPartialBehaviours.partialBaseBlock)
             .tileEntity((a, b, c) -> new SolarPanelControllerTile(b, c))
-            .with(ModularMaterialTrait.builder().hardness(4).resistance(4).requiresTool(true).build())
-            .build();
-
-    public static BlockBehavior laserHub = new BlockBehavior.Builder()
-            .composeFrom(BlockPartialBehaviours.partialBaseBlock)
-            .tileEntity((a, b, c) -> new LaserHubTile(b, c))
-            .with(ModularMaterialTrait.builder().hardness(4).resistance(4).requiresTool(true).build())
-            .build();
-
-    public static BlockBehavior laserPort = new BlockBehavior.Builder()
-            .composeFrom(BlockPartialBehaviours.partialBaseBlock)
-            .tileEntity((a, b, c) -> new LaserPortTile(b, c))
-            .rotation(BlockTraits.RotationType.XYZ)
             .with(ModularMaterialTrait.builder().hardness(4).resistance(4).requiresTool(true).build())
             .build();
 
